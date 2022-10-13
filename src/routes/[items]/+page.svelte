@@ -7,19 +7,20 @@
    export let data;
    const item = $page.params.items;
    let maxamount = data.maxamount[item];
+   let tempcart = {[item] : [0,0]};
    $: amount = 1;
    $: price = data.prices[item] * amount;
 
-   // if (localStorage.getItem('CartContent' != null)) {           //
-   //    $cart = JSON.parse(localStorage.getItem('CartContent'));  // Nem szűkséges mert a homepage már megcsinálja, de itthagyom ha a jövőben el akarom érni ezt az oldalt a homepage nélkül is.
-   // };                                                           //
-
-   if ($cart[item] == undefined) {
-      $cart[item] = [0,0]
-   };
+   if (localStorage.getItem('CartContent') != null) {
+      $cart = JSON.parse(localStorage.getItem('CartContent'));
+      tempcart = $cart;
+      if (tempcart[item] == undefined) {
+         tempcart[item] = [0,0]
+      }
+   }
 
    function addItem() {
-      if (amount < maxamount - $cart[item][1]) {
+      if (amount < maxamount - tempcart[item][1]) {
          amount++
       }
    };
@@ -31,14 +32,12 @@
    };
 
    function vissza() {
-      delete $cart[item];
       goto("/list?Category=".concat($page.url.searchParams.get('Category')))
    };
 
    function buy() {
-      if ($cart[item][1] < maxamount) {
-         $cart[item] = [$cart[item][0] + price, $cart[item][1] + amount];
-
+      if (tempcart[item][1] < maxamount) {
+         $cart[item] = [tempcart[item][0] + price, tempcart[item][1] + amount];
          localStorage.setItem('CartContent',JSON.stringify($cart));
          goto("/list?Category=".concat($page.url.searchParams.get('Category')))
       } else {

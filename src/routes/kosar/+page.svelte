@@ -93,9 +93,14 @@
       text-decoration: none;
    }
 
-   :global(body) {
-      background-color: black;
-   }
+	:global(body) {
+		background-color: black;
+      scrollbar-width: none;
+
+      ::-webkit-scrollbar {
+         width: 0;
+      }
+	}
 
    main {
       width: 100vw;

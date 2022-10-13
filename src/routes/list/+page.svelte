@@ -182,6 +182,11 @@
 
 	:global(body) {
 		background-color: black;
+      scrollbar-width: none;
+
+      ::-webkit-scrollbar {
+         width: 0;
+      }
 	}
 
    /* ----------------------------------------- */
@@ -315,7 +320,7 @@ main {
             .grid-container {
                display: grid;
                grid-template-columns: 25vw auto auto 15.2vw;
-               // margin: .5%;
+               margin: 2%;
                margin-bottom: 30%;
 
                div {

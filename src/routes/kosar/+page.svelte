@@ -1,23 +1,21 @@
 <script>
-   import { cart } from "$lib/stores/Cart.js";
    import { slide, fade } from "svelte/transition";
-   import { total } from "$lib/stores/Cart.js";
+   import { cart, total } from "$lib/stores/Cart.js";
 
    export let data;
-
 
    if (localStorage.getItem('CartContent') != null) {
       $cart = JSON.parse(localStorage.getItem('CartContent'));
    }
-   
+
    function recalculate() {
       $total = [0,0];
       for (let i = 0; i < Object.keys($cart).length; i++) {
          let cnt = $cart[Object.keys($cart)[i]];
          $total[1] += Number(cnt[1]); 
          $total[0] += Number(cnt[0])
-      };
-   }
+      }
+   };
 
    function urites() {
       localStorage.clear();
@@ -51,7 +49,7 @@
          $cart[item[0]][0] += price;
          $cart[item[0]][1]++;
          recalculate();
-         localStorage.setItem('CartContent', JSON.stringify($cart))
+         localStorage.setItem('CartContent', JSON.stringify($cart));
       };
    };
 
@@ -74,7 +72,12 @@
          <h2>{a[0]}</h2>
          <h3>{a[1][0]} Ft</h3>
          <div class="amount">
-            <p on:click="{() => {subtractAmount(a)}}" id="p-first">-</p><h4>{a[1][1]} db</h4><p on:click="{() => {addAmount(a)}}">+</p>
+            {#if $cart[a[0]][1] > 1}
+            <p on:click="{() => {subtractAmount(a)}}" id="p-first">-</p>
+            {:else} 
+            <p on:click="{() => {subtractAmount(a)}}" id="p-first" style="font-size: small">❌</p>
+            {/if}
+            <h4>{a[1][1]} db</h4><p on:click="{() => {addAmount(a)}}">+</p>
          </div>
       </div>
       {/each}

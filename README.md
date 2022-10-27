@@ -1,1 +1,1 @@
-# bufé-app
+# büfé-app

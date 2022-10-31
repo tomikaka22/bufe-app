@@ -53,6 +53,26 @@
       };
    };
 
+   async function buy() {
+      fetch('/vasarlas_api', {
+         method: 'POST',
+         headers: {
+            'Content-Type': 'application/json',
+         },
+         body: JSON.stringify($cart)
+      })
+      .then(res => res.json())
+      .then(data => {
+         alert(`Köszönjük a vásárlást! \nRendelés száma: #${data.orderID}`);
+         console.log(data);
+         urites()
+      })
+      .catch(error => {
+         alert(error)
+         console.log(error)
+      })
+   }
+
 </script>
 
 <main>
@@ -85,6 +105,10 @@
 
    <div class="vissza">
       <button on:click={() => {history.back();}}>Vissza</button>
+   </div>
+
+   <div class="buy">
+      <button on:click={buy}>Vásárlás!</button>
    </div>
 </main>
 
@@ -190,5 +214,21 @@
             font-weight: bolder;
          }
       }
+
+      .buy {
+         button {
+            display: block;
+            border-radius: 50em;
+            padding: 2em;
+            color: black;
+            background-color: red;
+            border: 1px solid rgb(126, 0, 0);
+            margin: 0 auto;
+            margin-top: 5%;
+            font-weight: bold;
+            font-size: larger;
+         }
+      }
+
    }
 </style>

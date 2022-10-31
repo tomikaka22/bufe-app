@@ -5,11 +5,11 @@ const prices = {
    'Szaros Étel': 1000,
    'Marhahúsos Étel': 1200,
    // Ital
-   'hell': 250,
-   'szikszo': 350,
+   'Hell': 250,
+   'Xixo': 350,
    // Nasi
-   'csipsz': 240,
-   'mogyi': 230
+   'Chips': 240,
+   'Mogyi': 230
 };
 
 let maxamount = {
@@ -17,11 +17,11 @@ let maxamount = {
    'Szaros Étel': 0,
    'Marhahúsos Étel': 5,
    // Ital
-   'hell': 10,
-   'szikszo': 7,
+   'Hell': 10,
+   'Xixo': 7,
    // Nasi
-   'csipsz': 4,
-   'mogyi': 6
+   'Chips': 4,
+   'Mogyi': 6
 };
 
 const description = {
@@ -29,11 +29,11 @@ const description = {
    'Szaros Étel': 'Szendvics, amit teleszart egy nagyon büdöset szaró ember.',
    'Marhahúsos Étel': 'Szendvics, majdnem nyers marhahússal.',
    // Ital
-   'hell': 'Mindenki kedvenc olcsó energiaitala.',
-   'szikszo': 'Mindenki kedvenc teának csúfolt üditőitala.',
+   'Hell': 'Mindenki kedvenc olcsó energiaitala.',
+   'Xixo': 'Mindenki kedvenc teának csúfolt üditőitala.',
    // Nasi
-   'csipsz': 'Nyomokban krumplit is tartalmazó ropogós burgonyaszirom.',
-   'mogyi': 'Bundás mogyoró amiből csak a wasabi izű ehető.'
+   'Chips': 'Nyomokban krumplit is tartalmazó ropogós burgonyaszirom.',
+   'Mogyi': 'Bundás mogyoró amiből csak a wasabi izű ehető.'
 
 };
 
@@ -42,5 +42,5 @@ export function GET() {
       prices : prices,
       description : description,
       maxamount : maxamount
-   });
+   })
 };

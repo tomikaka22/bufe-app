@@ -1,10 +1,10 @@
 <script>
-   import { swipe } from "svelte-gestures";
-   import { fly } from "svelte/transition";
-   import { goto } from "$app/navigation"
-   import { page } from "$app/stores";
-   import { browser } from "$app/environment";
-   import { cart, total } from "$lib/stores/Cart.js";
+   import { swipe } from 'svelte-gestures';
+   import { fly } from 'svelte/transition';
+   import { goto } from '$app/navigation'
+   import { page } from '$app/stores';
+   import { browser } from '$app/environment';
+   import { cart, total } from '$lib/stores/Cart.js';
 
    export let data;
    let navigation = $page.url.searchParams.get('Category');
@@ -30,27 +30,27 @@
      // Needed to be reactive because x is undefined on first render
 
    if (navigation == undefined) {
-      navigation = "Étel"
+      navigation = 'Étel'
    }
 
    function AnimationDirection(tab) {
-   	if (tab == "Étel") {
+   	if (tab == 'Étel') {
          flyIn={x: -innerWidth, duration: 500};
          flyOut={x: innerWidth, duration: 500};
          navigation = tab
       };
-      if (tab == "Nasi") {
+      if (tab == 'Nasi') {
          flyIn={x: innerWidth, duration: 500};
          flyOut={x: -innerWidth, duration: 500};
          navigation = tab
       };
-      if (tab == "Ital") {
-         if (navigation == "Étel") {
+      if (tab == 'Ital') {
+         if (navigation == 'Étel') {
             flyIn={x: innerWidth, duration: 500};
             flyOut={x: -innerWidth, duration: 500};
             navigation = tab
          };
-         if (navigation == "Nasi") {
+         if (navigation == 'Nasi') {
             flyIn={x: -innerWidth, duration: 500};
             flyOut={x: innerWidth, duration: 500};
             navigation = tab
@@ -59,30 +59,30 @@
    };
 
 	function AnimationDirectionSwipe(event) {
-		if (navigation == "Ital") {
-			if (event.detail.direction == "left") {
+		if (navigation == 'Ital') {
+			if (event.detail.direction == 'left') {
 				flyIn={x: innerWidth, duration: 500};
          	flyOut={x: -innerWidth, duration: 500};
-				navigation="Nasi"
+				navigation='Nasi'
 			}
-			if (event.detail.direction == "right") {
+			if (event.detail.direction == 'right') {
 				flyIn={x: -innerWidth, duration: 500};
          	flyOut={x: innerWidth, duration: 500};
-				navigation="Étel"
+				navigation='Étel'
 			}
 		}
-		if (navigation == "Étel") {
-			if (event.detail.direction == "left") {
+		if (navigation == 'Étel') {
+			if (event.detail.direction == 'left') {
 				flyIn={x: innerWidth, duration: 500};
          	flyOut={x: -innerWidth, duration: 500};
-				navigation="Ital"
+				navigation='Ital'
 			}
 		}
-		if (navigation == "Nasi") {
-			if (event.detail.direction == "right") {
+		if (navigation == 'Nasi') {
+			if (event.detail.direction == 'right') {
 				flyIn={x: -innerWidth, duration: 500};
          	flyOut={x: innerWidth, duration: 500};
-				navigation = "Ital"
+				navigation = 'Ital'
 			}
 		}
 	}
@@ -95,51 +95,51 @@
 
 <main use:swipe={{ timeframe: 800, minSwipeDistance: 50, touchAction: 'pan-y' }} on:swipe={AnimationDirectionSwipe}>
 
-   <div in:fly={{y: -200}} class="header">
-      <img class="favicon" src="favicon.png" alt="">
+   <div in:fly={{y: -200}} class='header'>
+      <img class='favicon' src='favicon.png' alt=''>
       <p>Büfé - app</p>
-      <img on:click="{() => {goto('/')}}" class="account" src="account.png" alt="">
+      <img on:click='{() => {goto('/')}}' class='account' src='account.png' alt=''>
    </div>
 
-   <div class="outer-div">
-      {#if navigation == "Étel"}
-         <div in:fly={flyIn} out:fly={flyOut} class="inner-div">
-            <div class="grid-container">
+   <div class='outer-div'>
+      {#if navigation == 'Étel'}
+         <div in:fly={flyIn} out:fly={flyOut} class='inner-div'>
+            <div class='grid-container'>
                {#each Object.entries(data.prices) as _}
-                  <div on:click="{() => {goto('Szaros Étel?Category=Étel')}}" class="grid-cell-icon lite"><img src="favicon.png" alt=""></div>
-                  <div on:click="{() => {goto('Szaros Étel?Category=Étel')}}" class="grid-cell-text lite">Szaros Étel</div>
-                  <div on:click="{() => {goto('Szaros Étel?Category=Étel')}}" class="grid-cell-price lite">{data.prices["Szaros Étel"]} Ft</div>
-                  <div on:click="{() => {goto('Marhahúsos Étel?Category=Étel')}}" class="grid-cell-icon"><img src="favicon.png" alt=""></div>
-                  <div on:click="{() => {goto('Marhahúsos Étel?Category=Étel')}}" class="grid-cell-text">Marhahúsos Étel</div>
-                  <div on:click="{() => {goto('Marhahúsos Étel?Category=Étel')}}" class="grid-cell-price">{data.prices["Marhahúsos Étel"]} Ft</div>
+                  <div on:click='{() => {goto('Szaros Étel?Category=Étel')}}' class='grid-cell-icon lite'><img src='favicon.png' alt=''></div>
+                  <div on:click='{() => {goto('Szaros Étel?Category=Étel')}}' class='grid-cell-text lite'>Szaros Étel</div>
+                  <div on:click='{() => {goto('Szaros Étel?Category=Étel')}}' class='grid-cell-price lite'>{data.prices['Szaros Étel']} Ft</div>
+                  <div on:click='{() => {goto('Marhahúsos Étel?Category=Étel')}}' class='grid-cell-icon'><img src='favicon.png' alt=''></div>
+                  <div on:click='{() => {goto('Marhahúsos Étel?Category=Étel')}}' class='grid-cell-text'>Marhahúsos Étel</div>
+                  <div on:click='{() => {goto('Marhahúsos Étel?Category=Étel')}}' class='grid-cell-price'>{data.prices['Marhahúsos Étel']} Ft</div>
                {/each}
             </div>
          </div>
       {/if}
-      {#if navigation == "Ital"}
-         <div in:fly={flyIn} out:fly={flyOut} class="inner-div">
-            <div class="grid-container">
+      {#if navigation == 'Ital'}
+         <div in:fly={flyIn} out:fly={flyOut} class='inner-div'>
+            <div class='grid-container'>
                {#each Object.entries(data.prices) as _}
-                  <div on:click="{() => {goto('hell?Category=Ital')}}" class="grid-cell-icon lite"><img src="favicon.png" alt=""></div>
-                  <div on:click="{() => {goto('hell?Category=Ital')}}" class="grid-cell-text lite">hell</div>
-                  <div on:click="{() => {goto('hell?Category=Ital')}}" class="grid-cell-price lite">{data.prices["hell"]} Ft</div>
-                  <div on:click="{() => {goto('szikszo?Category=Ital')}}" class="grid-cell-icon"><img src="favicon.png" alt=""></div>
-                  <div on:click="{() => {goto('szikszo?Category=Ital')}}" class="grid-cell-text">szikszo</div>
-                  <div on:click="{() => {goto('szikszo?Category=Ital')}}" class="grid-cell-price">{data.prices["szikszo"]} Ft</div>
+                  <div on:click='{() => {goto('Hell?Category=Ital')}}' class='grid-cell-icon lite'><img src='favicon.png' alt=''></div>
+                  <div on:click='{() => {goto('Hell?Category=Ital')}}' class='grid-cell-text lite'>Hell</div>
+                  <div on:click='{() => {goto('Hell?Category=Ital')}}' class='grid-cell-price lite'>{data.prices['Hell']} Ft</div>
+                  <div on:click='{() => {goto('Xixo?Category=Ital')}}' class='grid-cell-icon'><img src='favicon.png' alt=''></div>
+                  <div on:click='{() => {goto('Xixo?Category=Ital')}}' class='grid-cell-text'>Xixo</div>
+                  <div on:click='{() => {goto('Xixo?Category=Ital')}}' class='grid-cell-price'>{data.prices['Xixo']} Ft</div>
                {/each}
             </div>
          </div>
       {/if}
-      {#if navigation == "Nasi"}
-      <div in:fly={flyIn} out:fly={flyOut} class="inner-div">
-				<div class="grid-container">
+      {#if navigation == 'Nasi'}
+      <div in:fly={flyIn} out:fly={flyOut} class='inner-div'>
+				<div class='grid-container'>
                {#each Object.entries(data.prices) as _}
-                  <div on:click="{() => {goto('csipsz?Category=Nasi')}}" class="grid-cell-icon lite"><img src="favicon.png" alt=""></div>
-                  <div on:click="{() => {goto('csipsz?Category=Nasi')}}" class="grid-cell-text lite">csipsz</div>
-                  <div on:click="{() => {goto('csipsz?Category=Nasi')}}" class="grid-cell-price lite">{data.prices["csipsz"]} Ft</div>
-                  <div on:click="{() => {goto('mogyi?Category=Nasi')}}" class="grid-cell-icon"><img src="favicon.png" alt=""></div>
-                  <div on:click="{() => {goto('mogyi?Category=Nasi')}}" class="grid-cell-text">mogyi</div>
-                  <div on:click="{() => {goto('mogyi?Category=Nasi')}}" class="grid-cell-price">{data.prices["mogyi"]} Ft</div>
+                  <div on:click='{() => {goto('Chips?Category=Nasi')}}' class='grid-cell-icon lite'><img src='favicon.png' alt=''></div>
+                  <div on:click='{() => {goto('Chips?Category=Nasi')}}' class='grid-cell-text lite'>Chips</div>
+                  <div on:click='{() => {goto('Chips?Category=Nasi')}}' class='grid-cell-price lite'>{data.prices['Chips']} Ft</div>
+                  <div on:click='{() => {goto('Mogyi?Category=Nasi')}}' class='grid-cell-icon'><img src='favicon.png' alt=''></div>
+                  <div on:click='{() => {goto('Mogyi?Category=Nasi')}}' class='grid-cell-text'>Mogyi</div>
+                  <div on:click='{() => {goto('Mogyi?Category=Nasi')}}' class='grid-cell-price'>{data.prices['Mogyi']} Ft</div>
                {/each}
 				</div>
 			</div>
@@ -147,24 +147,24 @@
    </div>
 
 {#if cartshow}
-<div in:fly={{y: 100}} style="margin-bottom: 6.5vh;" if class="nav">
-   <div class="Étel" on:click={() => {AnimationDirection("Étel")}}><p class:active="{navigation == "Étel"}">Étel</p></div>
-   <div class="Ital" on:click={() => {AnimationDirection("Ital")}}><p class:active="{navigation == "Ital"}">Ital</p></div>
-   <div class="Nasi" on:click={() => {AnimationDirection("Nasi")}}><p class:active="{navigation == "Nasi"}">Nasi</p></div>
+<div in:fly={{y: 100}} style='margin-bottom: 6.5vh;' if class='nav'>
+   <div class='Étel' on:click={() => {AnimationDirection('Étel')}}><p class:active='{navigation == 'Étel'}'>Étel</p></div>
+   <div class='Ital' on:click={() => {AnimationDirection('Ital')}}><p class:active='{navigation == 'Ital'}'>Ital</p></div>
+   <div class='Nasi' on:click={() => {AnimationDirection('Nasi')}}><p class:active='{navigation == 'Nasi'}'>Nasi</p></div>
 </div>
 
-<div in:fly={{y: 100, delay: 100}} on:click="{() => {goto('kosar')}}" class="cart">
-   <div class="flex-container">
-      <img id="basket" src="shopping-basket.png" alt="">
+<div in:fly={{y: 100, delay: 100}} on:click='{() => {goto('kosar')}}' class='cart'>
+   <div class='flex-container'>
+      <img id='basket' src='shopping-basket.png' alt=''>
       <p><b>{$total[0]} Ft</b>({$total[1]} db termék a kosárban.)</p>
-      <img id="open" src="external-link-icon_6.webp" alt="">
+      <img id='open' src='external-link-icon_6.webp' alt=''>
    </div>
 </div>
 {:else}
-<div in:fly={{y: 200}} if class="nav">
-   <div class="Étel" on:click={() => {AnimationDirection("Étel")}}><p class:active="{navigation == "Étel"}">Étel</p></div>
-   <div class="Ital" on:click={() => {AnimationDirection("Ital")}}><p class:active="{navigation == "Ital"}">Ital</p></div>
-   <div class="Nasi" on:click={() => {AnimationDirection("Nasi")}}><p class:active="{navigation == "Nasi"}">Nasi</p></div>
+<div in:fly={{y: 200}} if class='nav'>
+   <div class='Étel' on:click={() => {AnimationDirection('Étel')}}><p class:active='{navigation == 'Étel'}'>Étel</p></div>
+   <div class='Ital' on:click={() => {AnimationDirection('Ital')}}><p class:active='{navigation == 'Ital'}'>Ital</p></div>
+   <div class='Nasi' on:click={() => {AnimationDirection('Nasi')}}><p class:active='{navigation == 'Nasi'}'>Nasi</p></div>
 </div>
 {/if}
 
@@ -172,7 +172,7 @@
 
 </main>
 
-<style lang="scss">
+<style lang='scss'>
    :global(*) {
       margin: 0;
       padding: 0;
@@ -314,7 +314,7 @@ main {
          .inner-div {
             // Using grid and grid-area 1/1 to force the inner divs into the same area. 
             // If you don't do this you get a bouncing effect where the incoming div is
-            // pushed below the outgoing div and then "pops up" jarringly.
+            // pushed below the outgoing div and then 'pops up' jarringly.
             grid-area: 1/1;	
 
             .grid-container {

@@ -39,27 +39,12 @@ setInterval( () => {
          </div>
       {/each}
    </div>
-   <div style="margin-top: 1%;" class="grid-cell">
-      <div class="inner-grid-container">
-         <div class="inner-grid-cell">
-            <h1>Ma népszerű termékek:</h1>
-            {#each Array(3) as a}
-                <p id="nepszeru">asd Étel</p>
-            {/each}
-         </div>
-         <div class="inner-grid-cell">
-            <h1>Mai bevétel:</h1>
-            <p id="bevetel">6 900 Ft</p>
-         </div>
-         <div class="inner-grid-cell">
-            <h1>Szerkesztés:</h1>
-            <button on:click={darabModal.showModal()}>Darab</button>
-            <button on:click={termekModal.showModal()}>Termékek</button>
-            <button on:click={arakModal.showModal()}>Árak</button>
-         </div>
-      </div>
+   <div class="grid-cell">
+      <h1>Szerkesztés:</h1>
+      <button on:click={darabModal.showModal()}>Darab</button>
+      <button on:click={termekModal.showModal()}>Termékek</button>
+      <button on:click={arakModal.showModal()}>Árak</button>
    </div>
-</div>
 
 <!-- Modalok: -->
 
@@ -96,14 +81,13 @@ setInterval( () => {
    /* ----------------------------------------- */
    main {
       .grid-container {
-         width: 100vw;
-         min-height: 100vh;
-         grid-template-columns: auto;
-         grid-template-rows: 80% 20%;
+         // width: 100vw;
+         // min-height: 100vh;
+         grid-template-columns: 85% auto;
+         grid-template-rows: auto;
          display: grid;
 
-            .grid-cell {
-               border-top: 1px solid white;
+         .grid-cell {
                color: white;
 
             .rendeles-kartya {
@@ -112,7 +96,7 @@ setInterval( () => {
                float: left;
                border-radius: 1em;
                background-color: rgb(34, 34, 34);
-               padding: 1em;
+               padding: .5em;
                margin-left: .8em;
                margin-top: .8em;
                outline: .1em solid rgb(255, 255, 255);
@@ -127,36 +111,6 @@ setInterval( () => {
                }
             }
 
-            .inner-grid-container {
-               display: grid;
-               grid-template-columns: auto auto auto;
-               grid-template-rows: auto;
-
-               .inner-grid-cell {
-                  h1 {
-                     margin: 1ch 0;
-                     font-size: x-large;
-                     text-align: center;
-                  }
-
-                  p {
-                     font-size: large;
-                     text-align: center;
-                  }
-
-                  button {
-                     background-color: rgb(34, 34, 34);
-                     color: white;
-                     width: 10em;
-                     font-size: larger;
-                     border-radius: 1em;
-                     padding: .5em;
-                     display: block;
-                     margin: 0 auto;
-                     margin-top: 1ch;
-                  }
-               }
-            }
          }
       }
 

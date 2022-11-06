@@ -85,7 +85,7 @@ setInterval( () => {
    main {
       .grid-container {
          // width: 100vw;
-         // min-height: 100vh;
+         min-height: 100vh;
          grid-template-columns: 85% auto;
          grid-template-rows: auto;
          display: grid;

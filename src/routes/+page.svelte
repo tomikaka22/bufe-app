@@ -1,5 +1,4 @@
 <script>
-   import { goto } from "$app/navigation";
    import { fade } from "svelte/transition";
 
    let username = "felhasználónév";
@@ -13,18 +12,18 @@
    <div class="outer-div">
       <div class="inner-div">
          <div class="grid-container">
-            <div on:click="{() => {goto('/list')}}" class="grid-cell top">
+            <a href="/list" class="grid-cell top">
                   <img src="favicon.png" alt="" />
                   <p>Termékek böngészése</p>
-            </div>
-            <div class="grid-cell">
+            </a>
+            <a href="/" class="grid-cell">
                   <img src="favicon.png" alt="" />
                   <p>Profil</p>
-            </div>
-            <div on:click="{() => {goto('/kosar')}}" class="grid-cell">
+            </a>
+            <a href="/kosar" class="grid-cell">
                   <img src="favicon.png" alt="" />
                   <p>Kosár</p>
-            </div>
+            </a>
          </div>
       </div>
    </div>

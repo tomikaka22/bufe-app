@@ -1,7 +1,6 @@
 <script>
    import { swipe } from 'svelte-gestures';
    import { fly } from 'svelte/transition';
-   import { goto } from '$app/navigation'
    import { page } from '$app/stores';
    import { browser } from '$app/environment';
    import { cart, total } from '$lib/stores/Cart.js';
@@ -95,10 +94,12 @@
 
 <main use:swipe={{ timeframe: 800, minSwipeDistance: 50, touchAction: 'pan-y' }} on:swipe={AnimationDirectionSwipe}>
 
+   <!-- IDEIGLENES HEADER szarfosSZAR!!!!!!!!! -->
    <div in:fly={{y: -200}} class='header'>
-      <img class='favicon' src='favicon.png' alt=''>
-      <p>Büfé - app</p>
-      <img on:click='{() => {goto('/')}}' class='account' src='account.png' alt=''>
+      <div class="content">
+         <img class='favicon' src='favicon.png' alt=''>
+         <p>Büfé - app</p>
+      </div>
    </div>
 
    <div class='outer-div'>
@@ -106,12 +107,12 @@
          <div in:fly={flyIn} out:fly={flyOut} class='inner-div'>
             <div class='grid-container'>
                {#each Object.entries(data.prices) as _}
-                  <div on:click='{() => {goto('Szaros Étel?Category=Étel')}}' class='grid-cell-icon lite'><img src='favicon.png' alt=''></div>
-                  <div on:click='{() => {goto('Szaros Étel?Category=Étel')}}' class='grid-cell-text lite'>Szaros Étel</div>
-                  <div on:click='{() => {goto('Szaros Étel?Category=Étel')}}' class='grid-cell-price lite'>{data.prices['Szaros Étel']} Ft</div>
-                  <div on:click='{() => {goto('Marhahúsos Étel?Category=Étel')}}' class='grid-cell-icon'><img src='favicon.png' alt=''></div>
-                  <div on:click='{() => {goto('Marhahúsos Étel?Category=Étel')}}' class='grid-cell-text'>Marhahúsos Étel</div>
-                  <div on:click='{() => {goto('Marhahúsos Étel?Category=Étel')}}' class='grid-cell-price'>{data.prices['Marhahúsos Étel']} Ft</div>
+                  <a href="Szaros Étel?Category=Étel" class='grid-cell-icon lite'><img src='favicon.png' alt=''></a>
+                  <a href="Szaros Étel?Category=Étel" class='grid-cell-text lite'>Szaros Étel</a>
+                  <a href="Szaros Étel?Category=Étel" class='grid-cell-price lite'>{data.prices['Szaros Étel']} Ft</a>
+                  <a href="Marhahúsos Étel?Category=Étel" class='grid-cell-icon'><img src='favicon.png' alt=''></a>
+                  <a href="Marhahúsos Étel?Category=Étel" class='grid-cell-text'>Marhahúsos Étel</a>
+                  <a href="Marhahúsos Étel?Category=Étel" class='grid-cell-price'>{data.prices['Marhahúsos Étel']} Ft</a>
                {/each}
             </div>
          </div>
@@ -120,12 +121,12 @@
          <div in:fly={flyIn} out:fly={flyOut} class='inner-div'>
             <div class='grid-container'>
                {#each Object.entries(data.prices) as _}
-                  <div on:click='{() => {goto('Hell?Category=Ital')}}' class='grid-cell-icon lite'><img src='favicon.png' alt=''></div>
-                  <div on:click='{() => {goto('Hell?Category=Ital')}}' class='grid-cell-text lite'>Hell</div>
-                  <div on:click='{() => {goto('Hell?Category=Ital')}}' class='grid-cell-price lite'>{data.prices['Hell']} Ft</div>
-                  <div on:click='{() => {goto('Xixo?Category=Ital')}}' class='grid-cell-icon'><img src='favicon.png' alt=''></div>
-                  <div on:click='{() => {goto('Xixo?Category=Ital')}}' class='grid-cell-text'>Xixo</div>
-                  <div on:click='{() => {goto('Xixo?Category=Ital')}}' class='grid-cell-price'>{data.prices['Xixo']} Ft</div>
+                  <a href="Hell?Category=Ital" class='grid-cell-icon lite'><img src='favicon.png' alt=''></a>
+                  <a href="Hell?Category=Ital" class='grid-cell-text lite'>Hell</a>
+                  <a href="Hell?Category=Ital" class='grid-cell-price lite'>{data.prices['Hell']} Ft</a>
+                  <a href="Xixo?Category=Ital" class='grid-cell-icon'><img src='favicon.png' alt=''></a>
+                  <a href="Xixo?Category=Ital" class='grid-cell-text'>Xixo</a>
+                  <a href="Xixo?Category=Ital" class='grid-cell-price'>{data.prices['Xixo']} Ft</a>
                {/each}
             </div>
          </div>
@@ -134,12 +135,12 @@
       <div in:fly={flyIn} out:fly={flyOut} class='inner-div'>
 				<div class='grid-container'>
                {#each Object.entries(data.prices) as _}
-                  <div on:click='{() => {goto('Chips?Category=Nasi')}}' class='grid-cell-icon lite'><img src='favicon.png' alt=''></div>
-                  <div on:click='{() => {goto('Chips?Category=Nasi')}}' class='grid-cell-text lite'>Chips</div>
-                  <div on:click='{() => {goto('Chips?Category=Nasi')}}' class='grid-cell-price lite'>{data.prices['Chips']} Ft</div>
-                  <div on:click='{() => {goto('Mogyi?Category=Nasi')}}' class='grid-cell-icon'><img src='favicon.png' alt=''></div>
-                  <div on:click='{() => {goto('Mogyi?Category=Nasi')}}' class='grid-cell-text'>Mogyi</div>
-                  <div on:click='{() => {goto('Mogyi?Category=Nasi')}}' class='grid-cell-price'>{data.prices['Mogyi']} Ft</div>
+                  <a href="Chips?Category=Nasi" class='grid-cell-icon lite'><img src='favicon.png' alt=''></a>
+                  <a href="Chips?Category=Nasi" class='grid-cell-text lite'>Chips</a>
+                  <a href="Chips?Category=Nasi" class='grid-cell-price lite'>{data.prices['Chips']} Ft</a>
+                  <a href="Mogyi?Category=Nasi" class='grid-cell-icon'><img src='favicon.png' alt=''></a>
+                  <a href="Mogyi?Category=Nasi" class='grid-cell-text'>Mogyi</a>
+                  <a href="Mogyi?Category=Nasi" class='grid-cell-price'>{data.prices['Mogyi']} Ft</a>
                {/each}
 				</div>
 			</div>
@@ -147,21 +148,23 @@
    </div>
 
 {#if cartshow}
-<div in:fly={{y: 100}} style='margin-bottom: 6.5vh;' if class='nav'>
+<div in:fly={{y: 100}} style='margin-bottom: 6.5vh;' class='nav'>
    <div class='Étel' on:click={() => {AnimationDirection('Étel')}}><p class:active='{navigation == 'Étel'}'>Étel</p></div>
    <div class='Ital' on:click={() => {AnimationDirection('Ital')}}><p class:active='{navigation == 'Ital'}'>Ital</p></div>
    <div class='Nasi' on:click={() => {AnimationDirection('Nasi')}}><p class:active='{navigation == 'Nasi'}'>Nasi</p></div>
 </div>
 
-<div in:fly={{y: 100, delay: 100}} on:click='{() => {goto('kosar')}}' class='cart'>
-   <div class='flex-container'>
-      <img id='basket' src='shopping-basket.png' alt=''>
-      <p><b>{$total[0]} Ft</b>({$total[1]} db termék a kosárban.)</p>
-      <img id='open' src='external-link-icon_6.webp' alt=''>
+<a href="kosar">
+   <div in:fly={{y: 100, delay: 100}} class='cart'>
+      <div class='flex-container'>
+         <img id='basket' src='shopping-basket.png' alt=''>
+         <p><b>{$total[0]} Ft</b>({$total[1]} db termék a kosárban.)</p>
+      </div>
    </div>
-</div>
+</a>
+
 {:else}
-<div in:fly={{y: 200}} if class='nav'>
+<div in:fly={{y: 200}} class='nav'>
    <div class='Étel' on:click={() => {AnimationDirection('Étel')}}><p class:active='{navigation == 'Étel'}'>Étel</p></div>
    <div class='Ital' on:click={() => {AnimationDirection('Ital')}}><p class:active='{navigation == 'Ital'}'>Ital</p></div>
    <div class='Nasi' on:click={() => {AnimationDirection('Nasi')}}><p class:active='{navigation == 'Nasi'}'>Nasi</p></div>
@@ -198,38 +201,30 @@ main {
       position: fixed;
       
       .header {
-         width: 100%;
+         width: auto;
          height: auto;
-         display: flex;
          background-color: #252525;
-         margin-bottom: 10%;
-         border-top-left-radius: 12px;
-         border-bottom-left-radius: 12px;
-         border: .25em solid black;
+         margin-bottom: 5%;
+         overflow: hidden;
 
+         .content {
+            display: flex;
+            width: 100vw;
 
-         .favicon {
-            width: 15%;
-            height: 100%;
-            float: left;
-            display: block;
-         }
+            .favicon {
+               width: 10%;
+               margin-left: auto;
+               padding-top: 1%;
+               padding-bottom: 1%;
+            }
 
-         p {
-            text-align: left;
-            align-self: center;
-            color: white;
-            height: 100%;
-            font-weight: bolder;
-         }
-
-         .account {
-            text-align: right;
-            align-self: center;
-            width: 10%;
-            filter: invert(88%);
-            margin: 0 auto;
-            margin-right: 3%;
+            p {
+               align-self: center;
+               color: white;
+               height: 100%;
+               font-weight: bolder;
+               margin-right: auto;
+            }
          }
       }
 
@@ -262,7 +257,7 @@ main {
             color: black;
             transition: all .25s ease-in-out;
          }
-   }
+      }
       
       .cart {
          position: sticky;
@@ -273,7 +268,7 @@ main {
 
          .flex-container {
             display: flex;
-            width: 100vw;
+            // width: 100%;
             height: 6vh;
             
             #basket {
@@ -295,15 +290,6 @@ main {
                   font-size: large;
                }
             }
-
-            #open {
-               display: block;
-               margin-left: auto;
-               margin-right: 1.2ch;
-               transform: scale(50%);
-               opacity: 50%;
-               margin-bottom: .7vh;
-            }
          }
       }
 
@@ -323,7 +309,7 @@ main {
                margin: 2%;
                margin-bottom: 30%;
 
-               div {
+               a {
                   display: flex;
                   justify-content: center;
                   align-items: center;

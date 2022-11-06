@@ -1,10 +1,8 @@
 <script>
-   import { fade } from "svelte/transition";
-
-   let username = "felhasználónév";
+   const username = "felhasználónév";
 </script>
 
-<main in:fade|local="{{delay : 200, duration: 1000}}">
+<main>
    <div class="welcome">
       <h1>Jónapot {username}!</h1>
    </div>
@@ -20,9 +18,9 @@
                   <img src="favicon.png" alt="" />
                   <p>Profil</p>
             </a>
-            <a href="/kosar" class="grid-cell">
+            <a href="/rendelesek" class="grid-cell">
                   <img src="favicon.png" alt="" />
-                  <p>Kosár</p>
+                  <p>Rendelések</p>
             </a>
          </div>
       </div>

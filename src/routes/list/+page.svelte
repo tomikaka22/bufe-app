@@ -1,5 +1,4 @@
 <script>
-   import { swipe } from 'svelte-gestures';
    import { fly } from 'svelte/transition';
    import { page } from '$app/stores';
    import { browser } from '$app/environment';
@@ -56,35 +55,6 @@
          }
       }
    };
-
-	function AnimationDirectionSwipe(event) {
-		if (navigation == 'Ital') {
-			if (event.detail.direction == 'left') {
-				flyIn={x: innerWidth, duration: 500};
-         	flyOut={x: -innerWidth, duration: 500};
-				navigation='Nasi'
-			}
-			if (event.detail.direction == 'right') {
-				flyIn={x: -innerWidth, duration: 500};
-         	flyOut={x: innerWidth, duration: 500};
-				navigation='Étel'
-			}
-		}
-		if (navigation == 'Étel') {
-			if (event.detail.direction == 'left') {
-				flyIn={x: innerWidth, duration: 500};
-         	flyOut={x: -innerWidth, duration: 500};
-				navigation='Ital'
-			}
-		}
-		if (navigation == 'Nasi') {
-			if (event.detail.direction == 'right') {
-				flyIn={x: -innerWidth, duration: 500};
-         	flyOut={x: innerWidth, duration: 500};
-				navigation = 'Ital'
-			}
-		}
-	}
 </script>
 
 <!-- Binds the innerWidth variable to the width of the monitor to give a more fluid motion -->
@@ -92,7 +62,14 @@
 <!-- Above is equivalent to below, shortcut for binding when you make them the same name -->
 <!-- <svelte:window bind:innerWidth={innerWidth} /> -->
 
-<main use:swipe={{ timeframe: 800, minSwipeDistance: 50, touchAction: 'pan-y' }} on:swipe={AnimationDirectionSwipe}>
+
+<!-- Swipe-talantias
+
+   Az oldal huzogatassal navigalasa eleg szarul volt megoldva, amtmenetileg kiszedtem. 
+   Vissza fog térni jobban megvalositva a design mobilositasakor: https://github.com/users/tomikaka22/projects/1/views/1
+
+-->
+<main>
 
    <!-- IDEIGLENES HEADER szarfosSZAR!!!!!!!!! -->
    <div in:fly={{y: -200}} class='header'>
@@ -197,6 +174,7 @@
 main {
       width: 100%;
       height: 100%;
+      overflow-x: hidden; // Swipe-talantias
       overflow-y: scroll;
       position: fixed;
       

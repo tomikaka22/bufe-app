@@ -1,6 +1,10 @@
 <script>
    import { fly } from 'svelte/transition';
+
+   export let data;
    let navigation = 'Folyamatban';
+
+   console.log(data)
 </script>
 
 <main>

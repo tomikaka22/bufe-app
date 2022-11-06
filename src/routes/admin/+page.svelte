@@ -7,7 +7,7 @@ let arakModal;
 
 async function dismissOrder(item) {
    if (confirm('Biztos kész a rendelés?')) {
-      await fetch('/vasarlas_api', {
+      await fetch('/api/vasarlas', {
          method: 'DELETE',
          body: JSON.stringify(item)
       });
@@ -16,7 +16,7 @@ async function dismissOrder(item) {
 };
 
 async function reloadData() {
-   let adat = await fetch('/vasarlas_api');
+   let adat = await fetch('/api/vasarlas');
    data = await adat.json()
 };
 

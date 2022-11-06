@@ -54,7 +54,7 @@
    };
 
    async function buy() {
-      fetch('/vasarlas_api', {
+      fetch('/api/vasarlas', {
          method: 'POST',
          headers: {
             'Content-Type': 'application/json',
@@ -64,7 +64,6 @@
       .then(res => res.json())
       .then(data => {
          alert(`Köszönjük a vásárlást! \nRendelés száma: #${data.orderID}`);
-         console.log(data);
          urites()
       })
       .catch(error => {

@@ -73,10 +73,10 @@
 
    <!-- IDEIGLENES HEADER szarfosSZAR!!!!!!!!! -->
    <div in:fly={{y: -200}} class='header'>
-      <div class="content">
+      <a href="/" class="title">
          <img class='favicon' src='favicon.png' alt=''>
          <p>Büfé - app</p>
-      </div>
+      </a>
    </div>
 
    <div class='outer-div'>
@@ -185,7 +185,7 @@ main {
          margin-bottom: 5%;
          overflow: hidden;
 
-         .content {
+         .title {
             display: flex;
             width: 100vw;
 

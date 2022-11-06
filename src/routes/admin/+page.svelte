@@ -40,11 +40,14 @@ setInterval( () => {
       {/each}
    </div>
    <div class="grid-cell">
+   <div class="szerkesztes">
       <h1>Szerkesztés:</h1>
-      <button on:click={darabModal.showModal()}>Darab</button>
-      <button on:click={termekModal.showModal()}>Termékek</button>
-      <button on:click={arakModal.showModal()}>Árak</button>
+         <button on:click={darabModal.showModal()}>Darab</button>
+         <button on:click={termekModal.showModal()}>Termékek</button>
+         <button on:click={arakModal.showModal()}>Árak</button>
+      </div>
    </div>
+</div>
 
 <!-- Modalok: -->
 
@@ -88,11 +91,19 @@ setInterval( () => {
          display: grid;
 
          .grid-cell {
+            color: white;
+
+            button {
+               background-color: #222;
                color: white;
+               font-size: larger;
+               border-radius: 1em;
+               margin: 0 auto;
+            }
 
             .rendeles-kartya {
                text-align: center;
-               font-size: x-large;
+               font-size: calc(12px + .5vw);
                float: left;
                border-radius: 1em;
                background-color: rgb(34, 34, 34);
@@ -107,7 +118,24 @@ setInterval( () => {
                }
 
                button {
-                  padding: .1rem;
+                  padding: .4em;
+               }
+            }
+
+            .szerkesztes {
+               margin-top: .8em;
+               position: fixed;
+               right: 1vw;
+               
+               h1 {
+                  text-align: center;
+                  font-size: larger;
+               }
+
+               button {
+                  display: block;
+                  margin-top: 1ch;
+                  padding: .5em;
                }
             }
 

@@ -5,8 +5,72 @@ let darabModal;
 let termekModal;
 let arakModal;
 
-async function dismissOrder(item) {
+
+//  DEBUG ---------------------------------------------------
+function tesztrendelés() {
+   fetch("http://localhost:5173/api/vasarlas", {
+   "headers": {
+      "Content-Type": "application/json",
+   },
+   "body": "{\"Marhahúsos Étel\":[6000,5],\"Hell\":[2500,10],\"Xixo\":[2450,7],\"Chips\":[960,4],\"Mogyi\":[1380,6]}",
+   "method": "POST",
+});
+
+fetch("http://localhost:5173/api/vasarlas", {
+   "headers": {
+      "Content-Type": "application/json",
+   },
+   "body": "{\"Hell\":[2500,10],\"Xixo\":[2450,7],\"Chips\":[960,4],\"Mogyi\":[1380,6]}",
+   "method": "POST",
+});
+
+fetch("http://localhost:5173/api/vasarlas", {
+   "headers": {
+      "Content-Type": "application/json",
+   },
+   "body": "{\"Xixo\":[2450,7],\"Chips\":[960,4],\"Mogyi\":[1380,6]}",
+   "method": "POST",
+});
+
+fetch("http://localhost:5173/api/vasarlas", {
+   "headers": {
+      "Content-Type": "application/json",
+   },
+   "body": "{\"Chips\":[960,4],\"Mogyi\":[1380,6]}",
+   "method": "POST",
+});
+
+fetch("http://localhost:5173/api/vasarlas", {
+   "headers": {
+      "Content-Type": "application/json",
+   },
+   "body": "{\"Mogyi\":[1380,6]}",
+   "method": "POST",
+});
+reloadData()
+};
+// DEBUG ---------------------------------------------------
+
+function clearRendelések() {
+   fetch('/api/vasarlas', {
+         method: 'DELETE',
+         body: JSON.stringify('debugDelete')
+      });
+      reloadData()
+};
+
+async function orderReady(item) {
    if (confirm('Biztos kész a rendelés?')) {
+      await fetch('/api/vasarlas', {
+         method: 'PUT',
+         body: JSON.stringify(item)
+      });
+      reloadData()
+   }
+};
+
+async function orderDone(item) {
+   if (confirm('Biztos átvették a rendelést?')) {
       await fetch('/api/vasarlas', {
          method: 'DELETE',
          body: JSON.stringify(item)
@@ -29,22 +93,37 @@ setInterval( () => {
 <main>
 <div class="grid-container">
    <div class="grid-cell">
+      <h1>Bejövő rendelések</h1>
       {#each Object.keys(data.rendelesek) as orderID, i}
          <div class="rendeles-kartya">
             <h1>#{orderID}</h1>
             {#each Object.keys(data.rendelesek[orderID]) as a}
                <p><span style="color: chartreuse">{a},</span> <span style="color: red;">{data.rendelesek[orderID][a][1]}</span> db, <span style="color: red;">{data.rendelesek[orderID][a][0]}</span> Ft</p>
             {/each}
-            <button on:click={() => {dismissOrder(Object.keys(data.rendelesek)[i])}}>Kész</button>
+            <button on:click={() => {orderReady(Object.keys(data.rendelesek)[i])}}>Kész</button>
          </div>
       {/each}
    </div>
    <div class="grid-cell">
-   <div class="szerkesztes">
-      <h1>Szerkesztés:</h1>
+      <h1>Kész rendelések</h1>
+      {#each Object.keys(data.kesz) as orderID, i}
+      <div class="rendeles-kartya">
+         <h1>#{orderID}</h1>
+         {#each Object.keys(data.kesz[orderID]) as a}
+            <p><span style="color: chartreuse">{a},</span> <span style="color: red;">{data.kesz[orderID][a][1]}</span> db, <span style="color: red;">{data.kesz[orderID][a][0]}</span> Ft</p>
+         {/each}
+         <button on:click={() => {orderDone(Object.keys(data.kesz)[i])}}>Átadva</button>
+      </div>
+   {/each}
+   </div>
+   <div class="grid-cell">
+      <div class="szerkesztes">
+         <h1>Szerkesztés:</h1>
          <button on:click={darabModal.showModal()}>Darab</button>
          <button on:click={termekModal.showModal()}>Termékek</button>
          <button on:click={arakModal.showModal()}>Árak</button>
+         <button style="color: yellow;" on:click={tesztrendelés}>Tesztrendelés</button>
+         <button style="color: yellow; font-size: small" on:click={clearRendelések}>Rendelések törlése</button>
       </div>
    </div>
 </div>
@@ -84,14 +163,20 @@ setInterval( () => {
    /* ----------------------------------------- */
    main {
       .grid-container {
-         // width: 100vw;
          min-height: 100vh;
-         grid-template-columns: 85% auto;
+         grid-template-columns: auto 50% 20%;
          grid-template-rows: auto;
          display: grid;
 
          .grid-cell {
             color: white;
+            outline: .1em solid white;
+
+            h1 {
+               text-align: center;
+               margin-top: .5em;
+               font-size: larger;
+            }
 
             button {
                background-color: #222;
@@ -103,14 +188,13 @@ setInterval( () => {
 
             .rendeles-kartya {
                text-align: center;
-               font-size: calc(12px + .5vw);
-               float: left;
                border-radius: 1em;
                background-color: rgb(34, 34, 34);
-               padding: .5em;
-               margin-left: .8em;
-               margin-top: .8em;
                outline: .1em solid rgb(255, 255, 255);
+               display: inline-block;
+               margin: .5em;
+               padding: .5em;
+               padding-top: 0;
 
                h1 {
                   color: rgb(0, 174, 255);
@@ -119,18 +203,18 @@ setInterval( () => {
 
                button {
                   padding: .4em;
+                  // color: red;
+                  
+                  // &:first-of-type {
+                  //    color: greenyellow;
+                  // }
                }
             }
 
             .szerkesztes {
-               margin-top: .8em;
                position: fixed;
                right: 1vw;
-               
-               h1 {
-                  text-align: center;
-                  font-size: larger;
-               }
+
 
                button {
                   display: block;

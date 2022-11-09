@@ -14,9 +14,16 @@ let splash = [
    'Puppy linux < bármelyik másik distro.',
    'Szigma himek nem használnak classokat.',
    'Akik OTL-t hallgatnak nem számitanak.',
-   'Pár rendelés és utóléred a kövér macskámat.'
+   'Pár rendelés és utóléred a kövér macskáimat.'
 ];
 
+let splashToday = splash[Math.floor(Math.random() * splash.length)];
+
+setInterval(() => {
+splashToday = splash[Math.floor(Math.random() * splash.length)]
+} ,20000)
+// 86400000 == 1 nap
+
 export function GET() {
-   return json(splash[Math.floor(Math.random() * splash.length)])
+   return json(splashToday)
 };

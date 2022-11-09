@@ -71,9 +71,7 @@ async function reloadData() {
    data = await adat.json()
 };
 
-setInterval( () => {
-   reloadData()
-}, 10000);
+setInterval(reloadData, 10000);
 
 </script>
 

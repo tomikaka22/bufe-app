@@ -8,42 +8,27 @@ let arakModal;
 
 //  DEBUG ---------------------------------------------------
 function tesztrendelés() {
-   fetch("http://localhost:5173/api/vasarlas", {
-   "headers": {
-      "Content-Type": "application/json",
-   },
+   fetch("/api/vasarlas", {
    "body": "{\"Marhahúsos Étel\":[6000,5],\"Hell\":[2500,10],\"Xixo\":[2450,7],\"Chips\":[960,4],\"Mogyi\":[1380,6]}",
    "method": "POST",
 });
 
-fetch("http://localhost:5173/api/vasarlas", {
-   "headers": {
-      "Content-Type": "application/json",
-   },
+fetch("/api/vasarlas", {
    "body": "{\"Hell\":[2500,10],\"Xixo\":[2450,7],\"Chips\":[960,4],\"Mogyi\":[1380,6]}",
    "method": "POST",
 });
 
-fetch("http://localhost:5173/api/vasarlas", {
-   "headers": {
-      "Content-Type": "application/json",
-   },
+fetch("/api/vasarlas", {
    "body": "{\"Xixo\":[2450,7],\"Chips\":[960,4],\"Mogyi\":[1380,6]}",
    "method": "POST",
 });
 
-fetch("http://localhost:5173/api/vasarlas", {
-   "headers": {
-      "Content-Type": "application/json",
-   },
+fetch("/api/vasarlas", {
    "body": "{\"Chips\":[960,4],\"Mogyi\":[1380,6]}",
    "method": "POST",
 });
 
-fetch("http://localhost:5173/api/vasarlas", {
-   "headers": {
-      "Content-Type": "application/json",
-   },
+fetch("/api/vasarlas", {
    "body": "{\"Mogyi\":[1380,6]}",
    "method": "POST",
 });
@@ -107,7 +92,7 @@ setInterval( () => {
    <div class="grid-cell">
       <h1>Kész rendelések</h1>
       {#each Object.keys(data.kesz) as orderID, i}
-      <div class="rendeles-kartya">
+      <div class="rendeles-kartya rendeles-kartya-done">
          <h1>#{orderID}</h1>
          {#each Object.keys(data.kesz[orderID]) as a}
             <p><span style="color: chartreuse">{a},</span> <span style="color: red;">{data.kesz[orderID][a][1]}</span> db, <span style="color: red;">{data.kesz[orderID][a][0]}</span> Ft</p>
@@ -209,6 +194,10 @@ setInterval( () => {
                   //    color: greenyellow;
                   // }
                }
+            }
+
+            .rendeles-kartya-done {
+               background-color: #003500;
             }
 
             .szerkesztes {

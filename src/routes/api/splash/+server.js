@@ -14,7 +14,14 @@ let splash = [
    'Puppy linux < bármelyik másik distro.',
    'Szigma himek nem használnak classokat.',
    'Akik OTL-t hallgatnak nem számitanak.',
-   'Pár rendelés és utóléred a kövér macskáimat.'
+   'Pár rendelés és utóléred a kövér macskáimat.',
+   'Tiborral ne húzz ujjat.',
+   'Ne engedd szék vagy fűzet közelébe!',
+   'App bepukkasztva',
+   'Release date: valamikor',
+   'Májkölszoft Binbóz',
+   'Általam kedvelt tanároknak jó napot kivánok!'
+
 ];
 
 let splashToday = splash[Math.floor(Math.random() * splash.length)];

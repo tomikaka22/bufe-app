@@ -1,5 +1,9 @@
 export async function load( { fetch } ) {
-   const response = await fetch("/api/termek");
-   const result = await response.json();
-   return result
+   const termek = await fetch("/api/termek");
+   const splash = await fetch('/api/splash');
+
+   return {
+      termek : await termek.json(),
+      splash : await splash.json()
+   }
 };

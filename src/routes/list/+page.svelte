@@ -75,7 +75,7 @@
    <div in:fly={{y: -200}} class='header'>
       <a href="/" class="title">
          <img class='favicon' src='favicon.png' alt=''>
-         <p>Büfé - app</p>
+         <p>{data.splash}</p>
       </a>
    </div>
 
@@ -83,13 +83,13 @@
       {#if navigation == 'Étel'}
          <div in:fly={flyIn} out:fly={flyOut} class='inner-div'>
             <div class='grid-container'>
-               {#each Object.entries(data.prices) as _}
+               {#each Object.entries(data.termek.prices) as _}
                   <a href="Szaros Étel?Category=Étel" class='grid-cell-icon lite'><img src='favicon.png' alt=''></a>
                   <a href="Szaros Étel?Category=Étel" class='grid-cell-text lite'>Szaros Étel</a>
-                  <a href="Szaros Étel?Category=Étel" class='grid-cell-price lite'>{data.prices['Szaros Étel']} Ft</a>
+                  <a href="Szaros Étel?Category=Étel" class='grid-cell-price lite'>{data.termek.prices['Szaros Étel']} Ft</a>
                   <a href="Marhahúsos Étel?Category=Étel" class='grid-cell-icon'><img src='favicon.png' alt=''></a>
                   <a href="Marhahúsos Étel?Category=Étel" class='grid-cell-text'>Marhahúsos Étel</a>
-                  <a href="Marhahúsos Étel?Category=Étel" class='grid-cell-price'>{data.prices['Marhahúsos Étel']} Ft</a>
+                  <a href="Marhahúsos Étel?Category=Étel" class='grid-cell-price'>{data.termek.prices['Marhahúsos Étel']} Ft</a>
                {/each}
             </div>
          </div>
@@ -97,13 +97,13 @@
       {#if navigation == 'Ital'}
          <div in:fly={flyIn} out:fly={flyOut} class='inner-div'>
             <div class='grid-container'>
-               {#each Object.entries(data.prices) as _}
+               {#each Object.entries(data.termek.prices) as _}
                   <a href="Hell?Category=Ital" class='grid-cell-icon lite'><img src='favicon.png' alt=''></a>
                   <a href="Hell?Category=Ital" class='grid-cell-text lite'>Hell</a>
-                  <a href="Hell?Category=Ital" class='grid-cell-price lite'>{data.prices['Hell']} Ft</a>
+                  <a href="Hell?Category=Ital" class='grid-cell-price lite'>{data.termek.prices['Hell']} Ft</a>
                   <a href="Xixo?Category=Ital" class='grid-cell-icon'><img src='favicon.png' alt=''></a>
                   <a href="Xixo?Category=Ital" class='grid-cell-text'>Xixo</a>
-                  <a href="Xixo?Category=Ital" class='grid-cell-price'>{data.prices['Xixo']} Ft</a>
+                  <a href="Xixo?Category=Ital" class='grid-cell-price'>{data.termek.prices['Xixo']} Ft</a>
                {/each}
             </div>
          </div>
@@ -111,13 +111,13 @@
       {#if navigation == 'Nasi'}
       <div in:fly={flyIn} out:fly={flyOut} class='inner-div'>
 				<div class='grid-container'>
-               {#each Object.entries(data.prices) as _}
+               {#each Object.entries(data.termek.prices) as _}
                   <a href="Chips?Category=Nasi" class='grid-cell-icon lite'><img src='favicon.png' alt=''></a>
                   <a href="Chips?Category=Nasi" class='grid-cell-text lite'>Chips</a>
-                  <a href="Chips?Category=Nasi" class='grid-cell-price lite'>{data.prices['Chips']} Ft</a>
+                  <a href="Chips?Category=Nasi" class='grid-cell-price lite'>{data.termek.prices['Chips']} Ft</a>
                   <a href="Mogyi?Category=Nasi" class='grid-cell-icon'><img src='favicon.png' alt=''></a>
                   <a href="Mogyi?Category=Nasi" class='grid-cell-text'>Mogyi</a>
-                  <a href="Mogyi?Category=Nasi" class='grid-cell-price'>{data.prices['Mogyi']} Ft</a>
+                  <a href="Mogyi?Category=Nasi" class='grid-cell-price'>{data.termek.prices['Mogyi']} Ft</a>
                {/each}
 				</div>
 			</div>
@@ -181,7 +181,7 @@ main {
       .header {
          width: auto;
          height: auto;
-         background-color: #252525;
+         background-color: #2e2e2e;
          margin-bottom: 5%;
          overflow: hidden;
 
@@ -191,7 +191,7 @@ main {
 
             .favicon {
                width: 10%;
-               margin-left: auto;
+               margin-left: .5ch;
                padding-top: 1%;
                padding-bottom: 1%;
             }
@@ -201,7 +201,6 @@ main {
                color: white;
                height: 100%;
                font-weight: bolder;
-               margin-right: auto;
             }
          }
       }

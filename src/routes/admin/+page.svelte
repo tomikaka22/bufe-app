@@ -1,6 +1,7 @@
 <script>
 
 export let data;
+
 let darabModal;
 let termekModal;
 let arakModal;
@@ -34,7 +35,6 @@ fetch("/api/vasarlas", {
 });
 reloadData()
 };
-// DEBUG ---------------------------------------------------
 
 function clearRendelések() {
    fetch('/api/vasarlas', {
@@ -43,6 +43,8 @@ function clearRendelések() {
       });
       reloadData()
 };
+// DEBUG ---------------------------------------------------
+
 
 async function orderReady(item) {
    if (confirm('Biztos kész a rendelés?')) {

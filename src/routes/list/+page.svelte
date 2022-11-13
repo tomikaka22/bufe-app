@@ -158,6 +158,7 @@
       padding: 0;
       list-style: none;
       text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
    }
 
 	:global(body) {

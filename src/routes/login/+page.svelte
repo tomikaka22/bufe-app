@@ -20,6 +20,7 @@
       list-style: none;
       text-decoration: none;
       border: none;
+      -webkit-tap-highlight-color: transparent;
    }
 
    .login {

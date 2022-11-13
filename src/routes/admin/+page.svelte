@@ -38,7 +38,7 @@ reloadData()
 
 function clearRendelések() {
    fetch('/api/vasarlas', {
-         method: 'DELETE',
+         method: 'PATCH',
          body: JSON.stringify('debugDelete')
       });
       reloadData()
@@ -59,8 +59,19 @@ async function orderReady(item) {
 async function orderDone(item) {
    if (confirm('Biztos átvették a rendelést?')) {
       await fetch('/api/vasarlas', {
-         method: 'DELETE',
+         method: 'PATCH',
          body: JSON.stringify(item)
+      });
+      reloadData()
+   }
+};
+
+async function deleteOrder(item,type) {
+   if (confirm('Biztos törli a rendelést?')) {
+      await fetch('/api/vasarlas', {
+         method: 'DELETE',
+         body: JSON.stringify({'item': item,
+                'type': type})
       });
       reloadData()
    }
@@ -81,6 +92,7 @@ setInterval(reloadData, 10000);
       <h1>Bejövő rendelések</h1>
       {#each Object.keys(data.rendelesek) as orderID, i}
          <div class="rendeles-kartya">
+            <h2 on:click={() => {deleteOrder(Object.keys(data.rendelesek)[i],'rendeles')}}>❌</h2>
             <h1>#{orderID}</h1>
             {#each Object.keys(data.rendelesek[orderID]) as a}
                <p><span style="color: chartreuse">{a},</span> <span style="color: red;">{data.rendelesek[orderID][a][1]}</span> db, <span style="color: red;">{data.rendelesek[orderID][a][0]}</span> Ft</p>
@@ -93,6 +105,7 @@ setInterval(reloadData, 10000);
       <h1>Kész rendelések</h1>
       {#each Object.keys(data.kesz) as orderID, i}
       <div class="rendeles-kartya rendeles-kartya-done">
+         <h2 on:click={() => {deleteOrder(Object.keys(data.kesz)[i],'kesz')}}>❌</h2>
          <h1>#{orderID}</h1>
          {#each Object.keys(data.kesz[orderID]) as a}
             <p><span style="color: chartreuse">{a},</span> <span style="color: red;">{data.kesz[orderID][a][1]}</span> db, <span style="color: red;">{data.kesz[orderID][a][0]}</span> Ft</p>
@@ -180,10 +193,18 @@ setInterval(reloadData, 10000);
                margin: .5em;
                padding: .5em;
                padding-top: 0;
+               position: relative;
 
                h1 {
                   color: rgb(0, 174, 255);
                   font-size: xx-large;
+               }
+
+               h2 {
+                  position: absolute;
+                  right: 1ch;
+                  top: .8ch;
+                  cursor: pointer;
                }
 
                button {

@@ -162,7 +162,7 @@ setInterval(reloadData, 10000);
    main {
       .grid-container {
          min-height: 100vh;
-         grid-template-columns: auto 50% 20%;
+         grid-template-columns: auto 52% 20%;
          grid-template-rows: auto;
          display: grid;
 
@@ -198,6 +198,10 @@ setInterval(reloadData, 10000);
                h1 {
                   color: rgb(0, 174, 255);
                   font-size: xx-large;
+               }
+
+               p {
+                  font-size: larger;
                }
 
                h2 {

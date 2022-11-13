@@ -1,4 +1,6 @@
 <script>
+import { fade } from "svelte/transition";
+
 
 export let data;
 
@@ -86,12 +88,16 @@ setInterval(reloadData, 10000);
 
 </script>
 
+{#each items as item,i (key)}
+    <!-- content here -->
+{/each}
+
 <main>
 <div class="grid-container">
    <div class="grid-cell">
       <h1>Bejövő rendelések</h1>
-      {#each Object.keys(data.rendelesek) as orderID, i}
-         <div class="rendeles-kartya">
+      {#each Object.keys(data.rendelesek) as orderID, i (orderID)}
+         <div transition:fade class="rendeles-kartya">
             <h2 on:click={() => {deleteOrder(Object.keys(data.rendelesek)[i],'rendeles')}}>❌</h2>
             <h1>#{orderID}</h1>
             {#each Object.keys(data.rendelesek[orderID]) as a}
@@ -103,8 +109,8 @@ setInterval(reloadData, 10000);
    </div>
    <div class="grid-cell">
       <h1>Kész rendelések</h1>
-      {#each Object.keys(data.kesz) as orderID, i}
-      <div class="rendeles-kartya rendeles-kartya-done">
+      {#each Object.keys(data.kesz) as orderID, i (orderID)}
+      <div transition:fade class="rendeles-kartya rendeles-kartya-done">
          <h2 on:click={() => {deleteOrder(Object.keys(data.kesz)[i],'kesz')}}>❌</h2>
          <h1>#{orderID}</h1>
          {#each Object.keys(data.kesz[orderID]) as a}

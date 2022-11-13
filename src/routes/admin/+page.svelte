@@ -88,10 +88,6 @@ setInterval(reloadData, 10000);
 
 </script>
 
-{#each items as item,i (key)}
-    <!-- content here -->
-{/each}
-
 <main>
 <div class="grid-container">
    <div class="grid-cell">

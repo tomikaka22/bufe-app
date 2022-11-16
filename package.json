@@ -16,6 +16,7 @@
 		"vite": "^3.1.0"
 	},
 	"dependencies": {
-		"@sveltejs/adapter-node": "^1.0.0-next.96"
+		"@sveltejs/adapter-node": "^1.0.0-next.96",
+		"pocketbase": "^0.8.0-rc3"
 	}
 }

@@ -7,4 +7,4 @@ node_modules
 .env.*
 !.env.example
 bufe-app
-Pocketbase/pb_data
+/src/lib/Pocketbase/pb_data

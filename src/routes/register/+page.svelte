@@ -3,11 +3,15 @@
       <img src="favicon.png" alt="" />
 
       <form method="post">
-         <label for="email-form">Kandós E-mail:</label><br />
+         <label for="name-form">Teljes név:</label><br>
+         <input name='name' id="name-form" type="name" /><br />
+         <label for="email-form">Kandós E-mail:</label><br>
          <input name='email' id="email-form" type="email" /><br />
-         <label for="password-form">Jelszó:</label><br />
-         <input name='password' id="password-form" type="password" />
-         <button>Belépés</button>
+         <label for="password-form">Jelszó:</label><br>
+         <input name='password' id="password-form" type="password" /> <br>
+         <label for="password-confirm-form">Jelszó újra:</label><br>
+         <input name='passwordConfirm' id="password-confirm-form" type="password" />
+         <button>Regisztrálás</button>
       </form>
 
    </div>

@@ -12,7 +12,7 @@ export const actions = { // Bejelentkezés, megkapja az oldal FORM data-ját és
 		const body = Object.fromEntries(await request.formData());
 
 		try {
-			const authData = await locals.pb.collection('users').authWithPassword(body.email,body.password);
+			const authData = await locals.pb.collection('users').authWithPassword(body.email.concat('@kkszki.hu'),body.password);
 		} catch (err) {
 			console.log('Errorrrrrrrrrrrrrrrrrrrr: ', err.data); // TODO: Error handling
 		};

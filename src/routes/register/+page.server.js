@@ -8,7 +8,8 @@ export function load({ locals }) {
 
 export const actions = {
 	default: async ({ locals, request }) => {
-		const body = Object.fromEntries(await request.formData());
+		let body = Object.fromEntries(await request.formData());
+		body.email = body.email.concat('@kkszki.hu')
 
 		try {
 			await locals.pb.collection('users').create({...body});

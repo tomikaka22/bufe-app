@@ -5,31 +5,60 @@
       <form method="post">
          <label for="name-form">Teljes név:</label><br>
          <input name='name' id="name-form" type="name" /><br />
-         <label for="email-form">Kandós E-mail:</label><br>
-         <input name='email' id="email-form" type="email" /><br />
+         <label id="email-form-label" for="email-form">Kandós E-mail:</label><br />
+         <input name='email' id="email-form" type="text" /> <p>@kkszki.hu</p>
+         <br />
          <label for="password-form">Jelszó:</label><br>
          <input name='password' id="password-form" type="password" /> <br>
          <label for="password-confirm-form">Jelszó újra:</label><br>
          <input name='passwordConfirm' id="password-confirm-form" type="password" />
          <button>Regisztrálás</button>
       </form>
-
    </div>
+
+   <div class="regin-button">
+      <h2>Van már fiókod?</h2> <a href="/login"><button>Belépés</button></a>
+   </div>
+
 </main>
 
 <style lang="scss">
-   * {
+   :global(*) {
       margin: 0;
       padding: 0;
       list-style: none;
       text-decoration: none;
-      border: none;
       -webkit-tap-highlight-color: transparent;
+   }
+
+	:global(body) {
+		background-color: black;
+      scrollbar-width: none;
+	}
+   
+   // ------------------------------------------
+
+   .regin-button {
+      width: 100vw;
+      position: fixed;
+      bottom: 0;
+      text-align: center;
+      margin-bottom: 2em;
+      color: white;
+
+      button {
+         background-color: rgb(20, 20, 20);
+         padding: 1ch;
+         border-radius: 4vw;
+         color: white;
+         margin-top: 1ch;
+      }
    }
 
    .login {
       text-align: center;
       margin-top: 50%;
+      color: white;
 
       img {
          display: block;
@@ -40,10 +69,11 @@
 
    form {
       input {
-         border: 0.2vw solid orange;
+         border: 0.2vw solid white;
          border-radius: 4vw;
-         width: 80%;
-         color: black;
+         width: 50%;
+         color: white;
+         background-color: rgb(20, 20, 20);
          padding-top: 2.5vw;
          padding-bottom: 2.5vw;
          padding-left: 3vw;
@@ -51,13 +81,26 @@
          margin-bottom: 3vw;
       }
 
+      #email-form-label {
+         margin-right: 10ch;
+      }
+
+      #email-form {
+         width: calc(50% - 10ch);
+      }
+
+      p {
+         // transform: translateX(-10vw);
+         display: inline-block;
+      }
+
       button {
          border-radius: 4vw;
          width: 80%;
          padding: 3vw;
          margin-top: 5vw;
-         background-color: orange;
+         background-color: rgb(20, 20, 20);
+         color: white;
       }
    }
-
 </style>

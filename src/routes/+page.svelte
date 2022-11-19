@@ -25,7 +25,7 @@
          </div>
       </div>
    </div>
-
+   <h2>{data.splash}</h2>
 </main>
 
 <style lang="scss">
@@ -48,7 +48,6 @@
 
       .welcome {
          h1 {
-            margin: 5% 0;
             font-size: x-large;
             color: white;
             text-align: center;
@@ -71,21 +70,19 @@
                border-radius: 25px;
                margin: 5%;
                margin-bottom: 0;
-
+               row-gap: 4%;
+               
                .grid-cell {
                   display: flex;
-                  justify-content: center;
                   align-items: center;
                   border-radius: 25px;
                   background-color: #252525;
                   transform: scale(110%);
                   margin: 3%;
-                  margin-top: 2%;
-                  padding: 2%;
                   flex-direction: column;
+                  border: 1px solid rgba(255, 255, 255, 0.048);
                   
                   p {
-                     margin-top: 1%;
                      color: white;
                   }
                }
@@ -93,12 +90,17 @@
                .top {
                   grid-column-start: 1;
                   grid-column-end: 3;
-                  margin-bottom: 8%;
 
                }
 
             }
          }
+      }
+
+      h2 {
+         color: white;
+         text-align: center;
+         margin-top: 10%;
       }
    }
 </style>

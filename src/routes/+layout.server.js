@@ -6,7 +6,9 @@ export function load({ locals, url }) {
       if (!locals.pb.authStore.baseModel) { // Ha nincs bejelentkezve, redirect to login
          throw redirect(303, '/login')
       } else {
-         return {name: locals.pb.authStore.baseModel.name}
+         return {
+            name: locals.pb.authStore.baseModel.name
+         }
       }
    }
 }

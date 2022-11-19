@@ -3,6 +3,7 @@
    import { page } from '$app/stores';
    import { browser } from '$app/environment';
    import { cart, total } from '$lib/stores/Cart.js';
+   import Topbar from '$lib/components/Topbar.svelte'
 
    export let data;
    let navigation = $page.url.searchParams.get('Category');
@@ -71,13 +72,10 @@
 -->
 <main>
 
-   <!-- IDEIGLENES HEADER szarfosSZAR!!!!!!!!! -->
-   <div in:fly={{y: -200}} class='header'>
-      <a href="/" class="title">
-         <img class='favicon' src='favicon.png' alt=''>
-         <p>{data.splash}</p>
-      </a>
-   </div>
+   <Topbar
+      target={'Vissza'}
+      targeturl={'/'}
+   ></Topbar>
 
    <div class='outer-div'>
       {#if navigation == 'Étel'}
@@ -149,10 +147,13 @@
 {/if}
 
 
-
 </main>
 
 <style lang='scss'>
+   $accent-color: #36200b;
+
+   // ------------------------------------------
+
    :global(*) {
       margin: 0;
       padding: 0;
@@ -178,33 +179,6 @@
       overflow-x: hidden; // Swipe-talantias
       overflow-y: scroll;
       position: fixed;
-      
-      .header {
-         width: auto;
-         height: auto;
-         background-color: #2e2e2e;
-         margin-bottom: 5%;
-         overflow: hidden;
-
-         .title {
-            display: flex;
-            width: 100vw;
-
-            .favicon {
-               width: 10%;
-               margin-left: .5ch;
-               padding-top: 1%;
-               padding-bottom: 1%;
-            }
-
-            p {
-               align-self: center;
-               color: white;
-               height: 100%;
-               font-weight: bolder;
-            }
-         }
-      }
 
       .nav {
          display: flex;
@@ -230,9 +204,9 @@
 
          .active {
             padding: 2vh;
-            background-color: white;
+            background-color: $accent-color;
             border-radius: 20px;
-            color: black;
+            color: white;
             transition: all .25s ease-in-out;
          }
       }
@@ -240,9 +214,12 @@
       .cart {
          position: sticky;
          bottom: 0;
-         background-color: #2e2e2e;
+         background-color: $accent-color;
          box-shadow: 0px -3px 7px 1px rgba(0,0,0,0.74);
          padding: .5em;
+         border-top-left-radius: 2.8em;
+         border-top-right-radius: 2.8em;
+         margin: 0 2%;
 
          .flex-container {
             display: flex;
@@ -279,14 +256,13 @@
             // Using grid and grid-area 1/1 to force the inner divs into the same area. 
             // If you don't do this you get a bouncing effect where the incoming div is
             // pushed below the outgoing div and then 'pops up' jarringly.
-            grid-area: 1/1;	
+            grid-area: 1/1;
 
             .grid-container {
                display: grid;
                grid-template-columns: 25vw auto auto 15.2vw;
                margin: 2%;
                margin-bottom: 30%;
-               margin-top: 0;
 
                a {
                   display: flex;

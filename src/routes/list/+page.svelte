@@ -13,7 +13,7 @@
       if (localStorage.getItem('CartContent') != null) {
          cartshow = 1;
          $cart = JSON.parse(localStorage.getItem('CartContent'));
-         // Kosar szamitas -- hacky, minden homepage latogatasnal urja szamolja. Nem tudom hogy mennyire expnesive a szamolas, lehet jobb lenne elraktarozni, lehet nem.
+         // Kosar szamitas -- hacky, minden latogatasnal urja szamolja. Nem tudom hogy mennyire expnesive a szamolas, lehet jobb lenne elraktarozni, lehet nem.
          $total = [0,0]
          for (let i = 0; i < Object.keys($cart).length; i++) {
             let cnt = $cart[Object.keys($cart)[i]];
@@ -172,7 +172,7 @@
 
    /* ----------------------------------------- */
 
-main {
+   main {
       width: 100%;
       height: 100%;
       overflow-x: hidden; // Swipe-talantias
@@ -286,6 +286,7 @@ main {
                grid-template-columns: 25vw auto auto 15.2vw;
                margin: 2%;
                margin-bottom: 30%;
+               margin-top: 0;
 
                a {
                   display: flex;

@@ -14,7 +14,7 @@
                   <img src="favicon.png" alt="" />
                   <p>Termékek böngészése</p>
             </a>
-            <a href="/" class="grid-cell">
+            <a href="/profil" class="grid-cell">
                   <img src="favicon.png" alt="" />
                   <p>Profil</p>
             </a>
@@ -26,7 +26,6 @@
       </div>
    </div>
 
-   <h1 style="color: rgb(230, 230, 230); text-align: center; margin-top: 4%;">Menü</h1>
 </main>
 
 <style lang="scss">
@@ -70,10 +69,7 @@
                grid-template-rows: auto auto;
                column-gap: 5.5%;
                border-radius: 25px;
-               // justify-items: center;
-               background-color: #161616;
-               padding: 5%;
-               margin: 2%;
+               margin: 5%;
                margin-bottom: 0;
 
                .grid-cell {

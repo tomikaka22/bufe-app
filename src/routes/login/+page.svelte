@@ -34,10 +34,8 @@
 
    .regin-button {
       width: 100vw;
-      position: fixed;
-      bottom: 0;
       text-align: center;
-      margin-bottom: 2em;
+      margin-top: 10vh;
       color: white;
 
       button {

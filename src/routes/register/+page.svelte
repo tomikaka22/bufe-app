@@ -40,10 +40,8 @@
 
    .regin-button {
       width: 100vw;
-      position: fixed;
-      bottom: 0;
       text-align: center;
-      margin-bottom: 2em;
+      margin-top: 5vh;
       color: white;
 
       button {
@@ -57,7 +55,7 @@
 
    .login {
       text-align: center;
-      margin-top: 50%;
+      margin-top: 20%;
       color: white;
 
       img {

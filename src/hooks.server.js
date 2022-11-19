@@ -6,7 +6,7 @@ export async function handle({ event, resolve }) {
 
 	const response = await resolve(event);
 
-	response.headers.set('set-cookie', event.locals.pb.authStore.exportToCookie({ secure: false }));
+	response.headers.set('set-cookie', event.locals.pb.authStore.exportToCookie());
 
 	return response
 };

@@ -7,4 +7,5 @@ export function load({ locals, url }) {
          throw redirect(303, '/login')
       }
    }
+   return {name: locals.pb.authStore.baseModel.name}
 }

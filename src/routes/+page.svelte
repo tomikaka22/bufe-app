@@ -1,10 +1,10 @@
 <script>
-   const username = "felhasználónév";
+   export let data;
 </script>
 
 <main>
    <div class="welcome">
-      <h1>Jónapot {username}!</h1>
+      <h1>Jónapot {data.name}!</h1>
    </div>
 
    <div class="outer-div">

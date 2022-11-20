@@ -158,7 +158,7 @@
          padding: 25px;
          font-size: x-large;
          border-radius: 25px;
-         background-color: red;
+         background-color: var(--accent-color);
          border: none;
       }
 </style>

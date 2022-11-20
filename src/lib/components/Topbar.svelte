@@ -21,7 +21,7 @@
       .header {
          width: 100%;
          height: auto;
-         background-color: #36200b;
+         background-color: var(--main-color);
          border-bottom-left-radius: 1em;
          border-bottom-right-radius: 1em;
 
@@ -37,13 +37,17 @@
                align-items: center;
                color: white;
 
+               p, h2 {
+                  color: var(--accent-color);
+               }
+
                img {
                   width: 30%;
                }
 
                #header-left {
                   margin-left: 5%;
-                  margin-right: 1px;
+                  margin-right: .5ch;
                   font-size: 3ch;
                   // filter: invert(85%);
 

@@ -150,7 +150,6 @@
 </main>
 
 <style lang='scss'>
-   $accent-color: #36200b;
 
    // ------------------------------------------
 
@@ -194,6 +193,7 @@
          border-radius: 3em;
          transform: scale(60%);
          font-weight: bold;
+         border: 1px solid rgba(255, 255, 255, 0.048);
 
          div {
             display: flex;
@@ -204,9 +204,9 @@
 
          .active {
             padding: 2vh;
-            background-color: $accent-color;
+            background-color: var(--accent-color);
             border-radius: 20px;
-            color: white;
+            color: black;
             transition: all .25s ease-in-out;
          }
       }
@@ -214,7 +214,7 @@
       .cart {
          position: sticky;
          bottom: 0;
-         background-color: $accent-color;
+         background-color: var(--accent-color);
          box-shadow: 0px -3px 7px 1px rgba(0,0,0,0.74);
          padding: .5em;
          border-top-left-radius: 2.8em;
@@ -225,19 +225,16 @@
             display: flex;
             // width: 100%;
             height: 6vh;
-            
+            justify-content: center;
+
             #basket {
-               display: flex;
-               filter: invert(100%);
-               transform: scale(80%);
-               align-items: center;
-               margin-bottom: .8vh;
+               margin-bottom: 1vh;
             }
 
             p {
                display: flex;
                align-items: center;
-               color: white;
+               color: black;
                margin-left: .6ch;
 
                b {
@@ -260,8 +257,8 @@
 
             .grid-container {
                display: grid;
-               grid-template-columns: 25vw auto auto 15.2vw;
-               margin: 2%;
+               grid-template-columns: 25% 25% 25% 25%;
+               margin: 3%;
                margin-bottom: 30%;
 
                a {
@@ -274,9 +271,8 @@
                }
 
                .grid-cell-price {
-                  justify-content: left;
-                  font-style: Italic;
-                  font-size: 80%;
+                  justify-content: center;
+                  font-size: 90%;
                   color: white;
                   border-top-right-radius: 12px;
                   border-bottom-right-radius: 12px;

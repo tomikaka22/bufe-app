@@ -12,6 +12,8 @@
    :global(*) {
       font-family:  Noto Serif Telugu;
       font-size: 1.78ch;
+      --main-color: #252525;
+      --accent-color: #cf6100;
    }
 
    @font-face {

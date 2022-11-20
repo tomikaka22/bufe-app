@@ -4,7 +4,7 @@
 
 <main>
    <div class="welcome">
-      <h1>Jónapot {data.name}!</h1>
+      <h1>Jónapot <span>{data.name}!</span></h1>
    </div>
 
    <div class="outer-div">
@@ -52,6 +52,10 @@
             color: white;
             text-align: center;
             margin-top: 30%;
+
+            span {
+               color: var(--accent-color);
+            }
          }
       }
 

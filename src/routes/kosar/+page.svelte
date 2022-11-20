@@ -94,7 +94,7 @@
             {#if $cart[a[0]][1] > 1}
             <p on:click="{() => {subtractAmount(a)}}" id="p-first">-</p>
             {:else} 
-            <p on:click="{() => {subtractAmount(a)}}" id="p-first" style="font-size: small">❌</p>
+            <p on:click="{() => {subtractAmount(a)}}" id="p-first" style="font-size: small; filter:hue-rotate(25deg)">❌</p>
             {/if}
             <h4>{a[1][1]} db</h4><p on:click="{() => {addAmount(a)}}">+</p>
          </div>
@@ -221,7 +221,7 @@
             border-radius: 50em;
             padding: 2em;
             color: black;
-            background-color: red;
+            background-color: var(--accent-color);
             border: 1px solid rgb(126, 0, 0);
             margin: 0 auto;
             margin-top: 5%;

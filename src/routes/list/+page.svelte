@@ -14,23 +14,25 @@
       if (localStorage.getItem('CartContent') != null) {
          cartshow = 1;
          $cart = JSON.parse(localStorage.getItem('CartContent'));
-         // Kosar szamitas -- hacky, minden latogatasnal urja szamolja. Nem tudom hogy mennyire expnesive a szamolas, lehet jobb lenne elraktarozni, lehet nem.
+         // Kosar szamitas -- minden latogatasnal urja szamolja. Nem tudom hogy mennyire expnesive a szamolas, lehet jobb lenne elraktarozni, lehet nem.
          $total = [0,0]
-         for (let i = 0; i < Object.keys($cart).length; i++) {
-            let cnt = $cart[Object.keys($cart)[i]];
-            $total[1] += Number(cnt[1]); 
-            $total[0] += Number(cnt[0])
+         for (let i = 0; i < Object.keys($cart).length; i++) { // atmegy minden key-en a kosar obejtben
+            let cnt = $cart[Object.keys($cart)[i]]; // cnt = kosar object i-ik eleme
+            $total[1] += Number(cnt[1]);  // hozzaadja a kosar object i-ik kulcsanak az 1. tagjat
+            $total[0] += Number(cnt[0])   // hozzaadja a kosar object i-ik kulcsanak a 2. tagjat
          };
       };
-   }
+   };
 
    $: flyIn={x: innerWidth, duration: 500};
    $: flyOut={x: -innerWidth, duration: 500};
      // Needed to be reactive because x is undefined on first render
 
+
+     // refakotorert konyorog innentol a kod
    if (navigation == undefined) {
       navigation = 'Étel'
-   }
+   };
 
    function AnimationDirection(tab) {
    	if (tab == 'Étel') {

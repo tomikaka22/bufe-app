@@ -9,7 +9,7 @@
 
 <div in:fly={{y: 100}} on:click={actionFunction} class="bottom-button">
    <div class="content">
-      <p>{text}</p>
+      <b>{text}</b>
    </div>
 </div>
 

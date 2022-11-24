@@ -3,7 +3,7 @@
    import { page } from '$app/stores';
    import { browser } from '$app/environment';
    import { cart, total } from '$lib/stores/Cart.js';
-   import Topbar from '$lib/components/Topbar.svelte'
+   import Topbar from '$lib/components/Topbar.svelte';
 
    export let data;
    let navigation = $page.url.searchParams.get('Category');
@@ -77,6 +77,9 @@
    <Topbar
       target={'Vissza'}
       targeturl={'/'}
+      text={'Termékek'}
+      background={'#252525'}
+      flyin={{y: -200}}
    ></Topbar>
 
    <div class='outer-div'>
@@ -218,10 +221,11 @@
          bottom: 0;
          background-color: var(--accent-color);
          box-shadow: 0px -3px 7px 1px rgba(0,0,0,0.74);
-         padding: .5em;
+         padding: .5ch;
          border-top-left-radius: 2.8em;
          border-top-right-radius: 2.8em;
          margin: 0 2%;
+         height: 3.5em;
 
          .flex-container {
             display: flex;

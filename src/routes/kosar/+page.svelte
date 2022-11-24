@@ -1,6 +1,8 @@
 <script>
    import { slide, fade } from "svelte/transition";
    import { cart, total } from "$lib/stores/Cart.js";
+   import Topbar from '$lib/components/Topbar.svelte';
+   import BottomButton from '$lib/components/BottomButton.svelte';
 
    export let data;
 
@@ -75,7 +77,13 @@
 </script>
 
 <main>
-   <h1 style="color: white; font-size: xx-large;">kosár</h1>
+
+   <Topbar
+   target={'Vissza'}
+   targeturl={'/list'}
+   text={'Kosár'}
+   background={'none'}
+   ></Topbar>
 
    <div class="urites">
       <button on:click={urites}>Űrités</button>
@@ -102,13 +110,8 @@
       {/each}
    </div>
 
-   <div class="vissza">
-      <button on:click={() => {history.back();}}>Vissza</button>
-   </div>
+   <BottomButton text={'Vásárlás!'}></BottomButton>
 
-   <div class="buy">
-      <button on:click={buy}>Vásárlás!</button>
-   </div>
 </main>
 
 <style lang="scss">
@@ -132,11 +135,9 @@
    main {
       width: 100vw;
       height: 100vh;
-      overflow-y: scroll;
 
       .kosar {
          padding-top: 2%;
-
          margin: 5% 0;
          text-align: center;
          outline: 0.1ch solid white;
@@ -199,34 +200,6 @@
             margin: 0 auto;
             font-weight: bolder;
             margin-top: 5%;
-         }
-      }
-
-      .vissza {
-         width: 100vw;
-
-         button {
-            display: block;
-            border-radius: 50em;
-            padding: 2em;
-            color: black;
-            margin: 0 auto;
-            font-weight: bolder;
-         }
-      }
-
-      .buy {
-         button {
-            display: block;
-            border-radius: 50em;
-            padding: 2em;
-            color: black;
-            background-color: var(--accent-color);
-            border: 1px solid rgb(126, 0, 0);
-            margin: 0 auto;
-            margin-top: 5%;
-            font-weight: bold;
-            font-size: larger;
          }
       }
 

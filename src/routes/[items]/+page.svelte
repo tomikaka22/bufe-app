@@ -3,6 +3,7 @@
    import { goto } from "$app/navigation";
    import { fade } from "svelte/transition";
    import { cart } from "$lib/stores/Cart.js";
+   import Topbar from '$lib/components/Topbar.svelte';
 
    export let data;
    const item = $page.params.items;
@@ -49,12 +50,17 @@
 
 <main>
 
+   <Topbar
+      target={'Vissza'}
+      targeturl={'/list'}
+      text={''}
+      background={'none'}
+   ></Topbar>
+
    <h1>{item}</h1>
    {#key price}<h2 in:fade="{{duration: 200}}">{price} Ft</h2>{/key}
    <h4>{data.description[item]}</h4>
    <div class="image"><img src="favicon.png" alt="" /></div>
-
-   <button on:click="{vissza}" class="vissza">Vissza</button>
 
 {#if maxamount != 0}
    <div class="amount">
@@ -140,15 +146,6 @@
          flex: 33.3%;
          user-select: none;
       }
-   }
-
-   .vissza {
-      display: block;
-      margin: 0 auto;
-      margin-top: 5%;
-      padding: 25px;
-      border-radius: 25px;
-      border: none;
    }
 
    .kosar {

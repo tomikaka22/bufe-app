@@ -2,12 +2,9 @@
    import { fly } from 'svelte/transition';
    export let text;
    export let action;
-
-   function actionFunction() {action}
-
 </script>
 
-<div in:fly={{y: 100}} on:click={actionFunction} class="bottom-button">
+<div in:fly={{y: 100}} on:click={action} class="bottom-button">
    <div class="content">
       <b>{text}</b>
    </div>

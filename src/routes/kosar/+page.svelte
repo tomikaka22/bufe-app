@@ -110,7 +110,7 @@
       {/each}
    </div>
 
-   <BottomButton text={'Vásárlás!'}></BottomButton>
+   <BottomButton action={buy} text={'Vásárlás!'}></BottomButton>
 
 </main>
 

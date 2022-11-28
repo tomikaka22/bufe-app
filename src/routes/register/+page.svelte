@@ -1,18 +1,35 @@
+<script>
+   import { fade } from "svelte/transition";
+
+   export let form;
+
+   let name = form?.name;
+   let email = form?.email.replace('@kkszki.hu', '')
+   let password;
+   let passwordConfirm;
+</script>
+
 <main>
    <div class="login">
       <img src="favicon.png" alt="" />
-
       <form method="post">
          <label for="name-form">Teljes név:</label><br>
-         <input name='name' id="name-form" type="name" /><br />
+         <input name='name' bind:value={name} id="name-form" type="name" /><br />
          <label id="email-form-label" for="email-form">Kandós E-mail:</label><br />
-         <input name='email' id="email-form" type="text" /> <p>@kkszki.hu</p>
+         <input name='email' bind:value={email} id="email-form" type="text" /> <p>@kkszki.hu</p>
          <br />
          <label for="password-form">Jelszó:</label><br>
-         <input name='password' id="password-form" type="password" /> <br>
+         <input name='password' bind:value={password} id="password-form" type="password" /> <br>
          <label for="password-confirm-form">Jelszó újra:</label><br>
-         <input name='passwordConfirm' id="password-confirm-form" type="password" />
-         <button>Regisztrálás</button>
+         <input name='passwordConfirm' bind:value={passwordConfirm} id="password-confirm-form" type="password" />
+         
+         {#if name && email && password && passwordConfirm && password == passwordConfirm}
+            <button in:fade={{duration: 400}}>Regisztrálás</button>          
+         {/if}
+         <br>
+         {#if form?.error}
+            <p id="error">{form?.error}</p>
+         {/if}
       </form>
    </div>
 
@@ -99,6 +116,11 @@
          margin-top: 5vw;
          background-color: rgb(20, 20, 20);
          color: white;
+      }
+
+      #error {
+         margin-top: 1vh;
+         color: var(--accent-color);
       }
    }
 </style>

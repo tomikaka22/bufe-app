@@ -8,5 +8,5 @@ export async function handle({ event, resolve }) {
 
 	response.headers.set('set-cookie', event.locals.pb.authStore.exportToCookie());
 
-	return response
-};
+	return response;
+}

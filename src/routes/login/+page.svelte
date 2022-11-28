@@ -1,14 +1,29 @@
+<script>
+import { fade } from "svelte/transition";
+
+export let form;
+
+let email = form?.email
+let password
+</script>
+
 <main>
    <div class="login">
       <img src="favicon.png" alt="" />
 
       <form method="post">
          <label id="email-form-label" for="email-form">Kandós E-mail:</label><br />
-         <input name='email' id="email-form" type="text" /> <p>@kkszki.hu</p>
+         <input name='email' bind:value={email} id="email-form" type="text" /> <p>@kkszki.hu</p>
          <br />
          <label for="password-form">Jelszó:</label><br />
-         <input name='password' id="password-form" type="password" />
-         <button>Belépés</button>
+         <input name='password' bind:value={password} id="password-form" type="password" />
+         {#if email && password}
+            <button in:fade={{duration: 400}}>Belépés</button>
+         {/if}
+         <br>
+         {#if form?.error}
+            <p id="error">{form?.error}</p>
+         {/if}
       </form>
    </div>
 
@@ -35,7 +50,7 @@
    .regin-button {
       width: 100vw;
       text-align: center;
-      margin-top: 10vh;
+      margin-top: 5vh;
       color: white;
 
       button {
@@ -66,10 +81,10 @@
          width: 50%;
          color: white;
          background-color: rgb(20, 20, 20);
-         padding-top: 2.5vw;
-         padding-bottom: 2.5vw;
+         padding-top: 1vh;
+         padding-bottom: 1vh;
          padding-left: 3vw;
-         margin-top: 2vw;
+         margin-top: 1vh;
          margin-bottom: 3vw;
       }
 
@@ -90,9 +105,14 @@
          border-radius: 4vw;
          width: 80%;
          padding: 3vw;
-         margin-top: 5vw;
+         margin-top: 2vh;
          background-color: rgb(20, 20, 20);
          color: white;
+      }
+
+      #error {
+         margin-top: 1vh;
+         color: var(--accent-color);
       }
    }
 

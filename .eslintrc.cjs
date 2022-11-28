@@ -12,24 +12,28 @@ module.exports = {
 		'sourceType': 'module'
 	},
 	'rules': {
+		'no-unused-vars': [
+			'warn'
+		],
 		'indent': [
-			'error',
-			'tab'
+			'warn',
+			'tab',
+			{ 'SwitchCase': 1 }
 		],
 		'linebreak-style': [
-			'error',
+			'warn',
 			'unix'
 		],
 		'quotes': [
-			'error',
+			'warn',
 			'single'
 		],
 		'semi': [
-			'error',
+			'warn',
 			'always'
 		],
 		'comma-dangle': [
-			'error', 'never'
+			'warn', 'never'
 		]
 	}
 };

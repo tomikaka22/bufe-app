@@ -4,7 +4,6 @@
 
    export let data;
    let navigation = 'Folyamatban';
-
    console.log(data)
 </script>
 
@@ -18,15 +17,45 @@
       flyin={{y: -200}}
    ></Topbar>
 
-{#if navigation == 'Folyamatban'}
-<div class="Folyamatban">
-   <p style="color: white;">Folyamatban</p>
-</div>
-{:else}
-<div class="Elozmenyek">
-   <p style="color: white;">Elozmenyek</p>
-</div>
-{/if}
+   {#if navigation == 'Folyamatban'}
+   <div class="Folyamatban">
+
+   </div>
+   {:else}
+   <div class="Elozmenyek">
+
+   </div>
+   {/if}
+
+   {#each Object.keys(data) as item (Object.keys(data))}
+      {#if item != 'name'}
+         <div class="rendeles-card">
+            <div class="rendeles-cell">
+               {#each Object.keys(data[item].rendeles) as a}
+                  {#if a != 'name'}
+                     <p>{a}</p>
+                  {/if}
+               {/each}
+            </div>
+
+            <div class="rendeles-cell">
+               {#each Object.keys(data[item].rendeles) as a}
+                  {#if a != 'name'}
+                     <p>{data[item].rendeles[a][0]} db</p>
+                  {/if}
+               {/each}
+            </div>
+
+            <div class="rendeles-cell">
+               {#each Object.keys(data[item].rendeles) as a}
+                  {#if a != 'name'}
+                     <p>{data[item].rendeles[a][1]} Ft</p>
+                  {/if}
+               {/each}
+            </div>
+         </div>
+      {/if}
+   {/each}
 
    <div in:fly={{y: 200}} class='nav'>
       <div class='Folyamatban' on:click={() => {navigation = 'Folyamatban'}}><p class:active='{navigation == 'Folyamatban'}'>Folyamatban</p></div>
@@ -57,6 +86,33 @@
    /* ----------------------------------------- */
 
 main {
+
+   .rendeles-card {
+      width: 80vw;
+      margin: 3% auto;
+      padding: 2%;
+      outline: 2px solid rgb(51, 51, 51);
+      background-color: #252525;
+      display: grid;
+      grid-template-columns: 50% 25% 25%;
+      border-radius: 1em;
+
+      &:nth-child(2n) {
+            background-color: #161616;
+         }
+
+      .rendeles-cell {
+         display: flex;
+         flex-direction: column;
+         justify-content: center;
+
+         p {
+            color: rgba(255, 255, 255, 0.932);
+            border-bottom: 1px solid #252525;
+         }
+      }
+   }
+
    .nav {
       display: flex;
       background-color: #252525ea;

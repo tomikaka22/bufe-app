@@ -4,8 +4,6 @@ import { fade } from "svelte/transition";
 
 export let data;
 
-console.log(data)
-
 let darabModal;
 let termekModal;
 let arakModal;
@@ -98,8 +96,11 @@ setInterval(reloadData, 10000);
          <div transition:fade class="rendeles-kartya">
             <h2 on:click={() => {deleteOrder(Object.keys(data.rendelesek)[i],'rendeles')}}>❌</h2>
             <h1>#{orderID}</h1>
+            <h3>{data.rendelesek[orderID].name}</h3>
             {#each Object.keys(data.rendelesek[orderID]) as a}
-               <p><span style="color: chartreuse">{a},</span> <span style="color: red;">{data.rendelesek[orderID][a][1]}</span> db, <span style="color: red;">{data.rendelesek[orderID][a][0]}</span> Ft</p>
+               {#if a != 'name'}
+                  <p><span style="color: chartreuse">{a},</span> <span style="color: red;">{data.rendelesek[orderID][a][1]}</span> db, <span style="color: red;">{data.rendelesek[orderID][a][0]}</span> Ft</p>
+               {/if}
             {/each}
             <button on:click={() => {orderReady(Object.keys(data.rendelesek)[i])}}>Kész</button>
          </div>
@@ -111,8 +112,11 @@ setInterval(reloadData, 10000);
       <div transition:fade class="rendeles-kartya rendeles-kartya-done">
          <h2 on:click={() => {deleteOrder(Object.keys(data.kesz)[i],'kesz')}}>❌</h2>
          <h1>#{orderID}</h1>
+         <h3>{data.kesz[orderID].name}</h3>
          {#each Object.keys(data.kesz[orderID]) as a}
-            <p><span style="color: chartreuse">{a},</span> <span style="color: red;">{data.kesz[orderID][a][1]}</span> db, <span style="color: red;">{data.kesz[orderID][a][0]}</span> Ft</p>
+            {#if a != 'name'}
+               <p><span style="color: chartreuse">{a},</span> <span style="color: red;">{data.kesz[orderID][a][1]}</span> db, <span style="color: red;">{data.kesz[orderID][a][0]}</span> Ft</p>
+            {/if}
          {/each}
          <button on:click={() => {orderDone(Object.keys(data.kesz)[i])}}>Átadva</button>
       </div>
@@ -214,6 +218,10 @@ setInterval(reloadData, 10000);
                   right: 1ch;
                   top: .8ch;
                   cursor: pointer;
+               }
+
+               h3 {
+                  color: chocolate;
                }
 
                button {

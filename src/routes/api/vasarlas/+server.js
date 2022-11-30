@@ -23,15 +23,17 @@ export async function POST({ request, locals }) {
 		const darab = data[Object.keys(data)[i]][1];
 		const osszeg = record.items[0].ar * darab; // ár validálás
 
-		rendelesek[counter][Object.keys(data)[i]] = [ darab, osszeg ];
+		rendelesek[counter][Object.keys(data)[i]] = [ darab, osszeg ]; // rendelesekhez hozzaad
 	}
-	console.log(rendelesek[counter])
+
+	// elraktaroz adatbazisban
+	locals.pb.collection('rendeles_elozmeny').create({ 'rendeles': rendelesek[counter], 'rendelo': [locals.pb.authStore.baseModel.id] });
+
 	return json({
 		orderID: counter
 	});
 }
 
-// ready
 export async function PUT({ request }) {
 	let adat = await request.json();
 	kesz[adat] = rendelesek[adat];

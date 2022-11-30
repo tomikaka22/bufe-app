@@ -1,5 +1,6 @@
 <script>
    import { fly } from 'svelte/transition';
+   import Topbar from '$lib/components/Topbar.svelte';
 
    export let data;
    let navigation = 'Folyamatban';
@@ -8,6 +9,14 @@
 </script>
 
 <main>
+
+   <Topbar
+      target={'Menü'}
+      targeturl={'/'}
+      text={'Rendelések'}
+      background={'none'}
+      flyin={{y: -200}}
+   ></Topbar>
 
 {#if navigation == 'Folyamatban'}
 <div class="Folyamatban">

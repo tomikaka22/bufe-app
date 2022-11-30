@@ -75,7 +75,7 @@
 <main>
 
    <Topbar
-      target={'Vissza'}
+      target={'Menü'}
       targeturl={'/'}
       text={'Termékek'}
       background={'#252525'}

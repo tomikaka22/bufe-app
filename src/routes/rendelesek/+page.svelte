@@ -105,6 +105,10 @@ main {
          p {
             color: rgba(255, 255, 255, 0.932);
             border-bottom: 1px solid #cf610088;
+
+            &:last-of-type {
+               border-bottom: 0;
+            }
          }
       }
 

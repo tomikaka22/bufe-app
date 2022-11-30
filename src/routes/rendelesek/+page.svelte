@@ -97,10 +97,6 @@ main {
       grid-template-columns: 50% 25% 25%;
       border-radius: 1em;
 
-      &:nth-child(2n) {
-            background-color: #161616;
-         }
-
       .rendeles-cell {
          display: flex;
          flex-direction: column;
@@ -108,9 +104,13 @@ main {
 
          p {
             color: rgba(255, 255, 255, 0.932);
-            border-bottom: 1px solid #252525;
+            border-bottom: 1px solid #cf610088;
          }
       }
+
+      &:nth-child(2n) {
+            background-color: #161616;
+         }
    }
 
    .nav {
@@ -137,7 +137,7 @@ main {
 
       .active {
          padding: 2vh;
-         background-color: white;
+         background-color: var(--accent-color);
          border-radius: 20px;
          color: black;
          transition: all .25s ease-in-out;

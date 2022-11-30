@@ -88,7 +88,7 @@
 main {
 
    .rendeles-card {
-      width: 80vw;
+      width: 90vw;
       margin: 3% auto;
       padding: 2%;
       outline: 2px solid rgb(51, 51, 51);

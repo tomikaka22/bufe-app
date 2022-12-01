@@ -27,7 +27,7 @@
    </div>
    {/if}
 
-   {#each Object.keys(data) as item (Object.keys(data))}
+   {#each [...Object.keys(data)].reverse() as item (Object.keys(data))}
       {#if item != 'name'}
          <div class="rendeles-card">
             <div class="rendeles-cell">

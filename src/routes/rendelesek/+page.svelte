@@ -17,16 +17,6 @@
       flyin={{y: -200}}
    ></Topbar>
 
-   {#if navigation == 'Folyamatban'}
-   <div class="Folyamatban">
-
-   </div>
-   {:else}
-   <div class="Elozmenyek">
-
-   </div>
-   {/if}
-
    {#each [...Object.keys(data)].reverse() as item (Object.keys(data))}
       {#if item != 'name'}
          <div class="rendeles-card">
@@ -56,11 +46,6 @@
          </div>
       {/if}
    {/each}
-
-   <div in:fly={{y: 200}} class='nav'>
-      <div class='Folyamatban' on:click={() => {navigation = 'Folyamatban'}}><p class:active='{navigation == 'Folyamatban'}'>Folyamatban</p></div>
-      <div class='Előzmények' on:click={() => {navigation = 'Előzmények'}}><p class:active='{navigation == 'Előzmények'}'>Előzmények</p></div>
-   </div>
 
 </main>
 
@@ -116,38 +101,6 @@ main {
             background-color: #161616;
          }
    }
-
-   .nav {
-      display: flex;
-      background-color: #252525ea;
-      color: rgba(255, 255, 255, 0.877);
-      height: 12vh;
-      width: 100vw;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      z-index: 20;
-      margin-bottom: 3vh;
-      border-radius: 3em;
-      transform: scale(60%);
-      font-weight: bold;
-
-      div {
-         display: flex;
-         flex: 33.3%;
-         justify-content: center;
-         align-items: center;
-      }
-
-      .active {
-         padding: 2vh;
-         background-color: var(--accent-color);
-         border-radius: 20px;
-         color: black;
-         transition: all .25s ease-in-out;
-      }
-   }
-
 
 }
 

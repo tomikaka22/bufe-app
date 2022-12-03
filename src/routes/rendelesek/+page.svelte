@@ -1,5 +1,5 @@
 <script>
-   import { fly } from 'svelte/transition';
+   import { slide } from 'svelte/transition';
    import Topbar from '$lib/components/Topbar.svelte';
 
    export let data;
@@ -17,11 +17,11 @@
       flyin={{y: -200}}
    ></Topbar>
 
-   {#each [...Object.keys(data)].reverse() as item (Object.keys(data))}
+   {#each [...Object.keys(data)].reverse() as item ([...Object.keys(data)].reverse())}
       {#if item != 'name'}
-         <div class="rendeles-card">
+         <div in:slide class="rendeles-card">
             <div class="rendeles-cell">
-               {#each Object.keys(data[item].rendeles) as a}
+               {#each [...Object.keys(data[item].rendeles)].reverse() as a}
                   {#if a != 'name'}
                      <p>{a}</p>
                   {/if}
@@ -29,7 +29,7 @@
             </div>
 
             <div class="rendeles-cell">
-               {#each Object.keys(data[item].rendeles) as a}
+               {#each [...Object.keys(data[item].rendeles)].reverse() as a}
                   {#if a != 'name'}
                      <p>{data[item].rendeles[a][0]} db</p>
                   {/if}
@@ -37,7 +37,7 @@
             </div>
 
             <div class="rendeles-cell">
-               {#each Object.keys(data[item].rendeles) as a}
+               {#each [...Object.keys(data[item].rendeles)].reverse() as a}
                   {#if a != 'name'}
                      <p>{data[item].rendeles[a][1]} Ft</p>
                   {/if}
@@ -73,9 +73,9 @@
 main {
 
    .rendeles-card {
-      width: 90vw;
+      width: 85vw;
       margin: 3% auto;
-      padding: 2%;
+      padding: 5% 3%;
       outline: 2px solid rgb(51, 51, 51);
       background-color: #252525;
       display: grid;
@@ -86,10 +86,12 @@ main {
          display: flex;
          flex-direction: column;
          justify-content: center;
+         gap: 5%;
 
          p {
             color: rgba(255, 255, 255, 0.932);
             border-bottom: 1px solid #cf610088;
+            font-size: medium;
 
             &:last-of-type {
                border-bottom: 0;
@@ -102,6 +104,9 @@ main {
          }
    }
 
+	.active-card {
+		background-color: #ff770060 !important;
+	}
 }
 
 </style>

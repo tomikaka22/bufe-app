@@ -2,7 +2,7 @@ import { json } from '@sveltejs/kit';
 
 let rendelesek = {};
 let kesz = {};
-let counter = 1;
+let counter = 0;
 
 
 // get data
@@ -27,37 +27,45 @@ export async function POST({ request, locals }) {
 	}
 
 	// elraktaroz adatbazisban
-	locals.pb.collection('rendeles_elozmeny').create({ 'rendeles': rendelesek[counter], 'rendelo': [locals.pb.authStore.baseModel.id] });
+	let elozmenyRecord = await locals.pb.collection('rendeles_elozmeny').create({ 'rendeles': rendelesek[counter], 'rendelo': [locals.pb.authStore.baseModel.id] });
+	rendelesek[counter].id = elozmenyRecord.id;
 
 	return json({
 		orderID: counter
 	});
 }
 
-export async function PUT({ request }) {
+// rendeles folyamatban
+export async function PUT({ request, locals }) {
 	let adat = await request.json();
 	kesz[adat] = rendelesek[adat];
 	delete rendelesek[adat];
+
+	locals.pb.collection('rendeles_elozmeny').update(kesz[adat].id, { 'status': 'folyamatban' }); // update rendeles status
+
 	return json({
 		ok : 'ok'
 	});
 }
 
-export async function PATCH({ request }) {
+// rendeles kesz
+export async function PATCH({ request, locals }) {
 	let adat = await request.json();
+
+	locals.pb.collection('rendeles_elozmeny').update(kesz[adat].id, { 'status': 'kesz' }); // update rendeles status
+
 	delete kesz[adat];
-	if (adat == 'debugDelete') {
-		kesz = {};
-		rendelesek = {};
-	}
 
 	return json({
 		ok : 'ok'
 	});
 }
 
-export async function DELETE({ request }) {
+export async function DELETE({ request, locals }) {
 	let adat = await request.json();
+
+	locals.pb.collection('rendeles_elozmeny').update(kesz[adat.item].id, { 'status': 'torolve' }); // update rendeles status
+
 	if (adat.type == 'kesz') {
 		delete kesz[adat.item];
 	} else {

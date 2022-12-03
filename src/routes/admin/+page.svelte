@@ -8,47 +8,7 @@ let darabModal;
 let termekModal;
 let arakModal;
 
-
-//  DEBUG ---------------------------------------------------
-function tesztrendelés() {
-   fetch("/api/vasarlas", {
-   "body": "{\"Marhahúsos Étel\":[6000,5],\"Hell\":[2500,10],\"Xixo\":[2450,7],\"Chips\":[960,4],\"Mogyi\":[1380,6]}",
-   "method": "POST",
-});
-
-fetch("/api/vasarlas", {
-   "body": "{\"Hell\":[2500,10],\"Xixo\":[2450,7],\"Chips\":[960,4],\"Mogyi\":[1380,6]}",
-   "method": "POST",
-});
-
-fetch("/api/vasarlas", {
-   "body": "{\"Xixo\":[2450,7],\"Chips\":[960,4],\"Mogyi\":[1380,6]}",
-   "method": "POST",
-});
-
-fetch("/api/vasarlas", {
-   "body": "{\"Chips\":[960,4],\"Mogyi\":[1380,6]}",
-   "method": "POST",
-});
-
-fetch("/api/vasarlas", {
-   "body": "{\"Mogyi\":[1380,6]}",
-   "method": "POST",
-});
-reloadData()
-};
-
-function clearRendelések() {
-   fetch('/api/vasarlas', {
-         method: 'PATCH',
-         body: JSON.stringify('debugDelete')
-      });
-      reloadData()
-};
-// DEBUG ---------------------------------------------------
-
-
-async function orderReady(item) {
+async function orderInProgress(item) {
    if (confirm('Biztos kész a rendelés?')) {
       await fetch('/api/vasarlas', {
          method: 'PUT',
@@ -72,8 +32,10 @@ async function deleteOrder(item,type) {
    if (confirm('Biztos törli a rendelést?')) {
       await fetch('/api/vasarlas', {
          method: 'DELETE',
-         body: JSON.stringify({'item': item,
-                'type': type})
+         body: JSON.stringify({
+               'item': item,
+               'type': type
+            })
       });
       reloadData()
    }
@@ -98,11 +60,11 @@ setInterval(reloadData, 10000);
             <h1>#{orderID}</h1>
             <h3>{data.rendelesek[orderID].name}</h3>
             {#each Object.keys(data.rendelesek[orderID]) as a}
-               {#if a != 'name'}
+               {#if a != 'name' && a != 'id'}
                   <p><span style="color: chartreuse">{a},</span> <span style="color: red;">{data.rendelesek[orderID][a][1]}</span> db, <span style="color: red;">{data.rendelesek[orderID][a][0]}</span> Ft</p>
                {/if}
             {/each}
-            <button on:click={() => {orderReady(Object.keys(data.rendelesek)[i])}}>Kész</button>
+            <button on:click={() => {orderInProgress(Object.keys(data.rendelesek)[i])}}>Kész</button>
          </div>
       {/each}
    </div>
@@ -114,7 +76,7 @@ setInterval(reloadData, 10000);
          <h1>#{orderID}</h1>
          <h3>{data.kesz[orderID].name}</h3>
          {#each Object.keys(data.kesz[orderID]) as a}
-            {#if a != 'name'}
+            {#if a != 'name' && a != 'id'}
                <p><span style="color: chartreuse">{a},</span> <span style="color: red;">{data.kesz[orderID][a][1]}</span> db, <span style="color: red;">{data.kesz[orderID][a][0]}</span> Ft</p>
             {/if}
          {/each}
@@ -128,8 +90,6 @@ setInterval(reloadData, 10000);
          <button on:click={darabModal.showModal()}>Darab</button>
          <button on:click={termekModal.showModal()}>Termékek</button>
          <button on:click={arakModal.showModal()}>Árak</button>
-         <button style="color: yellow;" on:click={tesztrendelés}>Tesztrendelés</button>
-         <button style="color: yellow; font-size: small" on:click={clearRendelések}>Rendelések törlése</button>
       </div>
    </div>
 </div>

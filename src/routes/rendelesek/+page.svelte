@@ -3,6 +3,7 @@
    import Topbar from '$lib/components/Topbar.svelte';
 
    export let data;
+	delete data.name;
    console.log(data)
 </script>
 
@@ -17,33 +18,157 @@
    ></Topbar>
 
    {#each [...Object.keys(data)].reverse() as item ([...Object.keys(data)].reverse())}
-      {#if item != 'name'}
-         <div in:slide class="rendeles-card">
-            <div class="rendeles-cell">
-               {#each [...Object.keys(data[item].rendeles)].reverse() as a}
-                  {#if a != 'name'}
-                     <p>{a}</p>
-                  {/if}
-               {/each}
-            </div>
 
-            <div class="rendeles-cell">
-               {#each [...Object.keys(data[item].rendeles)].reverse() as a}
-                  {#if a != 'name'}
-                     <p>{data[item].rendeles[a][0]} db</p>
-                  {/if}
-               {/each}
-            </div>
+		{#if data[item].status == 'folyamatban'}
+			<p id="card-text">folyamatban</p>
+		{:else if data[item].status == 'torolve'}
+			<p style="color: rgba(255, 255, 255, 0.5)" id="card-text">törölve</p>
+		{:else if data[item].status == ''}
+			<p style="color: #cf610088;" id="card-text">Függőben</p>
+		{:else}
+			<p style="color: rgba(255, 255, 255, 0.8);" id="card-text">{data[item].updated.slice(0, -8)}</p>
+		{/if}
 
-            <div class="rendeles-cell">
-               {#each [...Object.keys(data[item].rendeles)].reverse() as a}
-                  {#if a != 'name'}
-                     <p>{data[item].rendeles[a][1]} Ft</p>
-                  {/if}
-               {/each}
-            </div>
-         </div>
-      {/if}
+		{#if data[item].status == 'fuggoben'}
+			<div in:slide class="rendeles-card fuggoben-card">
+				<div class="rendeles-cell">
+					{#each [...Object.keys(data[item].rendeles)].reverse() as a}
+						{#if a != 'name'}
+							<p class:torolve-cell='{data[item].status == 'torolve'}'>{a}</p>
+						{/if}
+					{/each}
+				</div>
+
+				<div class="rendeles-cell">
+					{#each [...Object.keys(data[item].rendeles)].reverse() as a}
+						{#if a != 'name'}
+							<p class:torolve-cell='{data[item].status == 'torolve'}'>{data[item].rendeles[a][0]} db</p>
+						{/if}
+					{/each}
+				</div>
+
+				<div class="rendeles-cell">
+					{#each [...Object.keys(data[item].rendeles)].reverse() as a}
+						{#if a != 'name'}
+							<p class:torolve-cell='{data[item].status == 'torolve'}'>{data[item].rendeles[a][1]} Ft</p>
+						{/if}
+					{/each}
+				</div>
+			</div>
+		{/if}
+
+		{#if data[item].status == 'folyamatban'}
+		<div in:slide class="rendeles-card folyamatban-card">
+			<div class="rendeles-cell">
+				{#each [...Object.keys(data[item].rendeles)].reverse() as a}
+					{#if a != 'name'}
+						<p>{a}</p>
+					{/if}
+				{/each}
+			</div>
+
+			<div class="rendeles-cell">
+				{#each [...Object.keys(data[item].rendeles)].reverse() as a}
+					{#if a != 'name'}
+						<p>{data[item].rendeles[a][0]} db</p>
+					{/if}
+				{/each}
+			</div>
+
+			<div class="rendeles-cell">
+				{#each [...Object.keys(data[item].rendeles)].reverse() as a}
+					{#if a != 'name'}
+						<p>{data[item].rendeles[a][1]} Ft</p>
+					{/if}
+				{/each}
+			</div>
+		</div>
+	{/if}
+
+	{#if data[item].status == 'torolve'}
+		<div in:slide class="rendeles-card torolve-card">
+			<div class="rendeles-cell">
+				{#each [...Object.keys(data[item].rendeles)].reverse() as a}
+					{#if a != 'name'}
+						<p class:torolve-cell='{data[item].status == 'torolve'}'>{a}</p>
+					{/if}
+				{/each}
+			</div>
+
+			<div class="rendeles-cell">
+				{#each [...Object.keys(data[item].rendeles)].reverse() as a}
+					{#if a != 'name'}
+						<p class:torolve-cell='{data[item].status == 'torolve'}'>{data[item].rendeles[a][0]} db</p>
+					{/if}
+				{/each}
+			</div>
+
+			<div class="rendeles-cell">
+				{#each [...Object.keys(data[item].rendeles)].reverse() as a}
+					{#if a != 'name'}
+						<p class:torolve-cell='{data[item].status == 'torolve'}'>{data[item].rendeles[a][1]} Ft</p>
+					{/if}
+				{/each}
+			</div>
+		</div>
+	{/if}
+
+	{#if data[item].status == 'kesz'}
+		<div in:slide class="rendeles-card kesz-card">
+			<div class="rendeles-cell">
+				{#each [...Object.keys(data[item].rendeles)].reverse() as a}
+					{#if a != 'name'}
+						<p>{a}</p>
+					{/if}
+				{/each}
+			</div>
+
+			<div class="rendeles-cell">
+				{#each [...Object.keys(data[item].rendeles)].reverse() as a}
+					{#if a != 'name'}
+						<p>{data[item].rendeles[a][0]} db</p>
+					{/if}
+				{/each}
+			</div>
+
+			<div class="rendeles-cell">
+				{#each [...Object.keys(data[item].rendeles)].reverse() as a}
+					{#if a != 'name'}
+						<p>{data[item].rendeles[a][1]} Ft</p>
+					{/if}
+				{/each}
+			</div>
+		</div>
+	{/if}
+
+	{#if data[item].status == ''}
+		<div in:slide class="rendeles-card fuggoben-card">
+			<div class="rendeles-cell">
+				{#each [...Object.keys(data[item].rendeles)].reverse() as a}
+					{#if a != 'name'}
+						<p>{a}</p>
+					{/if}
+				{/each}
+			</div>
+
+			<div class="rendeles-cell">
+				{#each [...Object.keys(data[item].rendeles)].reverse() as a}
+					{#if a != 'name'}
+						<p>{data[item].rendeles[a][0]} db</p>
+					{/if}
+				{/each}
+			</div>
+
+			<div class="rendeles-cell">
+				{#each [...Object.keys(data[item].rendeles)].reverse() as a}
+					{#if a != 'name'}
+						<p>{data[item].rendeles[a][1]} Ft</p>
+					{/if}
+				{/each}
+			</div>
+		</div>
+	{/if}
+
    {/each}
 
 </main>
@@ -76,7 +201,7 @@ main {
       margin: 3% auto;
       padding: 5% 3%;
       outline: 2px solid rgb(51, 51, 51);
-      background-color: #252525;
+      background-color: #161616;
       display: grid;
       grid-template-columns: 50% 25% 25%;
       border-radius: 1em;
@@ -97,14 +222,33 @@ main {
             }
          }
       }
-
-      &:nth-child(2n) {
-            background-color: #161616;
-         }
    }
 
-	.active-card {
-		background-color: #ff770060 !important;
+	.fuggoben-card {
+		background-color: #cf610062;
+		opacity: 70%;
+	}
+
+	.folyamatban-card {
+		background-color: #cf610086;
+	}
+
+	.torolve-card {
+		background-color: rgb(53, 53, 53);
+	}
+
+	.torolve-cell {
+		text-decoration: line-through;
+		color: rgba(255, 255, 255, 0.5);
+		text-decoration-color: lightgray;
+
+	}
+
+	#card-text {
+		text-align: center;
+		color: var(--accent-color);
+		font-weight: 800;
+		
 	}
 }
 

@@ -3,7 +3,6 @@
    import Topbar from '$lib/components/Topbar.svelte';
 
    export let data;
-   let navigation = 'Folyamatban';
    console.log(data)
 </script>
 

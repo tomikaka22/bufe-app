@@ -43,18 +43,18 @@
       if (tab == 'Nasi') {
          flyIn={x: innerWidth, duration: 500};
          flyOut={x: -innerWidth, duration: 500};
-         navigation = tab
+         navigation = tab;
       };
       if (tab == 'Ital') {
          if (navigation == 'Étel') {
             flyIn={x: innerWidth, duration: 500};
             flyOut={x: -innerWidth, duration: 500};
-            navigation = tab
+            navigation = tab;
          };
          if (navigation == 'Nasi') {
             flyIn={x: -innerWidth, duration: 500};
             flyOut={x: innerWidth, duration: 500};
-            navigation = tab
+            navigation = tab;
          }
       }
    };

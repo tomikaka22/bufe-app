@@ -6,16 +6,19 @@
    export let text;
    export let background;
    export let flyin;
+   export let hideProfile;
 </script>
 
 <div in:fly={flyin} class="header" style="background-color: {background};">
    <div class="header-content">
-      <a class="header-cell" href="{targeturl}"><h2 id="header-left">&lt;</h2><p style="margin-right: auto;">{target}</p></a>
+      <div class="header-cell">
+         <a id="header-left" href="{targeturl}"><span>&lt;</span>{target}</a>
+      </div>
       <div class="header-cell">
          <h1>{text}</h1>
       </div>
       <div class="header-cell">
-         <img id="header-right" src="favicon.png" alt="">
+         <a class:hideProfile id="header-right" href='/profil'><img src="favicon.png" alt=""></a>
       </div>
    </div>
 </div>
@@ -40,24 +43,33 @@
                align-items: center;
                color: white;
 
-               p, h2 {
-                  color: var(--accent-color);
-               }
-
                #header-left {
                   margin-left: 5%;
-                  margin-right: .5ch;
-                  font-size: 3ch;
-                  // filter: invert(85%);
+                  margin-right: auto;
+                  color: var(--accent-color);
 
+                  span {
+                     font-size: 2ch;
+                     margin-right: .5ch;
+                  }
                }
 
                #header-right {
+                  width: 28%;
                   margin-left: auto;
                   margin-right: 5%;
-                  width: 28%;
+
+                  img {
+                     width: 100%;
+                     vertical-align: middle;
+                  }
                }
             }
          }
+
+         .hideProfile {
+            display: none;
+         }
+
       }
 </style>

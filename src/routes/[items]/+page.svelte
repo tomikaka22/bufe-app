@@ -45,16 +45,16 @@
          alert(`Túl sok ${item} van már a kosárban!`)
       }
    };
-
 </script>
 
 <main>
 
    <Topbar
       target={'Vissza'}
-      targeturl={'/list'}
+      targeturl={`/list?Category=${$page.url.searchParams.get('Category')}`}
       text={''}
       background={'none'}
+      hideProfile={0}
    ></Topbar>
 
    <h1>{item}</h1>

@@ -32,10 +32,6 @@
       }
    };
 
-   function vissza() {
-      goto("/list?Category=".concat($page.url.searchParams.get('Category')))
-   };
-
    function buy() {
       if (tempcart[item][1] < maxamount) {
          $cart[item] = [tempcart[item][0] + price, tempcart[item][1] + amount];
@@ -45,6 +41,7 @@
          alert(`Túl sok ${item} van már a kosárban!`)
       }
    };
+
 </script>
 
 <main>

@@ -12,13 +12,13 @@
 <div in:fly={flyin} class="header" style="background-color: {background};">
    <div class="header-content">
       <div class="header-cell">
-         <a id="header-left" href="{targeturl}"><span>&lt;</span>{target}</a>
+         <a data-sveltekit-noscroll id="header-left" href="{targeturl}"><span>&lt;</span>{target}</a>
       </div>
       <div class="header-cell">
          <h1>{text}</h1>
       </div>
       <div class="header-cell">
-         <a class:hideProfile id="header-right" href='/profil'><img src="favicon.png" alt=""></a>
+         <a data-sveltekit-noscroll class:hideProfile id="header-right" href='/profil'><img src="favicon.png" alt=""></a>
       </div>
    </div>
 </div>

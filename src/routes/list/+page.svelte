@@ -1,12 +1,11 @@
 <script>
    import { fly } from 'svelte/transition';
-   import { page } from '$app/stores';
    import { browser } from '$app/environment';
    import { cart, total } from '$lib/stores/Cart.js';
+   import { navigation } from '$lib/stores/Navigation.js';
    import Topbar from '$lib/components/Topbar.svelte';
 
    export let data;
-   let navigation = $page.url.searchParams.get('Category');
    let innerWidth;
    let cartshow = 0;
 
@@ -28,34 +27,28 @@
    $: flyOut={x: -innerWidth, duration: 500};
      // Needed to be reactive because x is undefined on first render
 
-
-     // refakotorert konyorog innentol a kod
-   if (navigation == undefined) {
-      navigation = 'Étel'
-   };
-
    function AnimationDirection(tab) {
       switch (tab) {
          case 'Étel':
             flyIn={x: -innerWidth, duration: 500};
             flyOut={x: innerWidth, duration: 500};
-            navigation = tab
+            $navigation = tab
             break;
          case 'Nasi':
             flyIn={x: innerWidth, duration: 500};
             flyOut={x: -innerWidth, duration: 500};
-            navigation = tab;
+            $navigation = tab
             break;
          case 'Ital':
-            if (navigation == 'Étel') {
+            if ($navigation == 'Étel') {
                flyIn={x: innerWidth, duration: 500};
                flyOut={x: -innerWidth, duration: 500};
-               navigation = tab;
+               $navigation = tab
             };
-            if (navigation == 'Nasi') {
+            if ($navigation == 'Nasi') {
                flyIn={x: -innerWidth, duration: 500};
                flyOut={x: innerWidth, duration: 500};
-               navigation = tab;
+               $navigation = tab
             }
       }
    }
@@ -85,44 +78,44 @@
    ></Topbar>
 
    <div class='outer-div'>
-      {#if navigation == 'Étel'}
+      {#if $navigation == 'Étel'}
          <div in:fly={flyIn} out:fly={flyOut} class='inner-div'>
             <div class='grid-container'>
                {#each Object.entries(data.termek.prices) as _}
-                  <a href="Szaros Étel?Category=Étel" class='grid-cell-icon lite'><img src='favicon.png' alt=''></a>
-                  <a href="Szaros Étel?Category=Étel" class='grid-cell-text lite'>Szaros Étel</a>
-                  <a href="Szaros Étel?Category=Étel" class='grid-cell-price lite'>{data.termek.prices['Szaros Étel']} Ft</a>
-                  <a href="Marhahúsos Étel?Category=Étel" class='grid-cell-icon'><img src='favicon.png' alt=''></a>
-                  <a href="Marhahúsos Étel?Category=Étel" class='grid-cell-text'>Marhahúsos Étel</a>
-                  <a href="Marhahúsos Étel?Category=Étel" class='grid-cell-price'>{data.termek.prices['Marhahúsos Étel']} Ft</a>
+                  <a data-sveltekit-noscroll href="Szaros Étel?Category=Étel" class='grid-cell-icon lite'><img src='favicon.png' alt=''></a>
+                  <a data-sveltekit-noscroll href="Szaros Étel?Category=Étel" class='grid-cell-text lite'>Szaros Étel</a>
+                  <a data-sveltekit-noscroll href="Szaros Étel?Category=Étel" class='grid-cell-price lite'>{data.termek.prices['Szaros Étel']} Ft</a>
+                  <a data-sveltekit-noscroll href="Marhahúsos Étel?Category=Étel" class='grid-cell-icon'><img src='favicon.png' alt=''></a>
+                  <a data-sveltekit-noscroll href="Marhahúsos Étel?Category=Étel" class='grid-cell-text'>Marhahúsos Étel</a>
+                  <a data-sveltekit-noscroll href="Marhahúsos Étel?Category=Étel" class='grid-cell-price'>{data.termek.prices['Marhahúsos Étel']} Ft</a>
                {/each}
             </div>
          </div>
       {/if}
-      {#if navigation == 'Ital'}
+      {#if $navigation == 'Ital'}
          <div in:fly={flyIn} out:fly={flyOut} class='inner-div'>
             <div class='grid-container'>
                {#each Object.entries(data.termek.prices) as _}
-                  <a href="Hell?Category=Ital" class='grid-cell-icon lite'><img src='favicon.png' alt=''></a>
-                  <a href="Hell?Category=Ital" class='grid-cell-text lite'>Hell</a>
-                  <a href="Hell?Category=Ital" class='grid-cell-price lite'>{data.termek.prices['Hell']} Ft</a>
-                  <a href="Xixo?Category=Ital" class='grid-cell-icon'><img src='favicon.png' alt=''></a>
-                  <a href="Xixo?Category=Ital" class='grid-cell-text'>Xixo</a>
-                  <a href="Xixo?Category=Ital" class='grid-cell-price'>{data.termek.prices['Xixo']} Ft</a>
+                  <a data-sveltekit-noscroll href="Hell?Category=Ital" class='grid-cell-icon lite'><img src='favicon.png' alt=''></a>
+                  <a data-sveltekit-noscroll href="Hell?Category=Ital" class='grid-cell-text lite'>Hell</a>
+                  <a data-sveltekit-noscroll href="Hell?Category=Ital" class='grid-cell-price lite'>{data.termek.prices['Hell']} Ft</a>
+                  <a data-sveltekit-noscroll href="Xixo?Category=Ital" class='grid-cell-icon'><img src='favicon.png' alt=''></a>
+                  <a data-sveltekit-noscroll href="Xixo?Category=Ital" class='grid-cell-text'>Xixo</a>
+                  <a data-sveltekit-noscroll href="Xixo?Category=Ital" class='grid-cell-price'>{data.termek.prices['Xixo']} Ft</a>
                {/each}
             </div>
          </div>
       {/if}
-      {#if navigation == 'Nasi'}
+      {#if $navigation == 'Nasi'}
       <div in:fly={flyIn} out:fly={flyOut} class='inner-div'>
 				<div class='grid-container'>
                {#each Object.entries(data.termek.prices) as _}
-                  <a href="Chips?Category=Nasi" class='grid-cell-icon lite'><img src='favicon.png' alt=''></a>
-                  <a href="Chips?Category=Nasi" class='grid-cell-text lite'>Chips</a>
-                  <a href="Chips?Category=Nasi" class='grid-cell-price lite'>{data.termek.prices['Chips']} Ft</a>
-                  <a href="Mogyi?Category=Nasi" class='grid-cell-icon'><img src='favicon.png' alt=''></a>
-                  <a href="Mogyi?Category=Nasi" class='grid-cell-text'>Mogyi</a>
-                  <a href="Mogyi?Category=Nasi" class='grid-cell-price'>{data.termek.prices['Mogyi']} Ft</a>
+                  <a data-sveltekit-noscroll href="Chips?Category=Nasi" class='grid-cell-icon lite'><img src='favicon.png' alt=''></a>
+                  <a data-sveltekit-noscroll href="Chips?Category=Nasi" class='grid-cell-text lite'>Chips</a>
+                  <a data-sveltekit-noscroll href="Chips?Category=Nasi" class='grid-cell-price lite'>{data.termek.prices['Chips']} Ft</a>
+                  <a data-sveltekit-noscroll href="Mogyi?Category=Nasi" class='grid-cell-icon'><img src='favicon.png' alt=''></a>
+                  <a data-sveltekit-noscroll href="Mogyi?Category=Nasi" class='grid-cell-text'>Mogyi</a>
+                  <a data-sveltekit-noscroll href="Mogyi?Category=Nasi" class='grid-cell-price'>{data.termek.prices['Mogyi']} Ft</a>
                {/each}
 				</div>
 			</div>
@@ -131,12 +124,12 @@
 
 {#if cartshow}
 <div in:fly={{y: 100}} style='margin-bottom: 6.5vh;' class='nav'>
-   <div class='Étel' on:click={() => {AnimationDirection('Étel')}}><p class:active='{navigation == 'Étel'}'>Étel</p></div>
-   <div class='Ital' on:click={() => {AnimationDirection('Ital')}}><p class:active='{navigation == 'Ital'}'>Ital</p></div>
-   <div class='Nasi' on:click={() => {AnimationDirection('Nasi')}}><p class:active='{navigation == 'Nasi'}'>Nasi</p></div>
+   <div class='Étel' on:click={() => {AnimationDirection('Étel')}}><p class:active='{$navigation == 'Étel'}'>Étel</p></div>
+   <div class='Ital' on:click={() => {AnimationDirection('Ital')}}><p class:active='{$navigation == 'Ital'}'>Ital</p></div>
+   <div class='Nasi' on:click={() => {AnimationDirection('Nasi')}}><p class:active='{$navigation == 'Nasi'}'>Nasi</p></div>
 </div>
 
-<a href="kosar">
+<a data-sveltekit-noscroll href="kosar">
    <div in:fly={{y: 100, delay: 100}} class='cart'>
       <div class='flex-container'>
          <img id='basket' src='shopping-basket.png' alt=''>
@@ -147,9 +140,9 @@
 
 {:else}
 <div in:fly={{y: 200}} class='nav'>
-   <div class='Étel' on:click={() => {AnimationDirection('Étel')}}><p class:active='{navigation == 'Étel'}'>Étel</p></div>
-   <div class='Ital' on:click={() => {AnimationDirection('Ital')}}><p class:active='{navigation == 'Ital'}'>Ital</p></div>
-   <div class='Nasi' on:click={() => {AnimationDirection('Nasi')}}><p class:active='{navigation == 'Nasi'}'>Nasi</p></div>
+   <div class='Étel' on:click={() => {AnimationDirection('Étel')}}><p class:active='{$navigation == 'Étel'}'>Étel</p></div>
+   <div class='Ital' on:click={() => {AnimationDirection('Ital')}}><p class:active='{$navigation == 'Ital'}'>Ital</p></div>
+   <div class='Nasi' on:click={() => {AnimationDirection('Nasi')}}><p class:active='{$navigation == 'Nasi'}'>Nasi</p></div>
 </div>
 {/if}
 

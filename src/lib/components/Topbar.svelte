@@ -68,7 +68,7 @@
          }
 
          .hideProfile {
-            display: none;
+            visibility: hidden;
          }
 
       }

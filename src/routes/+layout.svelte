@@ -10,11 +10,25 @@
 
 <style lang="scss">
    :global(*) {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
       font-family:  Noto Serif Telugu;
       font-size: 1.78ch;
       --main-color: #252525;
       --accent-color: #cf6100;
    }
+
+	:global(body) {
+		background-color: black;
+      scrollbar-width: none;
+
+      ::-webkit-scrollbar {
+         width: 0;
+      }
+	}
 
    @font-face {
       font-family:  Noto Serif Telugu;

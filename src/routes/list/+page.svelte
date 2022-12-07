@@ -35,29 +35,31 @@
    };
 
    function AnimationDirection(tab) {
-   	if (tab == 'Étel') {
-         flyIn={x: -innerWidth, duration: 500};
-         flyOut={x: innerWidth, duration: 500};
-         navigation = tab
-      };
-      if (tab == 'Nasi') {
-         flyIn={x: innerWidth, duration: 500};
-         flyOut={x: -innerWidth, duration: 500};
-         navigation = tab;
-      };
-      if (tab == 'Ital') {
-         if (navigation == 'Étel') {
+      switch (tab) {
+         case 'Étel':
+            flyIn={x: -innerWidth, duration: 500};
+            flyOut={x: innerWidth, duration: 500};
+            navigation = tab
+            break;
+         case 'Nasi':
             flyIn={x: innerWidth, duration: 500};
             flyOut={x: -innerWidth, duration: 500};
             navigation = tab;
-         };
-         if (navigation == 'Nasi') {
-            flyIn={x: -innerWidth, duration: 500};
-            flyOut={x: innerWidth, duration: 500};
-            navigation = tab;
-         }
+            break;
+         case 'Ital':
+            if (navigation == 'Étel') {
+               flyIn={x: innerWidth, duration: 500};
+               flyOut={x: -innerWidth, duration: 500};
+               navigation = tab;
+            };
+            if (navigation == 'Nasi') {
+               flyIn={x: -innerWidth, duration: 500};
+               flyOut={x: innerWidth, duration: 500};
+               navigation = tab;
+            }
       }
-   };
+   }
+
 </script>
 
 <!-- Binds the innerWidth variable to the width of the monitor to give a more fluid motion -->

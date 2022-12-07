@@ -4,7 +4,6 @@
 
    export let data;
 	delete data.name;
-   console.log(data)
 </script>
 
 <main>

@@ -221,37 +221,29 @@
             grid-area: 1/1;
             margin: 3%;
             margin-bottom: 100%;
+            display: grid;
+            row-gap: .6vh;
 
                .inner-grid {
                   display: grid;
-                  grid-template-columns: 33.33% 33.33% 33.33%;
+                  grid-template-columns: 25% 25% 25% 25%;
                   background-color: #252525;
-                  border-bottom: 1px solid var(--accent-color);
+                  border-radius: 1em;
 
                   &:nth-of-type(2n) {
                      background-color: #161616;
                   }
-
-                  &:last-of-type {
-                     border-bottom: none
-                  }
-
-                  &:first-of-type {
-                     border-top-left-radius: 20px;
-                     border-top-right-radius: 20px;
-                  }
-
-                  &:last-of-type {
-                     border-bottom-left-radius: 20px;
-                     border-bottom-right-radius: 20px;
-                  }
-
 
                   .grid-cell {
                      display: flex;
                      justify-content: center;
                      align-items: center;
                      color: rgba(255, 255, 255, 0.9);
+
+                     &:nth-of-type(2n) {  // termek neve cell
+                        grid-column-start: 2;
+                        grid-column-end: 4;
+                     }
 
                      img {
                         width: 90px;

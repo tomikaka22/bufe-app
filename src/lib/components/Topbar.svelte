@@ -47,10 +47,12 @@
                   margin-left: 5%;
                   margin-right: auto;
                   color: var(--accent-color);
+                  display: flex;
+                  align-items: center;
 
                   span {
-                     font-size: 2ch;
-                     margin-right: .5ch;
+                     font-size: 3ch;
+                     margin-right: 10%;
                   }
                }
 

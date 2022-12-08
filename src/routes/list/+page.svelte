@@ -4,7 +4,6 @@
    import { cart, total } from '$lib/stores/Cart.js';
    import { navigation } from '$lib/stores/Navigation.js';
    import Topbar from '$lib/components/Topbar.svelte';
-
    export let data;
    let innerWidth;
    let cartshow = 0;
@@ -77,48 +76,98 @@
       flyin={{y: -200}}
    ></Topbar>
 
-   <div class='outer-div'>
+   <div class='outer-grid'>
       {#if $navigation == 'Étel'}
-         <div in:fly={flyIn} out:fly={flyOut} class='inner-div'>
-            <div class='grid-container'>
-               {#each Object.entries(data.termek.prices) as _}
-                  <a data-sveltekit-noscroll href="Szaros Étel?Category=Étel" class='grid-cell-icon lite'><img src='favicon.png' alt=''></a>
-                  <a data-sveltekit-noscroll href="Szaros Étel?Category=Étel" class='grid-cell-text lite'>Szaros Étel</a>
-                  <a data-sveltekit-noscroll href="Szaros Étel?Category=Étel" class='grid-cell-price lite'>{data.termek.prices['Szaros Étel']} Ft</a>
-                  <a data-sveltekit-noscroll href="Marhahúsos Étel?Category=Étel" class='grid-cell-icon'><img src='favicon.png' alt=''></a>
-                  <a data-sveltekit-noscroll href="Marhahúsos Étel?Category=Étel" class='grid-cell-text'>Marhahúsos Étel</a>
-                  <a data-sveltekit-noscroll href="Marhahúsos Étel?Category=Étel" class='grid-cell-price'>{data.termek.prices['Marhahúsos Étel']} Ft</a>
-               {/each}
-            </div>
+         <div in:fly={flyIn} out:fly={flyOut} class='grid-container'>
+            {#each Object.keys(data.étel) as termek}
+               <div class="inner-grid">
+                  <a data-sveltekit-noscroll href="{termek}?Category=étel" class='grid-cell'><img src='favicon.png' alt=''></a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=étel" class='grid-cell'>{termek}</a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=étel" class='grid-cell'>{data.étel[termek].price} Ft</a>
+               </div>
+            {/each}
+         <!-- Csak useless padding -->
+            {#each Object.keys(data.étel) as termek}
+               <div class="inner-grid">
+                  <a data-sveltekit-noscroll href="{termek}?Category=étel" class='grid-cell'><img src='favicon.png' alt=''></a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=étel" class='grid-cell'>{termek}</a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=étel" class='grid-cell'>{data.étel[termek].price} Ft</a>
+               </div>
+            {/each}
+            {#each Object.keys(data.étel) as termek}
+               <div class="inner-grid">
+                  <a data-sveltekit-noscroll href="{termek}?Category=étel" class='grid-cell'><img src='favicon.png' alt=''></a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=étel" class='grid-cell'>{termek}</a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=étel" class='grid-cell'>{data.étel[termek].price} Ft</a>
+               </div>
+            {/each}
+            {#each Object.keys(data.étel) as termek}
+               <div class="inner-grid">
+                  <a data-sveltekit-noscroll href="{termek}?Category=étel" class='grid-cell'><img src='favicon.png' alt=''></a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=étel" class='grid-cell'>{termek}</a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=étel" class='grid-cell'>{data.étel[termek].price} Ft</a>
+               </div>
+            {/each}
+         <!-- Csak useless padding -->
          </div>
       {/if}
+
       {#if $navigation == 'Ital'}
-         <div in:fly={flyIn} out:fly={flyOut} class='inner-div'>
-            <div class='grid-container'>
-               {#each Object.entries(data.termek.prices) as _}
-                  <a data-sveltekit-noscroll href="Hell?Category=Ital" class='grid-cell-icon lite'><img src='favicon.png' alt=''></a>
-                  <a data-sveltekit-noscroll href="Hell?Category=Ital" class='grid-cell-text lite'>Hell</a>
-                  <a data-sveltekit-noscroll href="Hell?Category=Ital" class='grid-cell-price lite'>{data.termek.prices['Hell']} Ft</a>
-                  <a data-sveltekit-noscroll href="Xixo?Category=Ital" class='grid-cell-icon'><img src='favicon.png' alt=''></a>
-                  <a data-sveltekit-noscroll href="Xixo?Category=Ital" class='grid-cell-text'>Xixo</a>
-                  <a data-sveltekit-noscroll href="Xixo?Category=Ital" class='grid-cell-price'>{data.termek.prices['Xixo']} Ft</a>
-               {/each}
-            </div>
+         <div in:fly={flyIn} out:fly={flyOut} class='grid-container'>
+            {#each Object.keys(data.ital) as termek}
+               <div class="inner-grid">
+                  <a data-sveltekit-noscroll href="{termek}?Category=ital" class='grid-cell'><img src='favicon.png' alt=''></a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=ital" class='grid-cell'>{termek}</a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=ital" class='grid-cell'>{data.ital[termek].price} Ft</a>
+               </div>
+         <!-- Csak useless padding -->
+               <div class="inner-grid">
+                  <a data-sveltekit-noscroll href="{termek}?Category=ital" class='grid-cell'><img src='favicon.png' alt=''></a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=ital" class='grid-cell'>{termek}</a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=ital" class='grid-cell'>{data.ital[termek].price} Ft</a>
+               </div>
+               <div class="inner-grid">
+                  <a data-sveltekit-noscroll href="{termek}?Category=ital" class='grid-cell'><img src='favicon.png' alt=''></a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=ital" class='grid-cell'>{termek}</a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=ital" class='grid-cell'>{data.ital[termek].price} Ft</a>
+               </div>
+               <div class="inner-grid">
+                  <a data-sveltekit-noscroll href="{termek}?Category=ital" class='grid-cell'><img src='favicon.png' alt=''></a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=ital" class='grid-cell'>{termek}</a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=ital" class='grid-cell'>{data.ital[termek].price} Ft</a>
+               </div>
+          <!-- Csak useless padding -->
+            {/each}
          </div>
       {/if}
+
       {#if $navigation == 'Nasi'}
-      <div in:fly={flyIn} out:fly={flyOut} class='inner-div'>
-				<div class='grid-container'>
-               {#each Object.entries(data.termek.prices) as _}
-                  <a data-sveltekit-noscroll href="Chips?Category=Nasi" class='grid-cell-icon lite'><img src='favicon.png' alt=''></a>
-                  <a data-sveltekit-noscroll href="Chips?Category=Nasi" class='grid-cell-text lite'>Chips</a>
-                  <a data-sveltekit-noscroll href="Chips?Category=Nasi" class='grid-cell-price lite'>{data.termek.prices['Chips']} Ft</a>
-                  <a data-sveltekit-noscroll href="Mogyi?Category=Nasi" class='grid-cell-icon'><img src='favicon.png' alt=''></a>
-                  <a data-sveltekit-noscroll href="Mogyi?Category=Nasi" class='grid-cell-text'>Mogyi</a>
-                  <a data-sveltekit-noscroll href="Mogyi?Category=Nasi" class='grid-cell-price'>{data.termek.prices['Mogyi']} Ft</a>
-               {/each}
-				</div>
-			</div>
+         <div in:fly={flyIn} out:fly={flyOut} class='grid-container'>
+            {#each Object.keys(data.nasi) as termek}
+               <div class="inner-grid">
+                  <a data-sveltekit-noscroll href="{termek}?Category=nasi" class='grid-cell'><img src='favicon.png' alt=''></a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=nasi" class='grid-cell'>{termek}</a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=nasi" class='grid-cell'>{data.nasi[termek].price} Ft</a>
+               </div>
+         <!-- Csak useless padding -->
+               <div class="inner-grid">
+                  <a data-sveltekit-noscroll href="{termek}?Category=nasi" class='grid-cell'><img src='favicon.png' alt=''></a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=nasi" class='grid-cell'>{termek}</a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=nasi" class='grid-cell'>{data.nasi[termek].price} Ft</a>
+               </div>
+               <div class="inner-grid">
+                  <a data-sveltekit-noscroll href="{termek}?Category=nasi" class='grid-cell'><img src='favicon.png' alt=''></a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=nasi" class='grid-cell'>{termek}</a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=nasi" class='grid-cell'>{data.nasi[termek].price} Ft</a>
+               </div>
+               <div class="inner-grid">
+                  <a data-sveltekit-noscroll href="{termek}?Category=nasi" class='grid-cell'><img src='favicon.png' alt=''></a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=nasi" class='grid-cell'>{termek}</a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=nasi" class='grid-cell'>{data.nasi[termek].price} Ft</a>
+               </div>
+         <!-- Csak useless padding -->
+            {/each}
+         </div>
       {/if}
    </div>
 
@@ -131,9 +180,10 @@
 
 <a data-sveltekit-noscroll href="kosar">
    <div in:fly={{y: 100, delay: 100}} class='cart'>
-      <div class='flex-container'>
-         <img id='basket' src='shopping-basket.png' alt=''>
-         <p><b>{$total[0]} Ft</b>({$total[1]} db termék a kosárban.)</p>
+      <div class="cart-grid">
+         <div class="cart-cell">
+            <img src="shopping-basket.png" alt=""> <b>{$total[0]} Ft</b><p>({$total[1]} db termék a kosárban.)</p>
+         </div>
       </div>
    </div>
 </a>
@@ -159,6 +209,59 @@
       overflow-x: hidden; // Swipe-talantias
       overflow-y: scroll;
       position: fixed;
+
+      .outer-grid {
+         display: grid;
+         width: 100vw;
+
+         .grid-container {
+            // Using grid and grid-area 1/1 to force the inner divs into the same area. 
+            // If you don't do this you get a bouncing effect where the incoming div is
+            // pushed below the outgoing div and then 'pops up' jarringly.
+            grid-area: 1/1;
+            margin: 3%;
+            margin-bottom: 100%;
+
+               .inner-grid {
+                  display: grid;
+                  grid-template-columns: 33.33% 33.33% 33.33%;
+                  background-color: #252525;
+                  border-bottom: 1px solid var(--accent-color);
+
+                  &:nth-of-type(2n) {
+                     background-color: #161616;
+                  }
+
+                  &:last-of-type {
+                     border-bottom: none
+                  }
+
+                  &:first-of-type {
+                     border-top-left-radius: 20px;
+                     border-top-right-radius: 20px;
+                  }
+
+                  &:last-of-type {
+                     border-bottom-left-radius: 20px;
+                     border-bottom-right-radius: 20px;
+                  }
+
+
+                  .grid-cell {
+                     display: flex;
+                     justify-content: center;
+                     align-items: center;
+                     color: rgba(255, 255, 255, 0.9);
+
+                     img {
+                        width: 90px;
+                        // margin-right: auto;
+                     }
+                  }
+               }
+         }
+
+      }
 
       .nav {
          display: flex;
@@ -193,101 +296,46 @@
       }
       
       .cart {
-         position: sticky;
+         position: fixed;
          bottom: 0;
+         left: 0;
+         height: 3.5em;
          background-color: var(--accent-color);
-         box-shadow: 0px -3px 7px 1px rgba(0,0,0,0.74);
-         padding: .5ch;
          border-top-left-radius: 2.8em;
          border-top-right-radius: 2.8em;
-         margin: 0 2%;
-         height: 3.5em;
+         width: calc(98% - 2%); // * NAAAAGYON HACKY, de nem megy mashogy. Utálom a css-t
+         margin-left: 2%;
+         padding: .5ch 0;
 
-         .flex-container {
-            display: flex;
-            // width: 100%;
-            height: 6vh;
-            justify-content: center;
+         .cart-grid {
+            height: 100%;
+            width: 100%;
+            display: grid;
 
-            #basket {
-               margin-bottom: 1vh;
-            }
-
-            p {
+            .cart-cell {
                display: flex;
                align-items: center;
+               justify-content: center;
                color: black;
-               margin-left: .6ch;
+
+               img {
+                  width: 12%;
+               }
 
                b {
-                  margin-right: 1ch;
                   font-size: large;
+                  margin-right: 3%;
+                  margin-left: 1%;
+                  margin-top: 1%;
+               }
+
+               p {
+                  margin-top: 1%;
                }
             }
          }
       }
 
-      .outer-div {
-         display: grid;
-         width: 100vw;
-         
-         .inner-div {
-            // Using grid and grid-area 1/1 to force the inner divs into the same area. 
-            // If you don't do this you get a bouncing effect where the incoming div is
-            // pushed below the outgoing div and then 'pops up' jarringly.
-            grid-area: 1/1;
-
-            .grid-container {
-               display: grid;
-               grid-template-columns: 25% 25% 25% 25%;
-               margin: 3%;
-               margin-bottom: 30%;
-
-               a {
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-						background-color: #161616;
-						color: white;
-                  margin-bottom: .6vh;
-               }
-
-               .grid-cell-price {
-                  justify-content: center;
-                  font-size: 90%;
-                  color: white;
-                  border-top-right-radius: 12px;
-                  border-bottom-right-radius: 12px;
-               }
-
-               .grid-cell-text {
-                  grid-column-start: 2;
-                  grid-column-end: 4;
-               }
-
-               .grid-cell-icon {
-                  border-top-left-radius: 12px;
-                  border-bottom-left-radius: 12px;
-                  
-                  img {
-                     width: 100%;
-                     display: block;
-                     margin: auto;
-                  }
-               }
-
-               .lite {
-                  background-color: #252525;
-               }
-            }
-         }
-      }
    }
-
-
-
-	// Animation -------------------------------------------------
-
-
 
  </style>

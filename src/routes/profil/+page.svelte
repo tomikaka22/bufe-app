@@ -91,7 +91,7 @@ export let data;
    button {
       background-color: #161616;
       color: rgba(255, 0, 0, 0.9);
-      border-radius: 25px;
+      border-radius: 20px;
       border: 1px solid #252525;
       padding: 1ch;
       display: block;
@@ -105,7 +105,7 @@ export let data;
    grid-template-columns: auto;
    color: rgba(255, 255, 255, 0.9);
    // border: 1px solid rgba(255, 255, 255, 0.048);
-   border-radius: 25px;
+   border-radius: 20px;
    background-color: #252525;
    margin: 5%;
 
@@ -120,8 +120,8 @@ export let data;
 
       &:last-of-type {
          border-bottom: none;
-         border-bottom-left-radius: 25px;
-         border-bottom-right-radius: 25px;
+         border-bottom-left-radius: 20px;
+         border-bottom-right-radius: 20px;
       }
 
       grid-template-columns: auto auto;

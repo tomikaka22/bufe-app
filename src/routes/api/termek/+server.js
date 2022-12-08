@@ -1,46 +1,48 @@
 import { json } from '@sveltejs/kit';
 
-const prices = {
-	// Étel
-	'Szaros Étel': 1000,
-	'Marhahúsos Étel': 1200,
-	// Ital
-	'Hell': 250,
-	'Xixo': 350,
-	// Nasi
-	'Chips': 240,
-	'Mogyi': 230
+const étel = {
+	'Szaros Étel': {
+		'price': 1000,
+		'maxamount': 0,
+		'description': 'Szendvics, amit teleszart egy nagyon büdöset szaró ember.'
+	},
+	'Marhahúsos Étel': {
+		'price': 1200,
+		'maxamount': 5,
+		'description': 'Szendvics, majdnem nyers marhahússal.'
+	}
 };
 
-let maxamount = {
-	// Étel
-	'Szaros Étel': 0,
-	'Marhahúsos Étel': 5,
-	// Ital
-	'Hell': 10,
-	'Xixo': 7,
-	// Nasi
-	'Chips': 4,
-	'Mogyi': 6
+const ital = {
+	'Hell': {
+		'price': 250,
+		'maxamount': 10,
+		'description': 'Mindenki kedvenc olcsó energiaitala.'
+	},
+	'Xixo': {
+		'price': 350,
+		'maxamount': 7,
+		'description': 'Mindenki kedvenc teának csúfolt üditőitala.'
+	}
 };
 
-const description = {
-	// Étel
-	'Szaros Étel': 'Szendvics, amit teleszart egy nagyon büdöset szaró ember.',
-	'Marhahúsos Étel': 'Szendvics, majdnem nyers marhahússal.',
-	// Ital
-	'Hell': 'Mindenki kedvenc olcsó energiaitala.',
-	'Xixo': 'Mindenki kedvenc teának csúfolt üditőitala.',
-	// Nasi
-	'Chips': 'Nyomokban krumplit is tartalmazó ropogós burgonyaszirom.',
-	'Mogyi': 'Bundás mogyoró amiből csak a wasabi izű ehető.'
-
+const nasi = {
+	'Chips': {
+		'price': 240,
+		'maxamount': 4,
+		'description': 'Nyomokban krumplit is tartalmazó ropogós burgonyaszirom.'
+	},
+	'Mogyi': {
+		'price': 230,
+		'maxamount': 6,
+		'description': 'Bundás mogyoró amiből csak a wasabi izű ehető.'
+	}
 };
 
 export function GET() {
 	return json({
-		prices : prices,
-		description : description,
-		maxamount : maxamount
+		étel: étel,
+		ital: ital,
+		nasi: nasi
 	});
 }

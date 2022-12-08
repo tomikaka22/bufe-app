@@ -7,10 +7,12 @@
 
    export let data;
    const item = $page.params.items;
-   let maxamount = data.maxamount[item];
+   const maxamount = data[$page.url.searchParams.get('Category')][item].maxamount
+   const description = data[$page.url.searchParams.get('Category')][item].description
+
    let tempcart = {[item] : [0,0]};
    $: amount = 1;
-   $: price = data.prices[item] * amount;
+   $: price = data[$page.url.searchParams.get('Category')][item].price * amount;
 
    if (localStorage.getItem('CartContent') != null) {
       $cart = JSON.parse(localStorage.getItem('CartContent'));
@@ -56,7 +58,7 @@
 
    <h1>{item}</h1>
    {#key price}<h2 in:fade="{{duration: 200}}">{price} Ft</h2>{/key}
-   <h4>{data.description[item]}</h4>
+   <h4>{description}</h4>
    <div class="image"><img src="favicon.png" alt="" /></div>
 
 {#if maxamount != 0}

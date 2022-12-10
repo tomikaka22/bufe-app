@@ -46,7 +46,7 @@
    };
 
    function addAmount(item) {
-      if ($cart[item[0]][1] < data.maxamount[item[0]]) {
+      if ($cart[item[0]][1] < data.termekek[item[0]].maxamount) {
          let price = item[1][0] / item[1][1];
          $cart[item[0]][0] += price;
          $cart[item[0]][1]++;

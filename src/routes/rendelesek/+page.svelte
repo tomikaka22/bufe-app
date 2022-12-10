@@ -19,7 +19,7 @@
    {#each [...Object.keys(data)].reverse() as item ([...Object.keys(data)].reverse())}
 
 		{#if data[item].status == 'folyamatban'}
-			<p id="card-text">folyamatban</p>
+			<p id="card-text">Átvehető!</p>
 		{:else if data[item].status == 'torolve'}
 			<p style="color: rgba(255, 255, 255, 0.5)" id="card-text">törölve</p>
 		{:else if data[item].status == ''}
@@ -224,16 +224,18 @@ main {
    }
 
 	.fuggoben-card {
-		background-color: #cf610062;
+		outline: 2px solid #cf610086;
 		opacity: 70%;
 	}
 
 	.folyamatban-card {
+		outline: 2px solid var(--accent-color);
 		background-color: #cf610086;
 	}
 
 	.torolve-card {
 		background-color: rgb(53, 53, 53);
+		opacity: 70%;
 	}
 
 	.torolve-cell {

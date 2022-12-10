@@ -4,7 +4,9 @@
    import { cart, total } from '$lib/stores/Cart.js';
    import { navigation } from '$lib/stores/Navigation.js';
    import Topbar from '$lib/components/Topbar.svelte';
+
    export let data;
+   console.log(data.termekek)
    let innerWidth;
    let cartshow = 0;
 
@@ -79,34 +81,30 @@
    <div in:slide={{duration: 700}} class='list-grid'>
       {#if $navigation == 'Étel'}
          <div in:fly={flyIn} out:fly={flyOut} class='grid-container'>
-            {#each Object.keys(data.étel) as termek}
+            {#each Object.keys(data.termekek) as termek}
+               {#if data.termekek[termek].category == $navigation}
                <div class="inner-grid">
                   <a data-sveltekit-noscroll href="{termek}?Category=étel" class='grid-cell'><img src='favicon.png' alt=''></a>
                   <a data-sveltekit-noscroll href="{termek}?Category=étel" class='grid-cell'>{termek}</a>
-                  <a data-sveltekit-noscroll href="{termek}?Category=étel" class='grid-cell'>{data.étel[termek].price} Ft</a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=étel" class='grid-cell'>{data.termekek[termek].price} Ft</a>
                </div>
-            {/each}
          <!-- Csak useless padding -->
-            {#each Object.keys(data.étel) as termek}
                <div class="inner-grid">
                   <a data-sveltekit-noscroll href="{termek}?Category=étel" class='grid-cell'><img src='favicon.png' alt=''></a>
                   <a data-sveltekit-noscroll href="{termek}?Category=étel" class='grid-cell'>{termek}</a>
-                  <a data-sveltekit-noscroll href="{termek}?Category=étel" class='grid-cell'>{data.étel[termek].price} Ft</a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=étel" class='grid-cell'>{data.termekek[termek].price} Ft</a>
                </div>
-            {/each}
-            {#each Object.keys(data.étel) as termek}
                <div class="inner-grid">
                   <a data-sveltekit-noscroll href="{termek}?Category=étel" class='grid-cell'><img src='favicon.png' alt=''></a>
                   <a data-sveltekit-noscroll href="{termek}?Category=étel" class='grid-cell'>{termek}</a>
-                  <a data-sveltekit-noscroll href="{termek}?Category=étel" class='grid-cell'>{data.étel[termek].price} Ft</a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=étel" class='grid-cell'>{data.termekek[termek].price} Ft</a>
                </div>
-            {/each}
-            {#each Object.keys(data.étel) as termek}
                <div class="inner-grid">
                   <a data-sveltekit-noscroll href="{termek}?Category=étel" class='grid-cell'><img src='favicon.png' alt=''></a>
                   <a data-sveltekit-noscroll href="{termek}?Category=étel" class='grid-cell'>{termek}</a>
-                  <a data-sveltekit-noscroll href="{termek}?Category=étel" class='grid-cell'>{data.étel[termek].price} Ft</a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=étel" class='grid-cell'>{data.termekek[termek].price} Ft</a>
                </div>
+               {/if}
             {/each}
          <!-- Csak useless padding -->
          </div>
@@ -114,58 +112,62 @@
 
       {#if $navigation == 'Ital'}
          <div in:fly={flyIn} out:fly={flyOut} class='grid-container'>
-            {#each Object.keys(data.ital) as termek}
+            {#each Object.keys(data.termekek) as termek}
+               {#if data.termekek[termek].category == $navigation}
                <div class="inner-grid">
                   <a data-sveltekit-noscroll href="{termek}?Category=ital" class='grid-cell'><img src='favicon.png' alt=''></a>
                   <a data-sveltekit-noscroll href="{termek}?Category=ital" class='grid-cell'>{termek}</a>
-                  <a data-sveltekit-noscroll href="{termek}?Category=ital" class='grid-cell'>{data.ital[termek].price} Ft</a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=ital" class='grid-cell'>{data.termekek[termek].price} Ft</a>
                </div>
          <!-- Csak useless padding -->
                <div class="inner-grid">
                   <a data-sveltekit-noscroll href="{termek}?Category=ital" class='grid-cell'><img src='favicon.png' alt=''></a>
                   <a data-sveltekit-noscroll href="{termek}?Category=ital" class='grid-cell'>{termek}</a>
-                  <a data-sveltekit-noscroll href="{termek}?Category=ital" class='grid-cell'>{data.ital[termek].price} Ft</a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=ital" class='grid-cell'>{data.termekek[termek].price} Ft</a>
                </div>
                <div class="inner-grid">
                   <a data-sveltekit-noscroll href="{termek}?Category=ital" class='grid-cell'><img src='favicon.png' alt=''></a>
                   <a data-sveltekit-noscroll href="{termek}?Category=ital" class='grid-cell'>{termek}</a>
-                  <a data-sveltekit-noscroll href="{termek}?Category=ital" class='grid-cell'>{data.ital[termek].price} Ft</a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=ital" class='grid-cell'>{data.termekek[termek].price} Ft</a>
                </div>
                <div class="inner-grid">
                   <a data-sveltekit-noscroll href="{termek}?Category=ital" class='grid-cell'><img src='favicon.png' alt=''></a>
                   <a data-sveltekit-noscroll href="{termek}?Category=ital" class='grid-cell'>{termek}</a>
-                  <a data-sveltekit-noscroll href="{termek}?Category=ital" class='grid-cell'>{data.ital[termek].price} Ft</a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=ital" class='grid-cell'>{data.termekek[termek].price} Ft</a>
                </div>
-          <!-- Csak useless padding -->
+         <!-- Csak useless padding -->
+               {/if}
             {/each}
          </div>
       {/if}
 
       {#if $navigation == 'Nasi'}
          <div in:fly={flyIn} out:fly={flyOut} class='grid-container'>
-            {#each Object.keys(data.nasi) as termek}
+            {#each Object.keys(data.termekek) as termek}
+               {#if data.termekek[termek].category == $navigation}
                <div class="inner-grid">
                   <a data-sveltekit-noscroll href="{termek}?Category=nasi" class='grid-cell'><img src='favicon.png' alt=''></a>
                   <a data-sveltekit-noscroll href="{termek}?Category=nasi" class='grid-cell'>{termek}</a>
-                  <a data-sveltekit-noscroll href="{termek}?Category=nasi" class='grid-cell'>{data.nasi[termek].price} Ft</a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=nasi" class='grid-cell'>{data.termekek[termek].price} Ft</a>
                </div>
          <!-- Csak useless padding -->
                <div class="inner-grid">
                   <a data-sveltekit-noscroll href="{termek}?Category=nasi" class='grid-cell'><img src='favicon.png' alt=''></a>
                   <a data-sveltekit-noscroll href="{termek}?Category=nasi" class='grid-cell'>{termek}</a>
-                  <a data-sveltekit-noscroll href="{termek}?Category=nasi" class='grid-cell'>{data.nasi[termek].price} Ft</a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=nasi" class='grid-cell'>{data.termekek[termek].price} Ft</a>
                </div>
                <div class="inner-grid">
                   <a data-sveltekit-noscroll href="{termek}?Category=nasi" class='grid-cell'><img src='favicon.png' alt=''></a>
                   <a data-sveltekit-noscroll href="{termek}?Category=nasi" class='grid-cell'>{termek}</a>
-                  <a data-sveltekit-noscroll href="{termek}?Category=nasi" class='grid-cell'>{data.nasi[termek].price} Ft</a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=nasi" class='grid-cell'>{data.termekek[termek].price} Ft</a>
                </div>
                <div class="inner-grid">
                   <a data-sveltekit-noscroll href="{termek}?Category=nasi" class='grid-cell'><img src='favicon.png' alt=''></a>
                   <a data-sveltekit-noscroll href="{termek}?Category=nasi" class='grid-cell'>{termek}</a>
-                  <a data-sveltekit-noscroll href="{termek}?Category=nasi" class='grid-cell'>{data.nasi[termek].price} Ft</a>
+                  <a data-sveltekit-noscroll href="{termek}?Category=nasi" class='grid-cell'>{data.termekek[termek].price} Ft</a>
                </div>
          <!-- Csak useless padding -->
+               {/if}
             {/each}
          </div>
       {/if}

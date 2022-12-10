@@ -114,20 +114,7 @@ setInterval(reloadData, 10000);
 </main>
 
 <style lang="scss">
-   :global(*) {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      text-decoration: none;
-      -webkit-tap-highlight-color: transparent;
-   }
-
-	:global(body) {
-		background-color: rgb(15, 15, 15);
-      scrollbar-width: none;
-	}
-
-   /* ----------------------------------------- */
+   
    main {
       .grid-container {
          min-height: 100vh;

@@ -134,7 +134,7 @@ let form;
 
    img {
       border-radius: 50%;
-      width: 100px;
+      width: 9rem;
    }
 }
 </style>

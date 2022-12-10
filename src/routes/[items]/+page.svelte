@@ -77,19 +77,6 @@
 </main>
 
 <style lang="scss">
-   :global(*) {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      text-decoration: none;
-      -webkit-tap-highlight-color: transparent;
-   }
-
-	:global(body) {
-		background-color: black;
-	}
-
-   /* ----------------------------------------- */
 
    h1 {
       text-align: center;

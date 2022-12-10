@@ -25,8 +25,9 @@
 		background-color: black;
       scrollbar-width: none;
 
-      ::-webkit-scrollbar {
+      &::-webkit-scrollbar {
          width: 0;
+         display: none;
       }
 	}
 

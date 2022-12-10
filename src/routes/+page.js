@@ -14,11 +14,14 @@ let splash = [
 	'Akik OTL-t hallgatnak nem számitanak.',
 	'Pár rendelés és utóléred a kövér macskáimat.',
 	'Tiborral ne húzz ujjat.',
-	'Ne engedd szék vagy fűzet közelébe!',
 	'App bepukkasztva',
 	'Release date: valamikor',
 	'Májkölszoft Binbóz',
-	'Általam kedvelt tanároknak jó napot kivánok!'
+	'Általam kedvelt tanároknak jónapot kivánok!',
+	'🅱️ortfolio.',
+	'Balu Mester > Sajt32',
+	'Húszezresből mennyi van?',
+	'““”̿ ̿ ̿ ̿ ̿’̿’̵͇̿̿з=(*‿*)=ε/̵͇̿̿/̿ ̿ ̿ ̿ ̿’““'
 
 ];
 

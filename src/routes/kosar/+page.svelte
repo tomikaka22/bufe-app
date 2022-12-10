@@ -1,5 +1,6 @@
 <script>
    import { slide, fade } from "svelte/transition";
+   import { goto } from "$app/navigation"
    import { cart, total } from "$lib/stores/Cart.js";
    import Topbar from '$lib/components/Topbar.svelte';
    import BottomButton from '$lib/components/BottomButton.svelte';
@@ -23,7 +24,6 @@
       localStorage.clear();
       $cart = {};
       $total = [0,0];
-      history.back();
    };
 
    function subtractAmount(item) {
@@ -67,6 +67,7 @@
       .then(data => {
          alert(`Köszönjük a vásárlást! \nRendelés száma: #${data.orderID}`);
          urites()
+         goto('/rendelesek')
       })
       .catch(error => {
          alert(error)
@@ -86,7 +87,7 @@
    ></Topbar>
 
    <div class="urites">
-      <button on:click={urites}>Űrités</button>
+      <button on:click={() => {urites(); goto('/')}}>Űrités</button>
    </div>
 
    {#key $total}

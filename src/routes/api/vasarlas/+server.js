@@ -82,6 +82,7 @@ export async function PATCH({ request, locals }) {
 
 }
 
+// torles
 export async function DELETE({ request, locals }) {
 
 	try {

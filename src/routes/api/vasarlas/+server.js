@@ -82,18 +82,16 @@ export async function PATCH({ request, locals }) {
 
 }
 
-// torles
 export async function DELETE({ request, locals }) {
-
 	try {
 		if (admins.includes(locals.pb.authStore.baseModel.id)) {
 			let adat = await request.json();
 
-			locals.pb.collection('rendeles_elozmeny').update(kesz[adat.item].id, { 'status': 'torolve' }); // update rendeles status
-		
 			if (adat.type == 'kesz') {
+				locals.pb.collection('rendeles_elozmeny').update(kesz[adat.item].id, { 'status': 'torolve' }); // update rendeles status
 				delete kesz[adat.item];
 			} else {
+				locals.pb.collection('rendeles_elozmeny').update(rendelesek[adat.item].id, { 'status': 'torolve' }); // update rendeles status
 				delete rendelesek[adat.item];
 			}
 		

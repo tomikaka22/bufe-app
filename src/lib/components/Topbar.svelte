@@ -18,7 +18,7 @@
          <h1>{text}</h1>
       </div>
       <div class="header-cell">
-         <a data-sveltekit-noscroll class:hideProfile id="header-right" href='/profil'><img src="favicon.png" alt=""></a>
+         <a data-sveltekit-noscroll class:hideProfile id="header-right" href='/profil'><img src="/api/avatar" alt=""></a>
       </div>
    </div>
 </div>

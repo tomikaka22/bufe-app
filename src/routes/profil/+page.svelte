@@ -1,9 +1,11 @@
 <script>
-import Topbar from '$lib/components/Topbar.svelte';
+import { page } from "$app/stores";
 import { slide, fly } from 'svelte/transition';
 import { cubicOut } from 'svelte/easing';
+import Topbar from '$lib/components/Topbar.svelte';
 
 export let data;
+let form;
 </script>
 
 <main>
@@ -18,14 +20,25 @@ export let data;
    ></Topbar>
 
    <div in:fly={{y: -120, easing: cubicOut}} class="profile">
-      <img src="favicon.png" alt="">
-      <h1>{data.name}</h1>
+      <form bind:this={form} action="?/changeAvatar" method="post" enctype="multipart/form-data">
+         <label for="avatar">
+            <img src="/api/avatar" alt="">
+            <label for="avatar">
+               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+               </svg>
+            </label>
+         </label>
+         <h1>{data.name}</h1>
+         <input on:input={form.submit()} hidden type="file" name="avatar" id="avatar" accept="image/*">
+      </form>
    </div>
+
 
    <div in:slide class="options-container">
       <div class="options-grid">
          <div class="options-cell">
-            <p>Lorem.</p>
+            <p>Jelszó módositása</p>
          </div>
          <div class="options-cell">
             <p>❌</p>
@@ -39,42 +52,10 @@ export let data;
             <p>✔️</p>
          </div>
       </div>
-      <div class="options-grid">
-         <div class="options-cell">
-            <p>Lorem, ipsum dolor.</p>
-         </div>
-         <div class="options-cell">
-            <p>❌</p>
-         </div>
-      </div>
-      <div class="options-grid">
-         <div class="options-cell">
-            <p>Lorem ipsum dolor sit.</p>
-         </div>
-         <div class="options-cell">
-            <p>✔️</p>
-         </div>
-      </div>
-      <div class="options-grid">
-         <div class="options-cell">
-            <p>Lorem ipsum dolor sit amet.</p>
-         </div>
-         <div class="options-cell">
-            <p>❌</p>
-         </div>
-      </div>
-      <div class="options-grid">
-         <div class="options-cell">
-            <p>Lorem ipsum dolor sit amet consectetur.</p>
-         </div>
-         <div class="options-cell">
-            <p>✔️</p>
-         </div>
-      </div>
    </div>
 
    <div in:fly={{y: 120}} class="logout">
-      <form method="POST">
+      <form method="POST" action="?/logout">
          <button>Kijelentkezés</button>
       </form>  
    </div>
@@ -144,6 +125,11 @@ export let data;
    h1 {
       margin-top: 1ch;
       font-size: x-large;
+   }
+
+   svg {
+      width: 10%;
+      position: fixed;
    }
 }
 </style>

@@ -1,5 +1,5 @@
 <script>
-   import { fly } from 'svelte/transition';
+   import { fly, slide } from 'svelte/transition';
    import { browser } from '$app/environment';
    import { cart, total } from '$lib/stores/Cart.js';
    import { navigation } from '$lib/stores/Navigation.js';
@@ -76,7 +76,7 @@
       flyin={{y: -200}}
    ></Topbar>
 
-   <div class='outer-grid'>
+   <div in:slide={{duration: 700}} class='list-grid'>
       {#if $navigation == 'Étel'}
          <div in:fly={flyIn} out:fly={flyOut} class='grid-container'>
             {#each Object.keys(data.étel) as termek}
@@ -210,7 +210,7 @@
       overflow-y: scroll;
       position: fixed;
 
-      .outer-grid {
+      .list-grid {
          display: grid;
          width: 100vw;
 
@@ -239,6 +239,7 @@
                      justify-content: center;
                      align-items: center;
                      color: rgba(255, 255, 255, 0.9);
+                     height: 90px;
 
                      &:nth-of-type(2n) {  // termek neve cell
                         grid-column-start: 2;
@@ -246,8 +247,7 @@
                      }
 
                      img {
-                        width: 90px;
-                        // margin-right: auto;
+                        height: 100%;
                      }
                   }
                }

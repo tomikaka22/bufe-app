@@ -64,6 +64,7 @@
                   img {
                      width: 100%;
                      vertical-align: middle;
+                     border-radius: 50%;
                   }
                }
             }

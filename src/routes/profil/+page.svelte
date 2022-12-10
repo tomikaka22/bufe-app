@@ -131,5 +131,10 @@ let form;
       width: 10%;
       position: fixed;
    }
+
+   img {
+      border-radius: 50%;
+      width: 100px;
+   }
 }
 </style>

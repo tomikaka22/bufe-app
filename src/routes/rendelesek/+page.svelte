@@ -16,50 +16,54 @@
       flyin={{y: -200}}
    ></Topbar>
 
-   {#each [...Object.keys(data)].reverse() as item ([...Object.keys(data)].reverse())}
+	<div class="total">
+		<h3>Összesen: <span>{data.total} Ft</span></h3>
+	</div>
 
-		{#if data[item].status == 'folyamatban'}
+   {#each [...Object.keys(data.elozmenyLista)].reverse() as item ([...Object.keys(data.elozmenyLista)].reverse())}
+
+		{#if data.elozmenyLista[item].status == 'folyamatban'}
 			<p id="card-text">Átvehető!</p>
-		{:else if data[item].status == 'torolve'}
+		{:else if data.elozmenyLista[item].status == 'torolve'}
 			<p style="color: rgba(255, 255, 255, 0.5)" id="card-text">törölve</p>
-		{:else if data[item].status == ''}
+		{:else if data.elozmenyLista[item].status == ''}
 			<p style="color: #cf610088;" id="card-text">Függőben</p>
 		{:else}
-			<p style="color: rgba(255, 255, 255, 0.8);" id="card-text">{data[item].updated.slice(0, -8)}</p>
+			<p style="color: rgba(255, 255, 255, 0.8);" id="card-text">{data.elozmenyLista[item].updated.slice(0, -8)}</p>
 		{/if}
 
-		{#if data[item].status == 'fuggoben'}
+		{#if data.elozmenyLista[item].status == 'fuggoben'}
 			<div in:slide class="rendeles-card fuggoben-card">
 				<div class="rendeles-cell">
-					{#each [...Object.keys(data[item].rendeles)].reverse() as a}
+					{#each [...Object.keys(data.elozmenyLista[item].rendeles)].reverse() as a}
 						{#if a != 'name'}
-							<p class:torolve-cell='{data[item].status == 'torolve'}'>{a}</p>
+							<p class:torolve-cell='{data.elozmenyLista[item].status == 'torolve'}'>{a}</p>
 						{/if}
 					{/each}
 				</div>
 
 				<div class="rendeles-cell">
-					{#each [...Object.keys(data[item].rendeles)].reverse() as a}
+					{#each [...Object.keys(data.elozmenyLista[item].rendeles)].reverse() as a}
 						{#if a != 'name'}
-							<p class:torolve-cell='{data[item].status == 'torolve'}'>{data[item].rendeles[a][0]} db</p>
+							<p class:torolve-cell='{data.elozmenyLista[item].status == 'torolve'}'>{data.elozmenyLista[item].rendeles[a][0]} db</p>
 						{/if}
 					{/each}
 				</div>
 
 				<div class="rendeles-cell">
-					{#each [...Object.keys(data[item].rendeles)].reverse() as a}
+					{#each [...Object.keys(data.elozmenyLista[item].rendeles)].reverse() as a}
 						{#if a != 'name'}
-							<p class:torolve-cell='{data[item].status == 'torolve'}'>{data[item].rendeles[a][1]} Ft</p>
+							<p class:torolve-cell='{data.elozmenyLista[item].status == 'torolve'}'>{data.elozmenyLista[item].rendeles[a][1]} Ft</p>
 						{/if}
 					{/each}
 				</div>
 			</div>
 		{/if}
 
-		{#if data[item].status == 'folyamatban'}
+		{#if data.elozmenyLista[item].status == 'folyamatban'}
 		<div in:slide class="rendeles-card folyamatban-card">
 			<div class="rendeles-cell">
-				{#each [...Object.keys(data[item].rendeles)].reverse() as a}
+				{#each [...Object.keys(data.elozmenyLista[item].rendeles)].reverse() as a}
 					{#if a != 'name'}
 						<p>{a}</p>
 					{/if}
@@ -67,55 +71,55 @@
 			</div>
 
 			<div class="rendeles-cell">
-				{#each [...Object.keys(data[item].rendeles)].reverse() as a}
+				{#each [...Object.keys(data.elozmenyLista[item].rendeles)].reverse() as a}
 					{#if a != 'name'}
-						<p>{data[item].rendeles[a][0]} db</p>
+						<p>{data.elozmenyLista[item].rendeles[a][0]} db</p>
 					{/if}
 				{/each}
 			</div>
 
 			<div class="rendeles-cell">
-				{#each [...Object.keys(data[item].rendeles)].reverse() as a}
+				{#each [...Object.keys(data.elozmenyLista[item].rendeles)].reverse() as a}
 					{#if a != 'name'}
-						<p>{data[item].rendeles[a][1]} Ft</p>
+						<p>{data.elozmenyLista[item].rendeles[a][1]} Ft</p>
 					{/if}
 				{/each}
 			</div>
 		</div>
 	{/if}
 
-	{#if data[item].status == 'torolve'}
+	{#if data.elozmenyLista[item].status == 'torolve'}
 		<div in:slide class="rendeles-card torolve-card">
 			<div class="rendeles-cell">
-				{#each [...Object.keys(data[item].rendeles)].reverse() as a}
+				{#each [...Object.keys(data.elozmenyLista[item].rendeles)].reverse() as a}
 					{#if a != 'name'}
-						<p class:torolve-cell='{data[item].status == 'torolve'}'>{a}</p>
+						<p class:torolve-cell='{data.elozmenyLista[item].status == 'torolve'}'>{a}</p>
 					{/if}
 				{/each}
 			</div>
 
 			<div class="rendeles-cell">
-				{#each [...Object.keys(data[item].rendeles)].reverse() as a}
+				{#each [...Object.keys(data.elozmenyLista[item].rendeles)].reverse() as a}
 					{#if a != 'name'}
-						<p class:torolve-cell='{data[item].status == 'torolve'}'>{data[item].rendeles[a][0]} db</p>
+						<p class:torolve-cell='{data.elozmenyLista[item].status == 'torolve'}'>{data.elozmenyLista[item].rendeles[a][0]} db</p>
 					{/if}
 				{/each}
 			</div>
 
 			<div class="rendeles-cell">
-				{#each [...Object.keys(data[item].rendeles)].reverse() as a}
+				{#each [...Object.keys(data.elozmenyLista[item].rendeles)].reverse() as a}
 					{#if a != 'name'}
-						<p class:torolve-cell='{data[item].status == 'torolve'}'>{data[item].rendeles[a][1]} Ft</p>
+						<p class:torolve-cell='{data.elozmenyLista[item].status == 'torolve'}'>{data.elozmenyLista[item].rendeles[a][1]} Ft</p>
 					{/if}
 				{/each}
 			</div>
 		</div>
 	{/if}
 
-	{#if data[item].status == 'kesz'}
+	{#if data.elozmenyLista[item].status == 'kesz'}
 		<div in:slide class="rendeles-card kesz-card">
 			<div class="rendeles-cell">
-				{#each [...Object.keys(data[item].rendeles)].reverse() as a}
+				{#each [...Object.keys(data.elozmenyLista[item].rendeles)].reverse() as a}
 					{#if a != 'name'}
 						<p>{a}</p>
 					{/if}
@@ -123,27 +127,27 @@
 			</div>
 
 			<div class="rendeles-cell">
-				{#each [...Object.keys(data[item].rendeles)].reverse() as a}
+				{#each [...Object.keys(data.elozmenyLista[item].rendeles)].reverse() as a}
 					{#if a != 'name'}
-						<p>{data[item].rendeles[a][0]} db</p>
+						<p>{data.elozmenyLista[item].rendeles[a][0]} db</p>
 					{/if}
 				{/each}
 			</div>
 
 			<div class="rendeles-cell">
-				{#each [...Object.keys(data[item].rendeles)].reverse() as a}
+				{#each [...Object.keys(data.elozmenyLista[item].rendeles)].reverse() as a}
 					{#if a != 'name'}
-						<p>{data[item].rendeles[a][1]} Ft</p>
+						<p>{data.elozmenyLista[item].rendeles[a][1]} Ft</p>
 					{/if}
 				{/each}
 			</div>
 		</div>
 	{/if}
 
-	{#if data[item].status == ''}
+	{#if data.elozmenyLista[item].status == ''}
 		<div in:slide class="rendeles-card fuggoben-card">
 			<div class="rendeles-cell">
-				{#each [...Object.keys(data[item].rendeles)].reverse() as a}
+				{#each [...Object.keys(data.elozmenyLista[item].rendeles)].reverse() as a}
 					{#if a != 'name'}
 						<p>{a}</p>
 					{/if}
@@ -151,17 +155,17 @@
 			</div>
 
 			<div class="rendeles-cell">
-				{#each [...Object.keys(data[item].rendeles)].reverse() as a}
+				{#each [...Object.keys(data.elozmenyLista[item].rendeles)].reverse() as a}
 					{#if a != 'name'}
-						<p>{data[item].rendeles[a][0]} db</p>
+						<p>{data.elozmenyLista[item].rendeles[a][0]} db</p>
 					{/if}
 				{/each}
 			</div>
 
 			<div class="rendeles-cell">
-				{#each [...Object.keys(data[item].rendeles)].reverse() as a}
+				{#each [...Object.keys(data.elozmenyLista[item].rendeles)].reverse() as a}
 					{#if a != 'name'}
-						<p>{data[item].rendeles[a][1]} Ft</p>
+						<p>{data.elozmenyLista[item].rendeles[a][1]} Ft</p>
 					{/if}
 				{/each}
 			</div>
@@ -194,6 +198,23 @@
    /* ----------------------------------------- */
 
 main {
+
+	.total {
+		background-color: #252525;
+		padding: .5em;
+		margin: 3%;
+		margin-bottom: 5%;
+		border-radius: 1em;
+
+		h3 {
+			color: white;
+			text-align: center;
+
+			span {
+				color: var(--accent-color);
+			}
+		}
+	}
 
    .rendeles-card {
       width: 85vw;

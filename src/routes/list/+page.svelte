@@ -6,7 +6,6 @@
    import Topbar from '$lib/components/Topbar.svelte';
 
    export let data;
-   console.log(data.termekek)
    let innerWidth;
    let cartshow = 0;
 
@@ -14,13 +13,6 @@
       if (localStorage.getItem('CartContent') != null) {
          cartshow = 1;
          $cart = JSON.parse(localStorage.getItem('CartContent'));
-         // Kosar szamitas -- minden latogatasnal urja szamolja. Nem tudom hogy mennyire expnesive a szamolas, lehet jobb lenne elraktarozni, lehet nem.
-         $total = [0,0]
-         for (let i = 0; i < Object.keys($cart).length; i++) { // atmegy minden key-en a kosar obejtben
-            let cnt = $cart[Object.keys($cart)[i]]; // cnt = kosar object i-ik eleme
-            $total[1] += Number(cnt[1]);  // hozzaadja a kosar object i-ik kulcsanak az 1. tagjat
-            $total[0] += Number(cnt[0])   // hozzaadja a kosar object i-ik kulcsanak a 2. tagjat
-         };
       };
    };
 

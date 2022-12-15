@@ -2,7 +2,7 @@
    import { page } from "$app/stores";
    import { goto } from "$app/navigation";
    import { fade } from "svelte/transition";
-   import { cart } from "$lib/stores/Cart.js";
+   import { cart, total } from "$lib/stores/Cart.js";
    import Topbar from '$lib/components/Topbar.svelte';
 
    export let data;
@@ -37,7 +37,19 @@
    function buy() {
       if (tempcart[item][1] < maxamount) {
          $cart[item] = [tempcart[item][0] + price, tempcart[item][1] + amount];
+
+         $total = [0,0]
+         for (let i = 0; i < Object.keys($cart).length; i++) { // atmegy minden key-en a kosar obejtben
+            console.log(Object.keys($cart))
+            console.log(i,Object.keys($cart)[i])
+            let cnt = $cart[Object.keys($cart)[i]]; // cnt = kosar object i-ik eleme
+            $total[1] += Number(cnt[1]);  // hozzaadja a kosar object i-ik kulcsanak az 1. tagjat (ár)
+            $total[0] += Number(cnt[0])   // hozzaadja a kosar object i-ik kulcsanak a 2. tagjat (mennyiség)
+         };
+
          localStorage.setItem('CartContent',JSON.stringify($cart));
+         localStorage.setItem('Total',JSON.stringify($total));
+
          goto("/list?Category=".concat($page.url.searchParams.get('Category')))
       } else {
          alert(`Túl sok ${item} van már a kosárban!`)

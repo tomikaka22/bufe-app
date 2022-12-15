@@ -9,6 +9,7 @@
 
    if (localStorage.getItem('CartContent') != null) {
       $cart = JSON.parse(localStorage.getItem('CartContent'));
+      $total = JSON.parse(localStorage.getItem('Total'));
    }
 
    function recalculate() {

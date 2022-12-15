@@ -66,6 +66,7 @@
       text={''}
       background={'none'}
       hideProfile={0}
+      flyin={0}
    ></Topbar>
 
    <h1>{item}</h1>

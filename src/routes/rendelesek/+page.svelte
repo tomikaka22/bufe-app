@@ -14,6 +14,7 @@
       text={'Rendelések'}
       background={'none'}
       flyin={{y: -200}}
+		hideProfile={0}
    ></Topbar>
 
 	<div class="total">

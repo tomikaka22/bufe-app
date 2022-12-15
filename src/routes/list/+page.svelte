@@ -68,6 +68,7 @@
       text={'Termékek'}
       background={'#252525'}
       flyin={{y: -200}}
+      hideProfile={0}
    ></Topbar>
 
    <div in:slide={{duration: 700}} class='list-grid'>

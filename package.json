@@ -10,17 +10,13 @@
 	},
 	"devDependencies": {
 		"@sveltejs/kit": "next",
-		"@vite-pwa/sveltekit": "^0.0.1",
 		"eslint": "^8.28.0",
 		"sass": "^1.54.9",
 		"svelte": "^3.44.0",
 		"svelte-preprocess": "^4.10.7",
-		"vite": "^3.1.0",
-		"vite-plugin-pwa": "^0.13.3"
+		"vite": "^4.0.0"
 	},
 	"dependencies": {
-		"@steeze-ui/heroicons": "^2.2.1",
-		"@steeze-ui/svelte-icon": "^1.3.2",
 		"@sveltejs/adapter-node": "^1.0.0-next.96",
 		"eslint-plugin-svelte3": "^4.0.0",
 		"pocketbase": "^0.8.0-rc3"

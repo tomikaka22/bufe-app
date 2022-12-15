@@ -20,7 +20,7 @@ let form;
    ></Topbar>
 
    <div in:fly={{y: -120, easing: cubicOut}} class="profile">
-      <form bind:this={form} action="?/changeAvatar" method="post" enctype="multipart/form-data">
+      <form bind:this={form} action="?/changeAvatar" method="POST" enctype="multipart/form-data">
          <label for="avatar">
             <img src="/api/avatar" alt="">
             <label for="avatar">
@@ -30,7 +30,7 @@ let form;
             </label>
          </label>
          <h1>{data.name}</h1>
-         <input on:input={form.submit()} hidden type="file" name="avatar" id="avatar" accept="image/*">
+         <input on:input={form.submit()} hidden type="file" name="avatar" id="avatar" value="" accept="image/*">
       </form>
    </div>
 

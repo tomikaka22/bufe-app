@@ -32,7 +32,7 @@
 	}
 
    @font-face {
-      font-family:  Noto Serif Telugu;
+      font-family: Noto Serif Telugu;
       src: url(/NotoSerifTelugu-VariableFont_wght.ttf);
    }
 </style>

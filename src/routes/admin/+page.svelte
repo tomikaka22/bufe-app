@@ -59,12 +59,10 @@ setInterval(reloadData, 10000);
             <h2 on:click={() => {deleteOrder(Object.keys(data.rendelesek)[i],'rendeles')}}>❌</h2>
             <h1>#{orderID}</h1>
             <h3>{data.rendelesek[orderID].name}</h3>
-            {#each Object.keys(data.rendelesek[orderID]) as a}
-               {#if a != 'name' && a != 'id'}
-                  <p><span style="color: chartreuse">{a},</span> <span style="color: red;">{data.rendelesek[orderID][a][1]}</span> db, <span style="color: red;">{data.rendelesek[orderID][a][0]}</span> Ft</p>
-               {/if}
+            {#each Object.keys(data.rendelesek[orderID].items) as a}
+               <p><span style="color: chartreuse">{a},</span> <span style="color: red;">{data.rendelesek[orderID].items[a][0]}</span> db, <span style="color: red;">{data.rendelesek[orderID].items[a][1]}</span> Ft</p>
             {/each}
-            <button on:click={() => {orderInProgress(Object.keys(data.rendelesek)[i])}}>Kész</button>
+            <button on:click={() => {orderInProgress(orderID)}}>Kész</button>
          </div>
       {/each}
    </div>
@@ -75,12 +73,10 @@ setInterval(reloadData, 10000);
          <h2 on:click={() => {deleteOrder(Object.keys(data.kesz)[i],'kesz')}}>❌</h2>
          <h1>#{orderID}</h1>
          <h3>{data.kesz[orderID].name}</h3>
-         {#each Object.keys(data.kesz[orderID]) as a}
-            {#if a != 'name' && a != 'id'}
-               <p><span style="color: chartreuse">{a},</span> <span style="color: red;">{data.kesz[orderID][a][1]}</span> db, <span style="color: red;">{data.kesz[orderID][a][0]}</span> Ft</p>
-            {/if}
+         {#each Object.keys(data.kesz[orderID].items) as a}
+            <p><span style="color: chartreuse">{a},</span> <span style="color: red;">{data.kesz[orderID].items[a][0]}</span> db, <span style="color: red;">{data.kesz[orderID].items[a][1]}</span> Ft</p>
          {/each}
-         <button on:click={() => {orderDone(Object.keys(data.kesz)[i])}}>Átadva</button>
+         <button on:click={() => {orderDone(orderID)}}>Átadva</button>
       </div>
    {/each}
    </div>

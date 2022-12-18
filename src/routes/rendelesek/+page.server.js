@@ -6,11 +6,9 @@ export async function load({ locals }) {
 	let total = 0;
 
 	for (let i = 0; i < Object.keys(elozmenyLista).length; i++) {
-		for (let x in elozmenyLista[i].rendeles) {
+		for (let x in elozmenyLista[i].rendeles.items) {
 			if (elozmenyLista[i].status == 'kesz') {
-				if (elozmenyLista[i].rendeles[x] != elozmenyLista[i].rendeles.name) {
-					total += elozmenyLista[i].rendeles[x][1];
-				}
+				total += elozmenyLista[i].rendeles.items[x][1];
 			}
 		}
 	}

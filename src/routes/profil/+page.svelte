@@ -1,5 +1,4 @@
 <script>
-import { page } from "$app/stores";
 import { slide, fly } from 'svelte/transition';
 import { cubicOut } from 'svelte/easing';
 import Topbar from '$lib/components/Topbar.svelte';

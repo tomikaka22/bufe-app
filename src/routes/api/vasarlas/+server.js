@@ -2,7 +2,7 @@ import { json } from '@sveltejs/kit';
 import { error } from '@sveltejs/kit';
 
 const admins = ['rdzc6b3jes1k8am','u1fy74rt1m48tx1'];
-let rendelesek = {};
+let bejovo = {};
 let kesz = {};
 let counter = 0;
 
@@ -11,7 +11,7 @@ export async function GET({ locals }) {
 	try {
 		if (admins.includes(locals.pb.authStore.baseModel.id))
 			return json({
-				'rendelesek': rendelesek,
+				'bejovo': bejovo,
 				'kesz': kesz
 			});
 	} catch {
@@ -24,20 +24,20 @@ export async function POST({ request, locals }) {
 	counter++;
 	const data = await request.json();
 	let name = locals.pb.authStore.baseModel.name;
-	rendelesek[counter] = {'name': name, items: {}};
+	bejovo[counter] = {'name': name, items: {}};
 
 	for (let i = 0; i < Object.keys(data).length; i++) { // atmegy minden key-en az obejtben
 		const record = await locals.pb.collection('termekek').getList(1,1,{ filter: `termekek = "${Object.keys(data)[i]}"` }); // visszater a termek recordjaval
 		const darab = data[Object.keys(data)[i]][1];
 		const osszeg = record.items[0].ar * darab; // ár validálás
 
-		rendelesek[counter].items[Object.keys(data)[i]] = [ darab, osszeg ]; // rendelesekhez hozzaad
+		bejovo[counter].items[Object.keys(data)[i]] = [ darab, osszeg ]; // rendelesekhez hozzaad
 
 	}
 
 	// elraktaroz adatbazisban
-	let elozmenyRecord = await locals.pb.collection('rendeles_elozmeny').create({ 'rendeles': rendelesek[counter], 'rendelo': locals.pb.authStore.baseModel.id });
-	rendelesek[counter].id = elozmenyRecord.id;
+	let elozmenyRecord = await locals.pb.collection('rendeles_elozmeny').create({ 'rendeles': bejovo[counter], 'rendelo': locals.pb.authStore.baseModel.id });
+	bejovo[counter].id = elozmenyRecord.id;
 
 	return json({
 		orderID: counter
@@ -49,8 +49,8 @@ export async function PUT({ request, locals }) {
 	try {
 		if (admins.includes(locals.pb.authStore.baseModel.id)) {
 			let adat = await request.json();
-			kesz[adat] = rendelesek[adat];
-			delete rendelesek[adat];
+			kesz[adat] = bejovo[adat];
+			delete bejovo[adat];
 		
 			locals.pb.collection('rendeles_elozmeny').update(kesz[adat].id, { 'status': 'folyamatban' }); // update rendeles status
 		
@@ -93,8 +93,8 @@ export async function DELETE({ request, locals }) {
 				locals.pb.collection('rendeles_elozmeny').update(kesz[adat.item].id, { 'status': 'torolve' }); // update rendeles status
 				delete kesz[adat.item];
 			} else {
-				locals.pb.collection('rendeles_elozmeny').update(rendelesek[adat.item].id, { 'status': 'torolve' }); // update rendeles status
-				delete rendelesek[adat.item];
+				locals.pb.collection('rendeles_elozmeny').update(bejovo[adat.item].id, { 'status': 'torolve' }); // update rendeles status
+				delete bejovo[adat.item];
 			}
 		
 			return json({

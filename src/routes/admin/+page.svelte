@@ -43,7 +43,8 @@ async function deleteOrder(item,type) {
 
 async function reloadData() {
    let adat = await fetch('/api/vasarlas');
-   data = await adat.json()
+   data.rendelesek = await adat.json()
+   console.log(data)
 };
 
 setInterval(reloadData, 10000);
@@ -54,13 +55,13 @@ setInterval(reloadData, 10000);
 <div class="grid-container">
    <div class="grid-cell">
       <h1>Bejövő rendelések</h1>
-      {#each Object.keys(data.rendelesek) as orderID, i (orderID)}
+      {#each Object.keys(data.rendelesek.bejovo) as orderID, i (orderID)}
          <div transition:fade class="rendeles-kartya">
-            <h2 on:click={() => {deleteOrder(Object.keys(data.rendelesek)[i],'rendeles')}}>❌</h2>
+            <h2 on:click={() => {deleteOrder(Object.keys(data.rendelesek.bejovo)[i],'rendeles')}}>❌</h2>
             <h1>#{orderID}</h1>
-            <h3>{data.rendelesek[orderID].name}</h3>
-            {#each Object.keys(data.rendelesek[orderID].items) as a}
-               <p><span style="color: chartreuse">{a},</span> <span style="color: red;">{data.rendelesek[orderID].items[a][0]}</span> db, <span style="color: red;">{data.rendelesek[orderID].items[a][1]}</span> Ft</p>
+            <h3>{data.rendelesek.bejovo[orderID].name}</h3>
+            {#each Object.keys(data.rendelesek.bejovo[orderID].items) as a}
+               <p><span style="color: chartreuse">{a},</span> <span style="color: red;">{data.rendelesek.bejovo[orderID].items[a][0]}</span> db, <span style="color: red;">{data.rendelesek.bejovo[orderID].items[a][1]}</span> Ft</p>
             {/each}
             <button on:click={() => {orderInProgress(orderID)}}>Kész</button>
          </div>
@@ -68,13 +69,13 @@ setInterval(reloadData, 10000);
    </div>
    <div class="grid-cell">
       <h1>Kész rendelések</h1>
-      {#each Object.keys(data.kesz) as orderID, i (orderID)}
+      {#each Object.keys(data.rendelesek.kesz) as orderID, i (orderID)}
       <div transition:fade class="rendeles-kartya rendeles-kartya-done">
-         <h2 on:click={() => {deleteOrder(Object.keys(data.kesz)[i],'kesz')}}>❌</h2>
+         <h2 on:click={() => {deleteOrder(Object.keys(data.rendelesek.kesz)[i],'kesz')}}>❌</h2>
          <h1>#{orderID}</h1>
-         <h3>{data.kesz[orderID].name}</h3>
-         {#each Object.keys(data.kesz[orderID].items) as a}
-            <p><span style="color: chartreuse">{a},</span> <span style="color: red;">{data.kesz[orderID].items[a][0]}</span> db, <span style="color: red;">{data.kesz[orderID].items[a][1]}</span> Ft</p>
+         <h3>{data.rendelesek.kesz[orderID].name}</h3>
+         {#each Object.keys(data.rendelesek.kesz[orderID].items) as a}
+            <p><span style="color: chartreuse">{a},</span> <span style="color: red;">{data.rendelesek.kesz[orderID].items[a][0]}</span> db, <span style="color: red;">{data.rendelesek.kesz[orderID].items[a][1]}</span> Ft</p>
          {/each}
          <button on:click={() => {orderDone(orderID)}}>Átadva</button>
       </div>
@@ -94,6 +95,12 @@ setInterval(reloadData, 10000);
 
 <dialog class="darab-modal" bind:this={darabModal}>
    <h1>Darab modal</h1>
+   <form action="?/darab" method="POST">
+      {#each data.termekekLista as termekek, i (i)}
+         <p>{termekek.termek} <input name="{termekek.id}" style="width: 6ch;" value="{termekek.darab}" type="number"></p>
+      {/each}
+      <button>Mentés</button>
+   </form>
    <button on:click={darabModal.close()}><h1>Bezár</h1></button>
 </dialog>
 
@@ -201,7 +208,7 @@ setInterval(reloadData, 10000);
          background-color: rgb(31, 31, 31);
          color: white;
          border-radius: 1em;
-         padding: .5em;
+         padding: 1em;
          border: 1px solid white;
 
          &::backdrop {

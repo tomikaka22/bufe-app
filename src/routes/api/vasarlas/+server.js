@@ -27,12 +27,11 @@ export async function POST({ request, locals }) {
 	bejovo[counter] = {'name': name, items: {}};
 
 	for (let i = 0; i < Object.keys(data).length; i++) { // atmegy minden key-en az obejtben
-		const record = await locals.pb.collection('termekek').getList(1,1,{ filter: `termekek = "${Object.keys(data)[i]}"` }); // visszater a termek recordjaval
+		const record = await locals.pb.collection('termekek').getFirstListItem(`termek = "${Object.keys(data)[i]}"`); // visszater a termek recordjaval
 		const darab = data[Object.keys(data)[i]][1];
-		const osszeg = record.items[0].ar * darab; // ár validálás
+		const osszeg = record.ar * darab; // ár validálás
 
 		bejovo[counter].items[Object.keys(data)[i]] = [ darab, osszeg ]; // rendelesekhez hozzaad
-
 	}
 
 	// elraktaroz adatbazisban

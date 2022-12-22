@@ -7,6 +7,35 @@ export let data;
 let darabModal;
 let termekModal;
 let arakModal;
+let tempTermekek = {}
+let tempTermekekRemove = []
+
+function termekModalInput(event) { // Hozzáadja (Zölddel) a beirt termékeket.
+   event.preventDefault()
+   const data = Object.fromEntries(new FormData(event.target).entries())
+
+   tempTermekek[data.termek] = [data.ar,data.darab]
+}
+
+function termekModalInputRemove(event) { // Kitörli a (Zöld) frissen hozzáadott (Még nem véglegesitett) termékeket.
+   event.preventDefault()
+   const data = Object.fromEntries(new FormData(event.target).entries())
+
+   delete tempTermekek[Object.keys(data)[0]]
+   tempTermekek = tempTermekek // Kell reaktivitas miatt
+}
+
+function termekModalRemove(event) { // Kitörli a már (régen) véglegesen hozzáadott termekeket.
+   event.preventDefault()
+   const data = Object.fromEntries(new FormData(event.target).entries())
+
+   if (!tempTermekekRemove.includes(Object.keys(data)[0])) {
+      tempTermekekRemove.push(Object.keys(data)[0])
+      tempTermekekRemove = tempTermekekRemove // Kell reaktivitas miatt
+   } else {
+      tempTermekekRemove = tempTermekekRemove.filter(id => id != Object.keys(data)[0])
+   }
+}
 
 async function orderInProgress(item) {
    if (confirm('Biztos kész a rendelés?')) {
@@ -44,7 +73,6 @@ async function deleteOrder(item,type) {
 async function reloadData() {
    let adat = await fetch('/api/vasarlas');
    data.rendelesek = await adat.json()
-   console.log(data)
 };
 
 setInterval(reloadData, 10000);
@@ -94,10 +122,9 @@ setInterval(reloadData, 10000);
 <!-- Modalok: -->
 
 <dialog class="darab-modal" bind:this={darabModal}>
-   <h1>Darab modal</h1>
    <form action="?/darab" method="POST">
       {#each data.termekekLista as termekek, i (i)}
-         <p>{termekek.termek} <input name="{termekek.id}" style="width: 6ch;" value="{termekek.darab}" type="number"></p>
+         <p>{termekek.termek} <input name="{termekek.id}" style="width: 6ch;" value="{termekek.darab}" type="number">db</p>
       {/each}
       <button>Mentés</button>
    </form>
@@ -105,12 +132,46 @@ setInterval(reloadData, 10000);
 </dialog>
 
 <dialog class="termekek-modal" bind:this={termekModal}>
-   <h1>Termékek modal</h1>
+   <h2>Eddigi termékek:</h2>
+      {#each data.termekekLista as termekek, i (i)}
+         <form on:submit={termekModalRemove}>
+            <p class:crossed-out="{tempTermekekRemove.includes(termekek.id)}">{termekek.termek}: {termekek.ar} Ft, {termekek.darab} db
+               <input type="text" hidden name="{termekek.id}">
+               <button id="formRemoveButton"> {#if tempTermekekRemove.includes(termekek.id)}↻{:else}❌{/if}</button>
+            </p>
+         </form>
+      {/each}
+
+   <h2 style="color: greenyellow;">Hozzáadandó termékek:</h2>
+   {#each Object.keys(tempTermekek) as tempTermek, i (i)}
+      <form on:submit={termekModalInputRemove}>
+         <p style="color: green;">+ {tempTermek}: {tempTermekek[tempTermek][0]} Ft, {tempTermekek[tempTermek][1]} db 
+            <input type="text" hidden name="{tempTermek}">
+            <button id="formRemoveButton">❌</button>
+         </p>
+      </form>
+   {/each}
+
+   <form on:submit={termekModalInput}>
+      Termék neve: <input type="text" name="termek" style="width: 20ch;"> Termék ára: <input type="number" name="ar" style="width: 6ch;"> Ft, Termék darab: <input type="number" name="darab" style="width: 6ch;"> db <button style="color: greenyellow;">+</button>
+   </form>
+
+   <form action="?/termekek" method="POST">
+      <input hidden type="text" name="add" value="{JSON.stringify(tempTermekek)}">
+      <input hidden type="text" name="remove" value="{JSON.stringify(tempTermekekRemove)}">
+      <button>Mentés</button>
+   </form>
+
    <button on:click={termekModal.close()}><h1>Bezár</h1></button>
 </dialog>
 
 <dialog class="arak-modal" bind:this={arakModal}>
-   <h1>Árak modal</h1>
+   <form action="?/ar" method="POST">
+      {#each data.termekekLista as termekek, i (i)}
+      <p>{termekek.termek} <input name="{termekek.id}" style="width: 8ch;" value="{termekek.ar}" type="number">Ft</p>
+      {/each}
+   <button>Mentés</button>
+   </form>
    <button on:click={arakModal.close()}><h1>Bezár</h1></button>
 </dialog>
 
@@ -214,6 +275,14 @@ setInterval(reloadData, 10000);
          &::backdrop {
             background: rgba(0, 0, 0, 0.800);
          }
+         
+         #formRemoveButton {
+            margin-left: .5ch;
+            padding: 0;
+            border: none;
+            background-color: rgba(0, 0, 0, 0);
+            cursor: pointer;
+         }
 
          button {
             background-color: rgb(50, 50, 50);
@@ -222,6 +291,12 @@ setInterval(reloadData, 10000);
             border-radius: 1em;
             padding: .5em;
          }
+      }
+
+      .crossed-out {
+         text-decoration: line-through;
+         text-decoration-color: lightgray;
+         color: rgba(211, 211, 211, 0.75);
       }
    }
 

@@ -4,9 +4,15 @@
 
 </script>
 
-<PageTransition url={$page.url}>
+{#if $page.url.pathname !== '/admin'}
+   <PageTransition url={$page.url}>
+      <slot />
+   </PageTransition>
+{:else}
    <slot />
-</PageTransition>
+{/if}
+
+
 
 <style lang="scss">
    :global(*) {

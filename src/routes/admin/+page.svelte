@@ -1,5 +1,6 @@
 <script>
 import { enhance } from '$app/forms';
+import { invalidateAll } from '$app/navigation';
 import { fade } from 'svelte/transition';
 
 export let data;
@@ -45,6 +46,10 @@ function termekModalRemove(event) { // Kitörli a már (régen) véglegesen hozz
    }
 }
 
+setInterval(async () => {
+   invalidateAll()
+}, 8000);
+
 </script>
 
 <main>
@@ -69,10 +74,10 @@ function termekModalRemove(event) { // Kitörli a már (régen) véglegesen hozz
          </div>
       {/each}
    </div>
-   <div transition:fade class="grid-cell">
+   <div class="grid-cell">
       <h1>Kész rendelések</h1>
       {#each Object.keys(data.rendelesek.kesz) as orderID, i (orderID)}
-      <div class="rendeles-kartya rendeles-kartya-done">
+      <div transition:fade class="rendeles-kartya rendeles-kartya-done">
 			<form use:enhance action="?/torles" method="POST">
 				<input hidden type="text" name="recordID" value="{JSON.stringify(data.rendelesek.kesz[orderID].id)}">
 				<button class="torles-gomb">❌</button>

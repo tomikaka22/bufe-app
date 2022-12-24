@@ -1,9 +1,9 @@
 <script>
    import { slide, fade } from "svelte/transition";
    import { goto } from "$app/navigation"
+   import { deserialize } from '$app/forms';
    import { cart, total } from "$lib/stores/Cart.js";
    import Topbar from '$lib/components/Topbar.svelte';
-   import BottomButton from '$lib/components/BottomButton.svelte';
 
    export let data;
 
@@ -47,6 +47,7 @@
    };
 
    function addAmount(item) {
+      // * Elegge gusztustalan megoldas vegig loopolni es megtalalni a darabszamat a termeknek
       let darab;
       data.termekek.forEach(record => {
          if (record.termek == item[0]) darab = record.darab
@@ -61,6 +62,21 @@
       };
    };
 
+   async function handleSubmit(event) {
+      const data = new FormData(this);
+      const response = await fetch(this.action, {
+         method: 'POST',
+         body: data
+      })
+
+      const result = deserialize(await response.text());
+      console.log(result)
+      if (result.type == 'success') {
+         urites();
+         goto('/rendelesek')
+      };
+   }
+
 </script>
 
 <main>
@@ -70,6 +86,8 @@
    targeturl={'/list'}
    text={'Kosár'}
    background={'none'}
+   hideProfile={0}
+   flyin={0}
    ></Topbar>
 
    <div class="urites">
@@ -97,7 +115,7 @@
       {/each}
    </div>
 
-   <form method="POST">
+   <form method="POST" on:submit|preventDefault={handleSubmit}>
       <input hidden type="text" name="rendeles" value="{JSON.stringify($cart)}">
       <button class="bottom-button">Vásárlás!</button>
    </form>
@@ -190,14 +208,6 @@
          margin-left: 2%;
          padding: .5ch 0;
          border: none;
-
-         .content {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-         }
       }
    }
 </style>

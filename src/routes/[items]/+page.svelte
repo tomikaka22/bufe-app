@@ -57,7 +57,7 @@
 
 </script>
 
-<main>
+<main in:fade={{duration: 180}}>
 
    <Topbar
       target={'Vissza'}

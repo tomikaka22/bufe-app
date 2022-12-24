@@ -1,5 +1,5 @@
 <script>
-import { slide, fly } from 'svelte/transition';
+import { slide, fly, fade } from 'svelte/transition';
 import { cubicOut } from 'svelte/easing';
 import Topbar from '$lib/components/Topbar.svelte';
 
@@ -7,7 +7,7 @@ export let data;
 let form;
 </script>
 
-<main>
+<main in:fade={{duration: 180}}>
 
    <Topbar
       target={'Menü'}

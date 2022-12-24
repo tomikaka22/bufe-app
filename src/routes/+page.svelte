@@ -1,8 +1,10 @@
 <script>
+   import { fade } from 'svelte/transition';
+
    export let data;
 </script>
 
-<main>
+<main in:fade={{duration: 180}}>
    <div class="welcome">
       <h1>Jónapot <span>{data.name}!</span></h1>
    </div>

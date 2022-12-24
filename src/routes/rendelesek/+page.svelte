@@ -1,12 +1,13 @@
 <script>
    import { slide } from 'svelte/transition';
    import Topbar from '$lib/components/Topbar.svelte';
+	import { fade } from 'svelte/transition';
 
    export let data;
 	delete data.name;
 </script>
 
-<main>
+<main in:fade={{duration: 180}}>
 
    <Topbar
       target={'Menü'}
@@ -81,19 +82,19 @@
 		<div in:slide class="rendeles-card torolve-card">
 			<div class="rendeles-cell">
 				{#each [...Object.keys(data.elozmenyLista[item].termekek)].reverse() as a}
-					<p class="{data.elozmenyLista[item].status == 'torolve'}">{a}</p>
+					<p class="torolve-cell">{a}</p>
 				{/each}
 			</div>
 
 			<div class="rendeles-cell">
 				{#each [...Object.keys(data.elozmenyLista[item].termekek)].reverse() as a}
-					<p class="{data.elozmenyLista[item].status == 'torolve'}">{data.elozmenyLista[item].termekek[a].darab} db</p>
+					<p class="torolve-cell">{data.elozmenyLista[item].termekek[a].darab} db</p>
 				{/each}
 			</div>
 
 			<div class="rendeles-cell">
 				{#each [...Object.keys(data.elozmenyLista[item].termekek)].reverse() as a}
-					<p class="{data.elozmenyLista[item].status == 'torolve'}">{data.elozmenyLista[item].termekek[a].ar} Ft</p>
+					<p class="torolve-cell">{data.elozmenyLista[item].termekek[a].ar} Ft</p>
 				{/each}
 			</div>
 		</div>

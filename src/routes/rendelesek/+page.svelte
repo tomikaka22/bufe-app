@@ -27,7 +27,7 @@
 			<p id="card-text">Átvehető!</p>
 		{:else if data.elozmenyLista[item].status == 'torolve'}
 			<p style="color: rgba(255, 255, 255, 0.5)" id="card-text">törölve</p>
-		{:else if data.elozmenyLista[item].status == ''}
+		{:else if data.elozmenyLista[item].status == 'fuggoben'}
 			<p style="color: #cf610088;" id="card-text">Függőben</p>
 		{:else}
 			<p style="color: rgba(255, 255, 255, 0.8);" id="card-text">{data.elozmenyLista[item].updated.slice(0, -8)}</p>
@@ -36,20 +36,20 @@
 		{#if data.elozmenyLista[item].status == 'fuggoben'}
 			<div in:slide class="rendeles-card fuggoben-card">
 				<div class="rendeles-cell">
-					{#each [...Object.keys(data.elozmenyLista[item].rendeles.items)].reverse() as a}
+					{#each [...Object.keys(data.elozmenyLista[item].termekek)].reverse() as a}
 						<p class:torolve-cell='{data.elozmenyLista[item].status == 'torolve'}'>{a}</p>
 					{/each}
 				</div>
 
 				<div class="rendeles-cell">
-					{#each [...Object.keys(data.elozmenyLista[item].rendeles.items)].reverse() as a}
-						<p class:torolve-cell='{data.elozmenyLista[item].status == 'torolve'}'>{data.elozmenyLista[item].rendeles.items[a][0]} db</p>
+					{#each [...Object.keys(data.elozmenyLista[item].termekek)].reverse() as a}
+						<p class:torolve-cell='{data.elozmenyLista[item].status == 'torolve'}'>{data.elozmenyLista[item].termekek[a].darab} db</p>
 					{/each}
 				</div>
 
 				<div class="rendeles-cell">
-					{#each [...Object.keys(data.elozmenyLista[item].rendeles.items)].reverse() as a}
-						<p class:torolve-cell='{data.elozmenyLista[item].status == 'torolve'}'>{data.elozmenyLista[item].rendeles.items[a][1]} Ft</p>
+					{#each [...Object.keys(data.elozmenyLista[item].termekek)].reverse() as a}
+						<p class:torolve-cell='{data.elozmenyLista[item].status == 'torolve'}'>{data.elozmenyLista[item].termekek[a].ar} Ft</p>
 					{/each}
 				</div>
 			</div>
@@ -58,20 +58,20 @@
 		{#if data.elozmenyLista[item].status == 'folyamatban'}
 		<div in:slide class="rendeles-card folyamatban-card">
 			<div class="rendeles-cell">
-				{#each [...Object.keys(data.elozmenyLista[item].rendeles.items)].reverse() as a}
+				{#each [...Object.keys(data.elozmenyLista[item].termekek)].reverse() as a}
 					<p>{a}</p>
 				{/each}
 			</div>
 
 			<div class="rendeles-cell">
-				{#each [...Object.keys(data.elozmenyLista[item].rendeles.items)].reverse() as a}
-					<p>{data.elozmenyLista[item].rendeles.items[a][0]} db</p>
+				{#each [...Object.keys(data.elozmenyLista[item].termekek)].reverse() as a}
+					<p>{data.elozmenyLista[item].termekek[a].darab} db</p>
 				{/each}
 			</div>
 
 			<div class="rendeles-cell">
-				{#each [...Object.keys(data.elozmenyLista[item].rendeles.items)].reverse() as a}
-					<p>{data.elozmenyLista[item].rendeles.items[a][1]} Ft</p>
+				{#each [...Object.keys(data.elozmenyLista[item].termekek)].reverse() as a}
+					<p>{data.elozmenyLista[item].termekek[a].ar} Ft</p>
 				{/each}
 			</div>
 		</div>
@@ -80,20 +80,20 @@
 	{#if data.elozmenyLista[item].status == 'torolve'}
 		<div in:slide class="rendeles-card torolve-card">
 			<div class="rendeles-cell">
-				{#each [...Object.keys(data.elozmenyLista[item].rendeles.items)].reverse() as a}
-					<p class:torolve-cell='{data.elozmenyLista[item].status == 'torolve'}'>{a}</p>
+				{#each [...Object.keys(data.elozmenyLista[item].termekek)].reverse() as a}
+					<p class="{data.elozmenyLista[item].status == 'torolve'}">{a}</p>
 				{/each}
 			</div>
 
 			<div class="rendeles-cell">
-				{#each [...Object.keys(data.elozmenyLista[item].rendeles.items)].reverse() as a}
-					<p class:torolve-cell='{data.elozmenyLista[item].status == 'torolve'}'>{data.elozmenyLista[item].rendeles.items[a][0]} db</p>
+				{#each [...Object.keys(data.elozmenyLista[item].termekek)].reverse() as a}
+					<p class="{data.elozmenyLista[item].status == 'torolve'}">{data.elozmenyLista[item].termekek[a].darab} db</p>
 				{/each}
 			</div>
 
 			<div class="rendeles-cell">
-				{#each [...Object.keys(data.elozmenyLista[item].rendeles.items)].reverse() as a}
-					<p class:torolve-cell='{data.elozmenyLista[item].status == 'torolve'}'>{data.elozmenyLista[item].rendeles.items[a][1]} Ft</p>
+				{#each [...Object.keys(data.elozmenyLista[item].termekek)].reverse() as a}
+					<p class="{data.elozmenyLista[item].status == 'torolve'}">{data.elozmenyLista[item].termekek[a].ar} Ft</p>
 				{/each}
 			</div>
 		</div>
@@ -102,42 +102,20 @@
 	{#if data.elozmenyLista[item].status == 'kesz'}
 		<div in:slide class="rendeles-card kesz-card">
 			<div class="rendeles-cell">
-				{#each [...Object.keys(data.elozmenyLista[item].rendeles.items)].reverse() as a}
+				{#each [...Object.keys(data.elozmenyLista[item].termekek)].reverse() as a}
 					<p>{a}</p>
 				{/each}
 			</div>
 
 			<div class="rendeles-cell">
-				{#each [...Object.keys(data.elozmenyLista[item].rendeles.items)].reverse() as a}
-					<p>{data.elozmenyLista[item].rendeles.items[a][0]} db</p>
+				{#each [...Object.keys(data.elozmenyLista[item].termekek)].reverse() as a}
+					<p>{data.elozmenyLista[item].termekek[a].darab} db</p>
 				{/each}
 			</div>
 
 			<div class="rendeles-cell">
-				{#each [...Object.keys(data.elozmenyLista[item].rendeles.items)].reverse() as a}
-					<p>{data.elozmenyLista[item].rendeles.items[a][1]} Ft</p>
-				{/each}
-			</div>
-		</div>
-	{/if}
-
-	{#if data.elozmenyLista[item].status == ''}
-		<div in:slide class="rendeles-card fuggoben-card">
-			<div class="rendeles-cell">
-				{#each [...Object.keys(data.elozmenyLista[item].rendeles.items)].reverse() as a}
-					<p>{a}</p>
-				{/each}
-			</div>
-
-			<div class="rendeles-cell">
-				{#each [...Object.keys(data.elozmenyLista[item].rendeles.items)].reverse() as a}
-					<p>{data.elozmenyLista[item].rendeles.items[a][0]} db</p>
-				{/each}
-			</div>
-
-			<div class="rendeles-cell">
-				{#each [...Object.keys(data.elozmenyLista[item].rendeles.items)].reverse() as a}
-					<p>{data.elozmenyLista[item].rendeles.items[a][1]} Ft</p>
+				{#each [...Object.keys(data.elozmenyLista[item].termekek)].reverse() as a}
+					<p>{data.elozmenyLista[item].termekek[a].ar} Ft</p>
 				{/each}
 			</div>
 		</div>

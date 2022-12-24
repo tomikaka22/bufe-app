@@ -32,6 +32,7 @@ export async function POST({ request, locals }) {
 		const osszeg = record.ar * darab; // ár validálás
 
 		bejovo[counter].items[Object.keys(data)[i]] = [ darab, osszeg ]; // rendelesekhez hozzaad
+		locals.pb.collection('termekek').update(record.id, { 'darab': record.darab - darab }); // Rendelt termekek darabszamat kivonja az adatbazisbol
 	}
 
 	// elraktaroz adatbazisban
@@ -100,7 +101,8 @@ export async function DELETE({ request, locals }) {
 				ok : 'ok'
 			});
 		}
-	} catch {
+	} catch (err) {
+		console.log(err)
 		throw error(401, { 'error': 'Nincs hozzáférésed!' });
 	}
 

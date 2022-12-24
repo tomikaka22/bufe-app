@@ -47,7 +47,12 @@
    };
 
    function addAmount(item) {
-      if ($cart[item[0]][1] < data.termekek[item[0]].maxamount) {
+      let darab;
+      data.termekek.forEach(record => {
+         if (record.termek == item[0]) darab = record.darab
+      });
+
+      if ($cart[item[0]][1] < darab) {
          let price = item[1][0] / item[1][1];
          $cart[item[0]][0] += price;
          $cart[item[0]][1]++;
@@ -55,26 +60,6 @@
          localStorage.setItem('CartContent', JSON.stringify($cart));
       };
    };
-
-   async function buy() {
-      fetch('/api/vasarlas', {
-         method: 'POST',
-         headers: {
-            'Content-Type': 'application/json',
-         },
-         body: JSON.stringify($cart)
-      })
-      .then(res => res.json())
-      .then(data => {
-         alert(`Köszönjük a vásárlást! \nRendelés száma: #${data.orderID}`);
-         urites()
-         goto('/rendelesek')
-      })
-      .catch(error => {
-         alert(error)
-         console.log(error)
-      })
-   }
 
 </script>
 
@@ -112,7 +97,11 @@
       {/each}
    </div>
 
-   <BottomButton action={buy} text={'Vásárlás!'}></BottomButton>
+   <form method="POST">
+      <input hidden type="text" name="rendeles" value="{JSON.stringify($cart)}">
+      <button class="bottom-button">Vásárlás!</button>
+   </form>
+
 
 </main>
 
@@ -189,5 +178,26 @@
          }
       }
 
+      .bottom-button {
+         position: fixed;
+         bottom: 0;
+         left: 0;
+         height: 3.5em;
+         background-color: var(--accent-color);
+         border-top-left-radius: 2.8em;
+         border-top-right-radius: 2.8em;
+         width: calc(98% - 2%); // * NAAAAGYON HACKY, de nem megy mashogy. Utálom a css-t
+         margin-left: 2%;
+         padding: .5ch 0;
+         border: none;
+
+         .content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+         }
+      }
    }
 </style>

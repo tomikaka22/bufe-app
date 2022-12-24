@@ -6,13 +6,14 @@
    import Topbar from '$lib/components/Topbar.svelte';
 
    export let data;
+
    const item = $page.params.items;
-   const maxamount = data.termekek[item].maxamount
-   const description = data.termekek[item].description
+   const darab = data.termekek.darab
+   const description = data.termekek.leiras
 
    let tempcart = {[item] : [0,0]};
    $: amount = 1;
-   $: price = data.termekek[item].price * amount;
+   $: price = data.termekek.ar * amount;
 
    if (localStorage.getItem('CartContent') != null) {
       $cart = JSON.parse(localStorage.getItem('CartContent'));
@@ -23,7 +24,7 @@
    }
 
    function addItem() {
-      if (amount < maxamount - tempcart[item][1]) {
+      if (amount < darab - tempcart[item][1]) {
          amount++
       }
    };
@@ -35,13 +36,11 @@
    };
 
    function buy() {
-      if (tempcart[item][1] < maxamount) {
+      if (tempcart[item][1] < darab) {
          $cart[item] = [tempcart[item][0] + price, tempcart[item][1] + amount];
 
          $total = [0,0]
          for (let i = 0; i < Object.keys($cart).length; i++) { // atmegy minden key-en a kosar obejtben
-            console.log(Object.keys($cart))
-            console.log(i,Object.keys($cart)[i])
             let cnt = $cart[Object.keys($cart)[i]]; // cnt = kosar object i-ik eleme
             $total[1] += Number(cnt[1]);  // hozzaadja a kosar object i-ik kulcsanak az 1. tagjat (ár)
             $total[0] += Number(cnt[0])   // hozzaadja a kosar object i-ik kulcsanak a 2. tagjat (mennyiség)
@@ -74,7 +73,7 @@
    <h4>{description}</h4>
    <div class="image"><img src="favicon.png" alt="" /></div>
 
-{#if maxamount != 0}
+{#if darab != 0}
    <div class="amount">
       <h1 on:click="{subtractItem}">-</h1>{#key amount}<h2 in:fade="{{duration: 200}}">{amount}</h2>{/key}<h1 on:click="{addItem}">+</h1>
    </div>

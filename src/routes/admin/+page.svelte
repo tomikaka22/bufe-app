@@ -1,12 +1,15 @@
 <script>
-import { fade } from "svelte/transition";
-
+import { enhance } from '$app/forms';
+import { fade } from 'svelte/transition';
 
 export let data;
+console.log(data)
 
 let darabModal;
 let termekModal;
 let arakModal;
+let leirasModal;
+let kategoriaModal;
 let tempTermekek = {}
 let tempTermekekRemove = []
 
@@ -14,7 +17,12 @@ function termekModalInput(event) { // Hozzáadja (Zölddel) a beirt termékeket.
    event.preventDefault()
    const data = Object.fromEntries(new FormData(event.target).entries())
 
-   tempTermekek[data.termek] = [data.ar,data.darab]
+   tempTermekek[data.termek] = {
+      'ar': data.ar,
+      'darab': data.darab,
+      'leiras': data.leiras,
+      'kategoria': data.kategoria
+   }
 }
 
 function termekModalInputRemove(event) { // Kitörli a (Zöld) frissen hozzáadott (Még nem véglegesitett) termékeket.
@@ -37,105 +45,68 @@ function termekModalRemove(event) { // Kitörli a már (régen) véglegesen hozz
    }
 }
 
-async function orderInProgress(item) {
-   if (confirm('Biztos kész a rendelés?')) {
-      await fetch('/api/vasarlas', {
-         method: 'PUT',
-         body: JSON.stringify(item)
-      });
-      reloadData()
-   }
-};
-
-async function orderDone(item) {
-   if (confirm('Biztos átvették a rendelést?')) {
-      await fetch('/api/vasarlas', {
-         method: 'PATCH',
-         body: JSON.stringify(item)
-      });
-      reloadData()
-   }
-};
-
-async function deleteOrder(item,type) {
-   if (confirm('Biztos törli a rendelést?')) {
-      await fetch('/api/vasarlas', {
-         method: 'DELETE',
-         body: JSON.stringify({
-               'item': item,
-               'type': type
-            })
-      });
-      reloadData()
-   }
-};
-
-async function reloadData() {
-   let adat = await fetch('/api/vasarlas');
-   data.rendelesek = await adat.json()
-};
-
-setInterval(reloadData, 10000);
-
 </script>
 
 <main>
 <div class="grid-container">
    <div class="grid-cell">
       <h1>Bejövő rendelések</h1>
-      {#each Object.keys(data.rendelesek.bejovo) as orderID, i (orderID)}
+      {#each Object.keys(data.rendelesek.fuggoben) as orderID, i (orderID)}
          <div transition:fade class="rendeles-kartya">
-            <h2 on:click={() => {deleteOrder(Object.keys(data.rendelesek.bejovo)[i],'rendeles')}}>❌</h2>
+            <form use:enhance action="?/torles" method="POST">
+					<input hidden type="text" name="recordID" value="{JSON.stringify(data.rendelesek.fuggoben[orderID].id)}">
+               <button class="torles-gomb">❌</button>
+            </form>
             <h1>#{orderID}</h1>
-            <h3>{data.rendelesek.bejovo[orderID].name}</h3>
-            {#each Object.keys(data.rendelesek.bejovo[orderID].items) as a}
-               <p><span style="color: chartreuse">{a},</span> <span style="color: red;">{data.rendelesek.bejovo[orderID].items[a][0]}</span> db, <span style="color: red;">{data.rendelesek.bejovo[orderID].items[a][1]}</span> Ft</p>
+            <h3>{data.rendelesek.fuggoben[orderID].name}</h3>
+            {#each Object.keys(data.rendelesek.fuggoben[orderID].termekek) as a}
+               <p><span style="color: chartreuse">{a},</span> <span style="color: red;">{data.rendelesek.fuggoben[orderID].termekek[a].darab}</span> db, <span style="color: red;">{data.rendelesek.fuggoben[orderID].termekek[a].ar}</span> Ft</p>
             {/each}
-            <button on:click={() => {orderInProgress(orderID)}}>Kész</button>
+            <form use:enhance action="?/kesz" method="POST">
+               <input hidden type="text" name="recordID" value="{JSON.stringify(data.rendelesek.fuggoben[orderID].id)}">
+               <button>Kész</button>
+            </form>
          </div>
       {/each}
    </div>
-   <div class="grid-cell">
+   <div transition:fade class="grid-cell">
       <h1>Kész rendelések</h1>
       {#each Object.keys(data.rendelesek.kesz) as orderID, i (orderID)}
-      <div transition:fade class="rendeles-kartya rendeles-kartya-done">
-         <h2 on:click={() => {deleteOrder(Object.keys(data.rendelesek.kesz)[i],'kesz')}}>❌</h2>
+      <div class="rendeles-kartya rendeles-kartya-done">
+			<form use:enhance action="?/torles" method="POST">
+				<input hidden type="text" name="recordID" value="{JSON.stringify(data.rendelesek.kesz[orderID].id)}">
+				<button class="torles-gomb">❌</button>
+			</form>
          <h1>#{orderID}</h1>
          <h3>{data.rendelesek.kesz[orderID].name}</h3>
-         {#each Object.keys(data.rendelesek.kesz[orderID].items) as a}
-            <p><span style="color: chartreuse">{a},</span> <span style="color: red;">{data.rendelesek.kesz[orderID].items[a][0]}</span> db, <span style="color: red;">{data.rendelesek.kesz[orderID].items[a][1]}</span> Ft</p>
+         {#each Object.keys(data.rendelesek.kesz[orderID].termekek) as a}
+            <p><span style="color: chartreuse">{a},</span> <span style="color: red;">{data.rendelesek.kesz[orderID].termekek[a].darab}</span> db, <span style="color: red;">{data.rendelesek.kesz[orderID].termekek[a].ar}</span> Ft</p>
          {/each}
-         <button on:click={() => {orderDone(orderID)}}>Átadva</button>
+         <form use:enhance action="?/atadva" method="POST">
+            <input hidden type="text" name="recordID" value="{JSON.stringify(data.rendelesek.kesz[orderID].id)}">
+            <button>Átadva</button>
+         </form>
       </div>
    {/each}
    </div>
    <div class="grid-cell">
       <div class="szerkesztes">
          <h1>Szerkesztés:</h1>
-         <button on:click={darabModal.showModal()}>Darab</button>
          <button on:click={termekModal.showModal()}>Termékek</button>
+         <button on:click={darabModal.showModal()}>Darab</button>
          <button on:click={arakModal.showModal()}>Árak</button>
+         <button on:click={leirasModal.showModal()}>Leirás</button>
+         <button on:click={kategoriaModal.showModal()}>Kategória</button>
       </div>
    </div>
 </div>
 
 <!-- Modalok: -->
-
-<dialog class="darab-modal" bind:this={darabModal}>
-   <form action="?/darab" method="POST">
-      {#each data.termekekLista as termekek, i (i)}
-         <p>{termekek.termek} <input name="{termekek.id}" style="width: 6ch;" value="{termekek.darab}" type="number">db</p>
-      {/each}
-      <button>Mentés</button>
-   </form>
-   <button on:click={darabModal.close()}><h1>Bezár</h1></button>
-</dialog>
-
 <dialog class="termekek-modal" bind:this={termekModal}>
    <h2>Eddigi termékek:</h2>
-      {#each data.termekekLista as termekek, i (i)}
+      {#each data.termekekLista as termekek}
          <form on:submit={termekModalRemove}>
-            <p class:crossed-out="{tempTermekekRemove.includes(termekek.id)}">{termekek.termek}: {termekek.ar} Ft, {termekek.darab} db
+            <p class:crossed-out="{tempTermekekRemove.includes(termekek.id)}">{termekek.termek}: {termekek.ar} Ft, {termekek.darab} db | {termekek.leiras} | {termekek.kategoria}
                <input type="text" hidden name="{termekek.id}">
                <button id="formRemoveButton"> {#if tempTermekekRemove.includes(termekek.id)}↻{:else}❌{/if}</button>
             </p>
@@ -145,7 +116,7 @@ setInterval(reloadData, 10000);
    <h2 style="color: greenyellow;">Hozzáadandó termékek:</h2>
    {#each Object.keys(tempTermekek) as tempTermek, i (i)}
       <form on:submit={termekModalInputRemove}>
-         <p style="color: green;">+ {tempTermek}: {tempTermekek[tempTermek][0]} Ft, {tempTermekek[tempTermek][1]} db 
+         <p style="color: green;">+ {tempTermek}: {tempTermekek[tempTermek].ar} Ft, {tempTermekek[tempTermek].darab} db, {tempTermekek[tempTermek].leiras} {tempTermekek[tempTermek].kategoria} 
             <input type="text" hidden name="{tempTermek}">
             <button id="formRemoveButton">❌</button>
          </p>
@@ -153,7 +124,16 @@ setInterval(reloadData, 10000);
    {/each}
 
    <form on:submit={termekModalInput}>
-      Termék neve: <input type="text" name="termek" style="width: 20ch;"> Termék ára: <input type="number" name="ar" style="width: 6ch;"> Ft, Termék darab: <input type="number" name="darab" style="width: 6ch;"> db <button style="color: greenyellow;">+</button>
+      Termék neve: <input type="text" name="termek" style="width: 20ch;"> 
+      Termék ára: <input type="number" name="ar" style="width: 6ch;"> Ft, 
+      Termék darab: <input type="number" name="darab" style="width: 6ch;"> db |
+      Leirás: <input type="text" name="leiras" style="width: 20em;">
+      Kategória: <select name="kategoria">
+                  <option value="Étel">Étel</option>
+                  <option value="Ital">Ital</option>
+                  <option value="Nasi">Nasi</option>
+                 </select>
+      <button style="color: greenyellow;">+</button>
    </form>
 
    <form action="?/termekek" method="POST">
@@ -165,14 +145,50 @@ setInterval(reloadData, 10000);
    <button on:click={termekModal.close()}><h1>Bezár</h1></button>
 </dialog>
 
+<dialog class="darab-modal" bind:this={darabModal}>
+   <form action="?/darab" method="POST">
+      {#each data.termekekLista as termekek, i (i)}
+         <p>{termekek.termek} <input name="{termekek.id}" style="width: 6ch;" value="{termekek.darab}" type="number">db</p>
+      {/each}
+      <button>Mentés</button>
+   </form>
+   <button on:click={darabModal.close()}><h1>Bezár</h1></button>
+</dialog>
+
 <dialog class="arak-modal" bind:this={arakModal}>
    <form action="?/ar" method="POST">
-      {#each data.termekekLista as termekek, i (i)}
-      <p>{termekek.termek} <input name="{termekek.id}" style="width: 8ch;" value="{termekek.ar}" type="number">Ft</p>
+      {#each data.termekekLista as termekek}
+         <p>{termekek.termek} <input name="{termekek.id}" style="width: 8ch;" value="{termekek.ar}" type="number">Ft</p>
       {/each}
-   <button>Mentés</button>
+      <button>Mentés</button>
    </form>
    <button on:click={arakModal.close()}><h1>Bezár</h1></button>
+</dialog>
+
+<dialog class="leiras-modal" bind:this={leirasModal}>
+   <form action="?/leiras" method="POST">
+      {#each data.termekekLista as termekek}
+         <p>{termekek.termek}: <input name="{termekek.id}" type="text" value="{termekek.leiras}" style="width: 20em;"></p>
+      {/each}
+      <button>Mentés</button>
+   </form>
+   <button on:click={leirasModal.close()}><h1>Bezár</h1></button>
+</dialog>
+
+<dialog class="kategoria-modal" bind:this={kategoriaModal}>
+   <form action="?/kategoria" method="POST">
+      {#each data.termekekLista as termekek}
+         <p>{termekek.termek} | Kategória:
+            <select name="{termekek.id}">
+               <option value="Étel">Étel</option>
+               <option value="Ital">Ital</option>
+               <option value="Nasi">Nasi</option>
+            </select>
+         </p>
+      {/each}
+      <button>Mentés</button>
+   </form>
+   <button on:click={kategoriaModal.close()}><h1>Bezár</h1></button>
 </dialog>
 
 </main>
@@ -224,11 +240,14 @@ setInterval(reloadData, 10000);
                   font-size: larger;
                }
 
-               h2 {
+               .torles-gomb {
                   position: absolute;
                   right: 1ch;
                   top: .8ch;
                   cursor: pointer;
+                  border: none;
+                  padding: 0;
+						background-color: rgba(0, 0, 0, 0);
                }
 
                h3 {

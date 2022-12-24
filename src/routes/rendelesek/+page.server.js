@@ -1,20 +1,19 @@
 export async function load({ locals }) {
-	const elozmenyLista = await locals.pb.collection('rendeles_elozmeny').getFullList(1, {
+	const elozmenyLista = structuredClone(await locals.pb.collection('rendelesek').getFullList(1, {
 		filter: `rendelo = "${locals.pb.authStore.baseModel.id}"`
-	});
+	}));
 
 	let total = 0;
 
-	for (let i = 0; i < Object.keys(elozmenyLista).length; i++) {
-		for (let x in elozmenyLista[i].rendeles.items) {
-			if (elozmenyLista[i].status == 'kesz') {
-				total += elozmenyLista[i].rendeles.items[x][1];
-			}
-		}
-	}
+	Object.keys(elozmenyLista).forEach(rendeles => {
+		Object.keys(elozmenyLista[rendeles].termekek).forEach(termek => {
+			if (elozmenyLista[rendeles].status == 'kesz')
+				total += elozmenyLista[rendeles].termekek[termek].ar;
+		});
+	});
 
 	return {
-		'elozmenyLista': structuredClone(elozmenyLista),
+		'elozmenyLista': elozmenyLista,
 		'total': total
 	};
 }

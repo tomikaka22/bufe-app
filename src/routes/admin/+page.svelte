@@ -4,7 +4,6 @@ import { invalidateAll } from '$app/navigation';
 import { fade } from 'svelte/transition';
 
 export let data;
-console.log(data)
 
 let darabModal;
 let termekModal;
@@ -56,8 +55,8 @@ setInterval(async () => {
 <div class="grid-container">
    <div class="grid-cell">
       <h1>Bejövő rendelések</h1>
-      {#each Object.keys(data.rendelesek.fuggoben) as orderID, i (orderID)}
-         <div transition:fade class="rendeles-kartya">
+      {#each Object.keys(data.rendelesek.fuggoben) as orderID, i (data.rendelesek.fuggoben[orderID].id)}
+         <div transition:fade={{duration: 300}} class="rendeles-kartya">
             <form use:enhance action="?/torles" method="POST">
 					<input hidden type="text" name="recordID" value="{JSON.stringify(data.rendelesek.fuggoben[orderID].id)}">
                <button class="torles-gomb">❌</button>
@@ -76,8 +75,8 @@ setInterval(async () => {
    </div>
    <div class="grid-cell">
       <h1>Kész rendelések</h1>
-      {#each Object.keys(data.rendelesek.kesz) as orderID, i (orderID)}
-      <div transition:fade class="rendeles-kartya rendeles-kartya-done">
+      {#each Object.keys(data.rendelesek.kesz) as orderID, i (data.rendelesek.kesz[orderID].id)}
+      <div transition:fade={{duration: 300}} class="rendeles-kartya rendeles-kartya-done">
 			<form use:enhance action="?/torles" method="POST">
 				<input hidden type="text" name="recordID" value="{JSON.stringify(data.rendelesek.kesz[orderID].id)}">
 				<button class="torles-gomb">❌</button>

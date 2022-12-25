@@ -21,6 +21,11 @@ export const actions = {
 			
 			rendeles[Object.keys(rendeles)[i]] = {'ar': subTotal, 'darab': darab}; // ar validálás
 			total += subTotal; // total szamolas
+			try {
+				locals.pb.collection('termekek').update(record.id, { 'darab': record.darab - darab} ); // darabszam kivonasa
+			} catch (error) {
+				console.log(error)
+			}
 		}
 
 		// adatbazis

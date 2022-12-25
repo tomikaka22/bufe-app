@@ -30,7 +30,7 @@ export const actions = {
 		const data = Object.fromEntries(await request.formData());
 		
 		Object.keys(data).forEach(id => {
-			locals.pb.collection('termekek').update(id, { 'ar': data[id] }, { '$autoCancel': false });
+			locals.pb.collection('termekek').update(id, { 'ar': data[id] });
 		});
 	},
 	termekek: async ({ request, locals}) => {
@@ -39,25 +39,25 @@ export const actions = {
 		data.remove = JSON.parse(data.remove);
 
 		Object.keys(data.add).forEach(termek => {
-			locals.pb.collection('termekek').create({ 'termek': termek, 'ar': data.add[termek].ar, 'darab': data.add[termek].darab, 'leiras': data.add[termek].leiras, 'kategoria': data.add[termek].kategoria }, { '$autoCancel': false });
+			locals.pb.collection('termekek').create({ 'termek': termek, 'ar': data.add[termek].ar, 'darab': data.add[termek].darab, 'leiras': data.add[termek].leiras, 'kategoria': data.add[termek].kategoria });
 		});
 
 		data.remove.forEach(id => {
-			locals.pb.collection('termekek').delete(id), { '$autoCancel': false };
+			locals.pb.collection('termekek').delete(id);
 		});
 	},
 	leiras: async ({ request, locals }) => {
 		const data = Object.fromEntries(await request.formData());
 
 		Object.keys(data).forEach(id => {
-			locals.pb.collection('termekek').update(id, { 'leiras': data[id] }, { '$autoCancel': false });
+			locals.pb.collection('termekek').update(id, { 'leiras': data[id] });
 		});
 	},
 	kategoria: async ({ request, locals }) => {
 		const data = Object.fromEntries(await request.formData());
 
 		Object.keys(data).forEach(id => {
-			locals.pb.collection('termekek').update(id, { 'kategoria': data[id] }, { '$autoCancel': false });
+			locals.pb.collection('termekek').update(id, { 'kategoria': data[id] });
 		});
 	},
 	// -----------------------------------------------------------------------------------------------------
@@ -77,6 +77,14 @@ export const actions = {
 	torles: async ({ request, locals }) => {
 		const data = Object.fromEntries(await request.formData());
 		const id = JSON.parse(data.recordID);
+		const rendeles = await locals.pb.collection('rendelesek').getOne(id);
+
+		Object.keys(rendeles.termekek).forEach(async termek => {
+			const record = await locals.pb.collection('termekek').getFullList(1, { filter: `termek = '${termek}'` });
+			const darab = record[0].darab + rendeles.termekek[termek].darab;
+
+			locals.pb.collection('termekek').update(record[0].id, { 'darab': darab });
+		});
 
 		locals.pb.collection('rendelesek').update(id, { 'status': 'torolve' });
 	}

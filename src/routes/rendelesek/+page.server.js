@@ -6,10 +6,10 @@ export async function load({ locals }) {
 	let total = 0;
 
 	Object.keys(elozmenyLista).forEach(rendeles => {
-		Object.keys(elozmenyLista[rendeles].termekek).forEach(termek => {
-			if (elozmenyLista[rendeles].status == 'kesz')
+		if (elozmenyLista[rendeles].status == 'kesz')
+			Object.keys(elozmenyLista[rendeles].termekek).forEach(termek => {
 				total += elozmenyLista[rendeles].termekek[termek].ar;
-		});
+			});
 	});
 
 	return {

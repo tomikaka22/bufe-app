@@ -29,7 +29,7 @@ export const actions = {
 		}
 
 		// adatbazis
-		locals.pb.collection('rendelesek').create({ 'rendelo': locals.pb.authStore.baseModel.id, 'termekek': rendeles, 'total': total, 'status': 'fuggoben', 'name': locals.pb.authStore.baseModel.name });
+		await locals.pb.collection('rendelesek').create({ 'rendelo': locals.pb.authStore.baseModel.id, 'termekek': rendeles, 'total': total, 'status': 'fuggoben', 'name': locals.pb.authStore.baseModel.name });
 		return {
 			'orderID': 'asd'
 		};

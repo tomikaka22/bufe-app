@@ -65,14 +65,14 @@ export const actions = {
 		const data = Object.fromEntries(await request.formData());
 		const id = JSON.parse(data.recordID);
 
-		locals.pb.collection('rendelesek').update(id, { 'status': 'folyamatban' });
+		await locals.pb.collection('rendelesek').update(id, { 'status': 'folyamatban' });
 	},
 
 	atadva: async ({ request, locals }) => {
 		const data = Object.fromEntries(await request.formData());
 		const id = JSON.parse(data.recordID);
 
-		locals.pb.collection('rendelesek').update(id, { 'status': 'kesz' });
+		await locals.pb.collection('rendelesek').update(id, { 'status': 'kesz' });
 	},
 	torles: async ({ request, locals }) => {
 		const data = Object.fromEntries(await request.formData());
@@ -83,9 +83,9 @@ export const actions = {
 			const record = await locals.pb.collection('termekek').getFullList(1, { filter: `termek = '${termek}'` });
 			const darab = record[0].darab + rendeles.termekek[termek].darab;
 
-			locals.pb.collection('termekek').update(record[0].id, { 'darab': darab });
+			await locals.pb.collection('termekek').update(record[0].id, { 'darab': darab });
 		});
 
-		locals.pb.collection('rendelesek').update(id, { 'status': 'torolve' });
+		await locals.pb.collection('rendelesek').update(id, { 'status': 'torolve' });
 	}
 };

@@ -38,13 +38,14 @@
    ></Topbar>
 
 	<Swiper
+	speed={400}
 	spaceBetween={80}
 	slidesPerView={1}
 	on:slideChange={e => {$navigation = e.detail[0].activeIndex}}
 	on:swiper={e => {swiper = e.detail[0]}}
  	>
 		<SwiperSlide>
-			<div in:slide={{duration: 700}} class='list-grid'>
+			<div in:slide={{duration: 800}} class='list-grid'>
 				<div class='grid-container'>
 					{#each data.termekek as termek}
 						{#if termek.kategoria == 'Étel'}
@@ -60,7 +61,7 @@
 		</SwiperSlide>
 
 		<SwiperSlide>
-			<div in:slide={{duration: 700}} class='list-grid'>
+			<div in:slide={{duration: 800}} class='list-grid'>
 				<div class='grid-container'>
 					{#each data.termekek as termek}
 						{#if termek.kategoria == 'Ital'}
@@ -76,7 +77,7 @@
 		</SwiperSlide>
 
 		<SwiperSlide>
-			<div in:slide={{duration: 700}} class='list-grid'>
+			<div in:slide={{duration: 800}} class='list-grid'>
 				<div class='grid-container'>
 					{#each data.termekek as termek}
 						{#if termek.kategoria == 'Nasi'}

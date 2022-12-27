@@ -127,10 +127,6 @@ main {
 		opacity: 50%;
 	}
 
-	.kesz {
-
-	}
-
 	.total {
 		background-color: #252525;
 		padding: .5em;

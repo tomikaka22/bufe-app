@@ -14,6 +14,7 @@
       if (localStorage.getItem('CartContent') != null) {
          cartshow = 1;
          $cart = JSON.parse(localStorage.getItem('CartContent'));
+			$total = JSON.parse(localStorage.getItem('Total'));
       };
    };
 

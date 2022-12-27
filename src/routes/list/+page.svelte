@@ -1,5 +1,7 @@
 <script>
    import { fly, slide } from 'svelte/transition';
+	import { Swiper, SwiperSlide } from 'swiper/svelte';
+	import 'swiper/css';
    import { browser } from '$app/environment';
    import { cart, total } from '$lib/stores/Cart.js';
    import { navigation } from '$lib/stores/Navigation.js';
@@ -7,7 +9,7 @@
 
    export let data;
 
-   let innerWidth;
+	let swiper;
    let cartshow = 0;
 
    if (browser) {
@@ -18,50 +20,12 @@
       };
    };
 
-   $: flyIn={x: innerWidth, duration: 500};
-   $: flyOut={x: -innerWidth, duration: 500};
-     // Needed to be reactive because x is undefined on first render
-
-   function AnimationDirection(tab) {
-      switch (tab) {
-         case 'Étel':
-            flyIn={x: -innerWidth, duration: 500};
-            flyOut={x: innerWidth, duration: 500};
-            $navigation = tab
-            break;
-         case 'Nasi':
-            flyIn={x: innerWidth, duration: 500};
-            flyOut={x: -innerWidth, duration: 500};
-            $navigation = tab
-            break;
-         case 'Ital':
-            if ($navigation == 'Étel') {
-               flyIn={x: innerWidth, duration: 500};
-               flyOut={x: -innerWidth, duration: 500};
-               $navigation = tab
-            };
-            if ($navigation == 'Nasi') {
-               flyIn={x: -innerWidth, duration: 500};
-               flyOut={x: innerWidth, duration: 500};
-               $navigation = tab
-            }
-      }
-   }
-
+	function navigate(i) {
+		swiper.slideTo(i);
+		$navigation = i
+	}
 </script>
 
-<!-- Binds the innerWidth variable to the width of the monitor to give a more fluid motion -->
-<svelte:window bind:innerWidth />
-<!-- Above is equivalent to below, shortcut for binding when you make them the same name -->
-<!-- <svelte:window bind:innerWidth={innerWidth} /> -->
-
-
-<!-- Swipe-talantias
-
-   Az oldal huzogatassal navigalasa eleg szarul volt megoldva, amtmenetileg kiszedtem. 
-   Vissza fog térni jobban megvalositva a design mobilositasakor: https://github.com/users/tomikaka22/projects/1/views/1
-
--->
 <main>
 
    <Topbar
@@ -73,75 +37,85 @@
       hideProfile={0}
    ></Topbar>
 
-   <div in:slide={{duration: 700}} class='list-grid'>
-      {#if $navigation == 'Étel'}
-         <div in:fly={flyIn} out:fly={flyOut} class='grid-container'>
-            {#each data.termekek as termek}
-               {#if termek.kategoria == $navigation}
-               <div class="inner-grid">
-                  <a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'><img src='favicon.png' alt=''></a>
-                  <a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'>{termek.termek}</a>
-                  <a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'>{termek.ar} Ft</a>
-               </div>
-               {/if}
-            {/each}
-         </div>
-      {/if}
+	<Swiper
+	spaceBetween={80}
+	slidesPerView={1}
+	on:slideChange={e => {$navigation = e.detail[0].activeIndex}}
+	on:swiper={e => {swiper = e.detail[0]}}
+ 	>
+		<SwiperSlide>
+			<div in:slide={{duration: 700}} class='list-grid'>
+				<div class='grid-container'>
+					{#each data.termekek as termek}
+						{#if termek.kategoria == 'Étel'}
+							<div class="inner-grid">
+								<a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'><img src='favicon.png' alt=''></a>
+								<a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'>{termek.termek}</a>
+								<a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'>{termek.ar} Ft</a>
+							</div>
+						{/if}
+					{/each}
+				</div>
+			</div>
+		</SwiperSlide>
 
-      {#if $navigation == 'Ital'}
-         <div in:fly={flyIn} out:fly={flyOut} class='grid-container'>
-            {#each data.termekek as termek}
-               {#if termek.kategoria == $navigation}
-               <div class="inner-grid">
-                  <a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'><img src='favicon.png' alt=''></a>
-                  <a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'>{termek.termek}</a>
-                  <a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'>{termek.ar} Ft</a>
-               </div>
-               {/if}
-            {/each}
-         </div>
-      {/if}
+		<SwiperSlide>
+			<div in:slide={{duration: 700}} class='list-grid'>
+				<div class='grid-container'>
+					{#each data.termekek as termek}
+						{#if termek.kategoria == 'Ital'}
+							<div class="inner-grid">
+								<a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'><img src='favicon.png' alt=''></a>
+								<a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'>{termek.termek}</a>
+								<a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'>{termek.ar} Ft</a>
+							</div>
+						{/if}
+					{/each}
+				</div>
+			</div>
+		</SwiperSlide>
 
-      {#if $navigation == 'Nasi'}
-      <div in:fly={flyIn} out:fly={flyOut} class='grid-container'>
-         {#each data.termekek as termek}
-            {#if termek.kategoria == $navigation}
-            <div class="inner-grid">
-               <a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'><img src='favicon.png' alt=''></a>
-               <a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'>{termek.termek}</a>
-               <a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'>{termek.ar} Ft</a>
-            </div>
-            {/if}
-         {/each}
-      </div>
-   {/if}
-   </div>
+		<SwiperSlide>
+			<div in:slide={{duration: 700}} class='list-grid'>
+				<div class='grid-container'>
+					{#each data.termekek as termek}
+						{#if termek.kategoria == 'Nasi'}
+							<div class="inner-grid">
+								<a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'><img src='favicon.png' alt=''></a>
+								<a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'>{termek.termek}</a>
+								<a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'>{termek.ar} Ft</a>
+							</div>
+						{/if}
+					{/each}
+				</div>
+			</div>
+		</SwiperSlide>
+ 	</Swiper>
 
-{#if cartshow}
-<div in:fly={{y: 100}} style='margin-bottom: 6.5vh;' class='nav'>
-   <div class='Étel' on:click={() => {AnimationDirection('Étel')}}><p class:active='{$navigation == 'Étel'}'>Étel</p></div>
-   <div class='Ital' on:click={() => {AnimationDirection('Ital')}}><p class:active='{$navigation == 'Ital'}'>Ital</p></div>
-   <div class='Nasi' on:click={() => {AnimationDirection('Nasi')}}><p class:active='{$navigation == 'Nasi'}'>Nasi</p></div>
-</div>
-
-<a data-sveltekit-noscroll href="kosar">
-   <div in:fly={{y: 100, delay: 100}} class='cart'>
-      <div class="cart-grid">
-         <div class="cart-cell">
-            <img src="shopping-basket.png" alt=""> <b>{$total[0]} Ft</b><p>({$total[1]} db termék a kosárban.)</p>
-         </div>
-      </div>
-   </div>
-</a>
-
-{:else}
-<div in:fly={{y: 200}} class='nav'>
-   <div class='Étel' on:click={() => {AnimationDirection('Étel')}}><p class:active='{$navigation == 'Étel'}'>Étel</p></div>
-   <div class='Ital' on:click={() => {AnimationDirection('Ital')}}><p class:active='{$navigation == 'Ital'}'>Ital</p></div>
-   <div class='Nasi' on:click={() => {AnimationDirection('Nasi')}}><p class:active='{$navigation == 'Nasi'}'>Nasi</p></div>
-</div>
-{/if}
-
+ {#if cartshow}
+ <div in:fly={{y: 100}} style='margin-bottom: 6.5vh;' class='nav'>
+	 <div class='Étel' on:click={() => {swiper.slideTo(2)}}><p class:active='{$navigation == 0}'>Étel</p></div>
+	 <div class='Ital' on:click={() => {}}><p class:active='{$navigation == 1}'>Ital</p></div>
+	 <div class='Nasi' on:click={() => {}}><p class:active='{$navigation == 2}'>Nasi</p></div>
+ </div>
+ 
+ <a data-sveltekit-noscroll href="kosar">
+	 <div in:fly={{y: 100, delay: 100}} class='cart'>
+		 <div class="cart-grid">
+			 <div class="cart-cell">
+				 <img src="shopping-basket.png" alt=""> <b>{$total[0]} Ft</b><p>({$total[1]} db termék a kosárban.)</p>
+			 </div>
+		 </div>
+	 </div>
+ </a>
+ 
+ {:else}
+ <div in:fly={{y: 200}} class='nav'>
+	 <div class='Étel' on:click={() => {navigate(0)}}><p class:active='{$navigation == 0}'>Étel</p></div>
+	 <div class='Ital' on:click={() => {navigate(1)}}><p class:active='{$navigation == 1}'>Ital</p></div>
+	 <div class='Nasi' on:click={() => {navigate(2)}}><p class:active='{$navigation == 2}'>Nasi</p></div>
+ </div>
+ {/if}
 
 </main>
 

@@ -1,3 +1,3 @@
 import { writable } from 'svelte/store';
 
-export var navigation = writable('Étel');
+export var navigation = writable(0);

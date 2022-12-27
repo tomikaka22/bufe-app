@@ -4,6 +4,8 @@
 	import { onMount } from 'svelte';
   	import { pwaInfo } from 'virtual:pwa-info';
 
+	const noKeyURLs = ['/admin']
+
 	onMount(async () => {
     if (pwaInfo) {
       const { registerSW } = await import('virtual:pwa-register')
@@ -27,7 +29,7 @@
   $: webManifest = pwaInfo ? pwaInfo.webManifest.linkTag : ''
 </script>
 
-{#if $page.url.pathname !== '/admin'}
+{#if !noKeyURLs.includes($page.url.pathname)}
    <PageTransition url={$page.url}>
       <slot />
    </PageTransition>

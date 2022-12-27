@@ -95,9 +95,9 @@
 
  {#if cartshow}
  <div in:fly={{y: 100}} style='margin-bottom: 6.5vh;' class='nav'>
-	 <div class='Étel' on:click={() => {swiper.slideTo(2)}}><p class:active='{$navigation == 0}'>Étel</p></div>
-	 <div class='Ital' on:click={() => {}}><p class:active='{$navigation == 1}'>Ital</p></div>
-	 <div class='Nasi' on:click={() => {}}><p class:active='{$navigation == 2}'>Nasi</p></div>
+	 <div class='Étel' on:click={() => {navigate(0)}}><p class:active='{$navigation == 0}'>Étel</p></div>
+	 <div class='Ital' on:click={() => {navigate(1)}}><p class:active='{$navigation == 1}'>Ital</p></div>
+	 <div class='Nasi' on:click={() => {navigate(2)}}><p class:active='{$navigation == 2}'>Nasi</p></div>
  </div>
  
  <a data-sveltekit-noscroll href="kosar">

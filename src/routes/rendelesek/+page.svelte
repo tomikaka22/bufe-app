@@ -24,16 +24,16 @@
 	{#each data.elozmenyLista as record}
 
 		{#if record.status == 'fuggoben'}
-			<h1 class="status">Függőben</h1>
+			<h1 in:slide={{duration: 350}} class="status">Függőben</h1>
 		{:else if record.status == 'folyamatban'}
-			<h1 class="status">Átvehető!</h1>
+			<h1 in:slide={{duration: 350}} class="status">Átvehető!</h1>
 		{:else if record.status == 'kesz'}
-			<h1 class="status">{record.updated.slice(0, -8)}</h1>
+			<h1 in:slide={{duration: 350}} class="status">{record.updated.slice(0, -8)}</h1>
 		{:else}
-			<h1 style="opacity: 45%;" class="status">Törölve</h1>
+			<h1 in:slide={{duration: 350}} style="opacity: 45%;" class="status">Törölve</h1>
 		{/if}
 
-		<div class="grid-container {record.status}">
+		<div in:slide={{duration: 350}} class="grid-container {record.status}">
 			{#each Object.keys(record.termekek) as termek}
 				<div class="grid-cell termek">{termek}</div>
 				<div class="grid-cell darab">{record.termekek[termek].darab} db</div>

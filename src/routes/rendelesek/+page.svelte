@@ -4,7 +4,6 @@
 	import { fade } from 'svelte/transition';
 
    export let data;
-	delete data.name;
 </script>
 
 <main in:fade={{duration: 180}}>
@@ -21,109 +20,28 @@
 	<div class="total">
 		<h3>Összesen: <span>{data.total} Ft</span></h3>
 	</div>
+	
+	{#each data.elozmenyLista as record}
 
-   {#each [...Object.keys(data.elozmenyLista)].reverse() as item ([...Object.keys(data.elozmenyLista)].reverse())}
-
-		{#if data.elozmenyLista[item].status == 'folyamatban'}
-			<p id="card-text">Átvehető!</p>
-		{:else if data.elozmenyLista[item].status == 'torolve'}
-			<p style="color: rgba(255, 255, 255, 0.5)" id="card-text">törölve</p>
-		{:else if data.elozmenyLista[item].status == 'fuggoben'}
-			<p style="color: #cf610088;" id="card-text">Függőben</p>
+		{#if record.status == 'fuggoben'}
+			<h1 class="status">Függőben</h1>
+		{:else if record.status == 'folyamatban'}
+			<h1 class="status">Átvehető!</h1>
+		{:else if record.status == 'kesz'}
+			<h1 class="status">{record.updated.slice(0, -8)}</h1>
 		{:else}
-			<p style="color: rgba(255, 255, 255, 0.8);" id="card-text">{data.elozmenyLista[item].updated.slice(0, -8)}</p>
+			<h1 style="opacity: 45%;" class="status">Törölve</h1>
 		{/if}
 
-		{#if data.elozmenyLista[item].status == 'fuggoben'}
-			<div in:slide class="rendeles-card fuggoben-card">
-				<div class="rendeles-cell">
-					{#each [...Object.keys(data.elozmenyLista[item].termekek)].reverse() as a}
-						<p class:torolve-cell='{data.elozmenyLista[item].status == 'torolve'}'>{a}</p>
-					{/each}
-				</div>
-
-				<div class="rendeles-cell">
-					{#each [...Object.keys(data.elozmenyLista[item].termekek)].reverse() as a}
-						<p class:torolve-cell='{data.elozmenyLista[item].status == 'torolve'}'>{data.elozmenyLista[item].termekek[a].darab} db</p>
-					{/each}
-				</div>
-
-				<div class="rendeles-cell">
-					{#each [...Object.keys(data.elozmenyLista[item].termekek)].reverse() as a}
-						<p class:torolve-cell='{data.elozmenyLista[item].status == 'torolve'}'>{data.elozmenyLista[item].termekek[a].ar} Ft</p>
-					{/each}
-				</div>
-			</div>
-		{/if}
-
-		{#if data.elozmenyLista[item].status == 'folyamatban'}
-		<div in:slide class="rendeles-card folyamatban-card">
-			<div class="rendeles-cell">
-				{#each [...Object.keys(data.elozmenyLista[item].termekek)].reverse() as a}
-					<p>{a}</p>
-				{/each}
-			</div>
-
-			<div class="rendeles-cell">
-				{#each [...Object.keys(data.elozmenyLista[item].termekek)].reverse() as a}
-					<p>{data.elozmenyLista[item].termekek[a].darab} db</p>
-				{/each}
-			</div>
-
-			<div class="rendeles-cell">
-				{#each [...Object.keys(data.elozmenyLista[item].termekek)].reverse() as a}
-					<p>{data.elozmenyLista[item].termekek[a].ar} Ft</p>
-				{/each}
-			</div>
+		<div class="grid-container {record.status}">
+			{#each Object.keys(record.termekek) as termek}
+				<div class="grid-cell termek">{termek}</div>
+				<div class="grid-cell darab">{record.termekek[termek].darab} db</div>
+				<div class="grid-cell ar">{record.termekek[termek].ar} Ft</div>
+			{/each}
 		</div>
-	{/if}
-
-	{#if data.elozmenyLista[item].status == 'torolve'}
-		<div in:slide class="rendeles-card torolve-card">
-			<div class="rendeles-cell">
-				{#each [...Object.keys(data.elozmenyLista[item].termekek)].reverse() as a}
-					<p class="torolve-cell">{a}</p>
-				{/each}
-			</div>
-
-			<div class="rendeles-cell">
-				{#each [...Object.keys(data.elozmenyLista[item].termekek)].reverse() as a}
-					<p class="torolve-cell">{data.elozmenyLista[item].termekek[a].darab} db</p>
-				{/each}
-			</div>
-
-			<div class="rendeles-cell">
-				{#each [...Object.keys(data.elozmenyLista[item].termekek)].reverse() as a}
-					<p class="torolve-cell">{data.elozmenyLista[item].termekek[a].ar} Ft</p>
-				{/each}
-			</div>
-		</div>
-	{/if}
-
-	{#if data.elozmenyLista[item].status == 'kesz'}
-		<div in:slide class="rendeles-card kesz-card">
-			<div class="rendeles-cell">
-				{#each [...Object.keys(data.elozmenyLista[item].termekek)].reverse() as a}
-					<p>{a}</p>
-				{/each}
-			</div>
-
-			<div class="rendeles-cell">
-				{#each [...Object.keys(data.elozmenyLista[item].termekek)].reverse() as a}
-					<p>{data.elozmenyLista[item].termekek[a].darab} db</p>
-				{/each}
-			</div>
-
-			<div class="rendeles-cell">
-				{#each [...Object.keys(data.elozmenyLista[item].termekek)].reverse() as a}
-					<p>{data.elozmenyLista[item].termekek[a].ar} Ft</p>
-				{/each}
-			</div>
-		</div>
-	{/if}
-
-   {/each}
-
+	{/each}
+	
 </main>
 
 <style lang="scss">
@@ -149,6 +67,66 @@
 
 main {
 
+	.status {
+		color: white;
+		text-align: center;
+		margin-top: 5%;
+		margin-bottom: 1%;
+	}
+
+	.grid-container {
+		background-color: var(--main-color);
+		display: grid;
+		grid-template-columns: auto auto auto;
+		margin: 0 5%;
+		color: white;
+		border-radius: 1em;
+		overflow: hidden;
+		text-align: center;
+		font-size: larger;
+
+		.grid-cell {
+			padding: .5em 0;
+		}
+
+		.termek {
+			&:nth-of-type(even) {
+				background-color: #161616;
+			}
+		}
+
+		.darab {
+			&:nth-of-type(odd) {
+				background-color: #161616;
+			}
+		}
+
+		.ar {
+			&:nth-of-type(even) {
+				background-color: #161616;
+			}
+		}
+
+	}
+
+	.fuggoben {
+		opacity: 70%;
+		outline: 2px solid white;
+	}
+
+	.folyamatban {
+		outline: 2px solid var(--accent-color);
+	}
+
+	.torolve {
+		text-decoration: line-through;
+		opacity: 50%;
+	}
+
+	.kesz {
+
+	}
+
 	.total {
 		background-color: #252525;
 		padding: .5em;
@@ -166,62 +144,7 @@ main {
 		}
 	}
 
-   .rendeles-card {
-      width: 85vw;
-      margin: 3% auto;
-      padding: 5% 3%;
-      outline: 2px solid rgb(51, 51, 51);
-      background-color: #161616;
-      display: grid;
-      grid-template-columns: 50% 25% 25%;
-      border-radius: 1em;
 
-      .rendeles-cell {
-         display: flex;
-         flex-direction: column;
-         justify-content: center;
-         gap: 5%;
-
-         p {
-            color: rgba(255, 255, 255, 0.932);
-            border-bottom: 1px solid #cf610088;
-            font-size: medium;
-
-            &:last-of-type {
-               border-bottom: 0;
-            }
-         }
-      }
-   }
-
-	.fuggoben-card {
-		outline: 2px solid #cf610086;
-		opacity: 70%;
-	}
-
-	.folyamatban-card {
-		outline: 2px solid var(--accent-color);
-		background-color: #cf610086;
-	}
-
-	.torolve-card {
-		background-color: rgb(53, 53, 53);
-		opacity: 70%;
-	}
-
-	.torolve-cell {
-		text-decoration: line-through;
-		color: rgba(255, 255, 255, 0.5);
-		text-decoration-color: lightgray;
-
-	}
-
-	#card-text {
-		text-align: center;
-		color: var(--accent-color);
-		font-weight: 800;
-		
-	}
 }
 
 </style>

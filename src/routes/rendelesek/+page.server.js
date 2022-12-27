@@ -1,6 +1,7 @@
 export async function load({ locals }) {
 	const elozmenyLista = structuredClone(await locals.pb.collection('rendelesek').getFullList(1, {
-		filter: `rendelo = "${locals.pb.authStore.baseModel.id}"`
+		filter: `rendelo = "${locals.pb.authStore.baseModel.id}"`,
+		sort: '-created'
 	}));
 
 	let total = 0;

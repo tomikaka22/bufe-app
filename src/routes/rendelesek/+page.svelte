@@ -85,6 +85,10 @@ main {
 		text-align: center;
 		font-size: larger;
 
+		&:last-of-type {
+			margin-bottom: 6%;
+		}
+
 		.grid-cell {
 			padding: .5em 0;
 		}

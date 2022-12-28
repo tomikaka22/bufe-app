@@ -38,8 +38,9 @@
    ></Topbar>
 
 	<Swiper
-	speed={400}
-	spaceBetween={80}
+	resistanceRatio={0.5}
+	speed={370}
+	spaceBetween={20}
 	slidesPerView={1}
 	on:slideChange={e => {$navigation = e.detail[0].activeIndex}}
 	on:swiper={e => {swiper = e.detail[0]}}

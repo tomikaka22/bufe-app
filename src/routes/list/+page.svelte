@@ -125,7 +125,6 @@
 main {
       width: 100%;
       height: 100%;
-      overflow-x: hidden; // Swipe-talantias
       overflow-y: scroll;
       position: fixed;
 
@@ -134,12 +133,8 @@ main {
          width: 100vw;
 
          .grid-container {
-            // Using grid and grid-area 1/1 to force the inner divs into the same area. 
-            // If you don't do this you get a bouncing effect where the incoming div is
-            // pushed below the outgoing div and then 'pops up' jarringly.
-            grid-area: 1/1;
             margin: 3%;
-            margin-bottom: 100%;
+            margin-bottom: 40%;
             display: grid;
             row-gap: .6vh;
 
@@ -217,6 +212,7 @@ main {
          width: calc(98% - 2%); // * NAAAAGYON HACKY, de nem megy mashogy. Utálom a css-t
          margin-left: 2%;
          padding: .5ch 0;
+			z-index: 20;
 
          .cart-grid {
             height: 100%;

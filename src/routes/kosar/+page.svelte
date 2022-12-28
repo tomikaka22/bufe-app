@@ -70,7 +70,7 @@
       })
 
       const result = deserialize(await response.text());
-      console.log(result)
+
       if (result.type == 'success') {
          urites();
          goto('/rendelesek')

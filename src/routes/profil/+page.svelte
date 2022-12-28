@@ -1,6 +1,7 @@
 <script>
 import { slide, fly, fade } from 'svelte/transition';
 import { cubicOut } from 'svelte/easing';
+import { enhance } from '$app/forms';
 import Topbar from '$lib/components/Topbar.svelte';
 
 export let data;
@@ -19,7 +20,7 @@ let form;
    ></Topbar>
 
    <div in:fly={{y: -120, easing: cubicOut}} class="profile">
-      <form bind:this={form} action="?/changeAvatar" method="POST" enctype="multipart/form-data">
+      <form use:enhance bind:this={form} action="?/changeAvatar" method="POST" enctype="multipart/form-data">
          <label for="avatar">
             <img src="/api/avatar" alt="">
             <label for="avatar">

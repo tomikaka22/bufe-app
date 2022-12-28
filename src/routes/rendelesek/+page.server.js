@@ -18,3 +18,22 @@ export async function load({ locals }) {
 		'total': total
 	};
 }
+
+export const actions = {
+	default: async ({ request, locals }) => {
+		const data = Object.fromEntries(await request.formData());
+		const id = JSON.parse(data.recordID);
+		const rendeles = await locals.pb.collection('rendelesek').getOne(id);
+
+		if (rendeles.status == 'fuggoben' ) {
+			Object.keys(rendeles.termekek).forEach(async termek => {
+				const record = await locals.pb.collection('termekek').getFullList(1, { filter: `termek = '${termek}'` });
+				const darab = record[0].darab + rendeles.termekek[termek].darab;
+	
+				await locals.pb.collection('termekek').update(record[0].id, { 'darab': darab });
+			});
+		}
+
+		await locals.pb.collection('rendelesek').delete(id);
+	}
+};

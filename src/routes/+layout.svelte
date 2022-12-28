@@ -4,7 +4,7 @@
 	import { onMount } from 'svelte';
   	import { pwaInfo } from 'virtual:pwa-info';
 
-	const noKeyURLs = ['/admin']
+	const noKeyURLs = ['/admin','/rendelesek']
 
 	onMount(async () => {
     if (pwaInfo) {

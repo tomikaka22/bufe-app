@@ -1,9 +1,33 @@
 <script>
-   import { slide } from 'svelte/transition';
+   import { slide, fade } from 'svelte/transition';
+	import { deserialize } from '$app/forms';
+	import { invalidateAll } from '$app/navigation';
    import Topbar from '$lib/components/Topbar.svelte';
-	import { fade } from 'svelte/transition';
 
    export let data;
+	let lastOpenMenu;
+
+	function openMenu(i, record) {
+		if (lastOpenMenu == i) lastOpenMenu = undefined
+		else if (record.status != 'folyamatban') lastOpenMenu = i
+	}
+
+	async function handleSubmit(event) {
+		if (confirm('Biztos végleg törlöd a rendelést? A törölt rendelések nem számitanak bele az ár összesitésbe!')) {
+			const data = new FormData(this);
+      	const response = await fetch(this.action, {
+				method: 'POST',
+				body: data
+			})
+
+			const result = deserialize(await response.text());
+
+			if (result.type == 'success') {
+				openMenu(lastOpenMenu)
+				invalidateAll()
+			};
+		}
+   }
 </script>
 
 <main in:fade={{duration: 180}}>
@@ -21,7 +45,7 @@
 		<h3>Összesen: <span>{data.total} Ft</span></h3>
 	</div>
 	
-	{#each data.elozmenyLista as record}
+	{#each data.elozmenyLista as record, i}
 
 		{#if record.status == 'fuggoben'}
 			<h1 in:slide={{duration: 350}} class="status">Függőben</h1>
@@ -33,13 +57,21 @@
 			<h1 in:slide={{duration: 350}} style="opacity: 45%;" class="status">Törölve</h1>
 		{/if}
 
-		<div in:slide={{duration: 350}} class="grid-container {record.status}">
+		<div on:click={() => {openMenu(i,record)}} in:slide={{duration: 350}} class="grid-container {record.status}" class:menu-grid-container={lastOpenMenu == i}>
 			{#each Object.keys(record.termekek) as termek}
 				<div class="grid-cell termek">{termek}</div>
 				<div class="grid-cell darab">{record.termekek[termek].darab} db</div>
 				<div class="grid-cell ar">{record.termekek[termek].ar} Ft</div>
 			{/each}
 		</div>
+		{#if lastOpenMenu == i && record.status != 'folyamatban'}
+			<div transition:slide={{duration: 250}} class="menu">
+				<form method="POST" on:submit|preventDefault={handleSubmit}>
+					<input hidden name="recordID" type="text" value="{JSON.stringify(record.id)}">
+					<button>Törlés</button>
+				</form>
+			</div>
+		{/if}
 	{/each}
 	
 </main>
@@ -84,6 +116,7 @@ main {
 		overflow: hidden;
 		text-align: center;
 		font-size: larger;
+		transition: .18s .15s;
 
 		&:last-of-type {
 			margin-bottom: 6%;
@@ -127,6 +160,27 @@ main {
 		opacity: 50%;
 	}
 
+	.menu-grid-container {
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+		transition: 0s;
+		outline: 0;
+	}
+
+	.menu {
+		margin: 0 5%;
+		border-bottom-left-radius: 1em;
+		border-bottom-right-radius: 1em;
+		overflow: hidden;
+
+		button {
+			border: 0;
+			padding: .5em;
+			width: 100%;
+			background-color: var(--accent-color);
+		}
+	}
+	
 	.total {
 		background-color: #252525;
 		padding: .5em;

@@ -38,6 +38,7 @@
    ></Topbar>
 
 	<Swiper
+	initialSlide={$navigation}
 	resistanceRatio={0.5}
 	speed={370}
 	spaceBetween={20}

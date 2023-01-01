@@ -57,7 +57,7 @@
 			<h1 in:slide={{duration: 350}} style="opacity: 45%;" class="status">Törölve</h1>
 		{/if}
 
-		<div on:click={() => {openMenu(i,record)}} in:slide={{duration: 350}} class="grid-container {record.status}" class:menu-grid-container={lastOpenMenu == i}>
+		<div on:click={() => {openMenu(i,record)}} out:slide|local={{duration: 350}} class="grid-container {record.status}" class:menu-grid-container={lastOpenMenu == i}>
 			{#each Object.keys(record.termekek) as termek}
 				<div class="grid-cell termek">{termek}</div>
 				<div class="grid-cell darab">{record.termekek[termek].darab} db</div>

@@ -11,7 +11,7 @@
 
 	let swiper;
    let cartshow = 0;
-
+console.log(data)
    if (browser) {
       if (localStorage.getItem('CartContent') != null) {
          cartshow = 1;
@@ -51,7 +51,7 @@
 				<div class='grid-container'>
 					{#each data.termekek as termek}
 						{#if termek.kategoria == 'Étel'}
-							<div class="inner-grid">
+							<div class="inner-grid" class:elfogyott={termek.darab == 0}>
 								<a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'><img src='favicon.png' alt=''></a>
 								<a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'>{termek.termek}</a>
 								<a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'>{termek.ar} Ft</a>
@@ -67,7 +67,7 @@
 				<div class='grid-container'>
 					{#each data.termekek as termek}
 						{#if termek.kategoria == 'Ital'}
-							<div class="inner-grid">
+							<div class="inner-grid" class:elfogyott={termek.darab == 0}>
 								<a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'><img src='favicon.png' alt=''></a>
 								<a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'>{termek.termek}</a>
 								<a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'>{termek.ar} Ft</a>
@@ -83,7 +83,7 @@
 				<div class='grid-container'>
 					{#each data.termekek as termek}
 						{#if termek.kategoria == 'Nasi'}
-							<div class="inner-grid">
+							<div class="inner-grid" class:elfogyott={termek.darab == 0}>
 								<a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'><img src='favicon.png' alt=''></a>
 								<a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'>{termek.termek}</a>
 								<a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'>{termek.ar} Ft</a>
@@ -245,6 +245,9 @@ main {
          }
       }
 
+		.elfogyott {
+			opacity: 35%;
+		}
    }
 
  </style>

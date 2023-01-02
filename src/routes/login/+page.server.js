@@ -1,4 +1,4 @@
-import { redirect, invalid } from '@sveltejs/kit';
+import { redirect, fail } from '@sveltejs/kit';
 
 export function load({ locals }) { // ha bevagyunk jelentkezve dobjon át a főoldalra
 	if (locals.pb.authStore.isValid) {
@@ -11,10 +11,10 @@ export const actions = { // Bejelentkezés, megkapja az oldal FORM data-ját és
 		const body = Object.fromEntries(await request.formData());
 
 		try {
-			const authData = await locals.pb.collection('users').authWithPassword(body.email.concat('@kkszki.hu'),body.password);
+			await locals.pb.collection('users').authWithPassword(body.email.concat('@kkszki.hu'),body.password);
 		} catch (err) {
 			console.log(err.data);
-			return invalid(400, { email: body.email, error: 'Helytelen e-mail cím vagy jelszó!' });
+			return fail(400, { email: body.email, error: 'Helytelen e-mail cím vagy jelszó!' });
 		}
 
 		throw redirect(303, '/');

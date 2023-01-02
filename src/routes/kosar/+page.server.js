@@ -24,7 +24,7 @@ export const actions = {
 			try {
 				locals.pb.collection('termekek').update(record.id, { 'darab': record.darab - darab} ); // darabszam kivonasa
 			} catch (error) {
-				console.log(error)
+				console.log(error);
 			}
 		}
 

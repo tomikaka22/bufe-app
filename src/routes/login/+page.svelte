@@ -7,7 +7,7 @@ let email = form?.email
 let password
 </script>
 
-<main>
+<main in:fade={{duration: 180}}>
    <div class="login">
       <img src="favicon.png" alt="" />
 
@@ -25,15 +25,23 @@ let password
             <p id="error">{form?.error}</p>
          {/if}
       </form>
-   </div>
 
-   <div class="regin-button">
-      <h2>Nincs még fiókod?</h2> <a href="/register"><button>Regisztráció</button></a>
+		<div class="regin-button">
+			<h2>Nincs még fiókod?</h2> <a href="/register"><button>Regisztráció</button></a>
+		</div>
+
    </div>
    
 </main>
 
 <style lang="scss">
+
+	main {
+		width: 100vw;
+		height: 100vh;
+		display: flex;
+		align-items: center;
+	}
 
    .regin-button {
       width: 100vw;
@@ -52,12 +60,11 @@ let password
 
    .login {
       text-align: center;
-      margin-top: 50%;
       color: white;
 
       img {
          display: block;
-         margin: auto;
+         margin: 0 auto;
          margin-bottom: 10%;
       }
    }

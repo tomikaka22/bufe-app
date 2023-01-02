@@ -11,7 +11,7 @@
 
 	let swiper;
    let cartshow = 0;
-console.log(data)
+
    if (browser) {
       if (localStorage.getItem('CartContent') != null) {
          cartshow = 1;
@@ -52,9 +52,9 @@ console.log(data)
 					{#each data.termekek as termek}
 						{#if termek.kategoria == 'Étel'}
 							<div class="inner-grid" class:elfogyott={termek.darab == 0}>
-								<a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'><img src='favicon.png' alt=''></a>
-								<a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'>{termek.termek}</a>
-								<a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'>{termek.ar} Ft</a>
+								<a data-sveltekit-noscroll href="{termek.termek}?referrer=/list" class='grid-cell'><img src='favicon.png' alt=''></a>
+								<a data-sveltekit-noscroll href="{termek.termek}?referrer=/list" class='grid-cell'>{termek.termek}</a>
+								<a data-sveltekit-noscroll href="{termek.termek}?referrer=/list" class='grid-cell'>{termek.ar} Ft</a>
 							</div>
 						{/if}
 					{/each}
@@ -68,9 +68,9 @@ console.log(data)
 					{#each data.termekek as termek}
 						{#if termek.kategoria == 'Ital'}
 							<div class="inner-grid" class:elfogyott={termek.darab == 0}>
-								<a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'><img src='favicon.png' alt=''></a>
-								<a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'>{termek.termek}</a>
-								<a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'>{termek.ar} Ft</a>
+								<a data-sveltekit-noscroll href="{termek.termek}?referrer=/list" class='grid-cell'><img src='favicon.png' alt=''></a>
+								<a data-sveltekit-noscroll href="{termek.termek}?referrer=/list" class='grid-cell'>{termek.termek}</a>
+								<a data-sveltekit-noscroll href="{termek.termek}?referrer=/list" class='grid-cell'>{termek.ar} Ft</a>
 							</div>
 						{/if}
 					{/each}
@@ -84,9 +84,9 @@ console.log(data)
 					{#each data.termekek as termek}
 						{#if termek.kategoria == 'Nasi'}
 							<div class="inner-grid" class:elfogyott={termek.darab == 0}>
-								<a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'><img src='favicon.png' alt=''></a>
-								<a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'>{termek.termek}</a>
-								<a data-sveltekit-noscroll href="{termek.termek}?Category=étel" class='grid-cell'>{termek.ar} Ft</a>
+								<a data-sveltekit-noscroll href="{termek.termek}?referrer=/list" class='grid-cell'><img src='favicon.png' alt=''></a>
+								<a data-sveltekit-noscroll href="{termek.termek}?referrer=/list" class='grid-cell'>{termek.termek}</a>
+								<a data-sveltekit-noscroll href="{termek.termek}?referrer=/list" class='grid-cell'>{termek.ar} Ft</a>
 							</div>
 						{/if}
 					{/each}
@@ -102,7 +102,7 @@ console.log(data)
 	 <div class='Nasi' on:click={() => {navigate(2)}}><p class:active='{$navigation == 2}'>Nasi</p></div>
  </div>
  
- <a data-sveltekit-noscroll href="kosar">
+ <a data-sveltekit-noscroll href="kosar?referrer=/list">
 	 <div in:fly={{y: 100, delay: 100}} class='cart'>
 		 <div class="cart-grid">
 			 <div class="cart-cell">
@@ -132,7 +132,6 @@ main {
 
       .list-grid {
          display: grid;
-         width: 100vw;
 
          .grid-container {
             margin: 3%;

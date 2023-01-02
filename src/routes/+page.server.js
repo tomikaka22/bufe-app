@@ -25,6 +25,19 @@ let splash = [
 
 ];
 
-export async function load() {
-	return {'splash': splash[Math.floor(Math.random() * splash.length)]};
+export async function load({ locals, request }) {
+	const records = structuredClone(await locals.pb.collection('termekek').getFullList());
+	const userAgent = request.headers.get('user-agent');
+
+	if (userAgent.includes('Chrome'))
+		splash.push('Firefox jobb.');
+
+	const random = records.map(record => {
+		return record.termek;
+	});
+
+	return {
+		'randomTermek': encodeURI(random[Math.floor(Math.random() * random.length)]),
+		'splash': splash[Math.floor(Math.random() * splash.length)]
+	};
 }

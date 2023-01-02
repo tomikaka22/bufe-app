@@ -9,7 +9,7 @@
    let passwordConfirm;
 </script>
 
-<main>
+<main in:fade={{duration: 180}}>
    <div class="login">
       <img src="favicon.png" alt="" />
       <form method="post">
@@ -31,15 +31,23 @@
             <p id="error">{form?.error}</p>
          {/if}
       </form>
-   </div>
 
-   <div class="regin-button">
-      <h2>Van már fiókod?</h2> <a href="/login"><button>Belépés</button></a>
+		<div class="regin-button">
+			<h2>Van már fiókod?</h2> <a href="/login"><button>Belépés</button></a>
+		</div>
+
    </div>
 
 </main>
 
 <style lang="scss">
+
+	main {
+		width: 100vw;
+		height: 100vh;
+		display: flex;
+		align-items: center;
+	}
 
    .regin-button {
       width: 100vw;
@@ -58,12 +66,11 @@
 
    .login {
       text-align: center;
-      margin-top: 20%;
       color: white;
 
       img {
          display: block;
-         margin: auto;
+         margin: 0 auto;
          margin-bottom: 10%;
       }
    }
@@ -75,10 +82,10 @@
          width: 50%;
          color: white;
          background-color: rgb(20, 20, 20);
-         padding-top: 2.5vw;
-         padding-bottom: 2.5vw;
+         padding-top: 1vh;
+         padding-bottom: 1vh;
          padding-left: 3vw;
-         margin-top: 2vw;
+         margin-top: 1vh;
          margin-bottom: 3vw;
       }
 
@@ -99,7 +106,7 @@
          border-radius: 4vw;
          width: 80%;
          padding: 3vw;
-         margin-top: 5vw;
+         margin-top: 2vh;
          background-color: rgb(20, 20, 20);
          color: white;
       }
@@ -109,4 +116,5 @@
          color: var(--accent-color);
       }
    }
+
 </style>

@@ -1,4 +1,4 @@
-import { redirect, invalid } from '@sveltejs/kit';
+import { redirect, fail } from '@sveltejs/kit';
 
 export function load({ locals }) {
 	if (locals.pb.authStore.isValid) {
@@ -18,14 +18,14 @@ export const actions = {
 
 			if (err.data.data.password) { // jelszoval van baj
 				if (err.data.data.password.code == 'validation_length_out_of_range') {
-					return invalid(400, { name: body.name, email: body.email, error: 'A jelszavad legalább 8 és maximum 72 karakter lehet.' });
+					return fail(400, { name: body.name, email: body.email, error: 'A jelszavad legalább 8 és maximum 72 karakter lehet.' });
 				}
 			}
 			else if (err.data.data.email) { // email-lel van baj
-				return invalid(400, { name: body.name, email: body.email, error: 'Az email invalid vagy már használatban van.' });
+				return fail(400, { name: body.name, email: body.email, error: 'Az email helytelen vagy már használatban van.' });
 			}
 			else {
-				return invalid(400, { name: body.name, email: body.email, error: 'Hiba!' });
+				return fail(400, { name: body.name, email: body.email, error: 'Hiba!' });
 			}
 		}
 

@@ -61,7 +61,7 @@
 
    <Topbar
       target={'Vissza'}
-      targeturl={`/list?Category=${$page.url.searchParams.get('Category')}`}
+      targeturl={$page.url.searchParams.get('referrer')}
       text={''}
       background={'none'}
       hideProfile={0}

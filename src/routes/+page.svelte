@@ -5,108 +5,111 @@
 </script>
 
 <main in:fade={{duration: 180}}>
-   <div class="welcome">
-      <h1>Jónapot <span>{data.name}!</span></h1>
-   </div>
 
-   <div class="outer-div">
-      <div class="inner-div">
-         <div class="grid-container">
-            <a href="/list" class="grid-cell top">
-                  <img src="favicon.png" alt="" />
-                  <p>Termékek böngészése</p>
-            </a>
-            <a href="/profil" class="grid-cell">
-                  <img src="favicon.png" alt="" />
-                  <p>Profil</p>
-            </a>
-            <a href="/rendelesek" class="grid-cell">
-                  <img src="favicon.png" alt="" />
-                  <p>Rendelések</p>
-            </a>
-         </div>
-      </div>
-   </div>
-   <h2>{data.splash}</h2>
+<h1>Jónapot <span style="color: var(--accent-color);">{data.name}!</span></h1>
+
+<div class="grid-container">
+
+	<a href="/list" class="grid-cell termekek-cell">
+		<p>Termekek</p>
+	</a>
+	<a href="/profil" class="grid-cell profil-cell">
+		<p>Profil</p>
+	</a>
+	<a href="/rendelesek" class="grid-cell rendelesek-cell">
+		<p>Rendelések</p>
+	</a>
+	<a href="/kosar?referrer=/" class="grid-cell kosar-cell">
+		<p>Kosár</p>
+	</a>
+	<a href="/{data.randomTermek}?referrer=/" class="grid-cell random-cell">
+		<p>Random</p>
+	</a>
+
+</div>
+
+<h2>{data.splash}</h2>
+
 </main>
 
 <style lang="scss">
-   :global(*) {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      text-decoration: none;
-      -webkit-tap-highlight-color: transparent;
-   }
+main {
+	width: 100vw;
+	height: 100vh;
+	padding: 0 5%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 
-   :global(body) {
-      background-color: black;
-   }
+	h1 {
+		color: white;
+		text-align: center;
+		font-size: x-large;
+		margin: 2%;
+	}
 
-   main {
-      width: 100vw;
-      height: 100vh;
-      overflow-y: hidden;
+	h2 {
+		color: white;
+		text-align: center;
+		margin-top: 18%;
+	}
 
-      .welcome {
-         h1 {
-            font-size: x-large;
-            color: white;
-            text-align: center;
-            margin-top: 30%;
+	.grid-container {
+		display: grid;
+		grid-template-columns: repeat(6, auto);
+		grid-template-rows: repeat(4, auto);
+		gap: 5%;
 
-            span {
-               color: var(--accent-color);
-            }
-         }
-      }
+		.grid-cell {
+			border-radius: 1.2em;
+			background-color: var(--main-color);
+			display: grid;
+			align-items: center;
+			justify-items: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-position: center;
+			padding: 15% 10%;
 
-      .outer-div {
-         display: grid;
-         width: 100vw;
+			p {
+				color: black;
+				font-size: x-large;
+				-webkit-text-stroke: .8px white;
+				font-weight: 800;
+			}
+		}
 
-         .inner-div {
-            grid-area: 1/1;
+		.termekek-cell {
+			grid-column-start: span 6;
+			background-image: url('/favicon.png');
+		}
 
-            .grid-container {
-               display: grid;
-               grid-template-columns: auto auto;
-               grid-template-rows: auto auto;
-               column-gap: 5.5%;
-               border-radius: 25px;
-               margin: 5%;
-               margin-bottom: 0;
-               row-gap: 4%;
-               
-               .grid-cell {
-                  display: flex;
-                  align-items: center;
-                  border-radius: 25px;
-                  background-color: #252525;
-                  transform: scale(110%);
-                  margin: 3%;
-                  flex-direction: column;
-                  border: 1px solid rgba(255, 255, 255, 0.048);
-                  
-                  p {
-                     color: white;
-                  }
-               }
+		.profil-cell {
+			grid-column-start: span 3;
+			grid-row-start: span 3;
+			background-image: url('/api/avatar');
+		}
 
-               .top {
-                  grid-column-start: 1;
-                  grid-column-end: 3;
+		.rendelesek-cell {
+			grid-column-start: span 3;
+			background-image: url('/favicon.png');
+		}
 
-               }
+		.kosar-cell {
+			grid-column-start: span 1;
+			grid-row-start: span 2;
+			background-image: url('/shopping-basket.png');
+			background-size: contain;
+		}
 
-            }
-         }
-      }
+		.random-cell {
+			grid-column-start: span 2;
+			grid-row-start: span 2;
+			background-image: url('/favicon.png');
+		}
 
-      h2 {
-         color: white;
-         text-align: center;
-         margin-top: 10%;
-      }
-   }
+	}
+
+}
+
 </style>

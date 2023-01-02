@@ -1,10 +1,11 @@
 <script>
    import { slide, fade } from "svelte/transition";
+	import { page } from '$app/stores';
    import { goto } from "$app/navigation"
    import { deserialize } from '$app/forms';
    import { cart, total } from "$lib/stores/Cart.js";
    import Topbar from '$lib/components/Topbar.svelte';
-
+console.log(Object.keys($cart))
    export let data;
 
    if (localStorage.getItem('CartContent') != null) {
@@ -83,7 +84,7 @@
 
    <Topbar
    target={'Vissza'}
-   targeturl={'/list'}
+   targeturl={$page.url.searchParams.get('referrer')}
    text={'Kosár'}
    background={'none'}
    hideProfile={0}
@@ -115,10 +116,12 @@
       {/each}
    </div>
 
-   <form method="POST" on:submit|preventDefault={handleSubmit}>
-      <input hidden type="text" name="rendeles" value="{JSON.stringify($cart)}">
-      <button class="bottom-button">Vásárlás!</button>
-   </form>
+ {#if Object.keys($cart).length != 0}
+	<form method="POST" on:submit|preventDefault={handleSubmit}>
+		<input hidden type="text" name="rendeles" value="{JSON.stringify($cart)}">
+		<button class="bottom-button">Vásárlás!</button>
+	</form>
+ {/if}
 
 
 </main>

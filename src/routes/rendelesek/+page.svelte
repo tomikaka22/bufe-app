@@ -65,7 +65,7 @@
 			{/each}
 		</div>
 		{#if lastOpenMenu == i && record.status != 'folyamatban'}
-			<div transition:slide={{duration: 250}} class="menu">
+			<div in:slide={{duration: 250}} out:slide|local={{duration: 350}} class="menu">
 				<form method="POST" on:submit|preventDefault={handleSubmit}>
 					<input hidden name="recordID" type="text" value="{JSON.stringify(record.id)}">
 					<button>Törlés</button>

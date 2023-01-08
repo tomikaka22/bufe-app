@@ -4,6 +4,7 @@
    import { fade } from "svelte/transition";
    import { cart, total } from "$lib/stores/Cart.js";
    import Topbar from '$lib/components/Topbar.svelte';
+	import BottomButton from '$lib/components/BottomButton.svelte';
 
    export let data;
 
@@ -68,23 +69,42 @@
       flyin={0}
    ></Topbar>
 
-   <h1>{item}</h1>
-   {#key price}<h2 in:fade="{{duration: 200}}">{price} Ft</h2>{/key}
-   <h4>{description}</h4>
-   <div class="image"><img src="favicon.png" alt="" /></div>
+	<div class="container">
+		<h1>{item}</h1>
+		{#key price}<h2 in:fade="{{duration: 200}}">{price} Ft</h2>{/key}
+		<h4>{description}</h4>
+		<img src="favicon.png" alt="" />
+		
+		{#if darab != 0}
+			<div class="grid-container">
+				<div class="inner-grid">
+					<div class="button-cell">
+						<button on:click="{subtractItem}">➖</button>
+					</div>
+					{#key amount}<div in:fade="{{duration: 200}}" class="amount-cell">{amount}</div>{/key}
+					<div class="button-cell">
+						<button on:click="{addItem}">➕</button>
+					</div>
+				</div>
+			</div>
 
-{#if darab != 0}
-   <div class="amount">
-      <h1 on:click="{subtractItem}">-</h1>{#key amount}<h2 in:fade="{{duration: 200}}">{amount}</h2>{/key}<h1 on:click="{addItem}">+</h1>
-   </div>
-
-   <button on:click="{buy}" class="kosar">Kosárba</button>
-
-{:else}
-   <div style="margin-top: 5vh;" class="amount">
-      <h1>-</h1><h2>Elfogyott</h2><h1>+</h1>
-   </div>
-{/if}
+			<BottomButton
+				text={'kosárba!'}
+				action={buy}
+			></BottomButton>
+		
+		{:else}
+			<div class="grid-container">
+				<div class="inner-grid">
+					<div class="button-cell">
+					</div>
+					<div class="amount-cell elfogyott">Elfogyott</div>
+					<div class="button-cell">
+					</div>
+				</div>
+			</div>
+		{/if}
+	</div>
 
 </main>
 
@@ -117,43 +137,43 @@
       width: 70%;
    }
 
-   .amount {
-      display: flex;
-      height: auto;
-      width: auto;
-      margin: 0 5vw;
-      margin-top: 8%;
+	.container {
+		background-color: var(--main-color);
+		border-radius: 2em;
+		margin: 5%;
+		padding: 5%;
 
-      h1 {
-         background-color: white;
-         color: black;
-         border-radius: 30px;
-         padding: 25px;
-         transform: scale(80%);
-      }
+		.grid-container {
+			width: 100%;
+			display: grid;
+			justify-items: center;
+			margin-top: 5%;
 
-      h2 {
-         color: white;
-         font-size: xx-large;
-      }
+			.inner-grid {
+				width: 85%;
+				display: grid;
+				grid-template-columns: auto 10% auto;
+				align-items: center;
+				justify-items: center;
+				background-color: rgb(20, 20, 20);
+				color: white;
+				border-radius: 2em;
 
-      * {
-         display: flex;
-         justify-content: center;
-         align-items: center;
-         flex: 33.3%;
-         user-select: none;
-      }
-   }
+				button {
+					border: 0;
+					margin: 20% 0;
+					padding: 1.5rem;
+					border-radius: 1.5em;
+				}
 
-   .kosar {
-         display: block;
-         margin: 0 auto;
-         margin-top: 5%;
-         padding: 25px;
-         font-size: x-large;
-         border-radius: 25px;
-         background-color: var(--accent-color);
-         border: none;
-      }
+				.elfogyott {
+					margin: 1.5rem;
+				}
+
+				.amount-cell {
+					font-size: xx-large;
+				}
+			}
+		}
+	}
 </style>

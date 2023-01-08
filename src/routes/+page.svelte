@@ -70,6 +70,7 @@ main {
 			background-size: cover;
 			background-position: center;
 			padding: 15% 10%;
+			border: 1px solid rgba(255, 255, 255, 0.048);
 
 			p {
 				color: black;

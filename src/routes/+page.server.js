@@ -25,12 +25,8 @@ let splash = [
 
 ];
 
-export async function load({ locals, request }) {
+export async function load({ locals }) {
 	const records = structuredClone(await locals.pb.collection('termekek').getFullList());
-	const userAgent = request.headers.get('user-agent');
-
-	if (userAgent.includes('Chrome'))
-		splash.push('Firefox jobb.');
 
 	const random = records.map(record => {
 		return record.termek;

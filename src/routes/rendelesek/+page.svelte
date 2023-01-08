@@ -116,7 +116,7 @@ main {
 		overflow: hidden;
 		text-align: center;
 		font-size: larger;
-		transition: .18s .15s;
+		transition: .18s .25s;
 
 		&:last-of-type {
 			margin-bottom: 6%;

@@ -5,9 +5,9 @@
    import { deserialize } from '$app/forms';
    import { cart, total } from "$lib/stores/Cart.js";
    import Topbar from '$lib/components/Topbar.svelte';
-console.log(Object.keys($cart))
-   export let data;
 
+   export let data;
+	console.log(data)
    if (localStorage.getItem('CartContent') != null) {
       $cart = JSON.parse(localStorage.getItem('CartContent'));
       $total = JSON.parse(localStorage.getItem('Total'));
@@ -77,10 +77,10 @@ console.log(Object.keys($cart))
          goto('/rendelesek')
       };
    }
-
+	console.log($cart)
 </script>
 
-<main>
+<main in:fade={{duration: 180}}>
 
    <Topbar
    target={'Vissza'}
@@ -95,33 +95,45 @@ console.log(Object.keys($cart))
       <button on:click={() => {urites(); goto('/')}}>Űrités</button>
    </div>
 
-   {#key $total}
-   <h1 in:fade="{{duration: 200}}" style="color: white; ">{$total[1]} db termék, összesen: {$total[0]} Ft</h1>
+	{#key $total}
+   <h1 in:fade="{{duration: 200}}" style="color: white; margin-bottom: 5%;">{$total[1]} db termék, összesen: {$total[0]} Ft</h1>
    {/key}
    
-   <div in:slide class="kosar">
-      {#each Object.entries($cart) as a}
-      <div out:slide|local class="tartalom">
-         <h2>{a[0]}</h2>
-         <h3>{a[1][0]} Ft</h3>
-         <div class="amount">
-            {#if $cart[a[0]][1] > 1}
-            <p on:click="{() => {subtractAmount(a)}}" id="p-first">-</p>
-            {:else} 
-            <p on:click="{() => {subtractAmount(a)}}" id="p-first" style="font-size: small; filter:hue-rotate(25deg)">❌</p>
-            {/if}
-            <h4>{a[1][1]} db</h4><p on:click="{() => {addAmount(a)}}">+</p>
-         </div>
-      </div>
-      {/each}
-   </div>
+	{#each Object.entries($cart) as termek, i (i)}
+		{#key termek[1][0]}
+			<h2 class="title">{termek[0]}: <span in:fade="{{duration: 200}}">{termek[1][0]}</span> Ft</h2>
+		{/key}
 
- {#if Object.keys($cart).length != 0}
-	<form method="POST" on:submit|preventDefault={handleSubmit}>
-		<input hidden type="text" name="rendeles" value="{JSON.stringify($cart)}">
-		<button class="bottom-button">Vásárlás!</button>
-	</form>
- {/if}
+		<div class="grid-container">
+			<div class="grid-cell">
+				<img src="favicon.png" alt="">
+			</div>
+			<div class="grid-cell">
+				<div class="picker-container">
+					<div class="inner-grid">
+						<div class="button-cell">
+							{#if $cart[termek[0]][1] > 1}
+								<button on:click="{() => {subtractAmount(termek)}}"><span in:fade="{{duration: 200}}">➖</span></button>
+							{:else} 
+								<button on:click="{() => {subtractAmount(termek)}}"><span in:fade="{{duration: 200}}">❌</span></button>
+							{/if}
+						</div>
+							{#key termek[1][1]}<div in:fade="{{duration: 200}}" class="amount-cell">{termek[1][1]}</div>{/key}
+						<div class="button-cell">
+							<button on:click="{() => {addAmount(termek)}}">➕</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	{/each}
+
+	{#if Object.keys($cart).length != 0}
+		<form method="POST" on:submit|preventDefault={handleSubmit}>
+			<input hidden type="text" name="rendeles" value="{JSON.stringify($cart)}">
+			<button class="bottom-button">Vásárlás!</button>
+		</form>
+	{/if}
 
 
 </main>
@@ -132,57 +144,39 @@ console.log(Object.keys($cart))
       width: 100vw;
       height: 100vh;
 
-      .kosar {
-         padding-top: 2%;
-         margin: 5% 0;
-         text-align: center;
-         outline: 0.1ch solid white;
-
-         .tartalom {
-            h2 {
-            color: white;
-            font-size: larger;
-         }
-
-         h3 {
-            color: white;
-            font-size: 2ch;
-         }
-         }
-
-      }
-
-      .amount {
-         display: flex;
-         margin-bottom: 5%;
-
-         h4 {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex: 1%;
-            color: white;
-         }
-
-         p {
-            color: white;
-            display: flex;
-            align-items: center;
-            flex: 1%;
-            font-weight: bolder;
-            font-size: x-large;
-            user-select: none;
-         }
-         
-         #p-first {
-            justify-content: end;
-         }
-   }
-
       h1 {
          text-align: center;
          margin-top: 5%;
       }
+
+		.title {
+			color: white;
+			text-align: center;
+		}
+
+		.grid-container {
+			display: grid;
+			grid-template-columns: 1fr 2fr;
+			background-color: var(--main-color);
+			border-radius: 1em;
+			margin: 0 3%;
+			margin-bottom: 5%;
+			margin-top: 1%;
+
+			&:last-of-type {
+				margin-bottom: 30%;
+			}
+
+			.grid-cell {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+
+				img {
+					height: 90px;
+				}
+			}
+		}
 
       .urites {
          width: 100vw;
@@ -212,5 +206,33 @@ console.log(Object.keys($cart))
          padding: .5ch 0;
          border: none;
       }
+
+		.picker-container {
+			width: 100%;
+			display: grid;
+			justify-items: center;
+
+			.inner-grid {
+				width: 85%;
+				display: grid;
+				grid-template-columns: auto 10% auto;
+				align-items: center;
+				justify-items: center;
+				background-color: rgb(20, 20, 20);
+				color: white;
+				border-radius: 2em;
+
+				button {
+					border: 0;
+					margin: 20% 0;
+					padding: 1em;
+					border-radius: 2em;
+				}
+
+				.amount-cell {
+					font-size: xx-large;
+				}
+			}
+		}
    }
 </style>

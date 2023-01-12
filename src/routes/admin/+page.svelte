@@ -9,9 +9,47 @@ let darabModal;
 let termekModal;
 let arakModal;
 let leirasModal;
+let feltetModal;
 let kategoriaModal;
-let tempTermekek = {}
-let tempTermekekRemove = []
+
+let tempTermekek = {};
+let termekekRemove = [];
+
+let tempFeltetek = {};
+let feltetekRemove = {};
+
+function feltetModalInput(event) { // Hozzáadja (Zölddel) a beirt termékeket.
+	event.preventDefault()
+   const data = Object.fromEntries(new FormData(event.target).entries())
+
+	tempFeltetek[data.recordID] = {
+		...tempFeltetek[data.recordID],
+		[data.feltet]: {
+			'darab': data.darab,
+			'ar': data.ar
+		}}
+
+}
+
+function feltetModalInputRemove(event) { // Kitörli a (Zöld) frissen hozzáadott (Még nem véglegesitett) felteteket.
+	event.preventDefault()
+   const data = Object.fromEntries(new FormData(event.target).entries())
+
+	delete tempFeltetek[data.recordID][data.feltet]
+	tempFeltetek = tempFeltetek // Kell reaktivitas miatt
+}
+
+function feltetekModalRemove(event) { // Kitörli a már (régen) véglegesen hozzáadott felteteket.
+	event.preventDefault()
+   const data = Object.fromEntries(new FormData(event.target).entries())
+	if (!feltetekRemove[data.recordID]) feltetekRemove[data.recordID] = [];
+
+	if (feltetekRemove[data.recordID].includes(data.feltet)) {
+		feltetekRemove[data.recordID] = feltetekRemove[data.recordID].filter(feltet => feltet != data.feltet)
+	} else {
+		feltetekRemove[data.recordID] = [...feltetekRemove[data.recordID], data.feltet]
+	}
+}
 
 function termekModalInput(event) { // Hozzáadja (Zölddel) a beirt termékeket.
    event.preventDefault()
@@ -37,11 +75,11 @@ function termekModalRemove(event) { // Kitörli a már (régen) véglegesen hozz
    event.preventDefault()
    const data = Object.fromEntries(new FormData(event.target).entries())
 
-   if (!tempTermekekRemove.includes(Object.keys(data)[0])) {
-      tempTermekekRemove.push(Object.keys(data)[0])
-      tempTermekekRemove = tempTermekekRemove // Kell reaktivitas miatt
+   if (!termekekRemove.includes(Object.keys(data)[0])) {
+      termekekRemove.push(Object.keys(data)[0])
+      termekekRemove = termekekRemove // Kell reaktivitas miatt
    } else {
-      tempTermekekRemove = tempTermekekRemove.filter(id => id != Object.keys(data)[0])
+      termekekRemove = termekekRemove.filter(id => id != Object.keys(data)[0])
    }
 }
 
@@ -100,6 +138,7 @@ setInterval(async () => {
          <button on:click={darabModal.showModal()}>Darab</button>
          <button on:click={arakModal.showModal()}>Árak</button>
          <button on:click={leirasModal.showModal()}>Leirás</button>
+			<button on:click={feltetModal.showModal()}>Feltét</button>
          <button on:click={kategoriaModal.showModal()}>Kategória</button>
       </div>
    </div>
@@ -110,9 +149,9 @@ setInterval(async () => {
    <h2>Eddigi termékek:</h2>
       {#each data.termekekLista as termekek}
          <form on:submit={termekModalRemove}>
-            <p class:crossed-out="{tempTermekekRemove.includes(termekek.id)}">{termekek.termek}: {termekek.ar} Ft, {termekek.darab} db | {termekek.leiras} | {termekek.kategoria}
+            <p class:crossed-out="{termekekRemove.includes(termekek.id)}">{termekek.termek}: {termekek.ar} Ft, {termekek.darab} db | {termekek.leiras} | {termekek.kategoria}
                <input type="text" hidden name="{termekek.id}">
-               <button id="formRemoveButton"> {#if tempTermekekRemove.includes(termekek.id)}↻{:else}❌{/if}</button>
+               <button class="formRemoveButton"> {#if termekekRemove.includes(termekek.id)}↻{:else}❌{/if}</button>
             </p>
          </form>
       {/each}
@@ -122,7 +161,7 @@ setInterval(async () => {
       <form on:submit={termekModalInputRemove}>
          <p style="color: green;">+ {tempTermek}: {tempTermekek[tempTermek].ar} Ft, {tempTermekek[tempTermek].darab} db, {tempTermekek[tempTermek].leiras} {tempTermekek[tempTermek].kategoria} 
             <input type="text" hidden name="{tempTermek}">
-            <button id="formRemoveButton">❌</button>
+            <button class="formRemoveButton">❌</button>
          </p>
       </form>
    {/each}
@@ -142,7 +181,7 @@ setInterval(async () => {
 
    <form action="?/termekek" method="POST">
       <input hidden type="text" name="add" value="{JSON.stringify(tempTermekek)}">
-      <input hidden type="text" name="remove" value="{JSON.stringify(tempTermekekRemove)}">
+      <input hidden type="text" name="remove" value="{JSON.stringify(termekekRemove)}">
       <button>Mentés</button>
    </form>
 
@@ -177,6 +216,44 @@ setInterval(async () => {
       <button>Mentés</button>
    </form>
    <button on:click={leirasModal.close()}><h1>Bezár</h1></button>
+</dialog>
+
+<dialog class="feltet-modal" bind:this={feltetModal}>
+	{#each data.termekekLista as termekek}
+		<form on:submit={feltetModalInput}>
+			<h2>{termekek.termek}:</h2>
+			{#if termekek.feltetek}
+				{#each Object.keys(termekek.feltetek) as feltet}
+					<form on:submit={feltetekModalRemove}>
+						<input name="recordID" hidden type="text" value="{termekek.id}">
+						<input name="feltet" hidden type="text" value="{feltet}">
+						<p class:crossed-out="{feltetekRemove[termekek.id]?.includes(feltet)}" style="color: white;">{feltet}: {termekek.feltetek[feltet].darab} db, {termekek.feltetek[feltet].ar} Ft <button class="formRemoveButton"><span>{#if feltetekRemove[termekek.id]?.includes(feltet)}↻{:else}❌{/if}</span></button></p>
+					</form>
+				{/each}
+			{/if}
+
+			{#if tempFeltetek[termekek.id]}
+				{#each Object.keys(tempFeltetek[termekek.id]) as feltet}
+					<form on:submit={feltetModalInputRemove}>
+						<input name="recordID" hidden type="text" value="{termekek.id}">
+						<input name="feltet" hidden type="text" value="{feltet}">
+						<p> + {[feltet]}: {tempFeltetek[termekek.id][feltet].darab} db, {tempFeltetek[termekek.id][feltet].ar} Ft <button class="formRemoveButton"><span>❌</span></button></p>
+					</form>
+				{/each}
+			{/if}
+			<input name="recordID" hidden type="text" value="{termekek.id}">
+			<input name="feltet" placeholder="Feltét neve" type="text" style="width: 10rem;">
+			<input name="darab" type="number" value="1" style="width: 6ch;"> db
+			<input name="ar" type="number" value="100" style="width: 6ch;"> Ft
+			<button><span>+</span></button>
+		</form>
+	{/each}
+	<form action="?/feltet" method="POST">
+		<input name="add" hidden type="text" value="{JSON.stringify(tempFeltetek)}">
+		<input name="remove" hidden type="text" value="{JSON.stringify(feltetekRemove)}">
+		<button>Mentés</button>
+	</form>
+	<button on:click={feltetModal.close()}><h1>Bezár</h1></button>
 </dialog>
 
 <dialog class="kategoria-modal" bind:this={kategoriaModal}>
@@ -299,7 +376,7 @@ setInterval(async () => {
             background: rgba(0, 0, 0, 0.800);
          }
          
-         #formRemoveButton {
+         .formRemoveButton {
             margin-left: .5ch;
             padding: 0;
             border: none;
@@ -316,10 +393,23 @@ setInterval(async () => {
          }
       }
 
+		.feltet-modal {
+
+			p {
+				color: chartreuse;
+			}
+
+			button {
+				span {
+					color: chartreuse;
+				}
+			}
+		}
+
       .crossed-out {
          text-decoration: line-through;
          text-decoration-color: lightgray;
-         color: rgba(211, 211, 211, 0.75);
+         color: rgba(211, 211, 211, 0.75) !important;
       }
    }
 

@@ -7,7 +7,7 @@
 	import BottomButton from '$lib/components/BottomButton.svelte';
 
    export let data;
-
+console.log(data)
    const item = $page.params.items;
    const darab = data.termekek.darab
    const description = data.termekek.leiras
@@ -69,46 +69,69 @@
       flyin={0}
    ></Topbar>
 
-	<div class="container">
-		<h1>{item}</h1>
-		{#key price}<h2 in:fade="{{duration: 200}}">{price} Ft</h2>{/key}
-		<h4>{description}</h4>
-		<img src="favicon.png" alt="" />
-		
-		{#if darab != 0}
-			<div class="grid-container">
-				<div class="inner-grid">
-					<div class="button-cell">
-						<button on:click="{subtractItem}">➖</button>
-					</div>
-					{#key amount}<div in:fade="{{duration: 200}}" class="amount-cell">{amount}</div>{/key}
-					<div class="button-cell">
-						<button on:click="{addItem}">➕</button>
-					</div>
-				</div>
-			</div>
 
-			<BottomButton
-				text={'kosárba!'}
-				action={buy}
-			></BottomButton>
-		
-		{:else}
-			<div class="grid-container">
-				<div class="inner-grid">
-					<div class="button-cell">
-					</div>
-					<div class="amount-cell elfogyott">Elfogyott</div>
-					<div class="button-cell">
+	<div class="container">
+
+	
+		<div class="item-container">
+			<h1>{item}</h1>
+			{#key price}<h2 in:fade="{{duration: 200}}">{price} Ft</h2>{/key}
+			<img src="favicon.png" alt="" />
+			
+			{#if darab != 0}
+				<div class="grid-container">
+					<div class="inner-grid">
+						<div class="button-cell">
+							<button on:click="{subtractItem}">➖</button>
+						</div>
+						{#key amount}<div in:fade="{{duration: 200}}" class="amount-cell">{amount}</div>{/key}
+						<div class="button-cell">
+							<button on:click="{addItem}">➕</button>
+						</div>
 					</div>
 				</div>
-			</div>
-		{/if}
+
+				<h4>{description}</h4>
+
+				<BottomButton
+					text={'kosárba!'}
+					action={buy}
+				></BottomButton>
+			
+			{:else}
+				<div class="grid-container">
+					<div class="inner-grid">
+						<div class="button-cell">
+						</div>
+						<div class="amount-cell elfogyott">Elfogyott</div>
+						<div class="button-cell">
+						</div>
+					</div>
+				</div>
+			{/if}
+		</div>
+		
+	{#if data.termekek.feltetek}
+		<div class="feltet">
+			<p>Feltétek</p>
+		</div>
+	{/if}
+		
 	</div>
 
 </main>
 
 <style lang="scss">
+
+	.feltet {
+		padding: 5%;
+		color: white;
+
+		p {
+			font-size: larger;
+			text-align: center;
+		}
+	}
 
    h1 {
       text-align: center;
@@ -126,6 +149,7 @@
    }
 
    h4 {
+		padding: 1em 0;
       color: white;
       text-align: center;
    }
@@ -138,42 +162,49 @@
    }
 
 	.container {
-		background-color: var(--main-color);
+		background-color: rgb(20, 20, 20);
+		margin: 0 5%;
 		border-radius: 2em;
-		margin: 5%;
-		padding: 5%;
 
-		.grid-container {
-			width: 100%;
-			display: grid;
-			justify-items: center;
+		.item-container {
+			background-color: var(--main-color);
 			margin-top: 5%;
+			border-radius: 2em;
 
-			.inner-grid {
-				width: 85%;
+			.grid-container {
+				width: 100%;
 				display: grid;
-				grid-template-columns: auto 10% auto;
-				align-items: center;
 				justify-items: center;
-				background-color: rgb(20, 20, 20);
-				color: white;
-				border-radius: 2em;
+				margin-top: 5%;
 
-				button {
-					border: 0;
-					margin: 20% 0;
-					padding: 1.5rem;
-					border-radius: 1.5em;
-				}
+				.inner-grid {
+					width: 85%;
+					display: grid;
+					grid-template-columns: auto 10% auto;
+					align-items: center;
+					justify-items: center;
+					background-color: rgb(20, 20, 20);
+					color: white;
+					border-radius: 2em;
 
-				.elfogyott {
-					margin: 1.5rem;
-				}
+					button {
+						border: 0;
+						margin: 20% 0;
+						padding: 1.5rem;
+						border-radius: 1.5em;
+					}
 
-				.amount-cell {
-					font-size: xx-large;
+					.elfogyott {
+						margin: 1.5rem;
+					}
+
+					.amount-cell {
+						font-size: xx-large;
+					}
 				}
 			}
 		}
 	}
+
+
 </style>

@@ -26,7 +26,7 @@
    function urites() {
       localStorage.clear();
       $cart = {};
-      $total = { 'ar': 0, 'darab': 0 };
+      $total = { 'ar': 0, 'darab': 0, 'feltet': [] };
    };
 
    function subtractAmount(termek) {

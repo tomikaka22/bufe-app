@@ -40,6 +40,7 @@
       if (tempcart[termek].darab < darab) {
 			$cart[termek] = {'ar': tempcart[termek].ar + price, 'darab': tempcart[termek].darab + amount, 'feltet': tempcart[termek].feltet}
 
+			$total = { 'ar': 0, 'darab': 0, 'feltet': [] }
 			Object.keys($cart).forEach(termek => {
 				$total.ar += $cart[termek].ar
 				$total.darab += $cart[termek].darab

@@ -1,6 +1,7 @@
 <script>
 import { enhance } from '$app/forms';
 import { invalidateAll } from '$app/navigation';
+    import { each } from 'svelte/internal';
 import { fade } from 'svelte/transition';
 
 export let data;
@@ -90,6 +91,7 @@ setInterval(async () => {
 </script>
 
 <main>
+	<!-- TODO: Object.keys refactor + cleanup -->
 <div class="grid-container">
    <div class="grid-cell">
       <h1>Bejövő rendelések</h1>
@@ -103,6 +105,11 @@ setInterval(async () => {
             <h3>{data.rendelesek.fuggoben[orderID].name}</h3>
             {#each Object.keys(data.rendelesek.fuggoben[orderID].termekek) as a}
                <p><span style="color: chartreuse">{a},</span> <span style="color: red;">{data.rendelesek.fuggoben[orderID].termekek[a].darab}</span> db, <span style="color: red;">{data.rendelesek.fuggoben[orderID].termekek[a].ar}</span> Ft</p>
+				{#if Array.isArray(data.rendelesek.fuggoben[orderID].termekek[a].feltet)}
+					{#each data.rendelesek.fuggoben[orderID].termekek[a].feltet as feltet}
+						<p style="color: burlywood; text-align: start;">{feltet}</p>
+					{/each}
+				{/if}
             {/each}
             <form use:enhance action="?/kesz" method="POST">
                <input hidden type="text" name="recordID" value="{JSON.stringify(data.rendelesek.fuggoben[orderID].id)}">
@@ -123,6 +130,11 @@ setInterval(async () => {
          <h3>{data.rendelesek.kesz[orderID].name}</h3>
          {#each Object.keys(data.rendelesek.kesz[orderID].termekek) as a}
             <p><span style="color: chartreuse">{a},</span> <span style="color: red;">{data.rendelesek.kesz[orderID].termekek[a].darab}</span> db, <span style="color: red;">{data.rendelesek.kesz[orderID].termekek[a].ar}</span> Ft</p>
+				{#if Array.isArray(data.rendelesek.kesz[orderID].termekek[a].feltet)}
+					{#each data.rendelesek.kesz[orderID].termekek[a].feltet as feltet}
+						<p style="color: burlywood; text-align: start;">{feltet}</p>
+					{/each}
+				{/if}
          {/each}
          <form use:enhance action="?/atadva" method="POST">
             <input hidden type="text" name="recordID" value="{JSON.stringify(data.rendelesek.kesz[orderID].id)}">
@@ -131,6 +143,7 @@ setInterval(async () => {
       </div>
    {/each}
    </div>
+
    <div class="grid-cell">
       <div class="szerkesztes">
          <h1>Szerkesztés:</h1>

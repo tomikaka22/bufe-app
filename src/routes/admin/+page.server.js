@@ -23,8 +23,6 @@ export const actions = {
 		Object.keys(data).forEach(id => {
 			locals.pb.collection('termekek').update(id, { 'darab': data[id] });
 		});
-
-
 	},
 	ar: async ({ request, locals }) => {
 		const data = Object.fromEntries(await request.formData());
@@ -57,13 +55,21 @@ export const actions = {
 		let data = Object.fromEntries(await request.formData());
 		data.add = JSON.parse(data.add);
 		data.remove = JSON.parse(data.remove);
-		// console.log(data)
 
 		for (const id in data.add) {
 			for (const feltet in data.add[id]) {
 				const record = await locals.pb.collection('termekek').getOne(id);
-				// await locals.pb.collection('termekek').update(id, record.feltetek, { 'feltetek': { [feltet]: { 'ar': data.add[id][feltet].ar, 'darab': data.add[id][feltet].darab }}});
+
+				await locals.pb.collection('termekek').update(id, { 'feltetek': {...record.feltetek, [feltet]: { 'ar': data.add[id][feltet].ar, 'darab': data.add[id][feltet].darab }}});
 			}
+		}
+
+		for (const id in data.remove) {
+			const record = await locals.pb.collection('termekek').getOne(id);
+			data.remove[id].forEach(feltet => { delete record.feltetek[feltet]; });
+			if (JSON.stringify(record.feltetek) === '{}') record.feltetek = null;
+
+			await locals.pb.collection('termekek').update(id, { 'feltetek': record.feltetek });
 		}
 	},
 	kategoria: async ({ request, locals }) => {
@@ -80,7 +86,6 @@ export const actions = {
 
 		await locals.pb.collection('rendelesek').update(id, { 'status': 'folyamatban' });
 	},
-
 	atadva: async ({ request, locals }) => {
 		const data = Object.fromEntries(await request.formData());
 		const id = JSON.parse(data.recordID);

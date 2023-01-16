@@ -1,10 +1,8 @@
 export const ssr = false;
 
 export async function load({ locals }) {
-	const termekek = structuredClone(await locals.pb.collection('termekek').getFullList(1, {}));
-	
 	return {
-		'termekek': termekek
+		'termekek': structuredClone(await locals.pb.collection('termekek').getFullList(1, {}))
 	};
 }
 
@@ -14,13 +12,16 @@ export const actions = {
 		let rendeles = JSON.parse(data.rendeles);
 		let total = 0;
 
-		for (let i = 0; i < Object.keys(rendeles).length; i++) { // atmegy minden key-en az obejtben
-			const record = await locals.pb.collection('termekek').getFirstListItem(`termek = "${Object.keys(rendeles)[i]}"`); // visszater a termek recordjaval
-			const darab = rendeles[Object.keys(rendeles)[i]][1]; // TODO: Atalakitani a kosar osszesitest hogy ne array-t hasznaljon.
-			const subTotal = darab * record.ar;
-			
-			rendeles[Object.keys(rendeles)[i]] = {'ar': subTotal, 'darab': darab}; // ar validálás
-			total += subTotal; // total szamolas
+		for (const termek in rendeles) {
+			const record = await locals.pb.collection('termekek').getFirstListItem(`termek = "${termek}"`);
+			// ar validalas
+			const darab = rendeles[termek].darab;
+			let subTotal = darab * record.ar;
+			const feltet = rendeles[termek].feltet.map((feltet => { subTotal += Number(record.feltetek[feltet].ar); return feltet; }));
+
+			rendeles[termek] = { 'ar': subTotal, 'darab': darab, 'feltet': feltet };
+			total += subTotal;
+
 			try {
 				locals.pb.collection('termekek').update(record.id, { 'darab': record.darab - darab} ); // darabszam kivonasa
 			} catch (error) {

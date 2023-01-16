@@ -7,39 +7,39 @@
    import Topbar from '$lib/components/Topbar.svelte';
 
    export let data;
-	console.log(data)
+
    if (localStorage.getItem('CartContent') != null) {
       $cart = JSON.parse(localStorage.getItem('CartContent'));
       $total = JSON.parse(localStorage.getItem('Total'));
    }
 
    function recalculate() {
-      $total = [0,0];
-      for (let i = 0; i < Object.keys($cart).length; i++) {
-         let cnt = $cart[Object.keys($cart)[i]];
-         $total[1] += Number(cnt[1]); 
-         $total[0] += Number(cnt[0])
-      }
+      $total = { 'ar': 0, 'darab': 0 };
+		Object.keys($cart).forEach(termek => {
+			$total.ar += $cart[termek].ar
+			$total.darab += $cart[termek].darab
+         localStorage.setItem('CartContent', JSON.stringify($cart));
+			localStorage.setItem('Total', JSON.stringify($total))
+		});
    };
 
    function urites() {
       localStorage.clear();
       $cart = {};
-      $total = [0,0];
+      $total = { 'ar': 0, 'darab': 0 };
    };
 
-   function subtractAmount(item) {
-      if ($cart[item[0]][1] > 1) {
-         let price = item[1][0] / item[1][1];
-         $cart[item[0]][0] -= price;
-         $cart[item[0]][1]--;
+   function subtractAmount(termek) {
+      if ($cart[termek].darab > 1) {
+         let price = $cart[termek].ar / $cart[termek].darab;
+
+         $cart[termek].ar -= price;
+         $cart[termek].darab--;
          recalculate();
-         localStorage.setItem('CartContent', JSON.stringify($cart))
       } else {
-         delete $cart[item[0]];
+         delete $cart[termek];
          $cart = $cart; // Muszaj reactivity miatt
          recalculate();
-         localStorage.setItem('CartContent', JSON.stringify($cart));
          if (Object.keys($cart).length === 0) {
             localStorage.removeItem('CartContent');
             history.back()
@@ -47,19 +47,19 @@
       }
    };
 
-   function addAmount(item) {
+   function addAmount(termek) {
       // * Elegge gusztustalan megoldas vegig loopolni es megtalalni a darabszamat a termeknek
       let darab;
       data.termekek.forEach(record => {
-         if (record.termek == item[0]) darab = record.darab
+         if (record.termek == termek) darab = record.darab
       });
 
-      if ($cart[item[0]][1] < darab) {
-         let price = item[1][0] / item[1][1];
-         $cart[item[0]][0] += price;
-         $cart[item[0]][1]++;
+      if ($cart[termek].darab < darab) {
+         let price = $cart[termek].ar / $cart[termek].darab;
+
+         $cart[termek].ar += price;
+         $cart[termek].darab++;
          recalculate();
-         localStorage.setItem('CartContent', JSON.stringify($cart));
       };
    };
 
@@ -77,7 +77,7 @@
          goto('/rendelesek')
       };
    }
-	console.log($cart)
+
 </script>
 
 <main in:fade={{duration: 180}}>
@@ -96,12 +96,12 @@
    </div>
 
 	{#key $total}
-   <h1 in:fade="{{duration: 200}}" style="color: white; margin-bottom: 5%;">{$total[1]} db termék, összesen: {$total[0]} Ft</h1>
+   <h1 in:fade="{{duration: 200}}" style="color: white; margin-bottom: 5%;">{$total.darab} db termék, összesen: {$total.ar} Ft</h1>
    {/key}
    
-	{#each Object.entries($cart) as termek, i (i)}
-		{#key termek[1][0]}
-			<h2 class="title">{termek[0]}: <span in:fade="{{duration: 200}}">{termek[1][0]}</span> Ft</h2>
+	{#each Object.keys($cart) as termek, i (i)}
+		{#key termek.ar}
+			<h2 class="title">{termek}: <span in:fade="{{duration: 200}}">{$cart[termek].ar}</span> Ft</h2>
 		{/key}
 
 		<div class="grid-container">
@@ -112,13 +112,13 @@
 				<div class="picker-container">
 					<div class="inner-grid">
 						<div class="button-cell">
-							{#if $cart[termek[0]][1] > 1}
+							{#if $cart[termek].darab > 1}
 								<button on:click="{() => {subtractAmount(termek)}}"><span in:fade="{{duration: 200}}">➖</span></button>
 							{:else} 
 								<button on:click="{() => {subtractAmount(termek)}}"><span in:fade="{{duration: 200}}">❌</span></button>
 							{/if}
 						</div>
-							{#key termek[1][1]}<div in:fade="{{duration: 200}}" class="amount-cell">{termek[1][1]}</div>{/key}
+							{#key $cart[termek].ar}<div in:fade="{{duration: 200}}" class="amount-cell">{$cart[termek].darab}</div>{/key}
 						<div class="button-cell">
 							<button on:click="{() => {addAmount(termek)}}">➕</button>
 						</div>

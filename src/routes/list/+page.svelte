@@ -106,7 +106,7 @@
 	 <div in:fly={{y: 100, delay: 100}} class='cart'>
 		 <div class="cart-grid">
 			 <div class="cart-cell">
-				 <img src="shopping-basket.png" alt=""> <b>{$total[0]} Ft</b><p>({$total[1]} db termék a kosárban.)</p>
+				 <img src="shopping-basket.png" alt=""> <b>{$total.ar} Ft</b><p>({$total.darab} db termék a kosárban.)</p>
 			 </div>
 		 </div>
 	 </div>

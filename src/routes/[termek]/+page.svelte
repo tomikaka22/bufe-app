@@ -7,25 +7,25 @@
 	import BottomButton from '$lib/components/BottomButton.svelte';
 
    export let data;
-console.log(data)
-   const item = $page.params.items;
+
+   const termek = data.termekek.termek;
    const darab = data.termekek.darab
    const description = data.termekek.leiras
 
-   let tempcart = {[item] : [0,0]};
+   let tempcart = {[termek] : { 'ar': 0, 'darab': 0, 'feltet': [] }};
    $: amount = 1;
    $: price = data.termekek.ar * amount;
 
    if (localStorage.getItem('CartContent') != null) {
       $cart = JSON.parse(localStorage.getItem('CartContent'));
       tempcart = $cart;
-      if (tempcart[item] == undefined) {
-         tempcart[item] = [0,0]
+      if (tempcart[termek] == undefined) {
+         tempcart[termek] = { 'ar': 0, 'darab': 0, 'feltet': [] }
       }
    }
 
    function addItem() {
-      if (amount < darab - tempcart[item][1]) {
+      if (amount < darab - tempcart[termek].darab) {
          amount++
       }
    };
@@ -37,24 +37,32 @@ console.log(data)
    };
 
    function buy() {
-      if (tempcart[item][1] < darab) {
-         $cart[item] = [tempcart[item][0] + price, tempcart[item][1] + amount];
+      if (tempcart[termek].darab < darab) {
+			$cart[termek] = {'ar': tempcart[termek].ar + price, 'darab': tempcart[termek].darab + amount, 'feltet': tempcart[termek].feltet}
 
-         $total = [0,0]
-         for (let i = 0; i < Object.keys($cart).length; i++) { // atmegy minden key-en a kosar obejtben
-            let cnt = $cart[Object.keys($cart)[i]]; // cnt = kosar object i-ik eleme
-            $total[1] += Number(cnt[1]);  // hozzaadja a kosar object i-ik kulcsanak az 1. tagjat (ár)
-            $total[0] += Number(cnt[0])   // hozzaadja a kosar object i-ik kulcsanak a 2. tagjat (mennyiség)
-         };
+			Object.keys($cart).forEach(termek => {
+				$total.ar += $cart[termek].ar
+				$total.darab += $cart[termek].darab
+			});
 
          localStorage.setItem('CartContent',JSON.stringify($cart));
          localStorage.setItem('Total',JSON.stringify($total));
 
          goto("/list?Category=".concat($page.url.searchParams.get('Category')))
       } else {
-         alert(`Túl sok ${item} van már a kosárban!`)
+         alert(`Túl sok ${termek} van már a kosárban!`)
       }
    };
+
+	function feltetChange(feltet,feltetAr,feltetDarab) {
+		if (tempcart[termek].feltet.includes(feltet)) {
+			tempcart[termek].feltet = tempcart[termek].feltet.filter(item => item != feltet)
+			price -= Number(feltetAr)
+		} else {
+			tempcart[termek].feltet = [ ...tempcart[termek].feltet, feltet] 
+			price += Number(feltetAr)
+		}
+	}
 
 </script>
 
@@ -71,10 +79,8 @@ console.log(data)
 
 
 	<div class="container">
-
-	
-		<div class="item-container">
-			<h1>{item}</h1>
+		<div class="termek-container">
+			<h1>{termek}</h1>
 			{#key price}<h2 in:fade="{{duration: 200}}">{price} Ft</h2>{/key}
 			<img src="favicon.png" alt="" />
 			
@@ -112,8 +118,16 @@ console.log(data)
 		</div>
 		
 	{#if data.termekek.feltetek}
-		<div class="feltet">
-			<p>Feltétek</p>
+		<div class="feltetek">
+			<p id="feltetek">Feltétek:</p>
+
+			<div class="feltet-container">
+				{#each Object.keys(data.termekek.feltetek) as feltet}
+					<div class="feltet-cell feltet">{feltet}</div>
+					<div class="feltet-cell check"><input on:change={() => {feltetChange(feltet,data.termekek.feltetek[feltet].ar,data.termekek.feltetek[feltet].darab)}} type="checkbox" name="{feltet}"></div>
+					<div class="feltet-cell ar">{data.termekek.feltetek[feltet].ar} Ft</div>
+				{/each}
+			</div>
 		</div>
 	{/if}
 		
@@ -123,14 +137,54 @@ console.log(data)
 
 <style lang="scss">
 
-	.feltet {
-		padding: 5%;
-		color: white;
+.feltetek {
+	padding-bottom: .5rem;
 
-		p {
-			font-size: larger;
-			text-align: center;
+	p {
+		color: white;
+		text-align: center;
+		margin-top: 1rem;
+		margin-bottom: .5rem;
+	}
+}
+
+.feltet-container {
+		display: grid;
+		grid-template-columns: 49% auto 49%;
+		margin: 0 5%;
+		color: white;
+		border-radius: 1em;
+		overflow: hidden;
+		text-align: center;
+		font-size: larger;
+
+		&:last-of-type {
+			margin-bottom: 6%;
 		}
+
+		.feltet-cell {
+			background-color: var(--main-color);
+			padding: .5em 0;
+		}
+
+		.feltet {
+			&:nth-of-type(even) {
+				background-color: #141414;
+			}
+		}
+
+		.check {
+			&:nth-of-type(odd) {
+				background-color: #141414;
+			}
+		}
+
+		.ar {
+			&:nth-of-type(even) {
+				background-color: #141414;
+			}
+		}
+
 	}
 
    h1 {
@@ -166,7 +220,7 @@ console.log(data)
 		margin: 0 5%;
 		border-radius: 2em;
 
-		.item-container {
+		.termek-container {
 			background-color: var(--main-color);
 			margin-top: 5%;
 			border-radius: 2em;

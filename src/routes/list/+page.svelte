@@ -24,6 +24,39 @@
 		swiper.slideTo(i);
 		$navigation = i
 	}
+
+	// Search Bar
+	const originalData = structuredClone(data);
+	let searchWord;
+
+	function search() {
+		data.termekek = originalData.termekek.filter(termek => termek.termek.toLowerCase().includes(searchWord.toLowerCase()))
+
+		// Navigáljon arra a kategoriara amiben az a termek talalhato ahol a keresett szo a legtobbet elofordul.
+		if (searchWord.length > 0) { // ha nincs itt ez az if, akkor mindig visszaugrik az Etel kategoriara, mivel ott fordul elo a legtobbet empty string.
+			let kategoria = {
+				'Étel': 0,
+				'Ital': 0,
+				'Nasi': 0
+			}
+
+			data.termekek.forEach(termek => {
+				kategoria[termek.kategoria] += termek.termek.toLowerCase().split(searchWord.toLowerCase()).length - 1
+			});
+
+			switch (Object.values(kategoria).sort().reverse()[0]) {
+				case kategoria.Étel:
+					navigate(0)
+					break;
+				case kategoria.Ital:
+					navigate(1)
+					break;
+				case kategoria.Nasi:
+					navigate(2)
+			}
+		}
+		
+	}
 </script>
 
 <main>
@@ -36,6 +69,13 @@
       flyin={{y: -200}}
       hideProfile={0}
    ></Topbar>
+
+	<div class="search-container">
+		<div class="search">
+			<input type="text" bind:value={searchWord} on:input={search}>
+			<button on:click={() => {searchWord = ''; search()}}>❌</button>
+		</div>
+	</div>
 
 	<Swiper
 	initialSlide={$navigation}
@@ -246,6 +286,36 @@ main {
 
 		.elfogyott {
 			opacity: 35%;
+		}
+
+		.search-container {
+			display: flex;
+			justify-content: center;
+			
+			.search {
+				display: flex;
+				align-items: center;
+				margin: 1em;
+
+				input {
+					background-color: black;
+					border: 0;
+					padding: .4em;
+					outline: 1px solid rgba(255, 255, 255, 0.863);
+					width: 100%;
+					border-radius: 1em;
+					color: white;
+				}
+
+				button {
+					margin-left: 1em;
+					border: 0;
+					outline: 1px solid rgba(255, 255, 255, 0.863);
+					padding: .5em;
+					border-radius: 1em;
+					background-color: var(--main-color);
+				}
+			}
 		}
    }
 

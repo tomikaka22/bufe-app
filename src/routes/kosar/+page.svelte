@@ -77,7 +77,7 @@
          goto('/rendelesek')
       } else {
 			alert(result.data.error);
-			delete $cart[result.data.elfogyott];
+			delete $cart[result.data.sok];
 			$cart = $cart; // kell reactivity miatt
 			recalculate();
 		}

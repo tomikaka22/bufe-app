@@ -24,10 +24,10 @@ export const actions = {
 			rendeles[termek] = { 'ar': subTotal, 'darab': darab, 'feltet': feltet };
 			total += subTotal;
 
-			if (record.darab > 0)
+			if (record.darab - darab >= 0)
 				await locals.pb.collection('termekek').update(record.id, { 'darab': record.darab - darab} ); // darabszam kivonasa
 			else 
-				return fail(409, { 'error': `A ${record.termek} sajnos elfogyott.`, 'elfogyott': record.termek });
+				return fail(409, { 'error': `Túl sok ${record.termek} a kosárban!`, 'sok': record.termek });
 		}
 
 		await locals.pb.collection('rendelesek').create({ 'rendelo': locals.pb.authStore.baseModel.id, 'termekek': rendeles, 'total': total, 'status': 'fuggoben', 'name': locals.pb.authStore.baseModel.name });

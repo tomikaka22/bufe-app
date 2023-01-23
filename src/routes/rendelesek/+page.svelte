@@ -45,7 +45,7 @@
 		<h3>Összesen: <span>{data.total} Ft</span></h3>
 	</div>
 	
-	{#each data.elozmenyLista as record, i}
+	{#each data.elozmenyLista as record, i (record.id)}
 
 		{#if record.status == 'fuggoben'}
 			<h1 in:slide={{duration: 350}} class="status">Függőben</h1>

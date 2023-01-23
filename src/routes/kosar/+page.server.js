@@ -1,3 +1,5 @@
+import { fail } from '@sveltejs/kit';
+
 export const ssr = false;
 
 export async function load({ locals }) {
@@ -22,17 +24,12 @@ export const actions = {
 			rendeles[termek] = { 'ar': subTotal, 'darab': darab, 'feltet': feltet };
 			total += subTotal;
 
-			try {
-				locals.pb.collection('termekek').update(record.id, { 'darab': record.darab - darab} ); // darabszam kivonasa
-			} catch (error) {
-				console.log(error);
-			}
+			if (record.darab > 0)
+				await locals.pb.collection('termekek').update(record.id, { 'darab': record.darab - darab} ); // darabszam kivonasa
+			else 
+				return fail(409, { 'error': `A ${record.termek} sajnos elfogyott.`, 'elfogyott': record.termek });
 		}
 
-		// adatbazis
 		await locals.pb.collection('rendelesek').create({ 'rendelo': locals.pb.authStore.baseModel.id, 'termekek': rendeles, 'total': total, 'status': 'fuggoben', 'name': locals.pb.authStore.baseModel.name });
-		return {
-			'orderID': 'asd'
-		};
 	}
 };

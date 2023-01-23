@@ -75,7 +75,12 @@
       if (result.type == 'success') {
          urites();
          goto('/rendelesek')
-      };
+      } else {
+			alert(result.data.error);
+			delete $cart[result.data.elfogyott];
+			$cart = $cart; // kell reactivity miatt
+			recalculate();
+		}
    }
 
 </script>

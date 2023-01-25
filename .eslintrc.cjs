@@ -49,7 +49,7 @@ module.exports = {
 			'warn', 'always'
 		],
 		'sort-imports': [
-			'warn'
+			'warn', { 'ignoreDeclarationSort': true }
 		],
 		'prefer-const': [
 			'warn'

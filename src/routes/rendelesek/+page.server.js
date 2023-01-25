@@ -25,7 +25,7 @@ export const actions = {
 		const id = JSON.parse(data.recordID);
 		const rendeles = await locals.pb.collection('rendelesek').getOne(id);
 
-		if (rendeles.status == 'fuggoben' )
+		if (rendeles.status === 'fuggoben' )
 			Object.keys(rendeles.termekek).forEach(async termek => {
 				const record = await locals.pb.collection('termekek').getFullList(1, { filter: `termek = '${termek}'` });
 				const darab = record[0].darab + rendeles.termekek[termek].darab;

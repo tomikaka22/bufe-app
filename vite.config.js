@@ -8,6 +8,7 @@ const config = {
 			manifest: {
 				name: 'bufe-app',
 				description: 'Rendelj büféből a mobilodon, vedd át szünetben sorbanállás nélkül.',
+				// eslint-disable-next-line camelcase
 				start_url: '/',
 				scope: '/',
 				icons: [

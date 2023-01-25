@@ -111,19 +111,6 @@ function termekModalInput(event) { // Hozzáadja (Zölddel) a beirt termékeket.
          }
       }
 
-		.feltet-modal {
-
-			p {
-				color: chartreuse;
-			}
-
-			button {
-				span {
-					color: chartreuse;
-				}
-			}
-		}
-
       .crossed-out {
          text-decoration: line-through;
          text-decoration-color: lightgray;

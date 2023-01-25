@@ -7,6 +7,6 @@ export const actions = {
 		locals.pb.collection('users').update(locals.pb.authStore.baseModel.id, data);
 	},
 	changePassword: async ({ request, locals }) => {
-		
+
 	}
 };

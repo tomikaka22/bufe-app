@@ -1,9 +1,8 @@
-import { redirect, fail } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 
 export function load({ locals }) { // ha bevagyunk jelentkezve dobjon át a főoldalra
-	if (locals.pb.authStore.isValid) {
+	if (locals.pb.authStore.isValid)
 		throw redirect(303, '/');
-	}
 }
 
 export const actions = { // Bejelentkezés, megkapja az oldal FORM data-ját és az alapján beléptet

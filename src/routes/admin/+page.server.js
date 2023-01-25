@@ -1,7 +1,7 @@
 import { redirect } from '@sveltejs/kit';
 
 export const ssr = false;
-const admins = ['rdzc6b3jes1k8am','u1fy74rt1m48tx1'];
+const admins = [ 'rdzc6b3jes1k8am','u1fy74rt1m48tx1' ];
 
 export async function load({ locals }) {
 	if (!admins.includes(locals.pb.authStore.baseModel.id)) throw redirect(303, '/'); // Ha nem admin id-vel van bejelentkezve redirect to login
@@ -26,18 +26,18 @@ export const actions = {
 	},
 	ar: async ({ request, locals }) => {
 		const data = Object.fromEntries(await request.formData());
-		
+
 		Object.keys(data).forEach(id => {
 			locals.pb.collection('termekek').update(id, { 'ar': data[id] });
 		});
 	},
-	termekek: async ({ request, locals}) => {
-		let data = Object.fromEntries(await request.formData());
+	termekek: async ({ request, locals }) => {
+		const data = Object.fromEntries(await request.formData());
 		data.add = JSON.parse(data.add);
 		data.remove = JSON.parse(data.remove);
 
 		Object.keys(data.add).forEach(termek => {
-			locals.pb.collection('termekek').create({ 'termek': termek, 'ar': data.add[termek].ar, 'darab': data.add[termek].darab, 'leiras': data.add[termek].leiras, 'kategoria': data.add[termek].kategoria });
+			locals.pb.collection('termekek').create({ termek, 'ar': data.add[termek].ar, 'darab': data.add[termek].darab, 'leiras': data.add[termek].leiras, 'kategoria': data.add[termek].kategoria });
 		});
 
 		data.remove.forEach(id => {
@@ -52,7 +52,7 @@ export const actions = {
 		});
 	},
 	feltet: async ({ request, locals }) => {
-		let data = Object.fromEntries(await request.formData());
+		const data = Object.fromEntries(await request.formData());
 		data.add = JSON.parse(data.add);
 		data.remove = JSON.parse(data.remove);
 
@@ -60,7 +60,7 @@ export const actions = {
 			for (const feltet in data.add[id]) {
 				const record = await locals.pb.collection('termekek').getOne(id);
 
-				await locals.pb.collection('termekek').update(id, { 'feltetek': {...record.feltetek, [feltet]: { 'ar': data.add[id][feltet].ar, 'darab': data.add[id][feltet].darab }}});
+				await locals.pb.collection('termekek').update(id, { 'feltetek': { ...record.feltetek, [feltet]: { 'ar': data.add[id][feltet].ar, 'darab': data.add[id][feltet].darab } } });
 			}
 		}
 
@@ -101,7 +101,7 @@ export const actions = {
 			const record = await locals.pb.collection('termekek').getFullList(1, { filter: `termek = '${termek}'` });
 			const darab = record[0].darab + rendeles.termekek[termek].darab;
 
-			await locals.pb.collection('termekek').update(record[0].id, { 'darab': darab });
+			await locals.pb.collection('termekek').update(record[0].id, { darab });
 		});
 
 		await locals.pb.collection('rendelesek').update(id, { 'status': 'torolve' });

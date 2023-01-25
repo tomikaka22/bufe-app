@@ -1,4 +1,4 @@
-let splash = [
+const splash = [
 	'Az otthon készitett étel sokkal egészségesebb.',
 	'Ezen az oldalon nem pörög a cookie.',
 	'Adsz egy csókot?',

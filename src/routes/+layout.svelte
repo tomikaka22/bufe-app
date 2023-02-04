@@ -3,7 +3,6 @@
    import { page } from '$app/stores';
 	import { onMount } from 'svelte';
   	import { pwaInfo } from 'virtual:pwa-info';
-	  import "../app.css";
 
 	const noKeyURLs = ['/admin','/rendelesek']
 

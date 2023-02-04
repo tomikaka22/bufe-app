@@ -23,56 +23,6 @@
    </div>
 </div>
 
-<style lang="scss">
-      .header {
-         width: 100%;
-         height: auto;
-         border-bottom-left-radius: 1em;
-         border-bottom-right-radius: 1em;
+<style lang="postcss">
 
-         .header-content {
-            width: 100%;
-            display: grid;
-            grid-template-columns: 33.33% 33.33% 33.33%;
-            text-align: center;
-            padding: 1% 0;
-
-            .header-cell {
-               display: flex;
-               justify-content: center;
-               align-items: center;
-               color: white;
-
-               #header-left {
-                  margin-left: 5%;
-                  margin-right: auto;
-                  color: var(--accent-color);
-                  display: flex;
-                  align-items: center;
-
-                  span {
-                     font-size: 3ch;
-                     margin-right: 10%;
-                  }
-               }
-
-               #header-right {
-                  width: 28%;
-                  margin-left: auto;
-                  margin-right: 5%;
-
-                  img {
-                     width: 100%;
-                     vertical-align: middle;
-                     border-radius: 50%;
-                  }
-               }
-            }
-         }
-
-         .hideProfile {
-            visibility: hidden;
-         }
-
-      }
 </style>

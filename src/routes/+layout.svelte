@@ -1,15 +1,23 @@
 <script>
-   import PageTransition from '$lib/components/PageTransition.svelte';
-   import { page } from '$app/stores';
-	import { onMount } from 'svelte';
-  	import { pwaInfo } from 'virtual:pwa-info';
-	  import "../app.css";
+  import PageTransition from '$lib/components/PageTransition.svelte';
+  import {
+    page
+  } from '$app/stores';
+  import {
+    onMount
+  } from 'svelte';
+  import {
+    pwaInfo
+  } from 'virtual:pwa-info';
+  import "../app.css";
 
-	const noKeyURLs = ['/admin','/rendelesek']
+  const noKeyURLs = ['/admin', '/rendelesek']
 
-	onMount(async () => {
+  onMount(async () => {
     if (pwaInfo) {
-      const { registerSW } = await import('virtual:pwa-register')
+      const {
+        registerSW
+      } = await import('virtual:pwa-register')
       registerSW({
         immediate: true,
         onRegistered(r) {
@@ -26,7 +34,7 @@
       })
     }
   })
-  
+
   $: webManifest = pwaInfo ? pwaInfo.webManifest.linkTag : ''
 </script>
 
@@ -40,6 +48,9 @@
 
 <svelte:head>
     {@html webManifest}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans:wght@900&display=swap" rel="stylesheet">
 </svelte:head>
 
 <style lang="postcss">

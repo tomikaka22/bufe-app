@@ -1,114 +1,32 @@
 <script>
-import { fade } from "svelte/transition";
+	import { fade } from 'svelte/transition';
 
-export let form;
+	export let form;
 
-let email = form?.email
-let password
+	let email = form?.email;
+	let password;
 </script>
 
-<main in:fade={{duration: 180}}>
-   <div class="login">
-      <img src="favicon.png" alt="" />
+	<main in:fade={{ duration: 180 }} class="w-screen h-screen flex items-center">
+		<div class="text-center">
 
-      <form method="post">
-         <label id="email-form-label" for="email-form">Kandós E-mail:</label><br />
-         <input name='email' bind:value={email} id="email-form" type="text" /> <p>@kkszki.hu</p>
-         <br />
-         <label for="password-form">Jelszó:</label><br />
-         <input name='password' bind:value={password} id="password-form" type="password" />
-         {#if email && password}
-            <button in:fade={{duration: 400}}>Belépés</button>
-         {/if}
-         <br>
-         {#if form?.error}
-            <p id="error">{form?.error}</p>
-         {/if}
-      </form>
-
-		<div class="regin-button">
-			<h2>Nincs még fiókod?</h2> <a href="/register"><button>Regisztráció</button></a>
+			<!-- <h1 class="block mx-auto mb-10 text-3xl">Kandó Büfé</h1> -->
+			<img src="favicon.png" class="block mx-auto mb-10" alt="" />
+			<form method="post">
+				<input placeholder="Kandós e-mail" class="bg-[#201a17] transition-all duration-100 ease-in outline outline-[#9f8d84] focus:placeholder:text-background outline-1 w-32 py-2 px-3 mt-2 mb-5 rounded-xl placeholder:text-center text-center focus:outline-[#ffb68e] placeholder:text-[#e6beaa] focus:outline-2" name='email' bind:value={email} type="text" /> <p class="inline-block">@kkszki.hu</p>
+				<br>
+				<input placeholder="Jelszó" class="bg-[#201a17] transition-all duration-100 ease-in outline outline-[#9f8d84] focus:placeholder:text-background outline-1 w-52 py-2 px-3 mt-2 mb-5 rounded-xl placeholder:text-center text-center focus:outline-[#ffb68e] placeholder:text-[#e6beaa] focus:outline-2" name='password' bind:value={password} type="password" />
+				<br>
+				{#if email && password}
+					<button class="w-36 bg-[#ffb68e] text-[#201a17] p-2 rounded-full mt-2 focus:rounded-md transition-all font-semibold" in:fade={{ duration: 300 }}>Belépés</button>
+				{/if}
+				{#if form?.error && !password}
+					<p in:fade={{ duration: 300 }} class="text-[#ffb4ab] font-semibold">{form?.error}</p>
+				{/if}
+			</form>
+			<div class="w-screen text-center mt-6">
+				<h2>Nincs még fiókod?</h2>
+				<a href="/register"><button class="text-[#ffb68e] font-semibold outline outline-[#9f8d84] outline-1 w-max mx-auto rounded-full p-2 mt-2">Regisztráció</button></a>
+			</div>
 		</div>
-
-   </div>
-   
-</main>
-
-<style lang="scss">
-
-	main {
-		width: 100vw;
-		height: 100vh;
-		display: flex;
-		align-items: center;
-	}
-
-   .regin-button {
-      width: 100vw;
-      text-align: center;
-      margin-top: 5vh;
-      color: white;
-
-      button {
-         background-color: rgb(20, 20, 20);
-         padding: 1ch;
-         border-radius: 4vw;
-         color: white;
-         margin-top: 1ch;
-      }
-   }
-
-   .login {
-      text-align: center;
-      color: white;
-
-      img {
-         display: block;
-         margin: 0 auto;
-         margin-bottom: 10%;
-      }
-   }
-
-   form {
-      input {
-         border: 0.2vw solid white;
-         border-radius: 4vw;
-         width: 50%;
-         color: white;
-         background-color: rgb(20, 20, 20);
-         padding-top: 1vh;
-         padding-bottom: 1vh;
-         padding-left: 3vw;
-         margin-top: 1vh;
-         margin-bottom: 3vw;
-      }
-
-      #email-form-label {
-         margin-right: 10ch;
-      }
-
-      #email-form {
-         width: calc(50% - 10ch);
-      }
-
-      p {
-         // transform: translateX(-10vw);
-         display: inline-block;
-      }
-
-      button {
-         border-radius: 4vw;
-         width: 80%;
-         padding: 3vw;
-         margin-top: 2vh;
-         background-color: rgb(20, 20, 20);
-         color: white;
-      }
-
-      #error {
-         margin-top: 1vh;
-         color: var(--accent-color);
-      }
-   }
-
-</style>
+	</main>

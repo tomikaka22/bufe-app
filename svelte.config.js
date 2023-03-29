@@ -1,9 +1,9 @@
 import adapter from '@sveltejs/adapter-node';
-import preprocessor from 'svelte-preprocess';
+import { vitePreprocess } from '@sveltejs/kit/vite';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	preprocess: preprocessor(),
+	preprocess: vitePreprocess(),
 
 	onwarn: (warning, handler) => {
 		// disable a11y onclick warning

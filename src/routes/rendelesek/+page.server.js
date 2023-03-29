@@ -28,9 +28,10 @@ export const actions = {
 		if (rendeles.status === 'fuggoben' )
 			Object.keys(rendeles.termekek).forEach(async termek => {
 				const record = await locals.pb.collection('termekek').getFullList(1, { filter: `termek = '${termek}'` });
-				const darab = record[0].darab + rendeles.termekek[termek].darab;
+				const darab = record[0].darab + rendeles.termekek[termek].darab;	// visszaállítja a rendelkezésre álló termékek számát
+				const vasarlasok = record[0].vasarlasok - rendeles.termekek[termek].darab;	// visszaállítja a termék vásárlás számlálót
 
-				await locals.pb.collection('termekek').update(record[0].id, { darab });
+				await locals.pb.collection('termekek').update(record[0].id, { darab, vasarlasok });
 			});
 
 

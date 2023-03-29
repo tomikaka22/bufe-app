@@ -1,37 +1,40 @@
 <script>
-   import { fade } from "svelte/transition";
+   import { fade } from 'svelte/transition';
 
    export let form;
 
    let name = form?.name;
-   let email = form?.email.replace('@kkszki.hu', '')
-   let error = form?.error;
+   let email = form?.email.replace('@kkszki.hu', '');
+   const error = form?.error;
    let password;
    let passwordConfirm;
 </script>
 
-<main in:fade={{duration: 180}} class="font-sofia">
-   <div class="login flex flex-col items-center mt-24">
-      <h1 class="text-cyan-500 text-5xl font-extrabold drop-shadow-md">Kandó Büfé</h1>
-      <h2 class="text-cyan-500 text-2xl font-bold mt-12 mb-6 drop-shadow-md">Regisztráció</h2>
-      <form method="post" class="flex flex-col items-center">
-         <input placeholder="Teljes név" name='name' bind:value={name} id="name-form" type="name" class="border-gray bg-gray-1 p-2 rounded-md mb-6 drop-shadow-xl"/>
-         <input placeholder="Kandós e-mail" name='email' bind:value={email} id="email-form" type="text" class="border-gray bg-gray-1 p-2 rounded-md mb-6 drop-shadow-xl"/>
-         <input placeholder="Jelszó" name='password' bind:value={password} id="password-form" type="password" class="border-gray bg-gray-1 p-2 rounded-md mb-6 drop-shadow-xl"/>
-         <input placeholder="Jelszó újra" name='passwordConfirm' bind:value={passwordConfirm} id="password-confirm-form" type="password" class="border-gray bg-gray-1 p-2 rounded-md drop-shadow-xl"/>
-         
+<main in:fade={{ duration: 180 }} class="w-screen h-screen flex items-center">
+	<div class="text-center">
+
+		<img src="favicon.png" class="block mx-auto mb-10" alt="" />
+      <form method="post">
+         <input placeholder="Teljes név" name='name' bind:value={name} type="name" class="bg-[#201a17] outline outline-[#9f8d84] outline-1 w-52 py-2 px-3 mt-2 mb-5 rounded-xl placeholder:text-center text-center placeholder:focus:text-transparent focus:outline-[#ffb68e] placeholder:text-[#e6beaa] focus:outline-2 transition-colors"/>
+			<br>
+         <input placeholder="Kandós e-mail" name='email' bind:value={email} type="text" class="bg-[#201a17] outline outline-[#9f8d84] outline-1 w-32 py-2 px-3 mt-2 mb-5 rounded-xl placeholder:text-center text-center placeholder:focus:text-transparent focus:outline-[#ffb68e] placeholder:text-[#e6beaa] focus:outline-2 transition-colors"/> <p class="inline-block">@kkszki.hu</p>
+			<br>
+         <input placeholder="Jelszó" name='password' bind:value={password} type="password" class="bg-[#201a17] outline outline-[#9f8d84] outline-1 w-52 py-2 px-3 mt-2 mb-5 rounded-xl placeholder:text-center text-center placeholder:focus:text-transparent focus:outline-[#ffb68e] placeholder:text-[#e6beaa] focus:outline-2 transition-colors"/>
+			<br>
+         <input placeholder="Jelszó újra" name='passwordConfirm' bind:value={passwordConfirm} type="password" class="bg-[#201a17] outline outline-[#9f8d84] outline-1 w-52 py-2 px-3 mt-2 mb-5 rounded-xl placeholder:text-center text-center placeholder:focus:text-transparent focus:outline-[#ffb68e] placeholder:text-[#e6beaa] focus:outline-2 transition-colors"/>
+         <br>
          {#if name && email && password && passwordConfirm && password == passwordConfirm}
-            <button in:fade={{duration: 400}} class="bg-blue-1 text-white text-lg px-8 py-2 mt-6 rounded-md font-semibold">Regisztrálás</button>          
+			<button class="w-36 bg-[#ffb68e] text-[#201a17] p-2 rounded-full mt-2 focus:rounded-md transition-all font-semibold">Regisztrálás</button>
          {/if}
          <br>
          {#if error && !password || error && !password && !email}
-            <p id="error" class="text-red-1 text-lg text-center px-2 font-semibold">{form?.error}</p>
+            <p id="error" class="text-[#ffb4ab] text-lg text-center px-2 font-semibold">{form?.error}</p>
          {/if}
       </form>
 
-		<div class="regin-button">
-			<h2 class="text-center mt-3 mb-1 drop-shadow-md">Van már fiókod?</h2>
-         <a href="/login"><button class="bg-cyan-500 text-white shadow-lg shadow-cyan-500/50 text-lg px-8 py-2 rounded-md font-semibold">Belépés</button></a>
+		<div class="w-screen text-center mt-6">
+			<h2>Van már fiókod?</h2>
+			<a href="/login"><button class="text-[#ffb68e] font-semibold outline outline-[#9f8d84] outline-1 w-max mx-auto rounded-full p-2 mt-2">Belépés</button></a>
 		</div>
 
    </div>

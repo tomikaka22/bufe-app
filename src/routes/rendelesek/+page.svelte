@@ -1,79 +1,164 @@
 <script>
-   import { slide, fade } from 'svelte/transition';
-	import { deserialize } from '$app/forms';
+   import { fade } from 'svelte/transition';
+	import { flip } from 'svelte/animate';
+	import { expoOut } from 'svelte/easing';
 	import { invalidateAll } from '$app/navigation';
+	import { register } from 'swiper/element/bundle';
    import Topbar from '$lib/components/Topbar.svelte';
+	import { onMount } from 'svelte';
 
    export let data;
-	let lastOpenMenu;
 
-	function openMenu(i, record) {
-		if (lastOpenMenu == i) lastOpenMenu = undefined
-		else if (record.status != 'folyamatban') lastOpenMenu = i
+	async function handleSubmit(form,swiper) {
+		swiper.swiper.slideTo(1);
+		const data = new FormData(form);
+		await fetch(form.action, {
+			method: 'POST',
+			body: data
+		});
+
+		invalidateAll();
 	}
 
-	async function handleSubmit(event) {
-		if (confirm('Biztos végleg törlöd a rendelést? A törölt rendelések nem számitanak bele az ár összesitésbe!')) {
-			const data = new FormData(this);
-      	const response = await fetch(this.action, {
-				method: 'POST',
-				body: data
-			})
+	onMount(() => {
+		register();
+		const swiper = document.querySelectorAll('swiper-container');
 
-			const result = deserialize(await response.text());
+		swiper.forEach(element => {
+			element.addEventListener('slidechange', (e) => {
+				if (e.detail[0].activeIndex === 0)
+					handleSubmit(e.detail[0].slides[0].children[0],element);
+			});
+		});
+	});
 
-			if (result.type == 'success') {
-				openMenu(lastOpenMenu)
-				invalidateAll()
-			};
-		}
-   }
 </script>
 
-<main in:fade={{duration: 180}}>
+<main in:fade={{ duration: 180 }}>
 
    <Topbar
       target={'Menü'}
       targeturl={'/'}
       text={'Rendelések'}
       background={'none'}
-      flyin={{y: -200}}
+      flyin={{ y: -200 }}
 		hideProfile={0}
    ></Topbar>
 
-	<div class="total">
-		<h3>Összesen: <span>{data.total} Ft</span></h3>
-	</div>
-	
-	{#each data.elozmenyLista as record, i (record.id)}
+	<div class="mx-6">
+		<div class="flex w-full mt-1 justify-center items-center">
+			<div class="outline outline-primary outline-1 rounded-lg px-5 font-semibold text-lg py-1">
+				<h3 class="font-semibold text-primary">Összesen: <span>{data.total} Ft</span></h3>
+			</div>
+		</div>
 
-		{#if record.status == 'fuggoben'}
-			<h1 in:slide={{duration: 350}} class="status">Függőben</h1>
-		{:else if record.status == 'folyamatban'}
-			<h1 in:slide={{duration: 350}} class="status">Átvehető!</h1>
-		{:else if record.status == 'kesz'}
-			<h1 in:slide={{duration: 350}} class="status">{record.updated.slice(0, -8)}</h1>
-		{:else}
-			<h1 in:slide={{duration: 350}} style="opacity: 45%;" class="status">Törölve</h1>
-		{/if}
-
-		<div on:click={() => {openMenu(i,record)}} out:slide|local={{duration: 350}} class="grid-container {record.status}" class:menu-grid-container={lastOpenMenu == i}>
-			{#each Object.keys(record.termekek) as termek}
-				<div class="grid-cell termek">{termek}</div>
-				<div class="grid-cell darab">{record.termekek[termek].darab} db</div>
-				<div class="grid-cell ar">{record.termekek[termek].ar} Ft</div>
+		<div class="my-5">
+			{#each data.elozmenyLista as record, i (record.id)}
+				<div animate:flip={{ duration: 700, easing: expoOut }}>
+					{#if record.status === 'kesz'}
+						<h2 class="text-center my-3 font-semibold">{record.updated.slice(0, -5)}</h2>
+						<swiper-container class="grid grid-cols-2" initial-slide="1" space-between="30" slides-per-view="1" speed="370">
+							<swiper-slide>
+								<form class="bg-error-container w-full h-full rounded-r-full flex justify-end items-center font-semibold" method="POST" on:submit|preventDefault={handleSubmit}>
+									<input hidden name="recordID" type="text" value="{JSON.stringify(record.id)}">
+									<p class="mr-5">Törlés</p>
+								</form>
+							</swiper-slide>
+							<swiper-slide>
+								<div class="rounded-3xl overflow-hidden flex flex-col justify-around border border-1 border-outline">
+									<div class="p-2 bg-surface rounded-3xl">
+										{#each Object.keys(record.termekek) as termek}
+											<a href="{termek}?referrer=/rendelesek" class="grid h-16 grid-cols-4 items-center justify-items-center py-1 mb-1 last-of-type:mb-0">
+												<div style="background-image: url('{termek}.jpg');" class="flex justify-center items-center h-full w-full bg-primary bg-no-repeat bg-center bg-cover rounded-2xl overflow-hidden">
+													<div class="w-full h-full backdrop-brightness-[.4] flex justify-center items-center text-center text-on-background">
+														<p>{record.termekek[termek].darab} db</p>
+													</div>
+												</div>
+												<div class="text-center col-span-2">{termek}</div>
+												<div class="text-center">{record.termekek[termek].ar} Ft</div>
+											</a>
+										{/each}
+									</div>
+								</div>
+							</swiper-slide>
+						</swiper-container>
+					{:else if record.status === 'fuggoben'}
+						<h2 class="text-center my-3 text-outline font-semibold">Függőben</h2>
+						<swiper-container class="grid grid-cols-2" initial-slide="1" space-between="30" slides-per-view="1" speed="370">
+							<swiper-slide>
+								<form class="bg-error-container w-full h-full rounded-r-full flex justify-end items-center font-semibold" method="POST" on:submit|preventDefault={handleSubmit}>
+									<input hidden name="recordID" type="text" value="{JSON.stringify(record.id)}">
+									<p class="mr-5">Törlés</p>
+								</form>
+							</swiper-slide>
+							<swiper-slide>
+								<div class="rounded-3xl overflow-hidden flex flex-col justify-around brightness-75 border border-1 border-outline">
+									<div class="p-2 bg-surface rounded-3xl">
+										{#each Object.keys(record.termekek) as termek}
+											<a href="{termek}?referrer=/rendelesek" class="grid h-16 grid-cols-4 items-center justify-items-center py-1 mb-1 last-of-type:mb-0">
+												<div style="background-image: url('{termek}.jpg');" class="flex justify-center items-center h-full w-full bg-primary bg-no-repeat bg-center bg-cover rounded-2xl overflow-hidden">
+													<div class="w-full h-full backdrop-brightness-[.4] flex justify-center items-center text-center text-on-background">
+														<p>{record.termekek[termek].darab} db</p>
+													</div>
+												</div>
+												<div class="text-center col-span-2">{termek}</div>
+												<div class="text-center">{record.termekek[termek].ar} Ft</div>
+											</a>
+										{/each}
+									</div>
+								</div>
+							</swiper-slide>
+						</swiper-container>
+					{:else if record.status === 'folyamatban'}
+						<h2 class="text-center my-3 text-primary font-semibold">Átvehető!</h2>
+						<div class="rounded-3xl overflow-hidden flex flex-col justify-around border-2 border-primary font-semibold">
+							<div class="p-2 bg-surface rounded-3xl">
+								{#each Object.keys(record.termekek) as termek}
+									<a href="{termek}?referrer=/rendelesek" class="grid h-16 grid-cols-4 items-center justify-items-center py-1 mb-1 last-of-type:mb-0">
+										<div style="background-image: url('{termek}.jpg');" class="flex justify-center items-center h-full w-full bg-primary bg-no-repeat bg-center bg-cover rounded-2xl overflow-hidden">
+											<div class="w-full h-full backdrop-brightness-[.4] flex justify-center items-center text-center text-on-background">
+												<p>{record.termekek[termek].darab} db</p>
+											</div>
+										</div>
+										<div class="text-center col-span-2">{termek}</div>
+										<div class="text-center">{record.termekek[termek].ar} Ft</div>
+									</a>
+								{/each}
+							</div>
+						</div>
+					{:else if record.status === 'torolve'}
+						<h2 class="text-center my-3 text-outline"><del>Törölve</del></h2>
+						<swiper-container class="grid grid-cols-2" initial-slide="1" space-between="30" slides-per-view="1" speed="370">
+							<swiper-slide>
+								<form class="bg-error-container w-full h-full rounded-r-full flex justify-end items-center font-semibold" method="POST" on:submit|preventDefault={handleSubmit}>
+									<input hidden name="recordID" type="text" value="{JSON.stringify(record.id)}">
+									<p class="mr-5">Törlés</p>
+								</form>
+							</swiper-slide>
+							<swiper-slide>
+								<div class="rounded-3xl overflow-hidden flex flex-col justify-around brightness-50">
+									<div class="p-2 bg-surface rounded-3xl">
+										{#each Object.keys(record.termekek) as termek}
+											<a href="{termek}?referrer=/rendelesek" class="grid h-16 grid-cols-4 items-center justify-items-center py-1 mb-1 last-of-type:mb-0">
+												<div style="background-image: url('{termek}.jpg');" class="flex justify-center items-center h-full w-full bg-primary bg-no-repeat bg-center bg-cover rounded-2xl overflow-hidden">
+													<div class="w-full h-full backdrop-brightness-[.4] flex justify-center items-center text-center text-on-background">
+														<p><del>{record.termekek[termek].darab} db</del></p>
+													</div>
+												</div>
+												<div class="text-center col-span-2"><del>{termek}</del></div>
+												<div class="text-center"><del>{record.termekek[termek].ar} Ft</del></div>
+											</a>
+										{/each}
+									</div>
+								</div>
+							</swiper-slide>
+						</swiper-container>
+					{/if}
+				</div>
 			{/each}
 		</div>
-		{#if lastOpenMenu == i && record.status != 'folyamatban'}
-			<div in:slide={{duration: 250}} out:slide|local={{duration: 350}} class="menu">
-				<form method="POST" on:submit|preventDefault={handleSubmit}>
-					<input hidden name="recordID" type="text" value="{JSON.stringify(record.id)}">
-					<button>Törlés</button>
-				</form>
-			</div>
-		{/if}
-	{/each}
-	
+
+	</div>
 </main>
 
 <style lang="postcss">

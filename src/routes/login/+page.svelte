@@ -1,40 +1,32 @@
 <script>
-   import { fade } from "svelte/transition";
-   
-   export let form;
-   let email = form?.email
-   let error = form?.error
-   let password
-   </script>
-   
-   <main in:fade={{duration: 180}} class="font-sofia bg-white w-screen h-screen">
-      <div class="login flex flex-col items-center pt-24">
-         <h1 class="font-extrablack text-5xl text-cyan-500 drop-shadow-md">Kandó Büfé</h1>
-         <h2 class="text-cyan-500 text-2xl font-bold mt-12 mb-6 drop-shadow-md">Bejelentkezés</h2>
-   
-         <form method="post" class="flex flex-col items-center">
-            <div class="flex flex-row mb-6 drop-shadow-xl">
-               <input placeholder="Kandós e-mail" name='email' bind:value={email} id="email-form" type="text" class="border-gray bg-gray-1 p-2 rounded-md outline-cyan-500" />
-            </div>
-            <div class="flex flex-row mb-6 drop-shadow-xl">
-               <label for="password-form"></label><br />
-               <input placeholder="Jelszó" name='password' bind:value={password} id="password-form" type="password" class="border-gray bg-gray-1 p-2 rounded-md outline-cyan-500" />
-            </div>
-            <div class="flex flex-col justify-center">
-               {#if email && password}
-                  <button in:fade={{duration: 300}} class="bg-cyan-500 text-white text-lg px-8 py-2 rounded-md font-semibold shadow-lg shadow-cyan-500/50">Belépés</button>
-               {/if}
-            </div>
-            {#if error && !email || !password && error != undefined}
-               <p id="error" class="text-red-1 text-lg font-semibold">{error}</p>
-            {/if}
-         </form>
-   
-         <div class="regin-button flex flex-col items-center">
-            <h2 class="mt-3 mb-1 drop-shadow-md">Nincs még fiókod?</h2>
-            <a href="/register"><button class="bg-gray-50 text-cyan-500 text-lg px-8 py-2 rounded-md font-semibold drop-shadow-xl">Regisztráció</button></a>
-         </div>
-   
-      </div>
-      
-</main>
+	import { fade } from 'svelte/transition';
+
+	export let form;
+
+	let email = form?.email;
+	let password;
+</script>
+
+	<main in:fade={{ duration: 180 }} class="w-screen h-screen flex items-center">
+		<div class="text-center">
+
+			<!-- <h1 class="block mx-auto mb-10 text-3xl">Kandó Büfé</h1> -->
+			<img src="favicon.png" class="block mx-auto mb-10" alt="" />
+			<form method="post">
+				<input placeholder="Kandós e-mail" class="bg-[#201a17] transition-all duration-100 ease-in outline outline-[#9f8d84] focus:placeholder:text-background outline-1 w-32 py-2 px-3 mt-2 mb-5 rounded-xl placeholder:text-center text-center focus:outline-[#ffb68e] placeholder:text-[#e6beaa] focus:outline-2" name='email' bind:value={email} type="text" /> <p class="inline-block">@kkszki.hu</p>
+				<br>
+				<input placeholder="Jelszó" class="bg-[#201a17] transition-all duration-100 ease-in outline outline-[#9f8d84] focus:placeholder:text-background outline-1 w-52 py-2 px-3 mt-2 mb-5 rounded-xl placeholder:text-center text-center focus:outline-[#ffb68e] placeholder:text-[#e6beaa] focus:outline-2" name='password' bind:value={password} type="password" />
+				<br>
+				{#if email && password}
+					<button class="w-36 bg-[#ffb68e] text-[#201a17] p-2 rounded-full mt-2 focus:rounded-md transition-all font-semibold" in:fade={{ duration: 300 }}>Belépés</button>
+				{/if}
+				{#if form?.error && !password}
+					<p in:fade={{ duration: 300 }} class="text-[#ffb4ab] font-semibold">{form?.error}</p>
+				{/if}
+			</form>
+			<div class="w-screen text-center mt-6">
+				<h2>Nincs még fiókod?</h2>
+				<a href="/register"><button class="text-[#ffb68e] font-semibold outline outline-[#9f8d84] outline-1 w-max mx-auto rounded-full p-2 mt-2">Regisztráció</button></a>
+			</div>
+		</div>
+	</main>

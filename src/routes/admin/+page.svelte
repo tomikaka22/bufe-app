@@ -8,30 +8,30 @@
 	import Leiras from '$lib/components/admin/Leiras.svelte';
 	import Feltet from '$lib/components/admin/Feltet.svelte';
 	import Kategoria from '$lib/components/admin/Kategoria.svelte';
-	
-	
+
+
 	export let data;
-	
+
 	let darabModal;
 	let termekModal;
 	let arakModal;
 	let leirasModal;
 	let feltetModal;
 	let kategoriaModal;
-	
+
 	setInterval(async () => {
-		invalidateAll()
+		invalidateAll();
 	}, 8000);
-	
+
 	</script>
-	
+
 	<main>
-		
+
 	<div class="grid-container">
 		<div class="grid-cell">
 			<h1>Bejövő rendelések</h1>
 				{#each data.rendelesek.fuggoben as rendeles, i (rendeles.id)}
-					<div transition:fade={{duration: 300}} class="rendeles-kartya">
+					<div transition:fade={{ duration: 300 }} class="rendeles-kartya">
 						<form use:enhance action="?/torles" method="POST">
 							<input hidden type="text" name="recordID" value="{JSON.stringify(rendeles.id)}">
 							<button class="torles-gomb">❌</button>
@@ -53,11 +53,11 @@
 					</div>
 				{/each}
 		</div>
-	
+
 		<div class="grid-cell">
 			<h1>Kész rendelések</h1>
 			{#each data.rendelesek.kesz as rendeles, i (rendeles.id)}
-				<div transition:fade={{duration: 300}} class="rendeles-kartya rendeles-kartya-done">
+				<div transition:fade={{ duration: 300 }} class="rendeles-kartya rendeles-kartya-done">
 					<form use:enhance action="?/torles" method="POST">
 						<input hidden type="text" name="recordID" value="{JSON.stringify(rendeles.id)}">
 						<button class="torles-gomb">❌</button>
@@ -79,7 +79,7 @@
 				</div>
 			{/each}
 		</div>
-	 <!-- ----------------------------------------------------------------------------------------------------------------------------------- -->
+	<!-- ----------------------------------------------------------------------------------------------------------------------------------- -->
 		<div class="grid-cell">
 			<div class="szerkesztes">
 				<h1>Szerkesztés:</h1>
@@ -92,18 +92,18 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- Modalok: -->
-	
+
 	<Termekek bind:termekModal data={data}></Termekek>
 	<Darab bind:darabModal data={data}></Darab>
 	<Arak bind:arakModal data={data}></Arak>
 	<Leiras bind:leirasModal data={data}></Leiras>
 	<Feltet bind:feltetModal data={data}></Feltet>
 	<Kategoria bind:kategoriaModal data={data}></Kategoria>
-	
+
 	</main>
-	
+
 	<style lang="postcss">
 
 	</style>

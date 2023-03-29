@@ -3,37 +3,37 @@ export let data;
 export let feltetModal;
 
 let tempFeltetek = {};
-let feltetekRemove = {};
+const feltetekRemove = {};
 
 function feltetModalInput(event) { // Hozzáadja (Zölddel) a beirt termékeket.
-	event.preventDefault()
-   const data = Object.fromEntries(new FormData(event.target).entries())
+	event.preventDefault();
+	const data = Object.fromEntries(new FormData(event.target).entries());
 
 	tempFeltetek[data.recordID] = {
 		...tempFeltetek[data.recordID],
 		[data.feltet]: {
 			'darab': data.darab,
 			'ar': data.ar
-		}}
+		} };
 }
 
 function feltetModalInputRemove(event) { // Kitörli a (Zöld) frissen hozzáadott (Még nem véglegesitett) felteteket.
-	event.preventDefault()
-   const data = Object.fromEntries(new FormData(event.target).entries())
+	event.preventDefault();
+	const data = Object.fromEntries(new FormData(event.target).entries());
 
-	delete tempFeltetek[data.recordID][data.feltet]
-	tempFeltetek = tempFeltetek // Kell reaktivitas miatt
+	delete tempFeltetek[data.recordID][data.feltet];
+	tempFeltetek = tempFeltetek; // Kell reaktivitas miatt
 }
 
 function feltetekModalRemove(event) { // Kitörli a már (régen) véglegesen hozzáadott felteteket.
-	event.preventDefault()
-   const data = Object.fromEntries(new FormData(event.target).entries())
+	event.preventDefault();
+	const data = Object.fromEntries(new FormData(event.target).entries());
 	if (!feltetekRemove[data.recordID]) feltetekRemove[data.recordID] = [];
 
 	if (feltetekRemove[data.recordID].includes(data.feltet)) {
-		feltetekRemove[data.recordID] = feltetekRemove[data.recordID].filter(feltet => feltet != data.feltet)
+		feltetekRemove[data.recordID] = feltetekRemove[data.recordID].filter(feltet => feltet != data.feltet);
 	} else {
-		feltetekRemove[data.recordID] = [...feltetekRemove[data.recordID], data.feltet]
+		feltetekRemove[data.recordID] = [ ...feltetekRemove[data.recordID], data.feltet ];
 	}
 }
 </script>
@@ -57,7 +57,7 @@ function feltetekModalRemove(event) { // Kitörli a már (régen) véglegesen ho
 					<form on:submit={feltetModalInputRemove}>
 						<input name="recordID" hidden type="text" value="{termekek.id}">
 						<input name="feltet" hidden type="text" value="{feltet}">
-						<p> + {[feltet]}: {tempFeltetek[termekek.id][feltet].darab} db, {tempFeltetek[termekek.id][feltet].ar} Ft <button class="formRemoveButton"><span>❌</span></button></p>
+						<p> + {[ feltet ]}: {tempFeltetek[termekek.id][feltet].darab} db, {tempFeltetek[termekek.id][feltet].ar} Ft <button class="formRemoveButton"><span>❌</span></button></p>
 					</form>
 				{/each}
 			{/if}

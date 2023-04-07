@@ -14,7 +14,7 @@
 
 
 	export let data;
-console.log(data)
+
 	let darabModal;
 	let termekModal;
 	let arakModal;

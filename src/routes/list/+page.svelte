@@ -111,7 +111,7 @@
 					{#if termek.kategoria === 'Étel'}
 						<a href="{termek.termek}?referrer=/list" class="rounded-2xl transition-all overflow-hidden hover:rounded-lg">
 							<div class="h-32 overflow-clip">
-								<img class="w-full h-full object-cover" src="{termek.termek}.jpg" alt="">
+								<img class="w-full h-full object-cover" src="{termek.termek}.jpg" on:error={img => {img.target.src='favicon.png';}} alt="">
 							</div>
 							<div class="bg-foreground p-3 font-semibold flex justify-between">
 								<div class="w-9/12">
@@ -128,35 +128,45 @@
 			</div>
 		</swiper-slide>
 		<swiper-slide>
-			<div class="mx-6 bg-foreground rounded-2xl" in:slide={{ duration: 500 }}>
+			<div class="mx-6 flex flex-col gap-5 text-secondary">
 				{#each data.termekek as termek}
 					{#if termek.kategoria === 'Ital'}
-					<div class="text-secondary">
-						<a class="grid grid-cols-3 items-center justify-items-center" class:elfogyott={termek.darab === 0} href="{termek.termek}?referrer=/list">
-							<div class="h-24">
-								<img class='max-w-full max-h-full p-4' src='favicon.png' alt=''>
+						<a href="{termek.termek}?referrer=/list" class="rounded-2xl transition-all overflow-hidden hover:rounded-lg">
+							<div class="h-32 overflow-clip">
+								<img class="w-full h-full object-cover" src="{termek.termek}.jpg" on:error={img => {img.target.src='favicon.png';}} alt="">
 							</div>
-							<div class="text-center">{termek.termek}</div>
-							<div>{termek.ar} Ft</div>
+							<div class="bg-foreground p-3 font-semibold flex justify-between">
+								<div class="w-9/12">
+									<p class="text-primary">{termek.termek}</p>
+									<p class="text-xs font-normal">{termek.leiras}</p>
+								</div>
+								<div class="text-on-tertiary self-center">
+									<p class="bg-tertiary rounded-lg px-1">{termek.ar} Ft</p>
+								</div>
+							</div>
 						</a>
-					</div>
 					{/if}
 				{/each}
 			</div>
 		</swiper-slide>
 		<swiper-slide>
-			<div class="mx-6 bg-foreground rounded-2xl" in:slide={{ duration: 500 }}>
+			<div class="mx-6 flex flex-col gap-5 text-secondary">
 				{#each data.termekek as termek}
 					{#if termek.kategoria === 'Nasi'}
-					<div class="text-secondary">
-						<a class="grid grid-cols-3 items-center justify-items-center" class:elfogyott={termek.darab === 0} href="{termek.termek}?referrer=/list">
-							<div class="h-24">
-								<img class='max-w-full max-h-full p-4' src='favicon.png' alt=''>
+						<a href="{termek.termek}?referrer=/list" class="rounded-2xl transition-all overflow-hidden hover:rounded-lg">
+							<div class="h-32 overflow-clip">
+								<img class="w-full h-full object-cover" src="{termek.termek}.jpg" on:error={img => {img.target.src='favicon.png';}} alt="">
 							</div>
-							<div class="text-center">{termek.termek}</div>
-							<div>{termek.ar} Ft</div>
+							<div class="bg-foreground p-3 font-semibold flex justify-between">
+								<div class="w-9/12">
+									<p class="text-primary">{termek.termek}</p>
+									<p class="text-xs font-normal">{termek.leiras}</p>
+								</div>
+								<div class="text-on-tertiary self-center">
+									<p class="bg-tertiary rounded-lg px-1">{termek.ar} Ft</p>
+								</div>
+							</div>
 						</a>
-					</div>
 					{/if}
 				{/each}
 			</div>

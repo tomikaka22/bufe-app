@@ -7,3 +7,4 @@ package
 !.env.example
 bufe-app
 src/lib/Pocketbase/
+src/lib/backendUtils/szunetSzamolo.js

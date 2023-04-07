@@ -1,4 +1,5 @@
 import { redirect } from '@sveltejs/kit';
+import { szunet } from '$lib/backendUtils/szunetSzamolo';
 
 export const ssr = false;
 const admins = [ 'rdzc6b3jes1k8am','u1fy74rt1m48tx1' ];
@@ -11,7 +12,8 @@ export async function load({ locals }) {
 			'rendelesek': {
 				'fuggoben': structuredClone(await locals.pb.collection('rendelesek').getFullList(1, { filter: 'status = "fuggoben"' })),
 				'kesz': structuredClone(await locals.pb.collection('rendelesek').getFullList(1, { filter: 'status = "folyamatban"' }))
-			}
+			},
+			'szunetArray': szunet()
 		};
 	}
 }

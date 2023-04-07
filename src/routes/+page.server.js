@@ -1,39 +1,14 @@
-const splash = [
-	'Az otthon készitett étel sokkal egészségesebb.',
-	'Ezen az oldalon nem pörög a cookie.',
-	'Adsz egy csókot?',
-	'Valaki hozzányúlt a spagettimhez!',
-	'Nyisd ki a szád, jön a kaja gránát!',
-	'A tényekben nem szabad hinni.',
-	'www.kkszki.{!straight}',
-	'Órán telefonozni szigorúan tilos.',
-	'6 ember rendelt az appomon ezen a héten!',
-	'Nuraphone rossz.',
-	'Puppy linux < bármelyik másik distro.',
-	'Szigma himek nem használnak classokat.',
-	'Akik OTL-t hallgatnak nem számitanak.',
-	'Pár rendelés és utóléred a kövér macskáimat.',
-	'Tiborral ne húzz ujjat.',
-	'App bepukkasztva',
-	'Release date: valamikor',
-	'Májkölszoft Binbóz',
-	'Általam kedvelt tanároknak jónapot kivánok!',
-	'🅱️ortfolio.',
-	'Balu Mester > Sajt32',
-	'Húszezresből mennyi van?',
-	'““”̿ ̿ ̿ ̿ ̿’̿’̵͇̿̿з=(*‿*)=ε/̵͇̿̿/̿ ̿ ̿ ̿ ̿’““'
-
-];
-
 export async function load({ locals }) {
-	const records = structuredClone(await locals.pb.collection('termekek').getFullList());
+	const elozmenyLista = structuredClone(await locals.pb.collection('rendelesek').getFullList(1, 6, {
+		filter: `rendelo = "${locals.pb.authStore.baseModel.id}"`,
+		sort: '-created'
+	}));
 
-	const random = records.map(record => {
-		return record.termek;
-	});
+	const legutobbi6Termek = [ ...new Set(elozmenyLista.map(rendeles => { // Set --> kiszűri az ismétlődőket
+		return Object.keys(rendeles.termekek);
+	}).flat().splice(-7, 7).reverse()) ];
 
 	return {
-		'randomTermek': encodeURI(random[Math.floor(Math.random() * random.length)]),
-		'splash': splash[Math.floor(Math.random() * splash.length)]
+		legutobbi6Termek
 	};
 }

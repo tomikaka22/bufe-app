@@ -1,5 +1,5 @@
 <script>
-   import { fade, fly, slide } from 'svelte/transition';
+   import { fade, fly } from 'svelte/transition';
 	import { register } from 'swiper/element/bundle';
    import { onMount } from 'svelte';
    import { cart, total } from '$lib/stores/Cart.js';

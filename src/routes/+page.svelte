@@ -26,18 +26,21 @@
 		</a>
 	</div>
 
-	<div class="flex">
-		<div>
-
+	{#if data.legutobbi6Termek.length !== 0}
+		<h2 class="text-center">Legutóbb vásárolt termékeid</h2>
+		<div class="flex justify-center items-center flex-wrap">
+			{#each data.legutobbi6Termek as termek}
+				<div class="rounded-2xl transition-all overflow-hidden bg-secondary-container hover:rounded-lg mx-1.5 my-2">
+					<a href="{termek}?referrer=/">
+						<div class="w-24 h-20 bg-center bg-no-repeat bg-cover" style="background-image: url('{termek}.jpg');">
+							<div class="h-full w-full backdrop-brightness-50 flex justify-center items-center text-center px-2">
+								<p class="font-semibold text-primary">{termek}</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			{/each}
 		</div>
-		<div>
-
-		</div>
-		<div>
-
-		</div>
-	</div>
-
-	<!-- <h2 class="text-center">{data.splash}</h2> -->
+	{/if}
 
 </main>

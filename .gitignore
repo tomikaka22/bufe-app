@@ -6,7 +6,4 @@ package
 .env.*
 !.env.example
 bufe-app
-# src/lib/Pocketbase/
-src/lib/Pocketbase/pb_data/logs.db
-src/lib/Pocketbase/pb_migrations
-src/lib/Pocketbase/pb_data/data.db
+src/lib/Pocketbase/

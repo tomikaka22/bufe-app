@@ -20,7 +20,7 @@
 			</div>
 		</a>
 		<a href="/rendelesek">
-			<div class="bg-[#52443c] bg-[url('/money.png')] bg-cover bg-center bg-no-repeat rounded-3xl hover:rounded-2xl transition-all overflow-clip">
+			<div class="bg-[#52443c] bg-cover bg-center bg-no-repeat rounded-3xl hover:rounded-2xl transition-all overflow-clip">
 				<p class="py-12 pl-10 font-semibold text-lg my-3 backdrop-brightness-[.6]">Rendelések</p>
 			</div>
 		</a>

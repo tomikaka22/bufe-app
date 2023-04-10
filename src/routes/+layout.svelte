@@ -75,9 +75,6 @@
 <svelte:head>
 	<title>{splash[Math.floor(Math.random() * splash.length)]}</title>
     {@html webManifest}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans:wght@900&display=swap" rel="stylesheet">
 </svelte:head>
 
 <style>

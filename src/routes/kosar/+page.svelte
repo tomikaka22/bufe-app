@@ -23,30 +23,36 @@
 	function recalculate() {
 		$total = { 'ar': 0, 'darab': 0 };
 		Object.keys($cart).forEach(termek => {
-			$total.ar += $cart[termek].ar;
-			$total.darab += $cart[termek].darab;
-			localStorage.setItem('CartContent', JSON.stringify($cart));
-			localStorage.setItem('Total', JSON.stringify($total));
+			$cart[termek].forEach(x => {
+				$total.ar += x.ar;
+				$total.darab += x.darab;
+			});
 		});
+		localStorage.setItem('CartContent',JSON.stringify($cart));
+		localStorage.setItem('Total',JSON.stringify($total));
 	}
 
 	function urites() {
 		localStorage.clear();
 		$cart = {};
-		$total = { 'ar': 0, 'darab': 0, 'feltet': [] };
+		$total = { 'ar': 0, 'darab': 0 };
 	}
 
-	function subtractAmount(termek) {
-		if ($cart[termek].darab > 1) {
-			const price = $cart[termek].ar / $cart[termek].darab;
+	function subtractAmount(termek,i) {
+		if ($cart[termek][i].darab > 1) {
+			const price = $cart[termek][i].ar / $cart[termek][i].darab;
 
-			$cart[termek].ar -= price;
-			$cart[termek].darab--;
+			$cart[termek][i].ar -= price;
+			$cart[termek][i].darab--;
+
 			recalculate();
 		} else {
-			delete $cart[termek];
+			$cart[termek].splice(i,1);
+			if ($cart[termek].length === 0)
+				delete $cart[termek];
 			$cart = $cart; // Muszaj reactivity miatt
 			recalculate();
+
 			if (Object.keys($cart).length === 0) {
 				localStorage.removeItem('CartContent');
 				history.back();
@@ -54,20 +60,22 @@
 		}
 	}
 
-	function addAmount(termek) {
-		// * Elegge gusztustalan megoldas vegig loopolni es megtalalni a darabszamat a termeknek
-		let darab;
-		data.termekek.forEach(record => {
-			if (record.termek === termek) darab = record.darab;
+	function addAmount(termek,i) {
+		let totalDarab = 0;
+		const maxAmount = data.termekek.find(x => { return x.termek === termek; }).darab;
+
+		$cart[termek].forEach(x => {
+			totalDarab += x.darab;
 		});
 
-		if ($cart[termek].darab < darab) {
-			const price = $cart[termek].ar / $cart[termek].darab;
+		if (totalDarab < maxAmount) {
+			const price = $cart[termek][i].ar / $cart[termek][i].darab;
 
-			$cart[termek].ar += price;
-			$cart[termek].darab++;
+			$cart[termek][i].ar += price;
+			$cart[termek][i].darab++;
 			recalculate();
 		}
+
 	}
 
 	async function handleSubmit() {
@@ -121,28 +129,30 @@
 	</div>
 
 	<div class="grid grid-cols-2 gap-5 mx-6">
-		{#each Object.keys($cart) as termek, i (i)}
-			<div class="rounded-2xl overflow-hidden">
-				<div class="relative bg-cover bg-center bg-no-repeat" style="background-image: url('{termek}.jpg');">
-					<div class="absolute top-2 left-2 z-10 font-semibold">
-						{#key $cart[termek].ar}
-							<p in:fade class="text-[#343108] bg-tertiary rounded-lg px-1">
-								{$cart[termek].ar.toLocaleString({ style:'currency', currency:'HUF' }).replace(',',' ')} Ft
-							</p>
-						{/key}
+		{#each Object.keys($cart) as termek}
+			{#each $cart[termek] as x, i (i)}
+				<div class="rounded-2xl overflow-hidden">
+					<div class="relative bg-cover bg-center bg-no-repeat" style="background-image: url('{termek}.jpg');">
+						<div class="absolute top-2 left-2 z-10 font-semibold">
+							{#key x.ar}
+								<p in:fade|local class="text-[#343108] bg-tertiary rounded-lg px-1">
+									{x.ar.toLocaleString({ style:'currency', currency:'HUF' }).replace(',',' ')} Ft
+								</p>
+							{/key}
+						</div>
+						<div class="h-32 backdrop-brightness-[.4] flex justify-center items-center">
+							<p class="font-semibold text-center text-on-background">{termek}</p>
+						</div>
 					</div>
-					<div class="h-32 backdrop-brightness-[.4] flex justify-center items-center">
-						<p class="font-semibold text-center text-on-background">{termek}</p>
+					<div class="bg-foreground p-2 rounded-b-lg text-center text-on-secondary font-extrabold">
+						<button class="w-6 bg-secondary rounded-lg transition-all" on:click="{(e) => {subtractAmount(termek,i); touchRadius(e.target, '.3rem', '.5rem');}}">-</button>
+							{#key x.darab}
+								<span in:fade|local class="text-secondary mx-3">{x.darab} db</span>
+							{/key}
+						<button class="w-6 bg-secondary rounded-lg transition-all" on:click="{(e) => {addAmount(termek,i); touchRadius(e.target, '.3rem', '.5rem');}}">+</button>
 					</div>
 				</div>
-				<div class="bg-foreground p-2 rounded-b-lg text-center text-on-secondary font-extrabold">
-					<button class="w-6 bg-secondary rounded-lg transition-all" on:click="{(e) => {subtractAmount(termek); touchRadius(e.target, '.3rem', '.5rem');}}">-</button>
-						{#key $cart[termek].darab}
-							<span in:fade class="text-secondary mx-3">{$cart[termek].darab} db</span>
-						{/key}
-					<button class="w-6 bg-secondary rounded-lg transition-all" on:click="{(e) => {addAmount(termek); touchRadius(e.target, '.3rem', '.5rem');}}">+</button>
-				</div>
-			</div>
+			{/each}
 		{/each}
 	</div>
 

@@ -68,15 +68,17 @@
 								<div class="rounded-3xl overflow-hidden flex flex-col justify-around border border-1 border-outline">
 									<div class="p-2 bg-surface rounded-3xl">
 										{#each Object.keys(record.termekek) as termek}
-											<a href="{termek}?referrer=/rendelesek" class="grid h-16 grid-cols-4 items-center justify-items-center py-1 mb-1 last-of-type:mb-0">
-												<div style="background-image: url('{termek}.jpg');" class="flex justify-center items-center h-full w-full bg-primary bg-no-repeat bg-center bg-cover rounded-2xl overflow-hidden">
-													<div class="w-full h-full backdrop-brightness-[.4] flex justify-center items-center text-center text-on-background">
-														<p>{record.termekek[termek].darab} db</p>
+											{#each record.termekek[termek] as x}
+												<a href="{termek}?referrer=/rendelesek" class="grid h-16 grid-cols-4 items-center justify-items-center py-1 mb-1 last-of-type:mb-0">
+													<div style="background-image: url('{termek}.jpg');" class="flex justify-center items-center h-full w-full bg-primary bg-no-repeat bg-center bg-cover rounded-2xl overflow-hidden">
+														<div class="w-full h-full backdrop-brightness-[.4] flex justify-center items-center text-center text-on-background">
+															<p>{x.darab} db</p>
+														</div>
 													</div>
-												</div>
-												<div class="text-center col-span-2">{termek}</div>
-												<div class="text-center">{record.termekek[termek].ar} Ft</div>
-											</a>
+													<div class="text-center col-span-2">{termek}</div>
+													<div class="text-center">{x.ar} Ft</div>
+												</a>
+											{/each}
 										{/each}
 									</div>
 								</div>
@@ -95,15 +97,17 @@
 								<div class="rounded-3xl overflow-hidden flex flex-col justify-around brightness-75 border border-1 border-outline">
 									<div class="p-2 bg-surface rounded-3xl">
 										{#each Object.keys(record.termekek) as termek}
-											<a href="{termek}?referrer=/rendelesek" class="grid h-16 grid-cols-4 items-center justify-items-center py-1 mb-1 last-of-type:mb-0">
-												<div style="background-image: url('{termek}.jpg');" class="flex justify-center items-center h-full w-full bg-primary bg-no-repeat bg-center bg-cover rounded-2xl overflow-hidden">
-													<div class="w-full h-full backdrop-brightness-[.4] flex justify-center items-center text-center text-on-background">
-														<p>{record.termekek[termek].darab} db</p>
+											{#each record.termekek[termek] as x}
+												<a href="{termek}?referrer=/rendelesek" class="grid h-16 grid-cols-4 items-center justify-items-center py-1 mb-1 last-of-type:mb-0">
+													<div style="background-image: url('{termek}.jpg');" class="flex justify-center items-center h-full w-full bg-primary bg-no-repeat bg-center bg-cover rounded-2xl overflow-hidden">
+														<div class="w-full h-full backdrop-brightness-[.4] flex justify-center items-center text-center text-on-background">
+															<p>{x.darab} db</p>
+														</div>
 													</div>
-												</div>
-												<div class="text-center col-span-2">{termek}</div>
-												<div class="text-center">{record.termekek[termek].ar} Ft</div>
-											</a>
+													<div class="text-center col-span-2">{termek}</div>
+													<div class="text-center">{x.ar} Ft</div>
+												</a>
+											{/each}
 										{/each}
 									</div>
 								</div>
@@ -114,15 +118,17 @@
 						<div class="rounded-3xl overflow-hidden flex flex-col justify-around border-2 border-primary font-semibold">
 							<div class="p-2 bg-surface rounded-3xl">
 								{#each Object.keys(record.termekek) as termek}
-									<a href="{termek}?referrer=/rendelesek" class="grid h-16 grid-cols-4 items-center justify-items-center py-1 mb-1 last-of-type:mb-0">
-										<div style="background-image: url('{termek}.jpg');" class="flex justify-center items-center h-full w-full bg-primary bg-no-repeat bg-center bg-cover rounded-2xl overflow-hidden">
-											<div class="w-full h-full backdrop-brightness-[.4] flex justify-center items-center text-center text-on-background">
-												<p>{record.termekek[termek].darab} db</p>
+									{#each record.termekek[termek] as x}
+										<a href="{termek}?referrer=/rendelesek" class="grid h-16 grid-cols-4 items-center justify-items-center py-1 mb-1 last-of-type:mb-0">
+											<div style="background-image: url('{termek}.jpg');" class="flex justify-center items-center h-full w-full bg-primary bg-no-repeat bg-center bg-cover rounded-2xl overflow-hidden">
+												<div class="w-full h-full backdrop-brightness-[.4] flex justify-center items-center text-center text-on-background">
+													<p>{x.darab} db</p>
+												</div>
 											</div>
-										</div>
-										<div class="text-center col-span-2">{termek}</div>
-										<div class="text-center">{record.termekek[termek].ar} Ft</div>
-									</a>
+											<div class="text-center col-span-2">{termek}</div>
+											<div class="text-center">{x.ar} Ft</div>
+										</a>
+									{/each}
 								{/each}
 							</div>
 						</div>
@@ -139,15 +145,17 @@
 								<div class="rounded-3xl overflow-hidden flex flex-col justify-around brightness-50">
 									<div class="p-2 bg-surface rounded-3xl">
 										{#each Object.keys(record.termekek) as termek}
-											<a href="{termek}?referrer=/rendelesek" class="grid h-16 grid-cols-4 items-center justify-items-center py-1 mb-1 last-of-type:mb-0">
-												<div style="background-image: url('{termek}.jpg');" class="flex justify-center items-center h-full w-full bg-primary bg-no-repeat bg-center bg-cover rounded-2xl overflow-hidden">
-													<div class="w-full h-full backdrop-brightness-[.4] flex justify-center items-center text-center text-on-background">
-														<p><del>{record.termekek[termek].darab} db</del></p>
+											{#each record.termekek[termek] as x}
+												<a href="{termek}?referrer=/rendelesek" class="grid h-16 grid-cols-4 items-center justify-items-center py-1 mb-1 last-of-type:mb-0">
+													<div style="background-image: url('{termek}.jpg');" class="flex justify-center items-center h-full w-full bg-primary bg-no-repeat bg-center bg-cover rounded-2xl overflow-hidden">
+														<div class="w-full h-full backdrop-brightness-[.4] flex justify-center items-center text-center text-on-background">
+															<p>{x.darab} db</p>
+														</div>
 													</div>
-												</div>
-												<div class="text-center col-span-2"><del>{termek}</del></div>
-												<div class="text-center"><del>{record.termekek[termek].ar} Ft</del></div>
-											</a>
+													<div class="text-center col-span-2">{termek}</div>
+													<div class="text-center">{x.ar} Ft</div>
+												</a>
+											{/each}
 										{/each}
 									</div>
 								</div>

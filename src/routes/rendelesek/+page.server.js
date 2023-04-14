@@ -1,3 +1,5 @@
+import { fail } from '@sveltejs/kit';
+
 export async function load({ locals }) {
 	const elozmenyLista = structuredClone(await locals.pb.collection('rendelesek').getFullList(1, {
 		filter: `rendelo = "${locals.pb.authStore.baseModel.id}"`,
@@ -25,15 +27,24 @@ export const actions = {
 		const id = JSON.parse(data.recordID);
 		const rendeles = await locals.pb.collection('rendelesek').getOne(id);
 
-		if (rendeles.status === 'fuggoben' )
-			Object.keys(rendeles.termekek).forEach(async termek => {
-				const record = await locals.pb.collection('termekek').getFullList(1, { filter: `termek = '${termek}'` });
-				const darab = record[0].darab + rendeles.termekek[termek].darab;	// visszaállítja a rendelkezésre álló termékek számát
-				const vasarlasok = record[0].vasarlasok - rendeles.termekek[termek].darab;	// visszaállítja a termék vásárlás számlálót
+		if (rendeles.status === 'fuggoben' ) {
+			for (const termek of Object.keys(rendeles.termekek)) {
+				const record = await locals.pb.collection('termekek').getFirstListItem(`termek = '${termek}'`);
 
-				await locals.pb.collection('termekek').update(record[0].id, { darab, vasarlasok });
-			});
+				let darab = record.darab;
+				let vasarlasok = record.vasarlasok;
 
+				for (const x of rendeles.termekek[termek]) {
+					darab += x.darab;
+					vasarlasok -= x.darab;
+				}
+
+				await locals.pb.collection('termekek').update(record.id, { darab, vasarlasok }); // visszaállítja a termék vásárlás számlálót és a rendelkezésre álló termékek számát.
+			}
+		}
+
+		else if (rendeles.status === 'folyamatban')
+			return fail(409, { 'error': 'Ezt a rendlést már nem lehet törölni!' });
 
 		await locals.pb.collection('rendelesek').delete(id);
 	}

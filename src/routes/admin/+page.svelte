@@ -69,13 +69,15 @@
 												</div>
 												<div class="flex justify-center gap-1 items-start h-full">
 														{#each Object.keys(rendeles.termekek) as termek}
-															<div class="font-semibold text-center">
-																<p class="bg-primary text-on-primary px-1 my-0.5 rounded-md">{termek}</p>
-																<p class="bg-tertiary text-on-tertiary px-1 my-0.5 rounded-md">{rendeles.termekek[termek].ar} Ft, {rendeles.termekek[termek].darab} db</p>
-																{#each rendeles.termekek[termek].feltet as feltet}
-																	<p class="text-on-secondary-container outline outline-1 outline-outline px-2 my-1 rounded-md font-normal">{feltet}</p>
-																{/each}
-															</div>
+															{#each rendeles.termekek[termek] as x}
+																<div class="font-semibold text-center">
+																	<p class="bg-primary text-on-primary px-1 my-0.5 rounded-md">{termek}</p>
+																	<p class="bg-tertiary text-on-tertiary px-1 my-0.5 rounded-md">{x.ar} Ft, {x.darab} db</p>
+																	{#each x.feltet as feltet}
+																		<p class="text-on-secondary-container outline outline-1 outline-outline px-2 my-1 rounded-md font-normal">{feltet}</p>
+																	{/each}
+																</div>
+															{/each}
 														{/each}
 												</div>
 											</div>
@@ -100,13 +102,15 @@
 													</div>
 													<div class="flex justify-center gap-1 items-start h-full">
 														{#each Object.keys(rendeles.termekek) as termek}
-															<div class="font-semibold text-center">
-																<p class="bg-primary text-on-primary px-1 my-0.5 rounded-md">{termek}</p>
-																<p class="bg-tertiary text-on-tertiary px-1 my-0.5 rounded-md">{rendeles.termekek[termek].ar} Ft, {rendeles.termekek[termek].darab} db</p>
-																{#each rendeles.termekek[termek].feltet as feltet}
-																	<p class="text-on-secondary-container outline outline-1 outline-outline px-2 my-1 rounded-md font-normal">{feltet}</p>
-																{/each}
-															</div>
+															{#each rendeles.termekek[termek] as x}
+																<div class="font-semibold text-center">
+																	<p class="bg-primary text-on-primary px-1 my-0.5 rounded-md">{termek}</p>
+																	<p class="bg-tertiary text-on-tertiary px-1 my-0.5 rounded-md">{x.ar} Ft, {x.darab} db</p>
+																	{#each x.feltet as feltet}
+																		<p class="text-on-secondary-container outline outline-1 outline-outline px-2 my-1 rounded-md font-normal">{feltet}</p>
+																	{/each}
+																</div>
+															{/each}
 														{/each}
 													</div>
 											</div>

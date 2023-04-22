@@ -172,20 +172,20 @@
 		<!-- Szünet Választó -->
 		<div class="mb-5 flex justify-center items-center">
 			<div class="flex flex-col justify-center items-center font-semibold rounded-2xl">
-				<div class="bg-secondary-container flex justify-center items-center rounded-2xl w-32 text-2xl text-on-secondary-container transition-all after:-rotate-90 after:content-['>']" on:click={(e) => {szunetSplide.splide.go('<'); touchRadius(e.target, '.5rem', '1rem');}}>
+				<div class="bg-secondary-container flex justify-center items-center rounded-2xl w-20 mb-2 text-2xl text-on-secondary-container transition-all after:-rotate-90 after:content-['>']" on:click={(e) => {szunetSplide.splide.go('<'); touchRadius(e.target, '.5rem', '1rem');}}>
 				</div>
-				<div class="overflow-hidden flex">
-					<Splide bind:this={szunetSplide} on:moved={e => {idopont = data.szunetArray[e.detail.index];}} options={{ arrows: false, pagination: false, direction: 'ttb', height: '6rem' }}>
+				<div class="overflow-hidden flex rounded-xl outline outline-1 outline-outline">
+					<Splide bind:this={szunetSplide} on:moved={e => {idopont = data.szunetArray[e.detail.index];}} options={{ arrows: false, pagination: false, direction: 'ttb', height: '2rem', perMove: 1 }}>
 						{#each data.szunetArray as szunet}
 							<SplideSlide>
-								<div class="text-tertiary w-full h-full flex justify-center items-center">
+								<div class="text-tertiary w-full h-full flex justify-center items-center px-4">
 									{szunet}
 								</div>
 							</SplideSlide>
 						{/each}
 					</Splide>
 				</div>
-				<div class="bg-secondary-container flex justify-center items-center rounded-2xl w-36 text-2xl text-on-secondary-container transition-all after:rotate-90 after:content-['>']" on:click={(e) => {szunetSplide.splide.go('>'); touchRadius(e.target, '.5rem', '1rem');}}>
+				<div class="bg-secondary-container flex justify-center items-center rounded-2xl w-20 mt-2 text-2xl text-on-secondary-container transition-all after:rotate-90 after:content-['>']" on:click={(e) => {szunetSplide.splide.go('>'); touchRadius(e.target, '.5rem', '1rem');}}>
 				</div>
 			</div>
 		</div>

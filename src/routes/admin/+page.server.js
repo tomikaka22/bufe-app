@@ -100,10 +100,14 @@ export const actions = {
 		const rendeles = await locals.pb.collection('rendelesek').getOne(id);
 
 		Object.keys(rendeles.termekek).forEach(async termek => {
-			const record = await locals.pb.collection('termekek').getFullList(1, { filter: `termek = '${termek}'` });
-			const darab = record[0].darab + rendeles.termekek[termek].darab;
+			const record = await locals.pb.collection('termekek').getFirstListItem(`termek = '${termek}'`);
+			let darab = record.darab;
 
-			await locals.pb.collection('termekek').update(record[0].id, { darab });
+			for (const x of rendeles.termekek[termek]) {
+				darab += x.darab;
+			}
+
+			await locals.pb.collection('termekek').update(record.id, { darab });
 		});
 
 		await locals.pb.collection('rendelesek').update(id, { 'status': 'torolve' });

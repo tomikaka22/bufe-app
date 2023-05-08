@@ -7,6 +7,7 @@
 	import '@splidejs/svelte-splide/css/core';
    import { cart, total } from '$lib/stores/Cart.js';
 	import { touchRadius } from '$lib/frontendUtils/touchRadius.js';
+	import { forint } from '$lib/frontendUtils/formazo.js';
    import Topbar from '$lib/components/Topbar.svelte';
 
    export let data;
@@ -78,6 +79,12 @@
 
 	}
 
+	function feltetRemove(termek,i,feltet) {
+		$cart[termek][i].feltet = $cart[termek][i].feltet.filter(item => item !== feltet);
+		const ar = data.termekek.find(x => { return x.termek === termek; }).feltetek[feltet].ar;
+		$cart[termek][i].ar -= ar;
+	}
+
 	async function handleSubmit() {
 		const data = new FormData(this);
 		const response = await fetch(this.action, {
@@ -118,7 +125,7 @@
 	<div in:fade class="flex justify-center gap-3 text-tertiary text-xl my-1">
 		<div class="outline outline-1 outline-tertiary font-semibold w-max rounded-lg py-1 px-3 my-3">
 			{#key $total.ar}
-				<span in:fade>{$total.ar.toLocaleString({ style:'currency', currency:'HUF' }).replace(',',' ')} Ft</span>
+				<span in:fade>{forint($total.ar)} Ft</span>
 			{/key}
 		</div>
 		<div class="outline outline-1 outline-tertiary font-semibold w-max rounded-lg py-1 px-3 my-3">
@@ -131,25 +138,41 @@
 	<div class="grid grid-cols-2 gap-5 mx-6">
 		{#each Object.keys($cart) as termek}
 			{#each $cart[termek] as x, i (i)}
-				<div class="rounded-2xl overflow-hidden">
-					<div class="relative bg-cover bg-center bg-no-repeat" style="background-image: url('{termek}.jpg');">
-						<div class="absolute top-2 left-2 z-10 font-semibold">
-							{#key x.ar}
-								<p in:fade|local class="text-[#343108] bg-tertiary rounded-lg px-1">
-									{x.ar.toLocaleString({ style:'currency', currency:'HUF' }).replace(',',' ')} Ft
-								</p>
-							{/key}
+				<div>
+					<!-- Termék -->
+					<div class="rounded-2xl overflow-hidden">
+						<div class="relative bg-cover bg-center bg-no-repeat" style="background-image: url('{termek}.jpg');">
+							<div class="absolute top-2 left-2 z-10 font-semibold">
+								{#key x.ar}
+									<p in:fade|local class="text-[#343108] bg-tertiary rounded-lg px-1">
+										{forint(x.ar)} Ft
+									</p>
+								{/key}
+							</div>
+							<div class="h-32 backdrop-brightness-[.4] flex justify-center items-center">
+								<p class="font-semibold text-center text-on-background">{termek}</p>
+							</div>
 						</div>
-						<div class="h-32 backdrop-brightness-[.4] flex justify-center items-center">
-							<p class="font-semibold text-center text-on-background">{termek}</p>
+						<!-- Amount gombok -->
+						<div class="bg-foreground p-2 text-center text-on-secondary font-extrabold">
+							<button class="w-6 bg-secondary rounded-lg transition-all" on:click="{(e) => {subtractAmount(termek,i); touchRadius(e.target, '.3rem', '.5rem');}}">-</button>
+								{#key x.darab}
+									<span in:fade|local class="text-secondary mx-3">{x.darab} db</span>
+								{/key}
+							<button class="w-6 bg-secondary rounded-lg transition-all" on:click="{(e) => {addAmount(termek,i); touchRadius(e.target, '.3rem', '.5rem');}}">+</button>
 						</div>
-					</div>
-					<div class="bg-foreground p-2 rounded-b-lg text-center text-on-secondary font-extrabold">
-						<button class="w-6 bg-secondary rounded-lg transition-all" on:click="{(e) => {subtractAmount(termek,i); touchRadius(e.target, '.3rem', '.5rem');}}">-</button>
-							{#key x.darab}
-								<span in:fade|local class="text-secondary mx-3">{x.darab} db</span>
-							{/key}
-						<button class="w-6 bg-secondary rounded-lg transition-all" on:click="{(e) => {addAmount(termek,i); touchRadius(e.target, '.3rem', '.5rem');}}">+</button>
+						<!-- Feltétek -->
+						{#if x.feltet.length}
+							<div class="text-on-surface-variant bg-surface-variant flex flex-col py-1">
+								<div class="px-2 leading-4">
+									{#each x.feltet as feltet, _ (_)}
+										<div class="flex items-center gap-1 py-1">
+											<div class="w-5 h-5 bg-secondary rounded-lg transition-all text-on-secondary font-semibold flex justify-center items-center" on:click={() => {feltetRemove(termek,i,feltet);}}>-</div> <div>{feltet}</div>
+										</div>
+									{/each}
+								</div>
+							</div>
+						{/if}
 					</div>
 				</div>
 			{/each}

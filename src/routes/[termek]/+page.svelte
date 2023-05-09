@@ -108,12 +108,12 @@
 
 	{#if maxAmount}
 		<div class="flex w-full justify-center">
-			<div class="my-5 flex justify-center items-center text-on-secondary-container text-3xl rounded-2xl">
-				<div class="bg-primary flex justify-center items-center rounded-2xl w-16 text-on-primary transition-all" on:click="{(e) => {subtractAmount(); touchRadius(e.target.parentElement, '0.5rem', '1rem', 40);}}">
+			<div class="my-5 flex justify-center items-center text-3xl rounded-2xl">
+				<div class="bg-secondary flex justify-center items-center rounded-2xl w-16 text-on-secondary transition-all" on:click="{(e) => {subtractAmount(); touchRadius(e.target.parentElement, '0.5rem', '1rem', 40);}}">
 					<button class="p-3 px-5">-</button>
 				</div>
 				<div class="px-5 py-2 text-tertiary">{#key darab}<span in:fade="{{ duration: 200 }}">{darab}</span>{/key}</div>
-				<div class="bg-primary flex justify-center items-center rounded-2xl w-16 text-on-primary transition-all" on:click="{(e) => {addAmount(); touchRadius(e.target.parentElement, '0.5rem', '1rem', 40);}}">
+				<div class="bg-secondary flex justify-center items-center rounded-2xl w-16 text-on-secondary transition-all" on:click="{(e) => {addAmount(); touchRadius(e.target.parentElement, '0.5rem', '1rem', 40);}}">
 					<button class="p-3 px-5">+</button>
 				</div>
 			</div>
@@ -163,9 +163,10 @@
 		color: #eae5ab;
 		outline: none;
 		border-radius: .5rem;
+		@apply font-semibold;
 	}
 
 	.ar {
-		color: #ffdbca;
+		@apply text-secondary;
 	}
 </style>

@@ -157,13 +157,13 @@
 						<div class="bg-foreground p-2 text-center text-on-secondary font-extrabold">
 							<button class="w-6 bg-secondary rounded-lg transition-all" on:click="{(e) => {subtractAmount(termek,i); touchRadius(e.target, '.3rem', '.5rem');}}">-</button>
 								{#key x.darab}
-									<span in:fade|local class="text-secondary mx-3">{x.darab} db</span>
+									<span in:fade|local class="text-tertiary mx-3">{x.darab} <span class="text-secondary">db</span></span>
 								{/key}
 							<button class="w-6 bg-secondary rounded-lg transition-all" on:click="{(e) => {addAmount(termek,i); touchRadius(e.target, '.3rem', '.5rem');}}">+</button>
 						</div>
 						<!-- Feltétek -->
 						{#if x.feltet.length}
-							<div class="text-on-surface-variant bg-surface-variant flex flex-col py-1">
+							<div class="text-on-surface-variant bg-surface-variant bg-opacity-70 flex flex-col py-1">
 								<div class="px-2 leading-4">
 									{#each x.feltet as feltet, _ (_)}
 										<div class="flex items-center gap-1 py-1">
@@ -195,20 +195,20 @@
 		<!-- Szünet Választó -->
 		<div class="mb-5 flex justify-center items-center">
 			<div class="flex flex-col justify-center items-center font-semibold rounded-2xl">
-				<div class="bg-secondary-container flex justify-center items-center rounded-2xl w-20 mb-2 text-2xl text-on-secondary-container transition-all after:-rotate-90 after:content-['>']" on:click={(e) => {szunetSplide.splide.go('<'); touchRadius(e.target, '.5rem', '1rem');}}>
+				<div class="bg-secondary flex justify-center items-center rounded-2xl w-20 mb-2 text-2xl text-on-secondary transition-all after:-rotate-90 after:content-['>']" on:click={(e) => {szunetSplide.splide.go('<'); touchRadius(e.target, '.5rem', '1rem');}}>
 				</div>
 				<div class="overflow-hidden flex rounded-xl outline outline-1 outline-outline">
 					<Splide bind:this={szunetSplide} on:moved={e => {idopont = data.szunetArray[e.detail.index];}} options={{ arrows: false, pagination: false, direction: 'ttb', height: '2rem', perMove: 1 }}>
 						{#each data.szunetArray as szunet}
 							<SplideSlide>
-								<div class="text-tertiary w-full h-full flex justify-center items-center px-4">
+								<div class:activeSzunet={szunet === idopont} class="w-full h-full flex justify-center items-center px-4">
 									{szunet}
 								</div>
 							</SplideSlide>
 						{/each}
 					</Splide>
 				</div>
-				<div class="bg-secondary-container flex justify-center items-center rounded-2xl w-20 mt-2 text-2xl text-on-secondary-container transition-all after:rotate-90 after:content-['>']" on:click={(e) => {szunetSplide.splide.go('>'); touchRadius(e.target, '.5rem', '1rem');}}>
+				<div class="bg-secondary flex justify-center items-center rounded-2xl w-20 mt-2 text-2xl text-on-secondary transition-all after:rotate-90 after:content-['>']" on:click={(e) => {szunetSplide.splide.go('>'); touchRadius(e.target, '.5rem', '1rem');}}>
 				</div>
 			</div>
 		</div>
@@ -231,6 +231,10 @@
 		@apply text-on-tertiary-container;
 		@apply border-tertiary;
 		@apply font-semibold;
+	}
+
+	.activeSzunet {
+		@apply text-tertiary;
 	}
 
 </style>

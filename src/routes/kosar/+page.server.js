@@ -32,7 +32,7 @@ export const actions = {
 				// Validálás
 				const darab = rendeles[termek][i].darab;
 				let subTotal = darab * record.ar;
-				const feltet = rendeles[termek][i].feltet.map((feltet => { subTotal += Number(record.feltetek[feltet].ar); return feltet; }));
+				const feltet = rendeles[termek][i].feltet.map((feltet => { subTotal += Number(record.feltetek[feltet].ar) * darab; return feltet; }));
 				rendeles[termek][i] = { 'ar': subTotal, darab, feltet };
 				total += subTotal;
 

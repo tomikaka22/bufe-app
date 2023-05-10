@@ -13,7 +13,7 @@
 
 	let totalDarab = 0; // eddigi hozzaadott termekek + darab
    let darab = 1;
-   $: price = data.termekek.ar * darab;
+   $: price = data.termekek.ar * darab + feltetek.map((feltet => { return Number(data.termekek.feltetek[feltet].ar); })).reduce((a, b) => a + b, 0) * darab; // 1 db termék ára szorozva darabbal, feltétek árának összege szorozva darabbal
 	let feltetek = [];
 
 	if (localStorage.getItem('CartContent')) {
@@ -41,10 +41,8 @@
 	function feltetChange(feltet) {
 		if (feltetek.includes(feltet)) {
 			feltetek = feltetek.filter(item => item !== feltet);
-			price -= parseInt(data.termekek.feltetek[feltet].ar);
 		} else {
 			feltetek = [ ...feltetek, feltet ];
-			price += parseInt(data.termekek.feltetek[feltet].ar);
 		}
 		feltetek.sort();
 	}

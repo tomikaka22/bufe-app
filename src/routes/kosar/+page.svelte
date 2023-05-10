@@ -24,9 +24,22 @@
 	function recalculate() {
 		$total = { 'ar': 0, 'darab': 0 };
 		Object.keys($cart).forEach(termek => {
-			$cart[termek].forEach(x => {
+			const lastFeltet = [];
+			$cart[termek].forEach((x,i) => {
+				if (lastFeltet.includes(JSON.stringify(x.feltet))) {	// Ha megegyezik a current termék bármelyik előző termékkel, vonja össze őket.
+					const match = lastFeltet.indexOf(JSON.stringify(x.feltet));
+					$total.ar -= $cart[termek][match].ar;
+					$total.darab -= $cart[termek][match].darab;
+
+					$cart[termek][i].ar += $cart[termek][match].ar;
+					$cart[termek][i].darab += $cart[termek][match].darab;
+
+					$cart[termek].splice(match,1);
+				}
+
 				$total.ar += x.ar;
 				$total.darab += x.darab;
+				lastFeltet.push(JSON.stringify(x.feltet));
 			});
 		});
 		localStorage.setItem('CartContent',JSON.stringify($cart));
@@ -41,11 +54,10 @@
 
 	function subtractAmount(termek,i) {
 		if ($cart[termek][i].darab > 1) {
-			const price = $cart[termek][i].ar / $cart[termek][i].darab;
+			const record = data.termekek.find(x => { return x.termek === termek; });
 
-			$cart[termek][i].ar -= price;
 			$cart[termek][i].darab--;
-
+			$cart[termek][i].ar = record.ar * $cart[termek][i].darab + $cart[termek][i].feltet.map(feltet => { return Number(record.feltetek[feltet].ar); }).reduce((a, b) => a + b, 0) * $cart[termek][i].darab;	// 1 db termék ára szorozva darabbal, feltétek árának összege szorozva darabbal
 			recalculate();
 		} else {
 			$cart[termek].splice(i,1);
@@ -70,10 +82,10 @@
 		});
 
 		if (totalDarab < maxAmount) {
-			const price = $cart[termek][i].ar / $cart[termek][i].darab;
+			const record = data.termekek.find(x => { return x.termek === termek; });
 
-			$cart[termek][i].ar += price;
 			$cart[termek][i].darab++;
+			$cart[termek][i].ar = record.ar * $cart[termek][i].darab + $cart[termek][i].feltet.map(feltet => { return Number(record.feltetek[feltet].ar); }).reduce((a, b) => a + b, 0) * $cart[termek][i].darab;	// 1 db termék ára szorozva darabbal, feltétek árának összege szorozva darabbal
 			recalculate();
 		}
 
@@ -81,8 +93,10 @@
 
 	function feltetRemove(termek,i,feltet) {
 		$cart[termek][i].feltet = $cart[termek][i].feltet.filter(item => item !== feltet);
-		const ar = data.termekek.find(x => { return x.termek === termek; }).feltetek[feltet].ar;
-		$cart[termek][i].ar -= ar;
+		const record = data.termekek.find(x => { return x.termek === termek; });
+
+		$cart[termek][i].ar = record.ar * $cart[termek][i].darab + $cart[termek][i].feltet.map(feltet => { return Number(record.feltetek[feltet].ar); }).reduce((a, b) => a + b, 0) * $cart[termek][i].darab;	// 1 db termék ára szorozva darabbal, feltétek árának összege szorozva darabbal
+		recalculate();
 	}
 
 	async function handleSubmit() {

@@ -96,7 +96,7 @@
 		<input class="w-2/6 rounded-lg bg-background outline outline-outline transition-all px-1 focus:px-3 focus:py-1 focus:rounded-md focus:w-4/6 focus:outline-primary" type="text" bind:value={searchWord} on:input={search}>
 	</div>
 
-	<swiper-container class="mb-32"
+	<swiper-container class="pb-32"
 	initial-slide={$navigation}
 	resistance-ratio={'0.5'}
 	speed={'370'}

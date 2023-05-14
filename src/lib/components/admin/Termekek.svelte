@@ -38,49 +38,55 @@ function termekModalInput(event) { // Hozzáadja (Zölddel) a beirt termékeket.
 }
 </script>
 
-<dialog class="termekek-modal" bind:this={termekModal}>
-    <h2>Eddigi termékek:</h2>
+<dialog class="bg-surface-variant rounded-2xl text-secondary relative" bind:this={termekModal}>
+    <h2 class="font-semibold text-lg text-primary">Eddigi termékek:</h2>
        {#each data.termekekLista as termekek}
           <form on:submit={termekModalRemove}>
-             <p class:crossed-out="{termekekRemove.includes(termekek.id)}">{termekek.termek}: {termekek.ar} Ft, {termekek.darab} db | {termekek.leiras} | {termekek.kategoria}
+             <p class:crossedOut="{termekekRemove.includes(termekek.id)}">{termekek.termek}: {termekek.ar} Ft, {termekek.darab} db | {termekek.leiras} | {termekek.kategoria}
                 <input type="text" hidden name="{termekek.id}">
-                <button class="formRemoveButton"> {#if termekekRemove.includes(termekek.id)}↻{:else}❌{/if}</button>
+                <button class="bg-foreground p-2 py-0.5 rounded-3xl"> {#if termekekRemove.includes(termekek.id)}↻{:else}❌{/if}</button>
              </p>
           </form>
        {/each}
 
-    <h2 style="color: greenyellow;">Hozzáadandó termékek:</h2>
+    <h2 class="font-semibold text-primary">Hozzáadandó termékek:</h2>
     {#each Object.keys(tempTermekek) as tempTermek, i (i)}
        <form on:submit={termekModalInputRemove}>
-          <p style="color: green;">+ {tempTermek}: {tempTermekek[tempTermek].ar} Ft, {tempTermekek[tempTermek].darab} db, {tempTermekek[tempTermek].leiras} {tempTermekek[tempTermek].kategoria}
+          <p>+ {tempTermek}: {tempTermekek[tempTermek].ar} Ft, {tempTermekek[tempTermek].darab} db, {tempTermekek[tempTermek].leiras} {tempTermekek[tempTermek].kategoria}
              <input type="text" hidden name="{tempTermek}">
-             <button class="formRemoveButton">❌</button>
+             <button class="bg-foreground p-2 py-0.5 rounded-3xl">❌</button>
           </p>
        </form>
     {/each}
 
     <form on:submit={termekModalInput}>
-       Termék neve: <input type="text" name="termek" style="width: 20ch;">
-       Termék ára: <input type="number" name="ar" style="width: 6ch;"> Ft,
-       Termék darab: <input type="number" name="darab" style="width: 6ch;"> db |
-       Leirás: <input type="text" name="leiras" style="width: 20em;">
-       Kategória: <select name="kategoria">
-                   <option value="Étel">Étel</option>
-                   <option value="Ital">Ital</option>
-                   <option value="Nasi">Nasi</option>
+      Termék neve: <input class="bg-background rounded-xl py-1 px-2 my-1 focus:mx-1" type="text" name="termek" style="width: 20ch;">
+      Termék ára: <input class="appearance-none bg-background rounded-xl py-1 px-2 my-1 focus:mx-1" type="number" name="ar" style="width: 6ch; -moz-appearance: textfield;"> Ft
+		<br>
+      Termék darab: <input class="appearance-none bg-background rounded-xl py-1 px-2 my-1 focus:mx-1" type="number" name="darab" style="width: 6ch; -moz-appearance: textfield;"> db
+		<br>
+      Leirás: <input class="bg-background rounded-xl px-2 py-1 my-1 focus:mx-1" type="text" name="leiras" style="width: 20em;">
+		<br>
+      Kategória: <select class="bg-background rounded-xl px-2 py-1 my-1" name="kategoria">
+						<option value="Étel">Étel</option>
+						<option value="Ital">Ital</option>
+						<option value="Nasi">Nasi</option>
                   </select>
-       <button style="color: greenyellow;">+</button>
+       <button class="bg-background rounded-xl px-2 text-[yellowgreen] font-semibold text-lg">+</button>
     </form>
 
     <form action="?/termekek" method="POST">
        <input hidden type="text" name="add" value="{JSON.stringify(tempTermekek)}">
        <input hidden type="text" name="remove" value="{JSON.stringify(termekekRemove)}">
-       <button>Mentés</button>
+       <button class="px-2 py-1 outline outline-1 rounded-3xl">Mentés</button>
     </form>
 
-    <button on:click={termekModal.close()}><h1>Bezár</h1></button>
+    <button class="px-2 py-1 outline outline-1 rounded-3xl absolute right-3 top-3" on:click={termekModal.close()}><h1>Bezár</h1></button>
  </dialog>
 
  <style lang="postcss">
-
+ .crossedOut {
+	@apply line-through;
+	@apply text-outline
+ }
  </style>

@@ -31,23 +31,23 @@ function feltetekModalRemove(event) { // Kitörli a már (régen) véglegesen ho
 	if (!feltetekRemove[data.recordID]) feltetekRemove[data.recordID] = [];
 
 	if (feltetekRemove[data.recordID].includes(data.feltet)) {
-		feltetekRemove[data.recordID] = feltetekRemove[data.recordID].filter(feltet => feltet != data.feltet);
+		feltetekRemove[data.recordID] = feltetekRemove[data.recordID].filter(feltet => feltet !== data.feltet);
 	} else {
 		feltetekRemove[data.recordID] = [ ...feltetekRemove[data.recordID], data.feltet ];
 	}
 }
 </script>
 
-<dialog class="feltet-modal" bind:this={feltetModal}>
+<dialog class="bg-surface-variant rounded-2xl text-secondary relative w-fit" bind:this={feltetModal}>
 	{#each data.termekekLista as termekek}
 		<form on:submit={feltetModalInput}>
-			<h2>{termekek.termek}:</h2>
+			<h2 class="font-semibold text-lg">{termekek.termek}:</h2>
 			{#if termekek.feltetek}
 				{#each Object.keys(termekek.feltetek) as feltet}
 					<form on:submit={feltetekModalRemove}>
 						<input name="recordID" hidden type="text" value="{termekek.id}">
 						<input name="feltet" hidden type="text" value="{feltet}">
-						<p class:crossed-out="{feltetekRemove[termekek.id]?.includes(feltet)}" style="color: white;">{feltet}: {termekek.feltetek[feltet].darab} db, {termekek.feltetek[feltet].ar} Ft <button class="formRemoveButton"><span>{#if feltetekRemove[termekek.id]?.includes(feltet)}↻{:else}❌{/if}</span></button></p>
+						<p class:crossedOut="{feltetekRemove[termekek.id]?.includes(feltet)}">{feltet}: {termekek.feltetek[feltet].darab} db, {termekek.feltetek[feltet].ar} Ft <button class="bg-foreground p-2 py-0.5 rounded-3xl"><span>{#if feltetekRemove[termekek.id]?.includes(feltet)}↻{:else}❌{/if}</span></button></p>
 					</form>
 				{/each}
 			{/if}
@@ -57,25 +57,28 @@ function feltetekModalRemove(event) { // Kitörli a már (régen) véglegesen ho
 					<form on:submit={feltetModalInputRemove}>
 						<input name="recordID" hidden type="text" value="{termekek.id}">
 						<input name="feltet" hidden type="text" value="{feltet}">
-						<p> + {[ feltet ]}: {tempFeltetek[termekek.id][feltet].darab} db, {tempFeltetek[termekek.id][feltet].ar} Ft <button class="formRemoveButton"><span>❌</span></button></p>
+						<p class="text-tertiary"> + {feltet}: {tempFeltetek[termekek.id][feltet].darab} db, {tempFeltetek[termekek.id][feltet].ar} Ft <button class="bg-foreground p-2 py-0.5 rounded-3xl"><span>❌</span></button></p>
 					</form>
 				{/each}
 			{/if}
-			<input name="recordID" hidden type="text" value="{termekek.id}">
-			<input name="feltet" placeholder="Feltét neve" type="text" style="width: 10rem;">
-			<input name="darab" type="number" value="1" style="width: 6ch;"> db
-			<input name="ar" type="number" value="100" style="width: 6ch;"> Ft
-			<button><span>+</span></button>
+			<input class="appearance-none bg-background rounded-xl py-1 px-2 my-1 mr-1 focus:mx-2" name="recordID" hidden type="text" value="{termekek.id}">
+			<input class="appearance-none bg-background rounded-xl py-1 px-2 my-1 mr-1 focus:mx-2" name="feltet" placeholder="Feltét neve" type="text" style="width: 10rem;">
+			<input class="appearance-none bg-background rounded-xl py-1 px-2 my-1 mr-1 focus:mx-2" name="darab" type="number" value="1" style="width: 6ch; -moz-appearance: textfield"> db
+			<input class="appearance-none bg-background rounded-xl py-1 px-2 my-1 mr-1 focus:mx-2" name="ar" type="number" value="100" style="width: 6ch; -moz-appearance: textfield"> Ft
+			<button class="bg-background rounded-xl px-2 text-[yellowgreen] font-semibold text-lg">+</button>
 		</form>
 	{/each}
 	<form action="?/feltet" method="POST">
 		<input name="add" hidden type="text" value="{JSON.stringify(tempFeltetek)}">
 		<input name="remove" hidden type="text" value="{JSON.stringify(feltetekRemove)}">
-		<button>Mentés</button>
+		<button class="px-2 py-1 outline outline-1 rounded-3xl">Mentés</button>
 	</form>
-	<button on:click={feltetModal.close()}><h1>Bezár</h1></button>
+	<button class="px-2 py-1 outline outline-1 rounded-3xl absolute right-3 top-3" on:click={feltetModal.close()}><h1>Bezár</h1></button>
 </dialog>
 
 <style lang="postcss">
-
+ .crossedOut {
+	@apply line-through;
+	@apply text-outline
+ }
 </style>

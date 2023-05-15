@@ -5,11 +5,13 @@
    import { cart, total } from '$lib/stores/Cart.js';
 	import { touchRadius } from '$lib/frontendUtils/touchRadius.js';
    import Topbar from '$lib/components/Topbar.svelte';
+   import { enhance } from '$app/forms'
 
    export let data;
 
    const termek = data.termekek.termek;
    const maxAmount = data.termekek.darab;
+   const termekid = data.termekek.id
 
 	let totalDarab = 0; // eddigi hozzaadott termekek + darab
    let darab = 1;
@@ -147,8 +149,16 @@
 		</div>
 	{/if}
 
-		<div class="w-full fixed bottom-6 left-0 flex justify-center">
-			<button on:click={buy} style="box-shadow: 0px 0px 5px 2px #2b221d;" class="w-full shadow-background bg-primary-container text-on-secondary-container font-semibold transition-all py-2 px-10 mx-5 rounded-3xl text-lg hover:bg-primary hover:text-on-primary hover:rounded-lg">kosárba</button>
+		<div class="w-full fixed bottom-6 left-0 flex justify-center px-5">
+			<button on:click={buy} style="box-shadow: 0px 0px 5px 2px #2b221d;" class="w-full shadow-background bg-primary-container text-on-secondary-container font-semibold transition-all py-2 px-10 mr-2 rounded-3xl text-lg hover:bg-primary hover:text-on-primary hover:rounded-lg">kosárba</button>
+			<form 
+			use:enhance 
+			action="/profil/?/addFav" 
+			method="post"
+			>
+				<input hidden value={JSON.stringify({[termek]:{"id": termekid}})} name="newFav" type="text">
+				<button style="box-shadow: 0px 0px 5px 2px #2b221d;" class=" shadow-background bg-primary-container text-on-secondary-container font-semibold transition-all py-2 px-3 rounded-3xl text-lg hover:bg-primary hover:text-on-primary hover:rounded-lg"><i class="fa-solid fa-star"></i></button>
+			</form>
 		</div>
 
 	</div>

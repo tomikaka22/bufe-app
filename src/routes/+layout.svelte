@@ -74,6 +74,7 @@
 
 <svelte:head>
 	<title>{splash[Math.floor(Math.random() * splash.length)]}</title>
+	<link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro-v6@44659d9/css/all.min.css" rel="stylesheet" type="text/css" />
     {@html webManifest}
 </svelte:head>
 

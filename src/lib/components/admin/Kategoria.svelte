@@ -7,10 +7,11 @@
     <form action="?/kategoria" method="POST">
        {#each data.termekekLista as termekek}
           <p><span class="font-semibold text-lg">{termekek.termek}</span> | Kategória:
-             <select class="bg-background rounded-xl py-1 px-2 my-1 mr-1 focus:mx-2" name="{termekek.id}">
-                <option value="Étel">Étel</option>
-                <option value="Ital">Ital</option>
-                <option value="Nasi">Nasi</option>
+             <select class="bg-background rounded-xl py-1 px-2 my-1 mr-1 focus:mx-2" name="{termekek.id}" value="{termekek.kategoria}">
+					<option value="Étel">Étel</option>
+					<option value="Ital">Ital</option>
+					<option value="Nasi">Nasi</option>
+					<option value="Egyéb">Egyéb</option>
              </select>
           </p>
        {/each}

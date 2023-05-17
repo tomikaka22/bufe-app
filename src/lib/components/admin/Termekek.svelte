@@ -28,7 +28,7 @@ function termekModalRemove(event) { // Kitörli a már (régen) véglegesen hozz
 function termekModalInput(event) { // Hozzáadja (Zölddel) a beirt termékeket.
 	event.preventDefault();
 	const data = Object.fromEntries(new FormData(event.target).entries());
-
+console.log(data)
 	tempTermekek[data.termek] = {
 		'ar': data.ar,
 		'darab': data.darab,
@@ -71,6 +71,7 @@ function termekModalInput(event) { // Hozzáadja (Zölddel) a beirt termékeket.
 						<option value="Étel">Étel</option>
 						<option value="Ital">Ital</option>
 						<option value="Nasi">Nasi</option>
+						<option value="Egyéb">Egyéb</option>
                   </select>
        <button class="bg-background rounded-xl px-2 text-[yellowgreen] font-semibold text-lg">+</button>
     </form>

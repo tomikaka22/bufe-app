@@ -98,7 +98,7 @@
 			<h1 class="text-primary text-center mb-2 text-xl font-semibold">{termek}</h1>
 			<div class="flex justify-center">
 				<div class="w-10/12">
-					<img class="w-full h-full rounded-3xl transition-all" src="{termek}.jpg" alt="" on:click={(e) => {touchRadius(e.target, '1rem', '1.5rem');}}>
+					<img class="w-full h-full rounded-3xl transition-all" src="{termek}.jpg" alt="" on:click={(e) => {touchRadius(e.target, '1rem', '1.5rem');}} on:error={img => {img.target.src='favicon.png';}}>
 				</div>
 			</div>
 

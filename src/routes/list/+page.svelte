@@ -171,6 +171,28 @@
 				{/each}
 			</div>
 		</swiper-slide>
+		<swiper-slide>
+			<div class="mx-6 flex flex-col gap-5 text-secondary">
+				{#each data.termekek as termek}
+					{#if termek.kategoria === 'Egyéb'}
+						<a href="{termek.termek}?referrer=/list" class="rounded-2xl transition-all overflow-hidden hover:rounded-lg">
+							<div class="h-32 overflow-clip">
+								<img class="w-full h-full object-cover" src="{termek.termek}.jpg" on:error={img => {img.target.src='favicon.png';}} alt="">
+							</div>
+							<div class="bg-foreground p-3 font-semibold flex justify-between">
+								<div class="w-9/12">
+									<p class="text-primary">{termek.termek}</p>
+									<p class="text-xs font-normal">{termek.leiras}</p>
+								</div>
+								<div class="text-on-tertiary self-center">
+									<p class="bg-tertiary rounded-lg px-1">{termek.ar} Ft</p>
+								</div>
+							</div>
+						</a>
+					{/if}
+				{/each}
+			</div>
+		</swiper-slide>
 	</swiper-container>
 
 	{#if cartshow}
@@ -196,9 +218,10 @@
 	{:else}
 	<div class="w-screen flex justify-center fixed bottom-0 z-10">
 		<div in:fly={{ y: 200 }} class="p-3 flex justify-center gap-6 text-secondary bg-on-secondary rounded-2xl mb-10 opacity-[0.97] font-semibold">
-			<div class="flex justify-center w-12 rounded-xl" class:active='{$navigation === 0}' on:click={() => {navigate(0);}}><p class="p-1">Étel</p></div>
-			<div class="flex justify-center w-12 rounded-xl" class:active='{$navigation === 1}' on:click={() => {navigate(1);}}><p class="p-1">Ital</p></div>
-			<div class="flex justify-center w-12 rounded-xl" class:active='{$navigation === 2}' on:click={() => {navigate(2);}}><p class="p-1">Nasi</p></div>
+			<div class="flex justify-center transition-all" on:click={() => {navigate(0);}}><p class:active='{$navigation === 0}' class="rounded-xl transition-all py-1">Étel</p></div>
+			<div class="flex justify-center transition-all" on:click={() => {navigate(1);}}><p class:active='{$navigation === 1}' class="rounded-xl transition-all py-1">Ital</p></div>
+			<div class="flex justify-center transition-all" on:click={() => {navigate(2);}}><p class:active='{$navigation === 2}' class="rounded-xl transition-all py-1">Nasi</p></div>
+			<div class="flex justify-center transition-all" on:click={() => {navigate(3);}}><p class:active='{$navigation === 3}' class="rounded-xl transition-all py-1">Egyéb</p></div>
 		</div>
 	</div>
 	{/if}
@@ -210,9 +233,8 @@
 
 <style lang="postcss">
 	.active {
-		@apply transition-all;
-		@apply duration-500;
 		@apply text-primary;
 		@apply bg-secondary-container;
+		@apply px-2;
 	}
 </style>

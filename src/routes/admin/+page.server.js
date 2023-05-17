@@ -111,5 +111,19 @@ export const actions = {
 		});
 
 		await locals.pb.collection('rendelesek').update(id, { 'status': 'torolve' });
+	},
+	JSON: async ({ request, locals }) => {
+		const data = Object.fromEntries(await request.formData());
+		const adat = JSON.parse(await data.inputJson.text());
+
+		for (const kategoria in adat) {
+			for (const termek in adat[kategoria]) {
+				await locals.pb.collection('termekek').create({ 'termek': adat[kategoria][termek].name, 'ar': 469, 'darab': 1000, 'leiras': adat[kategoria][termek].name, kategoria });
+
+				for (const variation in adat[kategoria][termek].variations) {
+					await locals.pb.collection('termekek').create({ 'termek': adat[kategoria][termek].variations[variation].name + ' ' + adat[kategoria][termek].name, 'ar': adat[kategoria][termek].variations[variation].price, 'darab': 100, 'leiras': adat[kategoria][termek].variations[variation].name, kategoria });
+				}
+			}
+		}
 	}
 };

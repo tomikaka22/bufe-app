@@ -4,6 +4,7 @@ export let termekModal;
 
 let tempTermekek = {};
 let termekekRemove = [];
+let jsonForm;
 
 function termekModalInputRemove(event) { // Kitörli a (Zöld) frissen hozzáadott (Még nem véglegesitett) termékeket.
 	event.preventDefault();
@@ -28,7 +29,7 @@ function termekModalRemove(event) { // Kitörli a már (régen) véglegesen hozz
 function termekModalInput(event) { // Hozzáadja (Zölddel) a beirt termékeket.
 	event.preventDefault();
 	const data = Object.fromEntries(new FormData(event.target).entries());
-console.log(data)
+
 	tempTermekek[data.termek] = {
 		'ar': data.ar,
 		'darab': data.darab,
@@ -38,7 +39,7 @@ console.log(data)
 }
 </script>
 
-<dialog class="bg-surface-variant rounded-2xl text-secondary relative" bind:this={termekModal}>
+<dialog class="bg-surface-variant rounded-2xl text-secondary relative pt-5" bind:this={termekModal}>
     <h2 class="font-semibold text-lg text-primary">Eddigi termékek:</h2>
        {#each data.termekekLista as termekek}
           <form on:submit={termekModalRemove}>
@@ -52,7 +53,7 @@ console.log(data)
     <h2 class="font-semibold text-primary">Hozzáadandó termékek:</h2>
     {#each Object.keys(tempTermekek) as tempTermek, i (i)}
        <form on:submit={termekModalInputRemove}>
-          <p>+ {tempTermek}: {tempTermekek[tempTermek].ar} Ft, {tempTermekek[tempTermek].darab} db, {tempTermekek[tempTermek].leiras} {tempTermekek[tempTermek].kategoria}
+          <p class="text-tertiary">+ {tempTermek}: {tempTermekek[tempTermek].ar} Ft, {tempTermekek[tempTermek].darab} db, {tempTermekek[tempTermek].leiras} {tempTermekek[tempTermek].kategoria}
              <input type="text" hidden name="{tempTermek}">
              <button class="bg-foreground p-2 py-0.5 rounded-3xl">❌</button>
           </p>
@@ -82,7 +83,18 @@ console.log(data)
        <button class="px-2 py-1 outline outline-1 rounded-3xl">Mentés</button>
     </form>
 
-    <button class="px-2 py-1 outline outline-1 rounded-3xl absolute right-3 top-3" on:click={termekModal.close()}><h1>Bezár</h1></button>
+   <div class="flex gap-3 absolute right-3 top-3">
+		<form method="POST" action="?/JSON" enctype="multipart/form-data" bind:this={jsonForm}>
+			<div class="w-32 relative outline outline-1 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2">
+				<p class="w-max absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">JSON feltöltése</p>
+				<input class="w-full h-full opacity-0" on:input={() => {jsonForm.submit();}} type="file" name="inputJson" accept=".json">
+			</div>
+		</form>
+
+		<button class="outline outline-1 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={termekModal.close()}><h1>Bezár</h1></button>
+		<button class="outline outline-1 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={termekModal.close()}><h1>Bezár</h1></button>
+	</div>
+
  </dialog>
 
  <style lang="postcss">

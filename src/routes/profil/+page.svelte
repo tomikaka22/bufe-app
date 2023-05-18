@@ -34,7 +34,7 @@ let form;
 
       <div class="p-4">
          <p class="text-center text-lg">Kedvenc termékek:</p>
-         {#if Object.keys(data.currentUser.favs) != 0}
+         {#if data.currentUser.favs != null && typeof data.currentUser.favs !== 'undefined' && Object.keys(data.currentUser.favs).length != 0}
             {#each Object.keys(data.currentUser.favs) as fav, i (i)}
             <div class="flex p-2 rounded-lg mb-2 bg-surface-variant">
                <div class="basis-3/12">

@@ -157,7 +157,9 @@
 			method="post"
 			>
 				<input hidden value={JSON.stringify({[termek]:{"id": termekid}})} name="newFav" type="text">
-				<button style="box-shadow: 0px 0px 5px 2px #2b221d;" class=" shadow-background bg-primary-container text-on-secondary-container font-semibold transition-all py-2 px-3 rounded-3xl text-lg hover:bg-primary hover:text-on-primary hover:rounded-lg"><i class="fa-solid fa-star"></i></button>
+				<button style="box-shadow: 0px 0px 5px 2px #2b221d;" class=" shadow-background bg-primary-container text-on-secondary-container font-semibold transition-all py-2 px-3 rounded-3xl text-lg hover:bg-primary hover:text-on-primary hover:rounded-lg">
+					<i class="fa-solid fa-star"/>
+				</button>
 			</form>
 		</div>
 

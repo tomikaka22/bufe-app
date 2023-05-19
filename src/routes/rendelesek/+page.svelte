@@ -9,15 +9,16 @@
 
    export let data;
 
-	async function handleSubmit(form,swiper) {
-		swiper.swiper.slideTo(1);
+	async function handleSubmit(form) {
 		const data = new FormData(form);
 		await fetch(form.action, {
 			method: 'POST',
 			body: data
 		});
 
-		invalidateAll();
+		setTimeout(() => {
+			invalidateAll();
+		}, 250);
 	}
 
 	onMount(() => {
@@ -27,7 +28,7 @@
 		swiper.forEach(element => {
 			element.addEventListener('slidechange', (e) => {
 				if (e.detail[0].activeIndex === 0)
-					handleSubmit(e.detail[0].slides[0].children[0],element);
+					handleSubmit(e.detail[0].slides[0].children[0]);
 			});
 		});
 	});

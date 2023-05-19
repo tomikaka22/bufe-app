@@ -211,9 +211,10 @@
 	{#if cartshow}
 	<div class="w-screen flex justify-center fixed bottom-0 z-10">
 		<div in:fly={{ y: 200 }} class="p-3 flex justify-center gap-6 text-secondary bg-on-secondary rounded-2xl mb-16 opacity-95 font-semibold">
-			<div class="flex justify-center w-12 rounded-xl" class:active='{$navigation === 0}' on:click={() => {navigate(0);}}><p class="p-1">Étel</p></div>
-			<div class="flex justify-center w-12 rounded-xl" class:active='{$navigation === 1}' on:click={() => {navigate(1);}}><p class="p-1">Ital</p></div>
-			<div class="flex justify-center w-12 rounded-xl" class:active='{$navigation === 2}' on:click={() => {navigate(2);}}><p class="p-1">Nasi</p></div>
+			<div class="flex justify-center transition-all" on:click={() => {navigate(0);}}><p class:active='{$navigation === 0}' class="rounded-xl transition-all duration-300 py-1">Étel</p></div>
+			<div class="flex justify-center transition-all" on:click={() => {navigate(1);}}><p class:active='{$navigation === 1}' class="rounded-xl transition-all duration-300 py-1">Ital</p></div>
+			<div class="flex justify-center transition-all" on:click={() => {navigate(2);}}><p class:active='{$navigation === 2}' class="rounded-xl transition-all duration-300 py-1">Nasi</p></div>
+			<div class="flex justify-center transition-all" on:click={() => {navigate(3);}}><p class:active='{$navigation === 3}' class="rounded-xl transition-all duration-300 py-1">Egyéb</p></div>
 		</div>
 	</div>
 
@@ -231,10 +232,10 @@
 	{:else}
 	<div class="w-screen flex justify-center fixed bottom-0 z-10">
 		<div in:fly={{ y: 200 }} class="p-3 flex justify-center gap-6 text-secondary bg-on-secondary rounded-2xl mb-10 opacity-[0.97] font-semibold">
-			<div class="flex justify-center transition-all" on:click={() => {navigate(0);}}><p class:active='{$navigation === 0}' class="rounded-xl transition-all py-1">Étel</p></div>
-			<div class="flex justify-center transition-all" on:click={() => {navigate(1);}}><p class:active='{$navigation === 1}' class="rounded-xl transition-all py-1">Ital</p></div>
-			<div class="flex justify-center transition-all" on:click={() => {navigate(2);}}><p class:active='{$navigation === 2}' class="rounded-xl transition-all py-1">Nasi</p></div>
-			<div class="flex justify-center transition-all" on:click={() => {navigate(3);}}><p class:active='{$navigation === 3}' class="rounded-xl transition-all py-1">Egyéb</p></div>
+			<div class="flex justify-center transition-all" on:click={() => {navigate(0);}}><p class:active='{$navigation === 0}' class="rounded-xl transition-all duration-300 py-1">Étel</p></div>
+			<div class="flex justify-center transition-all" on:click={() => {navigate(1);}}><p class:active='{$navigation === 1}' class="rounded-xl transition-all duration-300 py-1">Ital</p></div>
+			<div class="flex justify-center transition-all" on:click={() => {navigate(2);}}><p class:active='{$navigation === 2}' class="rounded-xl transition-all duration-300 py-1">Nasi</p></div>
+			<div class="flex justify-center transition-all" on:click={() => {navigate(3);}}><p class:active='{$navigation === 3}' class="rounded-xl transition-all duration-300 py-1">Egyéb</p></div>
 		</div>
 	</div>
 	{/if}

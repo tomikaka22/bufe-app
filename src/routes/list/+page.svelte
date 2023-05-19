@@ -92,8 +92,21 @@
 		</swiper-container>
 	{/if}
 
-	<div class="w-full flex justify-center gap-2 my-4">
-		<input class="w-2/6 rounded-lg bg-background outline outline-outline transition-all px-1 focus:px-3 focus:py-1 focus:rounded-md focus:w-4/6 focus:outline-primary" type="text" bind:value={searchWord} on:input={search}>
+	<div class="w-full flex justify-center my-4">
+		<label for="search" style="animation-timing-function: cubic-bezier(0.2, 0.0, 0, 1.0);" class="w-3/5 h-10 mx-6 p-1 flex rounded-3xl overflow-hidden bg-foreground transition-all duration-[250ms] group focus-within:bg-surface-variant focus-within:w-4/5">
+			{#if !searchWord}
+				<svg in:fade={{ duration: 200 }} class="mx-2 py-1.5 text-outline group-focus-within:text-primary transition-all" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+					<!-- Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+					<path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/>
+				</svg>
+			{:else}
+				<svg on:click={() => { searchWord = ''; search(); }} in:fade={{ duration: 200 }} class="mx-2 py-1.5 text-outline group-focus-within:text-primary transition-all" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+					<!-- Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+					<path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/>
+				</svg>
+			{/if}
+			<input id="search" class="pr-2 p-1 bg-[transparent] placeholder:text-outline group-focus-within:placeholder:font-semibold outline-none w-full transition-all duration-300" type="text" placeholder="Keresés" bind:value={searchWord} on:input={search}>
+		</label>
 	</div>
 
 	<swiper-container class="pb-32"

@@ -11,7 +11,9 @@ export async function load({ locals }) {
 	Object.keys(elozmenyLista).forEach(rendeles => {
 		if (elozmenyLista[rendeles].status === 'kesz')
 			Object.keys(elozmenyLista[rendeles].termekek).forEach(termek => {
-				total += elozmenyLista[rendeles].termekek[termek].ar;
+				elozmenyLista[rendeles].termekek[termek].forEach(x => {
+					total += x.ar;
+				});
 			});
 	});
 

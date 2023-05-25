@@ -32,7 +32,7 @@
 			{#each data.legutobbi6Termek as termek}
 				<div class="rounded-2xl transition-all overflow-hidden bg-secondary-container hover:rounded-lg mx-1.5 my-2">
 					<a href="{termek}?referrer=/">
-						<div class="w-24 h-20 bg-center bg-no-repeat bg-cover" style="background-image: url('{termek}.jpg');">
+						<div class="w-24 aspect-video bg-center bg-no-repeat bg-cover" style="background-image: url('termek-drop.jpg');">
 							<div class="h-full w-full backdrop-brightness-50 flex justify-center items-center text-center px-2">
 								<p class="font-semibold text-primary">{termek}</p>
 							</div>

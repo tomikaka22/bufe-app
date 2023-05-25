@@ -13,9 +13,6 @@
 
 	onMount(() => {
 		register();
-		swiper.addEventListener('slidechange', (e) => {
-			$navigation = e.detail[0].activeIndex;
-		});
 
 		if (localStorage.getItem('CartContent')) {
 			cartshow = 1;
@@ -93,7 +90,7 @@
 	{/if}
 
 	<div class="w-full flex justify-center my-4">
-		<label for="search" style="animation-timing-function: cubic-bezier(0.2, 0.0, 0, 1.0);" class="w-3/5 h-10 mx-6 p-1 flex rounded-3xl overflow-hidden bg-foreground transition-all duration-[250ms] group focus-within:bg-surface-variant focus-within:w-4/5">
+		<div style="animation-timing-function: cubic-bezier(0.2, 0.0, 0, 1.0);" class="w-3/5 h-10 mx-6 p-1 flex rounded-3xl overflow-hidden bg-foreground transition-all duration-[250ms] group focus-within:bg-surface-variant focus-within:w-4/5">
 			{#if !searchWord}
 				<svg in:fade={{ duration: 200 }} class="mx-2 py-1.5 text-outline group-focus-within:text-primary transition-all" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 					<!-- Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -106,7 +103,7 @@
 				</svg>
 			{/if}
 			<input id="search" class="pr-2 p-1 bg-[transparent] placeholder:text-outline group-focus-within:placeholder:font-semibold outline-none w-full transition-all duration-300" type="text" placeholder="Keresés" bind:value={searchWord} on:input={search}>
-		</label>
+		</div>
 	</div>
 
 	<swiper-container class="pb-32"
@@ -116,6 +113,7 @@
 	space-between={'20'}
 	slides-per-view={'1'}
 	bind:this={swiper}
+	on:slidechange={(e) => { $navigation = e.detail[0].activeIndex; }}
 		>
 
 		<swiper-slide>

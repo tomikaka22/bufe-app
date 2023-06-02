@@ -4,7 +4,6 @@ export let termekModal;
 
 let tempTermekek = {};
 let termekekRemove = [];
-let jsonForm;
 
 function termekModalInputRemove(event) { // Kitörli a (Zöld) frissen hozzáadott (Még nem véglegesitett) termékeket.
 	event.preventDefault();
@@ -84,14 +83,6 @@ function termekModalInput(event) { // Hozzáadja (Zölddel) a beirt termékeket.
     </form>
 
    <div class="flex gap-3 absolute right-3 top-3">
-		<form method="POST" action="?/JSON" enctype="multipart/form-data" bind:this={jsonForm}>
-			<div class="w-32 relative outline outline-1 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2">
-				<p class="w-max absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">JSON feltöltése</p>
-				<input class="w-full h-full opacity-0" on:input={() => {jsonForm.submit();}} type="file" name="inputJson" accept=".json">
-			</div>
-		</form>
-
-		<button class="outline outline-1 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={termekModal.close()}><h1>Bezár</h1></button>
 		<button class="outline outline-1 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={termekModal.close()}><h1>Bezár</h1></button>
 	</div>
 

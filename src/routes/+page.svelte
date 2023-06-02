@@ -14,7 +14,7 @@
 				<p class="py-12 pl-10 font-semibold text-lg my-3 backdrop-brightness-[.6]">Termekek</p>
 			</div>
 		</a>
-		<a href="/profil">
+		<a href="/profil?referrer=/">
 			<div class="bg-[#52443c] bg-[url('/api/avatar')] bg-cover bg-center bg-no-repeat rounded-3xl hover:rounded-2xl transition-all overflow-clip">
 				<p class="py-12 pl-10 font-semibold text-lg my-3 backdrop-brightness-[.6]">Profil</p>
 			</div>

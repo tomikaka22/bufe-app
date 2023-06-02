@@ -2,6 +2,7 @@
 import { fade, fly } from 'svelte/transition';
 import { cubicOut } from 'svelte/easing';
 import { enhance } from '$app/forms';
+import { page } from '$app/stores';
 import Topbar from '$lib/components/Topbar.svelte';
 
 export let data;
@@ -11,8 +12,8 @@ let form;
 <main in:fade={{ duration: 180 }}>
 
    <Topbar
-      target={'Menü'}
-      targeturl={'/'}
+      target={'Vissza'}
+      targeturl={$page.url.searchParams.get('referrer')}
       text={'Profil'}
       background={'none'}
       flyin={{ y: -200 }}

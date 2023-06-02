@@ -1,5 +1,7 @@
 <script>
    import { fly } from 'svelte/transition';
+	import { page } from '$app/stores';
+
 
    export let targeturl;
    export let target;
@@ -17,7 +19,7 @@
          <h1>{text}</h1>
       </div>
       <div class="flex justify-center items-center">
-         <a class="w-10 ml-auto mr-5" class:hideProfile href='/profil' >
+         <a class="w-10 ml-auto mr-5" class:hideProfile href={'/profil?referrer=' + $page.url.pathname} >
 				<img class="max-w-full rounded-xl hover:rounded-md transition-all" src="/api/avatar" alt="">
 			</a>
       </div>

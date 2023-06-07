@@ -1,12 +1,16 @@
 {
+	"short_name": "bufe-app",
 	"name": "bufe-app",
-	"description": "Rendelj büféből a mobilodon, vedd át szünetben sorbanállás nélkül.",
 	"start_url": "/",
-	"scope": "/",
 	"icons": [
 		{
 			"src": "pwa-icon.svg",
 			"sizes": "any"
 		}
-	]
+	],
+	"background_color": "#3367D6",
+	"display": "standalone",
+	"scope": "/",
+	"theme_color": "#3367D6",
+	"description": "bufe-app"
 }

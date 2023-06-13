@@ -1,5 +1,6 @@
 <script>
    import { fade } from 'svelte/transition';
+	import { flip } from 'svelte/animate';
 	import { page } from '$app/stores';
    import { goto } from '$app/navigation';
    import { deserialize } from '$app/forms';
@@ -9,9 +10,10 @@
 	import { touchRadius } from '$lib/frontendUtils/touchRadius.js';
 	import { forint } from '$lib/frontendUtils/formazo.js';
    import Topbar from '$lib/components/Topbar.svelte';
+    import { each } from 'svelte/internal';
 
    export let data;
-
+console.log($cart)
 	let szunetSplide;
 	let fizetes = 'Készpénz';
 	let idopont = data.szunetArray[0];
@@ -139,7 +141,7 @@
 	<div in:fade class="flex justify-center gap-3 text-tertiary text-xl my-1">
 		<div class="outline outline-1 outline-tertiary font-semibold w-max rounded-lg py-1 px-3 my-3">
 			{#key $total.ar}
-				<span in:fade>{forint($total.ar)} Ft</span>
+				<span in:fade>{forint($total.ar)}</span>
 			{/key}
 		</div>
 		<div class="outline outline-1 outline-tertiary font-semibold w-max rounded-lg py-1 px-3 my-3">
@@ -149,49 +151,42 @@
 		</div>
 	</div>
 
-	<div class="grid grid-cols-2 gap-5 mx-6">
-		{#each Object.keys($cart) as termek}
-			{#each $cart[termek] as x, i (i)}
-				<div>
-					<!-- Termék -->
-					<div class="rounded-2xl overflow-hidden">
-						<div class="relative bg-cover bg-center bg-no-repeat" style="background-image: url('{termek}.jpg');">
-							<div class="absolute top-2 left-2 z-10 font-semibold">
+		<div class="flex flex-wrap justify-center gap-5">
+			{#each Object.keys($cart) as termek, _ (_)}
+				<div animate:flip={{ duration: 500 }} class="flex flex-wrap items-start justify-center gap-5">
+					{#each $cart[termek] as x, i (i)}
+						<div class="bg-foreground rounded-2xl overflow-hidden font-semibold">
+							<div class="w-40 h-32 relative bg-no-repeat bg-center bg-cover bg-[url('favicon.png')]">
+								<p class="absolute w-full h-full text-center text-on-background flex justify-center items-center backdrop-brightness-50 p-2">{termek}</p>
 								{#key x.ar}
-									<p in:fade|local class="text-[#343108] bg-tertiary rounded-lg px-1">
-										{forint(x.ar)} Ft
-									</p>
+									<p in:fade class="absolute top-2 left-2 bg-tertiary text-on-tertiary rounded-lg px-1">{forint(x.ar)}</p>
 								{/key}
 							</div>
-							<div class="h-32 backdrop-brightness-[.4] flex justify-center items-center">
-								<p class="font-semibold text-center text-on-background">{termek}</p>
+							<!-- +/- Gombok  -->
+							<div class="bg-foreground text-center flex justify-center items-center gap-3.5 py-1.5 text-tertiary font-extrabold">
+								<button on:click={e => { subtractAmount(termek, i); touchRadius(e.target, '.3rem', '.5rem'); }} class="rounded-lg bg-secondary text-on-secondary aspect-square w-6 flex justify-center items-center transition-all">-</button>
+									{#key x.darab}
+										<p in:fade>{x.darab} db</p>
+									{/key}
+								<button on:click={e => { addAmount(termek, i); touchRadius(e.target, '.3rem', '.5rem'); }} class="rounded-lg bg-secondary text-on-secondary aspect-square w-6 flex justify-center items-center transition-all">+</button>
 							</div>
-						</div>
-						<!-- Amount gombok -->
-						<div class="bg-foreground p-2 text-center text-on-secondary font-extrabold">
-							<button class="w-6 bg-secondary rounded-lg transition-all" on:click="{(e) => {subtractAmount(termek,i); touchRadius(e.target, '.3rem', '.5rem');}}">-</button>
-								{#key x.darab}
-									<span in:fade|local class="text-tertiary mx-3">{x.darab} <span class="text-secondary">db</span></span>
-								{/key}
-							<button class="w-6 bg-secondary rounded-lg transition-all" on:click="{(e) => {addAmount(termek,i); touchRadius(e.target, '.3rem', '.5rem');}}">+</button>
-						</div>
-						<!-- Feltétek -->
-						{#if x.feltet.length}
-							<div class="text-on-surface-variant bg-surface-variant bg-opacity-70 flex flex-col py-1">
-								<div class="px-2 leading-4">
-									{#each x.feltet as feltet, _ (_)}
-										<div class="flex items-center gap-1 py-1">
-											<div class="w-5 h-5 bg-secondary rounded-lg transition-all text-on-secondary font-semibold flex justify-center items-center" on:click={() => {feltetRemove(termek,i,feltet);}}>-</div> <div>{feltet}</div>
-										</div>
-									{/each}
+							<!-- Feltétel -->
+							{#if x.feltet.length}
+								<div class="text-on-surface-variant bg-surface-variant bg-opacity-70 flex flex-col py-1">
+									<div class="px-2 leading-4">
+										{#each x.feltet as feltet, _ (_)}
+											<div class="flex items-center gap-1 py-1">
+												<div class="w-5 h-5 bg-secondary rounded-lg transition-all text-on-secondary flex justify-center items-center font-extrabold" on:click={() => {feltetRemove(termek,i,feltet);}}>-</div> <div>{feltet}</div>
+											</div>
+										{/each}
+									</div>
 								</div>
-							</div>
-						{/if}
-					</div>
+							{/if}
+						</div>
+					{/each}
 				</div>
 			{/each}
-		{/each}
-	</div>
+		</div>
 
 	{#if Object.keys($cart).length && data.szunetArray.length}
 		<!-- Fizetési mód -->

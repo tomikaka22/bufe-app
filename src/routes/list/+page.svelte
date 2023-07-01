@@ -10,6 +10,8 @@
 
 	let swiper;
    let cartshow = 0;
+	let scrollYOld = 0;
+	let navHide = false;
 
 	onMount(() => {
 		register();
@@ -19,6 +21,15 @@
 			$cart = JSON.parse(localStorage.getItem('CartContent'));
 			$total = JSON.parse(localStorage.getItem('Total'));
 		}
+
+		addEventListener('scroll', () => {
+			if (window.scrollY > scrollYOld)
+				navHide = true;
+			else
+				navHide = false;
+
+			scrollYOld = window.scrollY;
+		});
 	});
 
 	function navigate(i) {
@@ -106,7 +117,7 @@
 		</div>
 	</div>
 
-	<swiper-container class="pb-32"
+	<swiper-container class="pb-5"
 	initial-slide={$navigation}
 	resistance-ratio={'0.5'}
 	speed={'370'}
@@ -206,9 +217,9 @@
 		</swiper-slide>
 	</swiper-container>
 
-	{#if cartshow}
+	{#if cartshow && !navHide}
 	<div class="w-screen flex justify-center fixed bottom-0 z-10">
-		<div in:fly={{ y: 200 }} class="p-3 flex justify-center gap-6 text-secondary bg-on-secondary rounded-2xl mb-16 opacity-95 font-semibold">
+		<div in:fly={{ y: 200 }} out:fly|local={{ y: 100 }} class="p-3 flex justify-center gap-6 text-secondary bg-on-secondary rounded-2xl mb-16 opacity-95 font-semibold">
 			<div class="flex justify-center transition-all" on:click={() => {navigate(0);}}><p class:active='{$navigation === 0}' class="rounded-xl transition-all duration-300 py-1">Étel</p></div>
 			<div class="flex justify-center transition-all" on:click={() => {navigate(1);}}><p class:active='{$navigation === 1}' class="rounded-xl transition-all duration-300 py-1">Ital</p></div>
 			<div class="flex justify-center transition-all" on:click={() => {navigate(2);}}><p class:active='{$navigation === 2}' class="rounded-xl transition-all duration-300 py-1">Nasi</p></div>
@@ -218,7 +229,7 @@
 
 	<!-- Kosar  -->
 	<a href="kosar?referrer=/list">
-		<div in:fly={{ y: 100, delay: 100 }} class='fixed bottom-0 z-10 w-full'>
+		<div in:fly={{ y: 100, delay: 100 }} out:fly|local={{ y: 100 }} class='fixed bottom-0 z-10 w-full'>
 			<div class="bg-on-secondary text-primary rounded-3xl transition-all hover:rounded-t-md hover:rounded-b-xl m-2 p-2 flex justify-between items-center px-5 opacity-95">
 				<b class="text-primary">{$total.ar} Ft</b>
 				<b class="text-secondary" >Kosár</b>
@@ -227,7 +238,7 @@
 		</div>
 	</a>
 
-	{:else}
+	{:else if !navHide}
 	<div class="w-screen flex justify-center fixed bottom-0 z-10">
 		<div in:fly={{ y: 200 }} class="p-3 flex justify-center gap-6 text-secondary bg-on-secondary rounded-2xl mb-10 opacity-[0.97] font-semibold">
 			<div class="flex justify-center transition-all" on:click={() => {navigate(0);}}><p class:active='{$navigation === 0}' class="rounded-xl transition-all duration-300 py-1">Étel</p></div>

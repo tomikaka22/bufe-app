@@ -6,8 +6,9 @@ const config = {
 	preprocess: vitePreprocess(),
 
 	onwarn: (warning, handler) => {
-		// disable a11y onclick warning
-		if (warning.code.startsWith('a11y-click-events-have-key-events')) return;
+		// disable a11y warnings
+		if (warning.code.startsWith('a11y')) return;
+
 		handler(warning);
 	},
 

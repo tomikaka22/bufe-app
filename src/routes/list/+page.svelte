@@ -118,6 +118,7 @@
 	</div>
 
 	<swiper-container class="pb-5"
+	auto-height={'true'}
 	initial-slide={$navigation}
 	resistance-ratio={'0.5'}
 	speed={'370'}

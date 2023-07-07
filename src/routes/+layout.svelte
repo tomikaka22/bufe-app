@@ -1,6 +1,8 @@
 <script>
 	import PageTransition from '$lib/components/PageTransition.svelte';
+	import { navigating } from '$app/stores';
 	import { page } from '$app/stores';
+	import { fade } from 'svelte/transition';
 	import '../app.css';
 
 	const noKeyURLs = [ '/admin', '/rendelesek' ];
@@ -34,7 +36,11 @@
 
 {#if !noKeyURLs.includes($page.url.pathname)}
    <PageTransition url={$page.url}>
-      <slot />
+		{#if $navigating}
+			<h1 in:fade={{ delay: 100 }} class="absolute w-full h-full flex justify-center items-center text-primary font-semibold">Betöltés...</h1>
+		{:else}
+			<slot />
+		{/if}
    </PageTransition>
 {:else}
    <slot />

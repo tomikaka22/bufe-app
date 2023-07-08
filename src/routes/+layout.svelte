@@ -1,6 +1,7 @@
 <script>
 	import PageTransition from '$lib/components/PageTransition.svelte';
 	import { navigating } from '$app/stores';
+	import { afterNavigate, beforeNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { fade } from 'svelte/transition';
 	import '../app.css';
@@ -32,12 +33,30 @@
 		'Húszezresből mennyi van?',
 		'““”̿ ̿ ̿ ̿ ̿’̿’̵͇̿̿з=(*‿*)=ε/̵͇̿̿/̿ ̿ ̿ ̿ ̿’““'
 	];
+
+	// ... - 'animáció'
+	let interval;
+	let loading = '';
+
+	beforeNavigate(() => {
+		interval = setInterval(() => {
+			loading += '.';
+			if (loading.length === 4)
+				loading = '';
+		}, 500);
+	});
+
+	afterNavigate(() => {
+		if (interval)
+			clearInterval(interval);
+	});
+
 </script>
 
 {#if !noKeyURLs.includes($page.url.pathname)}
    <PageTransition url={$page.url}>
 		{#if $navigating}
-			<h1 in:fade={{ delay: 100 }} class="absolute w-full h-full flex justify-center items-center text-primary font-semibold">Betöltés...</h1>
+			<h1 in:fade={{ delay: 100 }} class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-primary font-semibold">Betöltés{loading}</h1>
 		{:else}
 			<slot />
 		{/if}

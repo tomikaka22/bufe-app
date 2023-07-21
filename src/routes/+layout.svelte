@@ -41,14 +41,16 @@
 	beforeNavigate(() => {
 		interval = setInterval(() => {
 			loading += '.';
-			if (loading.length === 4)
+			if (loading.length === 3)
 				loading = '';
-		}, 500);
+		}, 700);
 	});
 
 	afterNavigate(() => {
-		if (interval)
+		if (interval) {
 			clearInterval(interval);
+			interval = undefined;
+		}
 	});
 
 </script>
@@ -56,7 +58,10 @@
 {#if !noKeyURLs.includes($page.url.pathname)}
    <PageTransition url={$page.url}>
 		{#if $navigating}
-			<h1 in:fade={{ delay: 100 }} class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-primary font-semibold">Betöltés{loading}</h1>
+			<div in:fade={{ delay: 300 }} class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-primary font-semibold">
+				<h1 class="text-xl text-center">Betöltés.{loading}</h1>
+				<p in:fade={{ delay: 500 }} class="font-normal text-sm text-center text-secondary">{splash[Math.floor(Math.random() * splash.length)]}</p>
+			</div>
 		{:else}
 			<slot />
 		{/if}
@@ -66,7 +71,7 @@
 {/if}
 
 <svelte:head>
-	<title>{splash[Math.floor(Math.random() * splash.length)]}</title>
+	<title>bufe-app</title>
 </svelte:head>
 
 <style>

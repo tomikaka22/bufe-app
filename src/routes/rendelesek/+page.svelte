@@ -3,9 +3,9 @@
 	import { flip } from 'svelte/animate';
 	import { expoOut } from 'svelte/easing';
 	import { invalidateAll } from '$app/navigation';
-	import { register } from 'swiper/element/bundle';
+	import { Splide, SplideSlide } from '@splidejs/svelte-splide';
+	import '@splidejs/svelte-splide/css/core';
    import Topbar from '$lib/components/Topbar.svelte';
-	import { onMount } from 'svelte';
 
    export let data;
 
@@ -16,22 +16,8 @@
 			body: data
 		});
 
-		setTimeout(() => {
-			invalidateAll();
-		}, 250);
+		invalidateAll();
 	}
-
-	onMount(() => {
-		register();
-		const swiper = document.querySelectorAll('swiper-container');
-
-		swiper.forEach(element => {
-			element.addEventListener('slidechange', (e) => {
-				if (e.detail[0].activeIndex === 0)
-					handleSubmit(e.detail[0].slides[0].children[0]);
-			});
-		});
-	});
 
 </script>
 
@@ -87,14 +73,14 @@
 						</swiper-container>
 					{:else if record.status === 'fuggoben'}
 						<h2 class="text-center my-3 text-outline font-semibold">Függőben</h2>
-						<swiper-container class="grid grid-cols-2" initial-slide="1" space-between="30" slides-per-view="1" speed="370">
-							<swiper-slide>
+						<Splide on:inactive={e => { handleSubmit(e.detail.splide.root.children[0].children[0].children[0].children[0]); }} options={{ arrows: false, start: 1, flickPower: 1, gap: '2rem' }}>
+							<SplideSlide>
 								<form class="bg-error-container w-full h-full rounded-r-full flex justify-end items-center font-semibold" method="POST" on:submit|preventDefault={handleSubmit}>
 									<input hidden name="recordID" type="text" value="{JSON.stringify(record.id)}">
 									<p class="mr-5">Törlés</p>
 								</form>
-							</swiper-slide>
-							<swiper-slide>
+							</SplideSlide>
+							<SplideSlide>
 								<div class="rounded-3xl overflow-hidden flex flex-col justify-around brightness-75 border border-1 border-outline">
 									<div class="p-2 bg-surface rounded-3xl">
 										{#each Object.keys(record.termekek) as termek}
@@ -112,8 +98,8 @@
 										{/each}
 									</div>
 								</div>
-							</swiper-slide>
-						</swiper-container>
+							</SplideSlide>
+						</Splide>
 					{:else if record.status === 'folyamatban'}
 						<h2 class="text-center my-3 text-primary font-semibold">Átvehető!</h2>
 						<div class="rounded-3xl overflow-hidden flex flex-col justify-around border-2 border-primary font-semibold">
@@ -135,14 +121,14 @@
 						</div>
 					{:else if record.status === 'torolve'}
 						<h2 class="text-center my-3 text-outline"><del>Törölve</del></h2>
-						<swiper-container class="grid grid-cols-2" initial-slide="1" space-between="30" slides-per-view="1" speed="370">
-							<swiper-slide>
+						<Splide on:inactive={e => { handleSubmit(e.detail.splide.root.children[0].children[0].children[0].children[0]); }} options={{ arrows: false, start: 1, flickPower: 1, gap: '2rem' }}>
+							<SplideSlide>
 								<form class="bg-error-container w-full h-full rounded-r-full flex justify-end items-center font-semibold" method="POST" on:submit|preventDefault={handleSubmit}>
 									<input hidden name="recordID" type="text" value="{JSON.stringify(record.id)}">
 									<p class="mr-5">Törlés</p>
 								</form>
-							</swiper-slide>
-							<swiper-slide>
+							</SplideSlide>
+							<SplideSlide>
 								<div class="rounded-3xl overflow-hidden flex flex-col justify-around brightness-50">
 									<div class="p-2 bg-surface rounded-3xl">
 										{#each Object.keys(record.termekek) as termek}
@@ -160,8 +146,8 @@
 										{/each}
 									</div>
 								</div>
-							</swiper-slide>
-						</swiper-container>
+							</SplideSlide>
+						</Splide>
 					{/if}
 				</div>
 			{/each}

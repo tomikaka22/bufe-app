@@ -1,7 +1,7 @@
 {
 	"short_name": "bufe-app",
 	"name": "bufe-app",
-	"start_url": "/",
+	"start_url": "/login",
 	"icons": [
 		{
 			"src": "pwa-icon.svg",

@@ -231,7 +231,7 @@
 	<!-- Kosar  -->
 	<a href="kosar?referrer=/list">
 		<div in:fly={{ y: 100, delay: 100 }} out:fly|local={{ y: 100 }} class='fixed bottom-0 z-10 w-full'>
-			<div class="bg-on-secondary text-primary rounded-3xl transition-all hover:rounded-t-md hover:rounded-b-xl m-2 p-2 flex justify-between items-center px-5 opacity-95">
+			<div class="bg-on-secondary text-primary rounded-3xl transition-all hover:rounded-t-md m-2 p-2 flex justify-between items-center px-5 opacity-95">
 				<b class="text-primary">{$total.ar} Ft</b>
 				<b class="text-secondary" >Kosár</b>
 				<b class="bg-secondary-container p-1 px-3 rounded-full">{$total.darab} db</b>

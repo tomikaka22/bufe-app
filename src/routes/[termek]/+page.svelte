@@ -102,11 +102,18 @@
 				</div>
 			</div>
 
-			<h4 class="my-2 text-center font-semibold">{data.termekek.leiras}</h4>
+			<h4 class="text-center font-semibold">{data.termekek.leiras}</h4>
 
 	{#if maxAmount}
+
+		<div class="flex w-full justify-center items-center">
+			<button on:click={buy} class="mt-3 text-lg transition-all bg-primary-container text-on-primary-container py-2 px-10 rounded-2xl hover:rounded-lg hover:bg-primary hover:text-on-primary font-semibold">
+				Kosárba
+			</button>
+		</div>
+
 		<div class="flex w-full justify-center">
-			<div class="my-5 flex justify-center items-center text-3xl rounded-2xl">
+			<div class="mt-5 flex justify-center items-center text-3xl rounded-2xl">
 				<div class="bg-secondary flex justify-center items-center rounded-2xl w-16 text-on-secondary transition-all" on:click="{(e) => {subtractAmount(); touchRadius(e.target.parentElement, '0.5rem', '1rem', 40);}}">
 					<button class="p-3 px-5">-</button>
 				</div>
@@ -118,8 +125,8 @@
 		</div>
 
 		{#key price}
-			<div class="flex w-full mt-1 justify-center items-center">
-				<div class="outline outline-tertiary outline-1 rounded-lg px-5 font-semibold text-lg py-1" on:click={(e) => {touchRadius(e.target, '0.3rem', '0.5rem');}}>
+			<div class="flex w-full justify-center items-center">
+				<div class="mt-5 outline outline-tertiary outline-1 rounded-lg px-5 font-semibold text-lg py-1" on:click={(e) => {touchRadius(e.target, '0.3rem', '0.5rem');}}>
 					<h2 class="font-semibold text-on-tertiary-container" in:fade="{{ duration: 200 }}">{price} Ft</h2>
 				</div>
 			</div>
@@ -127,7 +134,7 @@
 
 		{#if data.termekek.feltetek}
 			<div class="flex w-full justify-center">
-				<div class="w-10/12 rounded-2xl mt-5 mb-32 transition-all">
+				<div class="w-10/12 mt-3 rounded-2xl mb-32 transition-all">
 					<p class="text-center my-1 font-semibold">Feltétek</p>
 					<div>
 						{#each Object.keys(data.termekek.feltetek) as feltet}
@@ -146,10 +153,6 @@
 			</div>
 		</div>
 	{/if}
-
-		<div class="w-full fixed bottom-6 left-0 flex justify-center">
-			<button on:click={buy} style="box-shadow: 0px 0px 5px 2px #2b221d;" class="w-full shadow-background bg-primary-container text-on-secondary-container font-semibold transition-all py-2 px-10 mx-5 rounded-3xl text-lg hover:bg-primary hover:text-on-primary hover:rounded-lg">kosárba</button>
-		</div>
 
 	</div>
 

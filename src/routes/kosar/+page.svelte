@@ -16,6 +16,7 @@
 	let szunetSplide;
 	let fizetes = 'Készpénz';
 	let idopont = data.szunetArray[0];
+	let submitting = false;
 
 	if (localStorage.getItem('CartContent')) {
 		$cart = JSON.parse(localStorage.getItem('CartContent'));
@@ -101,6 +102,7 @@
 	}
 
 	async function handleSubmit() {
+		submitting = true;
 		const data = new FormData(this);
 		const response = await fetch(this.action, {
 			method: 'POST',
@@ -117,6 +119,7 @@
 			delete $cart[result.data.sok];
 			$cart = $cart; // kell reactivity miatt
 			recalculate();
+			submitting = false;
 		}
 	}
 
@@ -222,12 +225,19 @@
 		</div>
 
 		<!-- Vásárlás gomb -->
-		<form class="w-full flex justify-center" method="POST" on:submit|preventDefault={handleSubmit}>
-			<input hidden type="text" name="rendeles" value="{JSON.stringify($cart)}">
-			<input hidden type="text" name="fizetes" value="{fizetes}">
-			<input hidden type="text" name="idopont" value="{idopont}">
-			<button class="p-4 px-8 mb-10 font-semibold text-lg bg-primary-container text-on-primary-container rounded-xl focus:rounded-md transition-all">Vásárlás!</button>
-		</form>
+		{#if !submitting}
+			<form class="w-full flex justify-center" method="POST" on:submit|preventDefault={handleSubmit}>
+				<input hidden type="text" name="rendeles" value="{JSON.stringify($cart)}">
+				<input hidden type="text" name="fizetes" value="{fizetes}">
+				<input hidden type="text" name="idopont" value="{idopont}">
+				<button class="p-4 px-8 mb-10 font-semibold text-lg bg-primary-container text-on-primary-container hover:bg-primary hover:text-on-primary rounded-xl hover:rounded-md transition-all">Vásárlás!</button>
+			</form>
+		{:else}
+			<div class="w-full flex justify-center">
+				<button in:fade={{ duration: 200 }} class="p-4 px-8 mb-10 font-semibold text-lg bg-primary-container text-on-primary-container rounded-xl focus:rounded-md transition-all brightness-50">Vásárlás!</button>
+			</div>
+		{/if}
+
 	{/if}
 
 </main>

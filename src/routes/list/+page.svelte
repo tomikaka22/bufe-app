@@ -42,32 +42,30 @@
 	let searchWord;
 
 	function search() {
+
 		data.termekek = originalData.termekek.filter(termek => termek.termek.toLowerCase().includes(searchWord.toLowerCase()));
 
 		// Navigáljon arra a kategoriara amiben az a termek talalhato ahol a keresett szo a legtobbet elofordul.
-		if (searchWord.length > 0) { // ha nincs itt ez az if, akkor mindig visszaugrik az Etel kategoriara, mivel ott fordul elo a legtobbet empty string.
-			const kategoria = {
-				'Étel': 0,
-				'Ital': 0,
-				'Nasi': 0
-			};
+		const kategoria = {
+			'Étel': 0,
+			'Ital': 0,
+			'Nasi': 0
+		};
 
-			data.termekek.forEach(termek => {
-				kategoria[termek.kategoria] += termek.termek.toLowerCase().split(searchWord.toLowerCase()).length - 1;
-			});
+		data.termekek.forEach(termek => {
+			kategoria[termek.kategoria] += termek.termek.toLowerCase().split(searchWord.toLowerCase()).length - 1;
+		});
 
-			switch (Object.values(kategoria).sort().reverse()[0]) {
-				case kategoria.Étel:
-					navigate(0);
-					break;
-				case kategoria.Ital:
-					navigate(1);
-					break;
-				case kategoria.Nasi:
-					navigate(2);
-			}
+		switch (Object.values(kategoria).sort().reverse()[0]) {
+			case kategoria.Étel:
+				navigate(0);
+				break;
+			case kategoria.Ital:
+				navigate(1);
+				break;
+			case kategoria.Nasi:
+				navigate(2);
 		}
-
 	}
 </script>
 

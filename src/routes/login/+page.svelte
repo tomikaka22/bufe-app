@@ -27,9 +27,6 @@
 			<div class="w-screen text-center mt-6">
 				<h2>Nincs még fiókod?</h2>
 				<a href="/register"><button class="text-[#ffb68e] font-semibold outline outline-[#9f8d84] outline-1 w-max mx-auto rounded-full p-2 mt-2">Regisztráció</button></a>
-				<a class="fixed bottom-0 left-0 w-full mb-10" href="https://demo.bufe.kkszki.hu">
-					<button class="text-[#ffb68e] font-semibold outline outline-[#9f8d84] outline-1 w-max mx-auto rounded-full p-2 mt-2">Demo-oldal</button>
-				</a>
 			</div>
 		</div>
 	</main>

@@ -14,6 +14,7 @@ export const actions = {
 		try {
 			await locals.pb.collection('users').create({ ...body });
 			await locals.pb.collection('users').authWithPassword(body.email, body.password);
+
 		} catch (err) {
 			console.log(err.data.data);
 
@@ -28,6 +29,9 @@ export const actions = {
 				return fail(400, { name: body.name, email: body.email, error: 'Hiba!' });
 			}
 		}
+
+		if (!locals.pb.authStore.baseModel.verified)
+			await locals.pb.collection('users').requestVerification(body.email);
 
 		throw redirect(303, '/login');
 	}

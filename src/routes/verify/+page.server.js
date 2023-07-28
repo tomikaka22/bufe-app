@@ -3,7 +3,6 @@ import { redirect } from '@sveltejs/kit';
 export async function load({ locals }) {
 	if (!locals.pb.authStore.baseModel)  // Ha nincs bejelentkezve, redirect to login
 		throw redirect(303, '/login');
-
 	if (locals.pb.authStore.baseModel.verified)
 		throw redirect(303, '/');
 
@@ -15,6 +14,7 @@ export async function load({ locals }) {
 export const actions = {
 	logout: async ({ locals }) => {
 		locals.pb.authStore.clear();
+		throw redirect(303, '/login');
 	},
 
 	resend: async ({ locals }) => {

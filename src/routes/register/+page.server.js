@@ -3,7 +3,6 @@ import { fail, redirect } from '@sveltejs/kit';
 export function load({ locals }) {
 	if (locals.pb.authStore.isValid)
 		throw redirect(303, '/');
-
 }
 
 export const actions = {
@@ -30,9 +29,7 @@ export const actions = {
 			}
 		}
 
-		if (!locals.pb.authStore.baseModel.verified)
-			await locals.pb.collection('users').requestVerification(body.email);
-
-		throw redirect(303, '/login');
+		await locals.pb.collection('users').requestVerification(body.email);
+		throw redirect(303, '/verify');
 	}
 };

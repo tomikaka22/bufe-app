@@ -1,6 +1,9 @@
+import { redirect } from '@sveltejs/kit';
+
 export const actions = {
 	logout: async ({ locals }) => {
 		locals.pb.authStore.clear();
+		throw redirect(303, '/login');
 	},
 	changeAvatar: async ({ request, locals }) => {
 		const data = await request.formData();

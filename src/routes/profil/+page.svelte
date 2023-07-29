@@ -34,7 +34,7 @@ let form;
 		<a href="/change/password" class="text-on-primary bg-primary font-semibold w-max mx-auto rounded-3xl hover:rounded-lg transition-all p-2 px-4 mt-3">Jelszó módositása</a>
 	</div>
 	<div class="flex justify-center">
-		<a class="text-on-secondary-container bg-secondary-container font-semibold w-max mx-auto rounded-3xl hover:rounded-lg transition-all p-2 px-4 mt-3">Fiók törlése</a>
+		<a href="/change/delete" class="text-on-secondary-container bg-secondary-container font-semibold w-max mx-auto rounded-3xl hover:rounded-lg transition-all p-2 px-4 mt-3">Fiók törlése</a>
 	</div>
 
    <div in:fly={{ y: 120 }} class="fixed bottom-0 w-full mb-10">

@@ -83,19 +83,19 @@
 
 	{#if data.nepszeruTermekek.length !== 0}
 		<h2 class="pl-6 pb-4 font-semibold text-primary">Népszerű ételek:</h2>
-		<swiper-container class="mx-3" css-mode={'true'} slides-per-view={'auto'}>
+		<div class="w-full grid grid-flow-col justify-start overflow-x-scroll snap-x snap-mandatory gap-3 px-2">
 			{#each data.nepszeruTermekek as termek}
-				<swiper-slide class="rounded-2xl transition-all overflow-hidden bg-secondary-container hover:rounded-lg w-28 mx-1.5">
+				<div class="snap-center rounded-2xl transition-all overflow-hidden bg-secondary-container hover:rounded-lg w-28">
 					<a href="{termek.termek}?referrer=/list">
-						<div class="w-28 h-24 bg-center bg-no-repeat bg-cover" style="background-image: url('{termek.termek}.jpg');">
+						<div class="w-28 aspect-[5/4] bg-center bg-no-repeat bg-cover" style="background-image: url('{termek.termek}.jpg');">
 							<div class="h-full w-full px-2 backdrop-brightness-50 flex justify-center items-center text-center">
 								<p class="font-semibold text-primary">{termek.termek}</p>
 							</div>
 						</div>
 					</a>
-				</swiper-slide>
+				</div>
 			{/each}
-		</swiper-container>
+		</div>
 	{/if}
 
 	<div class="w-full flex justify-center my-4">
@@ -120,13 +120,11 @@
 	auto-height={'true'}
 	initial-slide={$navigation}
 	resistance-ratio={'0.5'}
-	speed={'370'}
 	space-between={'20'}
 	slides-per-view={'1'}
 	bind:this={swiper}
 	on:slidechange={(e) => { $navigation = e.detail[0].activeIndex; }}
 		>
-
 		<swiper-slide>
 			<div class="mx-6 flex flex-col gap-5 text-secondary">
 				{#each data.termekek as termek}

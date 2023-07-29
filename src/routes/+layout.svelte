@@ -77,6 +77,11 @@
 <style>
 	:global(*) {
 		-webkit-tap-highlight-color: transparent;
+		scrollbar-width: none;
+	}
+
+	:global(*)::-webkit-scrollbar {
+		display: none;
 	}
 
 	:global(body) {

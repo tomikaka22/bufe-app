@@ -11,9 +11,9 @@
 		<Topbar
 		target={'Vissza'}
 		targeturl={'/profil'}
-		text={'Profil'}
+		text={'Jelszó'}
 		background={'none'}
-		flyin={{ y: -200 }}
+		flyin={0}
 		hideProfile={1}
 		></Topbar>
 

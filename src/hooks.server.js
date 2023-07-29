@@ -15,7 +15,7 @@ export async function handle({ event, resolve }) {
 	}
 
 	// Ha nincs account, redirect
-	const anonRoutes = [ '/register','/login','/verify','/verified' ];
+	const anonRoutes = [ '/register','/login','/verify','/change' ];
 
 	if (!anonRoutes.find(route => { return event.url.pathname.includes(route); })) {
 		if (!event.locals.pb.authStore.baseModel )  // Ha nincs bejelentkezve, redirect to login

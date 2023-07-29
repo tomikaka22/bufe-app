@@ -13,7 +13,7 @@ let form;
 
    <Topbar
       target={'Vissza'}
-      targeturl={$page.url.searchParams.get('referrer')}
+      targeturl={$page.url.searchParams.get('referrer') || '/list'}
       text={'Profil'}
       background={'none'}
       flyin={{ y: -200 }}
@@ -30,18 +30,17 @@ let form;
       </form>
    </div>
 
-		<p class="text-[#201a17] bg-[#ffb68e] font-semibold w-max mx-auto rounded-3xl hover:rounded-lg transition-all p-2 px-4 my-3">Jelszó módositása</p>
-		<p class="text-[#201a17] bg-[#ffb68e] font-semibold w-max mx-auto rounded-3xl hover:rounded-lg transition-all p-2 px-4 my-3">Lorem, ipsum.</p>
+	<div class="flex justify-center">
+		<a href="/change/password" class="text-on-primary bg-primary font-semibold w-max mx-auto rounded-3xl hover:rounded-lg transition-all p-2 px-4 mt-3">Jelszó módositása</a>
+	</div>
+	<div class="flex justify-center">
+		<a class="text-on-secondary-container bg-secondary-container font-semibold w-max mx-auto rounded-3xl hover:rounded-lg transition-all p-2 px-4 mt-3">Fiók törlése</a>
+	</div>
 
-   <div in:fly={{ y: 120 }} class="fixed bottom-0 w-screen mb-10">
+   <div in:fly={{ y: 120 }} class="fixed bottom-0 w-full mb-10">
       <form class="flex justify-center" method="POST" action="?/logout">
-         <button class="text-[#ffb68e] font-semibold outline outline-[#9f8d84] outline-1 w-max mx-auto rounded-3xl hover:rounded-lg transition-all p-2">Kijelentkezés</button>
+         <button class="text-[#ffb68e] font-semibold outline outline-[#9f8d84] outline-1 w-max mx-auto rounded-3xl hover:rounded-lg transition-all p-2 px-4">Kijelentkezés</button>
       </form>
    </div>
 
 </main>
-
-
-<style lang="postcss">
-
-</style>

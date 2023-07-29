@@ -13,7 +13,7 @@
 		"autoprefixer": "latest",
 		"eslint": "latest",
 		"eslint-plugin-svelte": "latest",
-		"postcss": "latest",
+		"postcss": "^8.4.27",
 		"svelte": "latest",
 		"tailwindcss": "latest",
 		"vite": "latest"

@@ -7,6 +7,9 @@ export async function load({ locals }) {
 
 export const actions = {
 	default: async ({ locals }) => {
+		if (locals.pb.authStore.baseModel.id === 'u1fy74rt1m48tx1' )  // Az admin profil ne tudja törölni magát
+			throw redirect(303, '/login');
+
 		const elozmenyLista = structuredClone(await locals.pb.collection('rendelesek').getFullList(1, {
 			filter: `rendelo = "${locals.pb.authStore.baseModel.id}"`,
 			sort: '+created'

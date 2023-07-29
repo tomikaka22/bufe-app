@@ -2,7 +2,7 @@ import { redirect } from '@sveltejs/kit';
 import { szunet } from '$lib/backendUtils/szunetSzamolo';
 
 export const ssr = false;
-const admins = [ 'rdzc6b3jes1k8am','u1fy74rt1m48tx1' ];
+const admins = [ 'u1fy74rt1m48tx1' ];
 
 export async function load({ locals }) {
 	if (!admins.includes(locals.pb.authStore.baseModel.id)) throw redirect(303, '/'); // Ha nem admin id-vel van bejelentkezve redirect to login

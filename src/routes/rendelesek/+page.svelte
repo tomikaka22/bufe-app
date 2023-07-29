@@ -44,14 +44,14 @@
 				<div animate:flip={{ duration: 700, easing: expoOut }}>
 					{#if record.status === 'kesz'}
 						<h2 class="text-center my-3 font-semibold">{record.updated.slice(0, -5)}</h2>
-						<swiper-container class="grid grid-cols-2" initial-slide="1" space-between="30" slides-per-view="1" speed="370">
-							<swiper-slide>
+						<Splide on:inactive={e => { handleSubmit(e.detail.splide.root.children[0].children[0].children[0].children[0]); }} options={{ arrows: false, start: 1, flickPower: 1, gap: '2rem' }}>
+							<SplideSlide>
 								<form class="bg-error-container w-full h-full rounded-r-full flex justify-end items-center font-semibold" method="POST" on:submit|preventDefault={handleSubmit}>
 									<input hidden name="recordID" type="text" value="{JSON.stringify(record.id)}">
 									<p class="mr-5">Törlés</p>
 								</form>
-							</swiper-slide>
-							<swiper-slide>
+							</SplideSlide>
+							<SplideSlide>
 								<div class="rounded-3xl overflow-hidden flex flex-col justify-around border border-1 border-outline">
 									<div class="p-2 bg-surface rounded-3xl">
 										{#each Object.keys(record.termekek) as termek}
@@ -69,8 +69,8 @@
 										{/each}
 									</div>
 								</div>
-							</swiper-slide>
-						</swiper-container>
+							</SplideSlide>
+						</Splide>
 					{:else if record.status === 'fuggoben'}
 						<h2 class="text-center my-3 text-outline font-semibold">Függőben</h2>
 						<Splide on:inactive={e => { handleSubmit(e.detail.splide.root.children[0].children[0].children[0].children[0]); }} options={{ arrows: false, start: 1, flickPower: 1, gap: '2rem' }}>

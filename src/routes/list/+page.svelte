@@ -49,7 +49,8 @@
 		const kategoria = {
 			'Étel': 0,
 			'Ital': 0,
-			'Nasi': 0
+			'Nasi': 0,
+			'Egyéb' : 0
 		};
 
 		data.termekek.forEach(termek => {
@@ -65,6 +66,9 @@
 				break;
 			case kategoria.Nasi:
 				navigate(2);
+				break;
+			case kategoria.Egyéb:
+				navigate(3);
 		}
 	}
 </script>

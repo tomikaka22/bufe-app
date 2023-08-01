@@ -24,112 +24,119 @@
 		invalidateAll();
 	}, 8000);
 
-	</script>
+</script>
 
-	<main>
+<main>
 
-		<div class="grid grid-rows-[3rem_auto] h-screen">
-			<!-- Gombok -->
-			<div class="outline outline-1 py-2 flex text-center items-center justify-evenly z-10">
-				<button class="outline outline-1 w-24 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={termekModal.showModal()}>Termékek</button>
-				<button class="outline outline-1 w-24 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={darabModal.showModal()}>Darab</button>
-				<button class="outline outline-1 w-24 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={arakModal.showModal()}>Árak</button>
-				<button class="outline outline-1 w-24 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={leirasModal.showModal()}>Leírás</button>
-				<button class="outline outline-1 w-24 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={feltetModal.showModal()}>Feltét</button>
-				<button class="outline outline-1 w-24 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={kategoriaModal.showModal()}>Kategória</button>
-			</div>
+	<div class="grid grid-rows-[3rem_auto] h-screen">
+		<!-- Gombok -->
+		<div class="outline outline-1 py-2 flex text-center items-center justify-evenly z-10">
+			<button class="outline outline-1 w-24 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={termekModal.showModal()}>Termékek</button>
+			<button class="outline outline-1 w-24 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={darabModal.showModal()}>Darab</button>
+			<button class="outline outline-1 w-24 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={arakModal.showModal()}>Árak</button>
+			<button class="outline outline-1 w-24 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={leirasModal.showModal()}>Leírás</button>
+			<button class="outline outline-1 w-24 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={feltetModal.showModal()}>Feltét</button>
+			<button class="outline outline-1 w-24 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={kategoriaModal.showModal()}>Kategória</button>
+		</div>
 
-			<p class="top-1/2 translate-y-[.2rem] translate-x-1 right-0 fixed text-4xl text-outline -z-10">&#9664</p>
+		<!-- Rendelések -->
+		<div class="h-full w-full snap-y snap-mandatory overflow-y-scroll">
+			{#each data.szunetArray as szunet}
+				<div class="h-max snap-center">
+					<div class="grid grid-cols-[20%_80%] h-full w-full">
+						<!-- X. Óra előtti szünet -->
+						<div class="px-2 border-r border-b font-semibold text-lg flex items-center justify-center text-center">
+							{szunet}
+						</div>
 
-			<!-- Rendelések -->
-			<div class="h-full w-full snap-y snap-mandatory overflow-y-scroll">
-				{#each data.szunetArray as szunet}
-					<div class="h-1/2 snap-center">
-						<div class="grid grid-cols-[20%_80%] h-full w-full">
-							<div class="border-r border-b flex items-center justify-center text-center">
-								{szunet}
-							</div>
-
-							<div class="border-b flex flex-row items-center h-full w-full overflow-x-scroll">
-								{#each data.rendelesek.fuggoben as rendeles, i (rendeles.id)}
-									<div animate:flip={{ duration: 700, easing: expoOut }}>
-										{#if rendeles.idopont === szunet}
-											<!-- Függőben rendelések -->
-											<div class="bg-tertiary-container p-1 rounded-lg max-h-full min-w-max m-1">
-												<div class="flex w-full justify-between gap-0.5">
-													<form use:enhance action="?/torles" method="POST">
-														<input hidden type="text" name="recordID" value="{JSON.stringify(rendeles.id)}">
-														<button class="text-[red]">&#10005;</button>
-													</form>
-														<p class="font-semibold">{rendeles.fizetes}</p>
-													<form use:enhance action="?/kesz" method="POST">
-														<input hidden type="text" name="recordID" value="{JSON.stringify(rendeles.id)}">
-														<button class="text-[lightgreen]">&#10003;</button>
-													</form>
-												</div>
-												<div class="flex justify-center gap-1 items-start h-full">
-														{#each Object.keys(rendeles.termekek) as termek}
-															{#each rendeles.termekek[termek] as x}
-																<div class="font-semibold text-center">
-																	<p class="bg-primary text-on-primary px-1 my-0.5 rounded-md">{termek}</p>
-																	<p class="bg-tertiary text-on-tertiary px-1 my-0.5 rounded-md">{x.ar} Ft, {x.darab} db</p>
-																	{#each x.feltet as feltet}
-																		<p class="text-on-secondary-container outline outline-1 outline-outline px-2 my-1 rounded-md font-normal">{feltet}</p>
-																	{/each}
-																</div>
-															{/each}
-														{/each}
-												</div>
-											</div>
-										{/if}
-									</div>
-								{/each}
-								{#each data.rendelesek.kesz as rendeles, i (rendeles.id)}
-									<div animate:flip={{ duration: 700, easing: expoOut }}>
-										{#if rendeles.idopont === szunet}
-											<!-- Kész rendelések -->
-											<div class="bg-surface-variant p-1 rounded-lg max-h-full min-w-max m-1">
-													<div class="flex w-full justify-between gap-0.5">
+						<div class="border-b flex flex-row items-center h-full w-full">
+							<div class="grid grid-rows-2 h-full w-full">
+								<!-- Függőben rendelések -->
+								<div class="p-2 border-b border-tertiary-container flex items-center overflow-x-scroll">
+									{#each data.rendelesek.fuggoben as rendeles, i (rendeles.id)}
+										<div animate:flip={{ duration: 700, easing: expoOut }}>
+											{#if rendeles.idopont === szunet}
+												<div class="bg-tertiary-container p-1 rounded-lg max-h-full min-w-max m-1">
+													<div class="flex w-full justify-between gap-3 mb-2">
 														<form use:enhance action="?/torles" method="POST">
 															<input hidden type="text" name="recordID" value="{JSON.stringify(rendeles.id)}">
-															<button class="text-[red]">&#10005;</button>
+															<button class="bg-error text-on-error hover:bg-on-error hover:text-error hover:rounded-lg transition-all font-semibold px-1.5 rounded-3xl">&#10005;</button>
 														</form>
 															<p class="font-semibold">{rendeles.fizetes}</p>
-														<form use:enhance action="?/atadva" method="POST">
+														<form use:enhance action="?/kesz" method="POST">
 															<input hidden type="text" name="recordID" value="{JSON.stringify(rendeles.id)}">
-															<button class="text-[lightgreen]">&#10003;</button>
+															<button class="bg-tertiary text-on-tertiary hover:bg-on-tertiary hover:text-tertiary hover:rounded-lg transition-all font-semibold px-1.5 rounded-3xl">&#10003;</button>
 														</form>
 													</div>
 													<div class="flex justify-center gap-1 items-start h-full">
 														{#each Object.keys(rendeles.termekek) as termek}
 															{#each rendeles.termekek[termek] as x}
-																<div class="font-semibold text-center">
-																	<p class="bg-primary text-on-primary px-1 my-0.5 rounded-md">{termek}</p>
-																	<p class="bg-tertiary text-on-tertiary px-1 my-0.5 rounded-md">{x.ar} Ft, {x.darab} db</p>
+																<div class="font-semibold text-center flex flex-col justify-center items-center">
+																	<p class="w-fit bg-primary text-on-primary px-1 my-0.5 rounded-md">{termek}</p>
+																	<p class="w-fit bg-tertiary text-on-tertiary px-1 my-0.5 rounded-md">{x.ar} Ft, {x.darab} db</p>
 																	{#each x.feltet as feltet}
-																		<p class="text-on-secondary-container outline outline-1 outline-outline px-2 my-1 rounded-md font-normal">{feltet}</p>
+																		<p class="w-fit text-on-secondary-container outline outline-1 outline-outline px-2 my-0.5 rounded-md font-normal">{feltet}</p>
 																	{/each}
 																</div>
 															{/each}
 														{/each}
 													</div>
-											</div>
-										{/if}
-									</div>
-								{/each}
+												</div>
+											{/if}
+										</div>
+									{/each}
+								</div>
+								<!-- Kész rendelések -->
+								<div class="p-2 flex items-center overflow-x-scroll">
+									{#each data.rendelesek.kesz as rendeles, i (rendeles.id)}
+										<div animate:flip={{ duration: 700, easing: expoOut }}>
+											{#if rendeles.idopont === szunet}
+												<div class="bg-surface-variant p-1 rounded-lg max-h-full min-w-max m-1">
+													<div class="flex w-full justify-between gap-3 mb-2">
+														<form use:enhance action="?/torles" method="POST">
+															<input hidden type="text" name="recordID" value="{JSON.stringify(rendeles.id)}">
+															<button class="bg-error text-on-error hover:bg-on-error hover:text-error hover:rounded-lg transition-all font-semibold px-1.5 rounded-3xl">&#10005;</button>
+														</form>
+															<p class="font-semibold">{rendeles.fizetes}</p>
+														<form use:enhance action="?/atadva" method="POST">
+															<input hidden type="text" name="recordID" value="{JSON.stringify(rendeles.id)}">
+															<button class="bg-tertiary text-on-tertiary hover:bg-on-tertiary hover:text-tertiary hover:rounded-lg transition-all font-semibold px-1.5 rounded-3xl">&#10003;</button>
+														</form>
+													</div>
+													<div class="flex justify-center gap-1 items-start h-full">
+														{#each Object.keys(rendeles.termekek) as termek}
+															{#each rendeles.termekek[termek] as x}
+															<div class="font-semibold text-center flex flex-col justify-center items-center">
+																<p class="w-fit bg-primary text-on-primary px-1 my-0.5 rounded-md">{termek}</p>
+																<p class="w-fit bg-tertiary text-on-tertiary px-1 my-0.5 rounded-md">{x.ar} Ft, {x.darab} db</p>
+																{#each x.feltet as feltet}
+																	<p class="w-fit text-on-secondary-container outline outline-1 outline-outline px-2 my-0.5 rounded-md font-normal">{feltet}</p>
+																{/each}
+															</div>
+															{/each}
+														{/each}
+													</div>
+												</div>
+											{/if}
+										</div>
+									{/each}
+								</div>
+
 							</div>
 						</div>
 					</div>
-				{/each}
-			</div>
+				</div>
+			{/each}
 		</div>
+	</div>
 
-	<!-- Modalok: -->
-	<Termekek bind:termekModal data={data}></Termekek>
-	<Darab bind:darabModal data={data}></Darab>
-	<Arak bind:arakModal data={data}></Arak>
-	<Leiras bind:leirasModal data={data}></Leiras>
-	<Feltet bind:feltetModal data={data}></Feltet>
-	<Kategoria bind:kategoriaModal data={data}></Kategoria>
+<!-- Modalok: -->
+<Termekek bind:termekModal data={data}></Termekek>
+<Darab bind:darabModal data={data}></Darab>
+<Arak bind:arakModal data={data}></Arak>
+<Leiras bind:leirasModal data={data}></Leiras>
+<Feltet bind:feltetModal data={data}></Feltet>
+<Kategoria bind:kategoriaModal data={data}></Kategoria>
 
-	</main>
+</main>
+

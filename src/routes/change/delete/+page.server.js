@@ -21,6 +21,7 @@ export const actions = {
 		for (const rendeles of elozmenyLista) {
 			if (rendeles.status === 'folyamatban')
 				return fail(409, { 'error': 'Amíg folyamatban van rendelésed, teljes profil törlés nem lehetséges.' });
+
 			await locals.pb.collection('rendelesek').delete(rendeles.id);
 		}
 

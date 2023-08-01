@@ -8,7 +8,7 @@ export async function load({ locals }) {
 	if (!admins.includes(locals.pb.authStore.baseModel.id)) throw redirect(303, '/'); // Ha nem admin id-vel van bejelentkezve redirect to login
 	else {
 		return {
-			'termekekLista': structuredClone(await locals.pb.collection('termekek').getFullList(1, { sort: '-created' })),
+			'termekekLista': structuredClone(await locals.pb.collection('termekek').getFullList(1, { sort: '+termek' })),
 			'rendelesek': {
 				'fuggoben': structuredClone(await locals.pb.collection('rendelesek').getFullList(1, { filter: 'status = "fuggoben"' })),
 				'kesz': structuredClone(await locals.pb.collection('rendelesek').getFullList(1, { filter: 'status = "folyamatban"' }))

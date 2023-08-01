@@ -105,12 +105,13 @@
 			<h4 class="text-center font-semibold">{data.termekek.leiras}</h4>
 
 	{#if maxAmount}
-
-		<div class="flex w-full justify-center items-center">
-			<button on:click={buy} class="mt-3 text-lg transition-all bg-primary-container text-on-primary-container py-2 px-10 rounded-2xl hover:rounded-lg hover:bg-primary hover:text-on-primary font-semibold">
-				Kosárba
-			</button>
-		</div>
+		{#key price}
+			<div class="flex w-full justify-center items-center">
+				<div class="mt-5 outline outline-tertiary outline-1 rounded-lg px-5 font-semibold text-lg py-1" on:click={(e) => {touchRadius(e.target, '0.3rem', '0.5rem');}}>
+					<h2 class="font-semibold text-on-tertiary-container" in:fade="{{ duration: 200 }}">{price} Ft</h2>
+				</div>
+			</div>
+		{/key}
 
 		<div class="flex w-full justify-center">
 			<div class="mt-5 flex justify-center items-center text-3xl rounded-2xl">
@@ -124,13 +125,11 @@
 			</div>
 		</div>
 
-		{#key price}
-			<div class="flex w-full justify-center items-center">
-				<div class="mt-5 outline outline-tertiary outline-1 rounded-lg px-5 font-semibold text-lg py-1" on:click={(e) => {touchRadius(e.target, '0.3rem', '0.5rem');}}>
-					<h2 class="font-semibold text-on-tertiary-container" in:fade="{{ duration: 200 }}">{price} Ft</h2>
-				</div>
-			</div>
-		{/key}
+		<div class="flex w-full justify-center items-center">
+			<button on:click={buy} class="mt-5 text-lg transition-all bg-primary-container text-on-primary-container py-2 px-10 rounded-3xl hover:rounded-lg hover:bg-primary hover:text-on-primary font-semibold">
+				Kosárba
+			</button>
+		</div>
 
 		{#if data.termekek.feltetek}
 			<div class="flex w-full justify-center">

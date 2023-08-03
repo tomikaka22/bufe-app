@@ -97,7 +97,7 @@ export const actions = {
 		const rendeles = await locals.pb.collection('rendelesek').getOne(id);
 		const pushList = await locals.pb.collection('push').getFullList(1, { filter: `name = "${rendeles.rendelo}"` });
 
-		// await locals.pb.collection('rendelesek').update(id, { 'status': 'folyamatban' });
+		await locals.pb.collection('rendelesek').update(id, { 'status': 'folyamatban' });
 
 		for (const pushSubscriber of pushList) {
 			webpush.sendNotification(pushSubscriber.subscription, JSON.stringify({

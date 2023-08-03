@@ -19,12 +19,6 @@
 		invalidateAll();
 	}
 
-	async function notify() {
-		const notification = new Notification('testing testing 123', {
-			body: 'asdasdasdasdasd', icon: 'favicon.png'
-		});
-	}
-
 </script>
 
 <main in:fade={{ duration: 180 }}>
@@ -44,8 +38,6 @@
 				<h3 class="font-semibold text-primary">Összesen: <span>{data.total} Ft</span></h3>
 			</div>
 		</div>
-
-		<button on:click={notify}>Notify</button>
 
 		<div class="my-5">
 			{#each data.elozmenyLista as record, i (record.id)}

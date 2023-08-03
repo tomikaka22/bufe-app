@@ -8,6 +8,32 @@ const ASSETS = [
 	...files  // everything in `static`
 ];
 
+const pushSubscribeBroadcast = new BroadcastChannel('pushSubscribe');
+
+pushSubscribeBroadcast.onmessage = async (event) => {
+	if (event.data === 'subscribe') {
+		try {
+			const applicationServerKey = urlB64ToUint8Array('BN5M32D0WPnvIRlNo8YoJ4Obrb4ok0ULSSbyDqCvhoq0KdTMJ2xKm3YytmPPk2Ve32OyipWUpjt_4r0H_pyifbI');
+			const subscription = JSON.stringify(await self.registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey }));
+			const pushLinkBroadcast = new BroadcastChannel('pushLink');
+
+			const response = await fetch('/api/push', {
+				method: 'post',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: subscription
+			});
+			console.log('subscribed!');
+			pushLinkBroadcast.postMessage({ subscription });
+
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
+};
+
 function urlB64ToUint8Array(base64String) {
 	const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
 	// eslint-disable-next-line no-useless-escape
@@ -30,33 +56,15 @@ self.addEventListener('install', (event) => {
 	event.waitUntil(addFilesToCache());
 });
 
-self.addEventListener('activate', async (event) => {
-
-	try {
-		const applicationServerKey = urlB64ToUint8Array('BN5M32D0WPnvIRlNo8YoJ4Obrb4ok0ULSSbyDqCvhoq0KdTMJ2xKm3YytmPPk2Ve32OyipWUpjt_4r0H_pyifbI');
-		const subscription = JSON.stringify(await self.registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey }));
-		const pushLinkBroadcast = new BroadcastChannel('pushLink');
-
-		const response = await fetch('/api/push', {
-			method: 'post',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: subscription
-		});
-
-		pushLinkBroadcast.postMessage({ subscription });
-
-	} catch (error) {
-		console.log(error);
-	}
-
+self.addEventListener('activate', (event) => {
 	// Remove previous cached data from disk
-	for (const key of await caches.keys()) {
-		if (key !== CACHE) await caches.delete(key);
+	async function deleteOldCaches() {
+		for (const key of await caches.keys()) {
+			if (key !== CACHE) await caches.delete(key);
+		}
 	}
 
-	// event.waitUntil(deleteOldCaches());
+	event.waitUntil(deleteOldCaches());
 });
 
 self.addEventListener('fetch', (event) => {
@@ -92,8 +100,8 @@ self.addEventListener('fetch', (event) => {
 
 self.addEventListener('push', async event => {
 	if (event.data) {
-		const data = await JSON.parse(event.data.text())
-		console.log(data)
+		const data = await JSON.parse(event.data.text());
+		console.log(data);
 		// console.log('Push event!! ', event.data.text());
 		self.registration.showNotification(data.title, data.options);
 	}

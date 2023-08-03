@@ -18,7 +18,7 @@ export async function PATCH({ request, locals }) {
 		const oldSubscription = await locals.pb.collection('push').getFirstListItem(`name = '${locals.pb.authStore.baseModel.id}'`);
 
 		await locals.pb.collection('push').delete(oldSubscription.id);
-		await locals.pb.collection('push').update(matchingSubscription.id, { name: locals.pb.authStore.baseModel.id });
+		await locals.pb.collection('push').create({ subscription, name: locals.pb.authStore.baseModel.id });
 		return json({
 			'status': 200
 		});

@@ -1,12 +1,24 @@
 <script>
-import { fade, fly } from 'svelte/transition';
-import { cubicOut } from 'svelte/easing';
-import { enhance } from '$app/forms';
-import { page } from '$app/stores';
-import Topbar from '$lib/components/Topbar.svelte';
+	import { fade, fly } from 'svelte/transition';
+	import { cubicOut } from 'svelte/easing';
+	import { enhance } from '$app/forms';
+	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
+	import Topbar from '$lib/components/Topbar.svelte';
 
-export let data;
-let form;
+	export let data;
+	let form;
+
+	async function handleSubmit(event) {
+		const data = new FormData(this);
+		await fetch(this.action, {
+			method: 'POST',
+			body: data
+		});
+
+		localStorage.clear();
+		goto('/login');
+	}
 </script>
 
 <main in:fade={{ duration: 180 }}>
@@ -38,7 +50,7 @@ let form;
 	</div>
 
    <div in:fly={{ y: 120 }} class="fixed bottom-0 w-full mb-10">
-      <form class="flex justify-center" method="POST" action="?/logout">
+      <form on:submit|preventDefault={handleSubmit} class="flex justify-center" method="POST" action="?/logout">
          <button class="text-[#ffb68e] font-semibold outline outline-[#9f8d84] outline-1 w-max mx-auto rounded-3xl hover:rounded-lg transition-all p-2 px-4">Kijelentkezés</button>
       </form>
    </div>

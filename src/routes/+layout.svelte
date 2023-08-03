@@ -42,19 +42,24 @@
 	let loading = '';
 
 	async function pushLink() {
-		const pushSubscriptionData = localStorage.getItem('pushSubscriptionData');
-		if (data.name && pushSubscriptionData) {
+		const pushSubscribeBroadcast = new BroadcastChannel('pushSubscribe');
+		const pushLinkBroadcast = new BroadcastChannel('pushLink');
+
+
+		pushSubscribeBroadcast.postMessage('subscribe');
+
+		pushLinkBroadcast.onmessage = async (event) => {
+			localStorage.setItem('pushSubscriptionData', event.data.subscription);
+
 			const response = await fetch('/api/push', {
 				method: 'PATCH',
 				headers: {
 					'Content-Type': 'application/json'
 				},
-				body: pushSubscriptionData
+				body: event.data.subscription
 			});
-
-			if (response.status === 200)
-				localStorage.removeItem('pushSubscriptionData');
-		}
+			console.log('linked!');
+		};
 	}
 
 	beforeNavigate(() => {
@@ -74,11 +79,6 @@
 
 	async function swRegister() {
 		if ('serviceWorker' in navigator) {
-			const pushLinkBroadcast = new BroadcastChannel('pushLink');
-			pushLinkBroadcast.onmessage = async (event) => {
-				localStorage.setItem('pushSubscriptionData', event.data.subscription);
-			};
-
 			if (Notification.permission !== 'granted') {
 				alert('Ahhoz hogy infót kapj a rendelésed állapotáról engedélyezd az értesítéseket.');
 				await Notification.requestPermission();
@@ -91,7 +91,8 @@
 
 	onMount(() => {
 		swRegister();
-		pushLink();
+		if (data.name && !localStorage.getItem('pushSubscriptionData'))
+			pushLink();
 	});
 
 </script>

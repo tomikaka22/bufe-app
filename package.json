@@ -22,6 +22,7 @@
 		"@splidejs/svelte-splide": "latest",
 		"@sveltejs/adapter-node": "latest",
 		"pocketbase": "latest",
-		"swiper": "latest"
+		"swiper": "latest",
+		"web-push": "^3.6.4"
 	}
 }

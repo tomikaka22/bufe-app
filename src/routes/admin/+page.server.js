@@ -1,8 +1,17 @@
+import { PUSH_PRIVATE_KEY, PUSH_PUBLIC_KEY } from '$env/static/private';
+import webpush from 'web-push';
 import { redirect } from '@sveltejs/kit';
 import { szunet } from '$lib/backendUtils/szunetSzamolo';
 
+process.on('uncaughtException', function (err) {
+	console.error(err);
+	console.log('Node NOT Exiting...');
+});
+
 export const ssr = false;
 const admins = [ 'u1fy74rt1m48tx1' ];
+
+webpush.setVapidDetails('mailto:szabot2@kkszki.hu', PUSH_PUBLIC_KEY, PUSH_PRIVATE_KEY);
 
 export async function load({ locals }) {
 	if (!admins.includes(locals.pb.authStore.baseModel.id)) throw redirect(303, '/'); // Ha nem admin id-vel van bejelentkezve redirect to login
@@ -85,8 +94,16 @@ export const actions = {
 	kesz: async ({ request, locals }) => {
 		const data = Object.fromEntries(await request.formData());
 		const id = JSON.parse(data.recordID);
+		const rendeles = await locals.pb.collection('rendelesek').getOne(id);
+		const pushList = await locals.pb.collection('push').getFullList(1, { filter: `name = "${rendeles.rendelo}"` });
 
-		await locals.pb.collection('rendelesek').update(id, { 'status': 'folyamatban' });
+		// await locals.pb.collection('rendelesek').update(id, { 'status': 'folyamatban' });
+
+		for (const pushSubscriber of pushList) {
+			webpush.sendNotification(pushSubscriber.subscription, JSON.stringify({
+				title: 'A rendelésed átvehető!', options: { body: 'Vedd át amíg meleg.', icon: 'favicon.png' }
+			}));
+		}
 	},
 	atadva: async ({ request, locals }) => {
 		const data = Object.fromEntries(await request.formData());

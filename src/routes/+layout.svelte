@@ -5,6 +5,9 @@
 	import { page } from '$app/stores';
 	import { fade } from 'svelte/transition';
 	import '../app.css';
+   import { onMount } from 'svelte';
+
+	export let data;
 
 	const noKeyURLs = [ '/admin', '/rendelesek' ];
 
@@ -38,6 +41,22 @@
 	let interval;
 	let loading = '';
 
+	async function pushLink() {
+		const pushSubscriptionData = localStorage.getItem('pushSubscriptionData');
+		if (data.name && pushSubscriptionData) {
+			const response = await fetch('/api/push', {
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: pushSubscriptionData
+			});
+
+			if (response.status === 200)
+				localStorage.removeItem('pushSubscriptionData');
+		}
+	}
+
 	beforeNavigate(() => {
 		interval = setInterval(() => {
 			loading += '.';
@@ -51,6 +70,28 @@
 			clearInterval(interval);
 			interval = undefined;
 		}
+	});
+
+	async function swRegister() {
+		if ('serviceWorker' in navigator) {
+			const pushLinkBroadcast = new BroadcastChannel('pushLink');
+			pushLinkBroadcast.onmessage = async (event) => {
+				localStorage.setItem('pushSubscriptionData', event.data.subscription);
+			};
+
+			if (Notification.permission !== 'granted') {
+				alert('Ahhoz hogy infót kapj a rendelésed állapotáról engedélyezd az értesítéseket.');
+				await Notification.requestPermission();
+			}
+
+			return await navigator.serviceWorker.register('service-worker.js');
+		}
+
+	}
+
+	onMount(() => {
+		swRegister();
+		pushLink();
 	});
 
 </script>

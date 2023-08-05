@@ -5,6 +5,9 @@
 	import { page } from '$app/stores';
 	import { fade } from 'svelte/transition';
 	import '../app.css';
+   import { onMount } from 'svelte';
+
+	export let data;
 
 	const noKeyURLs = [ '/admin', '/rendelesek' ];
 
@@ -53,6 +56,18 @@
 		}
 	});
 
+	async function swRegister() {
+		if ('serviceWorker' in navigator) {
+			addEventListener('load', () => {
+				navigator.serviceWorker.register('service-worker.js');
+			});
+		}
+	}
+
+	onMount(() => {
+		swRegister();
+	});
+
 </script>
 
 {#if !noKeyURLs.includes($page.url.pathname)}
@@ -87,13 +102,5 @@
 	:global(body) {
 		background-color: #201a17;
 		@apply text-secondary;
-	}
-
-	:global(.button-primary) {
-		@apply text-on-primary bg-primary font-semibold w-max mx-auto rounded-3xl transition-all p-2 px-4 mt-3;
-	}
-
-	:global(.button-primary:hover) {
-		@apply rounded-lg bg-on-primary text-primary;
 	}
 </style>

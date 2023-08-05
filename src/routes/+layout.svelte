@@ -99,4 +99,12 @@
 		background-color: #201a17;
 		@apply text-secondary;
 	}
+
+	:global(.button-primary) {
+		@apply text-on-primary bg-primary font-semibold w-max mx-auto rounded-3xl transition-all p-2 px-4 mt-3;
+	}
+
+	:global(.button-primary:hover) {
+		@apply rounded-lg;
+	}
 </style>

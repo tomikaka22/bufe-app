@@ -7,8 +7,6 @@
 	import '../app.css';
    import { onMount } from 'svelte';
 
-	export let data;
-
 	const noKeyURLs = [ '/admin', '/rendelesek' ];
 
 	const splash = [
@@ -56,14 +54,14 @@
 		}
 	});
 
-	if ('serviceWorker' in navigator) {
-		addEventListener('load', () => {
+	function swRegister() {
+		if ('serviceWorker' in navigator) {
 			navigator.serviceWorker.register('service-worker.js');
-		});
+		}
 	}
 
 	onMount(() => {
-		// swRegister();
+		swRegister();
 	});
 
 </script>

@@ -42,8 +42,19 @@
       </form>
    </div>
 
+	<!-- Értesítések button -->
+	{#if localStorage.getItem('pushSubscriptionData')}
+		<div class="flex justify-center">
+			<a href="/change/notification" class="button-primary button-notification-on">Értesítések</a>
+		</div>
+	{:else}
+		<div class="flex justify-center">
+			<a href="/change/notification" class="outline outline-1 p-2 px-4 mt-3 rounded-3xl hover:rounded-lg transition-all">Értesítések</a>
+		</div>
+	{/if}
+
 	<div class="flex justify-center">
-		<a href="/change/password" class="text-on-primary bg-primary font-semibold w-max mx-auto rounded-3xl hover:rounded-lg transition-all p-2 px-4 mt-3">Jelszó módositása</a>
+		<a href="/change/password" class="text-on-secondary-container bg-secondary-container font-semibold w-max mx-auto rounded-3xl hover:rounded-lg transition-all p-2 px-4 mt-3">Jelszó módositása</a>
 	</div>
 	<div class="flex justify-center">
 		<a href="/change/delete" class="text-on-secondary-container bg-secondary-container font-semibold w-max mx-auto rounded-3xl hover:rounded-lg transition-all p-2 px-4 mt-3">Fiók törlése</a>
@@ -56,3 +67,14 @@
    </div>
 
 </main>
+
+<style>
+	.button-notification-on {
+		@apply
+		bg-background
+		outline
+		outline-1
+		outline-tertiary
+		text-tertiary;
+	}
+</style>

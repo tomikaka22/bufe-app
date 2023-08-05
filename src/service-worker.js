@@ -8,44 +8,6 @@ const ASSETS = [
 	...files  // everything in `static`
 ];
 
-const pushSubscribeBroadcast = new BroadcastChannel('pushSubscribe');
-
-pushSubscribeBroadcast.onmessage = async (event) => {
-	if (event.data === 'subscribe') {
-		try {
-			const applicationServerKey = urlB64ToUint8Array('BN5M32D0WPnvIRlNo8YoJ4Obrb4ok0ULSSbyDqCvhoq0KdTMJ2xKm3YytmPPk2Ve32OyipWUpjt_4r0H_pyifbI');
-			const subscription = JSON.stringify(await self.registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey }));
-			const pushLinkBroadcast = new BroadcastChannel('pushLink');
-
-			const response = await fetch('/api/push', {
-				method: 'post',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: subscription
-			});
-			console.log('subscribed!');
-			pushLinkBroadcast.postMessage({ subscription });
-
-		} catch (error) {
-			console.log(error);
-		}
-	}
-
-};
-
-function urlB64ToUint8Array(base64String) {
-	const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
-	// eslint-disable-next-line no-useless-escape
-	const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
-	const rawData = atob(base64);
-	const outputArray = new Uint8Array(rawData.length);
-	for (let i = 0; i < rawData.length; ++i) {
-		outputArray[i] = rawData.charCodeAt(i);
-	}
-	return outputArray;
-}
-
 self.addEventListener('install', (event) => {
 	// Create a new cache and add all files to it
 	async function addFilesToCache() {

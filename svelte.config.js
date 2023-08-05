@@ -13,8 +13,7 @@ const config = {
 	},
 
 	kit: {
-		adapter: adapter({ out: 'bufe-app' }),
-		serviceWorker: { register: false }
+		adapter: adapter({ out: 'bufe-app' })
 	}
 
 };

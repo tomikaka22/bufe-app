@@ -5,9 +5,6 @@
 	import { page } from '$app/stores';
 	import { fade } from 'svelte/transition';
 	import '../app.css';
-   import { onMount } from 'svelte';
-
-	export let data;
 
 	const noKeyURLs = [ '/admin', '/rendelesek' ];
 
@@ -41,27 +38,6 @@
 	let interval;
 	let loading = '';
 
-	async function pushLink() {
-		const pushSubscribeBroadcast = new BroadcastChannel('pushSubscribe');
-		const pushLinkBroadcast = new BroadcastChannel('pushLink');
-
-
-		pushSubscribeBroadcast.postMessage('subscribe');
-
-		pushLinkBroadcast.onmessage = async (event) => {
-			localStorage.setItem('pushSubscriptionData', event.data.subscription);
-
-			const response = await fetch('/api/push', {
-				method: 'PATCH',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: event.data.subscription
-			});
-			console.log('linked!');
-		};
-	}
-
 	beforeNavigate(() => {
 		interval = setInterval(() => {
 			loading += '.';
@@ -75,24 +51,6 @@
 			clearInterval(interval);
 			interval = undefined;
 		}
-	});
-
-	async function swRegister() {
-		if ('serviceWorker' in navigator) {
-			if (Notification.permission !== 'granted') {
-				alert('Ahhoz hogy infót kapj a rendelésed állapotáról engedélyezd az értesítéseket.');
-				await Notification.requestPermission();
-			}
-
-			return await navigator.serviceWorker.register('service-worker.js');
-		}
-
-	}
-
-	onMount(() => {
-		swRegister();
-		if (data.name && !localStorage.getItem('pushSubscriptionData'))
-			pushLink();
 	});
 
 </script>
@@ -129,5 +87,13 @@
 	:global(body) {
 		background-color: #201a17;
 		@apply text-secondary;
+	}
+
+	:global(.button-primary) {
+		@apply text-on-primary bg-primary font-semibold w-max mx-auto rounded-3xl transition-all p-2 px-4 mt-3;
+	}
+
+	:global(.button-primary:hover) {
+		@apply rounded-lg bg-on-primary text-primary;
 	}
 </style>

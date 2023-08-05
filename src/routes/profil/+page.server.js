@@ -10,3 +10,18 @@ export const actions = {
 		locals.pb.collection('users').update(locals.pb.authStore.baseModel.id, data);
 	}
 };
+
+export async function load({ locals }) {
+	try {
+		const linkedSubscription = await locals.pb.collection('push').getFirstListItem(`name = '${locals.pb.authStore.baseModel.id}'`);
+		return {
+			linkedSubscription: linkedSubscription.subscription
+		};
+
+	} catch (error) {
+		if (error.status === 404)
+			return {
+				linkedSubscription: undefined
+			};
+	}
+}

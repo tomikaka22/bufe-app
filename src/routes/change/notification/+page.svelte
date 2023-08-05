@@ -19,14 +19,18 @@
 
 	async function pushSubscribe() {
 		if (await notificationRequest() === 'granted') {
-			const serviceWorker = await navigator.serviceWorker.getRegistration('/');
-			const applicationServerKey = urlB64ToUint8Array('BN5M32D0WPnvIRlNo8YoJ4Obrb4ok0ULSSbyDqCvhoq0KdTMJ2xKm3YytmPPk2Ve32OyipWUpjt_4r0H_pyifbI');
+			try {
+				const serviceWorker = await navigator.serviceWorker.getRegistration('/');
+				const applicationServerKey = urlB64ToUint8Array('BN5M32D0WPnvIRlNo8YoJ4Obrb4ok0ULSSbyDqCvhoq0KdTMJ2xKm3YytmPPk2Ve32OyipWUpjt_4r0H_pyifbI');
 
-			pushSubscriptionData = JSON.stringify(await serviceWorker.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey }));
-			localStorage.setItem('pushSubscriptionData', pushSubscriptionData);
+				pushSubscriptionData = JSON.stringify(await serviceWorker.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey }));
+				localStorage.setItem('pushSubscriptionData', pushSubscriptionData);
 
-			subscribeForm[0].value = pushSubscriptionData;
-			subscribeForm.submit();
+				subscribeForm[0].value = pushSubscriptionData;
+				subscribeForm.submit();
+			} catch (error) {
+				console.log(error);
+			}
 		}
 	}
 

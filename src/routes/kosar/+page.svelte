@@ -47,7 +47,8 @@
 	}
 
 	function urites() {
-		localStorage.clear();
+		localStorage.removeItem('CartContent');
+		localStorage.removeItem('Total');
 		$cart = {};
 		$total = { 'ar': 0, 'darab': 0 };
 	}

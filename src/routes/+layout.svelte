@@ -105,11 +105,14 @@
 	<a href="/kosar" class="flex flex-col h-14 transition-all" class:active-nav={$page.url.pathname === '/kosar'}>
 		<div class="w-full h-1/2 relative flex justify-center items-center rounded-3xl py-1 px-5 transition-all" class:active-img={$page.url.pathname === '/kosar'}>
 			<img class="h-full" src="favicon.png" alt="">
-			{#if $total.darab < 10}
-				<p class="absolute top-0 right-3 font-semibold bg-primary text-on-primary px-1 text-xs rounded-3xl">{$total.darab}</p>
-			{:else}
-				<p class="absolute top-0 right-2 font-semibold bg-primary text-on-primary px-1 text-xs rounded-3xl">{$total.darab}</p>
+			{#if $total.darab}
+				{#if $total.darab < 10}
+					<p class="absolute top-0 right-3 font-semibold bg-primary text-on-primary px-1 text-xs rounded-3xl">{$total.darab}</p>
+				{:else}
+					<p class="absolute top-0 right-2 font-semibold bg-primary text-on-primary px-1 text-xs rounded-3xl">{$total.darab}</p>
+				{/if}
 			{/if}
+
 
 		</div>
 		<div class="w-full h-1/2 flex justify-center items-center" class:active-text={$page.url.pathname === '/kosar'}>

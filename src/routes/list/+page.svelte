@@ -4,12 +4,10 @@
    import { onMount } from 'svelte';
    import { cart, total } from '$lib/stores/Cart.js';
    import { navigation } from '$lib/stores/Navigation.js';
-   import Topbar from '$lib/components/Topbar.svelte';
 
    export let data;
 
 	let swiper;
-   let cartshow = 0;
 	let scrollYOld = 0;
 	let navHide = false;
 
@@ -17,7 +15,6 @@
 		register();
 
 		if (localStorage.getItem('CartContent')) {
-			cartshow = 1;
 			$cart = JSON.parse(localStorage.getItem('CartContent'));
 			$total = JSON.parse(localStorage.getItem('Total'));
 		}
@@ -74,20 +71,10 @@
 </script>
 
 <main in:fade={{ duration: 180 }}>
-
-   <Topbar
-      target={'Menü'}
-      targeturl={'/'}
-      text={'Termékek'}
-      flyin={{ y: -200 }}
-      hideProfile={0}
-   ></Topbar>
-
 <div class="w-screen h-screen absolute">
 
 	{#if data.nepszeruTermekek.length !== 0}
-		<h2 class="pl-6 pb-4 font-semibold text-primary">Népszerű ételek:</h2>
-		<div class="w-full grid grid-flow-col justify-start overflow-x-scroll snap-x snap-mandatory gap-3 px-2">
+		<div class="w-full grid grid-flow-col justify-start overflow-x-scroll snap-x snap-mandatory gap-3 mt-4 px-2">
 			{#each data.nepszeruTermekek as termek}
 				<div class="snap-center rounded-2xl transition-all overflow-hidden bg-secondary-container hover:rounded-lg w-28">
 					<a href="{termek.termek}?referrer=/list">
@@ -219,36 +206,15 @@
 		</swiper-slide>
 	</swiper-container>
 
-	{#if cartshow && !navHide}
-	<div class="w-screen flex justify-center fixed bottom-0 z-10">
-		<div in:fly={{ y: 200 }} out:fly|local={{ y: 100 }} class="p-3 flex justify-center gap-6 text-secondary bg-on-secondary rounded-2xl mb-16 opacity-95 font-semibold">
-			<button class="flex justify-center transition-all" on:click={() => {navigate(0);}}><p class:active='{$navigation === 0}' class="rounded-xl transition-all duration-300 py-1">Étel</p></button>
-			<button class="flex justify-center transition-all" on:click={() => {navigate(1);}}><p class:active='{$navigation === 1}' class="rounded-xl transition-all duration-300 py-1">Ital</p></button>
-			<button class="flex justify-center transition-all" on:click={() => {navigate(2);}}><p class:active='{$navigation === 2}' class="rounded-xl transition-all duration-300 py-1">Nasi</p></button>
-			<button class="flex justify-center transition-all" on:click={() => {navigate(3);}}><p class:active='{$navigation === 3}' class="rounded-xl transition-all duration-300 py-1">Egyéb</p></button>
-		</div>
-	</div>
-
-	<!-- Kosar  -->
-	<a href="kosar?referrer=/list">
-		<div in:fly={{ y: 100, delay: 100 }} out:fly|local={{ y: 100 }} class='fixed bottom-0 z-10 w-full'>
-			<div class="bg-on-secondary text-primary rounded-3xl transition-all hover:rounded-t-md m-2 p-2 flex justify-between items-center px-5 opacity-95">
-				<b class="text-primary">{$total.ar} Ft</b>
-				<b class="text-secondary" >Kosár</b>
-				<b class="bg-secondary-container p-1 px-3 rounded-full">{$total.darab} db</b>
+	{#if !navHide}
+		<div class="w-screen flex justify-center fixed bottom-0 z-10">
+			<div in:fly={{ y: 200 }} out:fly|local={{ y: 100 }} class="p-3 flex justify-center gap-6 text-secondary bg-on-secondary rounded-2xl mb-24 opacity-[0.97] font-semibold">
+				<button class="flex justify-center transition-all" on:click={() => {navigate(0);}}><p class:active='{$navigation === 0}' class="rounded-xl transition-all duration-300 py-1">Étel</p></button>
+				<button class="flex justify-center transition-all" on:click={() => {navigate(1);}}><p class:active='{$navigation === 1}' class="rounded-xl transition-all duration-300 py-1">Ital</p></button>
+				<button class="flex justify-center transition-all" on:click={() => {navigate(2);}}><p class:active='{$navigation === 2}' class="rounded-xl transition-all duration-300 py-1">Nasi</p></button>
+				<button class="flex justify-center transition-all" on:click={() => {navigate(3);}}><p class:active='{$navigation === 3}' class="rounded-xl transition-all duration-300 py-1">Egyéb</p></button>
 			</div>
 		</div>
-	</a>
-
-	{:else if !navHide}
-	<div class="w-screen flex justify-center fixed bottom-0 z-10">
-		<div in:fly={{ y: 200 }} out:fly|local={{ y: 100 }} class="p-3 flex justify-center gap-6 text-secondary bg-on-secondary rounded-2xl mb-10 opacity-[0.97] font-semibold">
-			<button class="flex justify-center transition-all" on:click={() => {navigate(0);}}><p class:active='{$navigation === 0}' class="rounded-xl transition-all duration-300 py-1">Étel</p></button>
-			<button class="flex justify-center transition-all" on:click={() => {navigate(1);}}><p class:active='{$navigation === 1}' class="rounded-xl transition-all duration-300 py-1">Ital</p></button>
-			<button class="flex justify-center transition-all" on:click={() => {navigate(2);}}><p class:active='{$navigation === 2}' class="rounded-xl transition-all duration-300 py-1">Nasi</p></button>
-			<button class="flex justify-center transition-all" on:click={() => {navigate(3);}}><p class:active='{$navigation === 3}' class="rounded-xl transition-all duration-300 py-1">Egyéb</p></button>
-		</div>
-	</div>
 	{/if}
 </div>
 

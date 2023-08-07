@@ -1,7 +1,6 @@
 <script>
    import { fade } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
-	import { page } from '$app/stores';
    import { goto } from '$app/navigation';
    import { deserialize } from '$app/forms';
 	import { Splide, SplideSlide } from '@splidejs/svelte-splide';
@@ -9,7 +8,6 @@
    import { cart, total } from '$lib/stores/Cart.js';
 	import { touchRadius } from '$lib/frontendUtils/touchRadius.js';
 	import { forint } from '$lib/frontendUtils/formazo.js';
-   import Topbar from '$lib/components/Topbar.svelte';
 
    export let data;
 
@@ -127,15 +125,7 @@
 
 <main in:fade={{ duration: 180 }}>
 
-   <Topbar
-   target={'Vissza'}
-   targeturl={$page.url.searchParams.get('referrer')}
-   text={'Kosár'}
-   hideProfile={0}
-   flyin={0}
-   ></Topbar>
-
-   <div class="flex w-full justify-center">
+   <div class="flex w-full justify-center mt-4">
 		<button class="text-primary font-semibold outline outline-outline outline-1 w-max rounded-3xl p-2 px-6 transition-all hover:rounded-lg hover:bg-primary hover:text-on-primary hover:outline-none" on:click={() => {urites(); goto('/');}}>Űrités</button>
 	</div>
 

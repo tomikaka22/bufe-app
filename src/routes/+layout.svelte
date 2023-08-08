@@ -83,8 +83,8 @@
    <slot />
 {/if}
 
-<div class:navbar-background-noconflict={!backgroundConflict.includes($page.url.pathname)} class="bg-foreground text-on-background flex justify-between items-start fixed bottom-0 w-full text-sm h-20 transition-all px-5 pt-3 z-10">
-	<a href="/" class="flex flex-col h-14 transition-all" class:active-nav={$page.url.pathname === '/' || $page.url.pathname === '/rendelesek'}>
+<div class:navbar-background-noconflict={!backgroundConflict.includes($page.url.pathname)} class="bg-foreground text-on-background flex justify-between items-start fixed bottom-0 w-full text-sm h-[5.25rem] transition-all px-5 pt-3 z-10">
+	<a href="/" class="flex flex-col h-16 transition-all" class:active-nav={$page.url.pathname === '/' || $page.url.pathname === '/rendelesek'}>
 		<div class="w-full h-1/2 flex justify-center items-center rounded-3xl py-1 px-5 transition-all" class:active-img={$page.url.pathname === '/' || $page.url.pathname === '/rendelesek'}>
 			<img class="h-full opacity-100" src="favicon.png" alt="">
 		</div>
@@ -93,7 +93,7 @@
 		</div>
 	</a>
 
-	<a href="/list" class="flex flex-col h-14 transition-all" class:active-nav={$page.url.pathname === '/list'}>
+	<a href="/list" class="flex flex-col h-16 transition-all" class:active-nav={$page.url.pathname === '/list'}>
 		<div class="w-full h-1/2 flex justify-center items-center rounded-3xl py-1 px-5 transition-all" class:active-img={$page.url.pathname === '/list'}>
 			<img class="h-full" src="favicon.png" alt="">
 		</div>
@@ -102,7 +102,7 @@
 		</div>
 	</a>
 
-	<a href="/kosar" class="flex flex-col h-14 transition-all" class:active-nav={$page.url.pathname === '/kosar'}>
+	<a href="/kosar" class="flex flex-col h-16 transition-all" class:active-nav={$page.url.pathname === '/kosar'}>
 		<div class="w-full h-1/2 relative flex justify-center items-center rounded-3xl py-1 px-5 transition-all" class:active-img={$page.url.pathname === '/kosar'}>
 			<img class="h-full" src="favicon.png" alt="">
 			{#if $total.darab}
@@ -112,15 +112,13 @@
 					<p class="absolute top-0 right-2 font-semibold bg-primary text-on-primary px-1 text-xs rounded-3xl">{$total.darab}</p>
 				{/if}
 			{/if}
-
-
 		</div>
 		<div class="w-full h-1/2 flex justify-center items-center" class:active-text={$page.url.pathname === '/kosar'}>
 			Kosár
 		</div>
 	</a>
 
-	<a href="/profil" class="flex flex-col h-14 transition-all" class:active-nav={$page.url.pathname === '/profil'}>
+	<a href="/profil" class="flex flex-col h-16 transition-all" class:active-nav={$page.url.pathname === '/profil'}>
 		<div class="w-full h-1/2 flex justify-center items-center rounded-3xl py-1 px-5 transition-all" class:active-img={$page.url.pathname === '/profil'}>
 			<img class="h-full" src="favicon.png" alt="">
 		</div>

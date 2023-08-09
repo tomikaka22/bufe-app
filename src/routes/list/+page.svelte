@@ -73,24 +73,8 @@
 <main in:fade={{ duration: 180 }}>
 <div class="w-screen h-screen absolute">
 
-	{#if data.nepszeruTermekek.length !== 0}
-		<div class="w-full grid grid-flow-col justify-start overflow-x-scroll snap-x snap-mandatory gap-3 mt-4 px-2">
-			{#each data.nepszeruTermekek as termek}
-				<div class="snap-center rounded-2xl transition-all overflow-hidden bg-secondary-container hover:rounded-lg w-28">
-					<a href="{termek.termek}?referrer=/list">
-						<div class="w-28 aspect-[5/4] bg-center bg-no-repeat bg-cover" style="background-image: url('{termek.termek}.jpg');">
-							<div class="h-full w-full px-2 backdrop-brightness-50 flex justify-center items-center text-center">
-								<p class="font-semibold text-primary">{termek.termek}</p>
-							</div>
-						</div>
-					</a>
-				</div>
-			{/each}
-		</div>
-	{/if}
-
-	<div class="w-full flex justify-center my-4">
-		<div style="animation-timing-function: cubic-bezier(0.2, 0.0, 0, 1.0);" class="w-3/5 h-10 mx-6 p-1 flex rounded-3xl overflow-hidden bg-foreground transition-all duration-[250ms] group focus-within:bg-surface-variant focus-within:w-4/5">
+	<div class="w-full flex justify-center my-5">
+		<div style="animation-timing-function: cubic-bezier(0.2, 0.0, 0, 1.0);" class="w-full h-10 mx-6 p-1 flex rounded-3xl overflow-hidden bg-foreground transition-all duration-[250ms] group focus-within:bg-surface-variant">
 			{#if !searchWord}
 				<svg in:fade={{ duration: 200 }} class="mx-2 py-1.5 text-outline group-focus-within:text-primary transition-all" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 					<!-- Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->

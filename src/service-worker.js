@@ -8,6 +8,10 @@ const ASSETS = [
 	...files  // everything in `static`
 ];
 
+const cachedURLs = [
+	'/list/__data.json' // Be cacheli a /list load functionjét hogy ne kelljen várni amíg oda navigálunk.
+];
+
 self.addEventListener('install', (event) => {
 	// Create a new cache and add all files to it
 	async function addFilesToCache() {
@@ -42,19 +46,21 @@ self.addEventListener('fetch', (event) => {
 			return cache.match(url.pathname);
 		}
 
-		// for everything else, try the network first, but
-		// fall back to the cache if we're offline
-		try {
-			const response = await fetch(event.request);
+		// cache first with cache refresh - https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Caching#cache_first_with_cache_refresh
+		if (cachedURLs.includes(url.pathname)) {
+			const networkResponse = fetch(event.request).then(async (response) => {
+				if (response.ok) {
+					cache.put(event.request, response.clone());
+					console.log('Cached ', url.pathname, '!');
+				}
 
-			if (response.status === 200) {
-				cache.put(event.request, response.clone());
-			}
+				return response;
+			});
 
-			return response;
-		} catch {
-			return cache.match(event.request);
+			return (await cache.match(event.request)) || (await networkResponse);
 		}
+
+		return fetch(event.request);
 	}
 
 	event.respondWith(respond());

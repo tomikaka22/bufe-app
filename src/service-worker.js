@@ -51,7 +51,7 @@ self.addEventListener('fetch', (event) => {
 			const networkResponse = fetch(event.request).then(async (response) => {
 				if (response.ok) {
 					cache.put(event.request, response.clone());
-					console.log('Cached ', url.pathname, '!');
+					console.log('Cached', url.pathname + '!');
 				}
 
 				return response;

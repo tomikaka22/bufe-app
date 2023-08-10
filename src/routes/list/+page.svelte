@@ -115,7 +115,7 @@
 	slides-per-view={'1'}
 	bind:this={swiper}
 	on:slidechange={(e) => { $navigation = e.detail[0].activeIndex; }}
-	in:fly={{ delay: 180, duration: 400, y: -10 }}
+	in:fly={{ delay: 180, duration: 400, y: -15 }}
 		>
 		<swiper-slide>
 			<div class="mx-6 flex flex-col gap-5 text-secondary">

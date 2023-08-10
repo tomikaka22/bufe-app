@@ -14,6 +14,7 @@ export async function load({ locals }) {
 	}
 
 	return {
-		'legutobbi6Termek' : [ ...new Set(legutobbi6Termek) ]	// Set --> kiszűri az ismétlődőket
+		'legutobbi6Termek' : [ ...new Set(legutobbi6Termek) ],	// Set --> kiszűri az ismétlődőket
+		name: locals.pb.authStore?.baseModel?.name
 	};
 }

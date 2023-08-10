@@ -14,17 +14,6 @@ export async function handle({ event, resolve }) {
 		event.locals.pb.authStore.clear();
 	}
 
-	// Ha nincs account, redirect
-	const anonRoutes = [ '/register','/login','/verify','/change', '/api' ];
-
-	if (!anonRoutes.find(route => { return event.url.pathname.includes(route); })) {
-		if (!event.locals.pb.authStore.baseModel )  // Ha nincs bejelentkezve, redirect to login
-			throw redirect(303, '/login');
-
-		if (!event.locals.pb.authStore.baseModel.verified) // Ha nincs megerősítve, redirect to verify
-			throw redirect(303, '/verify');
-	}
-
 	const response = await resolve(event);
 
 	// send back the default 'pb_auth' cookie to the client with the latest store state

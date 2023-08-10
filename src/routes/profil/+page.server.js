@@ -15,13 +15,15 @@ export async function load({ locals }) {
 	try {
 		const linkedSubscription = await locals.pb.collection('push').getFirstListItem(`name = '${locals.pb.authStore.baseModel.id}'`);
 		return {
-			linkedSubscription: linkedSubscription.subscription
+			linkedSubscription: linkedSubscription.subscription,
+			name: locals.pb.authStore?.baseModel?.name
 		};
 
 	} catch (error) {
 		if (error.status === 404)
 			return {
-				linkedSubscription: undefined
+				linkedSubscription: undefined,
+				name: locals.pb.authStore?.baseModel?.name
 			};
 	}
 }

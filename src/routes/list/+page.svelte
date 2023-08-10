@@ -1,8 +1,7 @@
 <script>
-   import { fade, fly, slide } from 'svelte/transition';
+   import { fade, fly } from 'svelte/transition';
 	import { register } from 'swiper/element/bundle';
    import { onMount } from 'svelte';
-   import { cart, total } from '$lib/stores/Cart.js';
    import { navigation } from '$lib/stores/Navigation.js';
 
    export let data;
@@ -13,11 +12,6 @@
 
 	onMount(() => {
 		register();
-
-		if (localStorage.getItem('CartContent')) {
-			$cart = JSON.parse(localStorage.getItem('CartContent'));
-			$total = JSON.parse(localStorage.getItem('Total'));
-		}
 
 		addEventListener('scroll', () => {
 			if (window.scrollY > scrollYOld)

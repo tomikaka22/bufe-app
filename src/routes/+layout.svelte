@@ -6,7 +6,7 @@
 	import { fade } from 'svelte/transition';
 	import '../app.css';
    import { onMount } from 'svelte';
-   import { total } from '$lib/stores/Cart.js';
+   import { cart, total } from '$lib/stores/Cart.js';
 
 	const noKeyURLs = [ '/admin', '/rendelesek' ];
 
@@ -71,6 +71,11 @@
 
 	onMount(() => {
 		swRegister();
+
+		if (localStorage.getItem('CartContent')) {
+			$cart = JSON.parse(localStorage.getItem('CartContent'));
+			$total = JSON.parse(localStorage.getItem('Total'));
+		}
 	});
 
 </script>

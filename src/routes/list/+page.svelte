@@ -1,5 +1,5 @@
 <script>
-   import { fade, fly } from 'svelte/transition';
+   import { fade, fly, slide } from 'svelte/transition';
 	import { register } from 'swiper/element/bundle';
    import { onMount } from 'svelte';
    import { cart, total } from '$lib/stores/Cart.js';
@@ -115,6 +115,7 @@
 	slides-per-view={'1'}
 	bind:this={swiper}
 	on:slidechange={(e) => { $navigation = e.detail[0].activeIndex; }}
+	in:fly={{ delay: 180, duration: 400, y: -10 }}
 		>
 		<swiper-slide>
 			<div class="mx-6 flex flex-col gap-5 text-secondary">

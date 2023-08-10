@@ -107,7 +107,7 @@
 		</div>
 	</div>
 
-	<swiper-container class="pb-5"
+	<swiper-container class="pb-[6.5rem]"
 	auto-height={'true'}
 	initial-slide={$navigation}
 	resistance-ratio={'0.5'}

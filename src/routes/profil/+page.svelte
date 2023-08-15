@@ -5,7 +5,6 @@
 	import { goto } from '$app/navigation';
 
 	export let data;
-	let form;
 
 	async function handleSubmit(event) {
 		const data = new FormData(this);
@@ -22,12 +21,12 @@
 <main in:fade={{ duration: 180 }}>
 
    <div in:fly={{ y: -120, easing: cubicOut }} class="w-full flex justify-center items-center">
-      <form use:enhance bind:this={form} action="?/changeAvatar" method="POST" enctype="multipart/form-data">
+      <form use:enhance action="?/changeAvatar" method="POST" enctype="multipart/form-data">
 			<h1 class="text-center text-[#ffb68e] text-3xl font-semibold my-2">{data.name}</h1>
          <label for="avatar">
             <img class="rounded-[5rem] hover:rounded-3xl transition-all" src="/api/avatar" alt="">
          </label>
-         <input on:input={form.submit()} hidden type="file" name="avatar" id="avatar" value="" accept="image/*">
+         <input on:input={(e) => {e.target.form.submit();}} hidden type="file" name="avatar" id="avatar" value="" accept="image/*">
       </form>
    </div>
 

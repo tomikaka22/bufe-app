@@ -14,7 +14,7 @@
 	const backgroundConflict = [ '/list','/kosar' ];
 
 	const termekekRoutes = [ '/list', '/[termek]' ];
-	const homeRoutes = [ '/', '/rendelesek' ];
+	const homeRoutes = [ '/', '/rendelesek', '/rendelesek/[rendeles]' ];
 	const kosarRoutes = [ '/kosar' ];
 	const profilRoutes = [ '/profil', '/change/notification', '/change/password', '/change/delete' ];
 

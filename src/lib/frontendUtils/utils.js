@@ -9,3 +9,8 @@ export function urlB64ToUint8Array(base64String) {
 	}
 	return outputArray;
 }
+
+// Megformázza az árakat.
+export function forint(x) {
+	return x.toLocaleString({ style:'currency', currency:'HUF' }).replace(',',' ') + ' Ft';
+}

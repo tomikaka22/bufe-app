@@ -7,7 +7,8 @@ export const actions = {
 	},
 	changeAvatar: async ({ request, locals }) => {
 		const data = await request.formData();
-		locals.pb.collection('users').update(locals.pb.authStore.baseModel.id, data);
+
+		await locals.pb.collection('users').update(locals.pb.authStore.baseModel.id, data);
 	}
 };
 

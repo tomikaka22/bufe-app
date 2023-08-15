@@ -21,7 +21,7 @@
 
 </script>
 
-<main in:fade={{ duration: 180 }}>
+<main class="pb-[6.5rem]" in:fade={{ duration: 180 }}>
 
    <Topbar
       target={'Menü'}

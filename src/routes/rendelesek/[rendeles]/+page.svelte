@@ -4,8 +4,6 @@
    import Topbar from '$lib/components/Topbar.svelte';
 
 	export let data;
-
-	console.log(data.record)
 </script>
 
 <main class="pb-[6.5rem]" in:fade={{ duration: 180 }}>
@@ -72,7 +70,7 @@
 							</div>
 						</a>
 						<!-- Feltétek -->
-						<div class="w-full p-1.5 flex gap-1.5 bg-surface-variant">
+						<div class="w-full p-1.5 flex flex-wrap gap-1.5 bg-surface-variant">
 							{#each x.feltet as feltet}
 								<p class="bg-secondary text-on-secondary font-semibold rounded-lg w-fit px-2">{feltet}</p>
 							{/each}

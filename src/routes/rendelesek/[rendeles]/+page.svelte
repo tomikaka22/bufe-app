@@ -1,27 +1,43 @@
 <script>
    import { fade } from 'svelte/transition';
+   import { goto } from '$app/navigation';
 	import { forint } from '$lib/frontendUtils/utils.js';
+   import { cart, total } from '$lib/stores/Cart.js';
    import Topbar from '$lib/components/Topbar.svelte';
 
 	export let data;
+
+	function rebuy() {
+		$cart = data.record.termekek;
+
+		$total = { 'ar': 0, 'darab': 0 };	// Kosár total újraszámolása
+		Object.keys($cart).forEach(termek => {
+			$cart[termek].forEach(x => {
+				$total.ar += x.ar;
+				$total.darab += x.darab;
+			});
+		});
+
+		goto('/kosar');
+	}
+
 </script>
 
 <main class="pb-[6.5rem]" in:fade={{ duration: 180 }}>
 
 	<Topbar
 		targeturl={'/rendelesek'}
-		text={'Rendelés'}
-></Topbar>
+		text={data.record.updated.slice(0, -5)}
+	>
+	</Topbar>
 
-	<div class="flex w-full mt-1 justify-center items-center">
+	<div class="flex w-full justify-center items-center">
 		<div class="outline outline-primary outline-1 rounded-lg px-5 font-semibold text-lg py-1">
 			<h3 class="font-semibold text-primary">Összesen: <span>{data.record.total} Ft</span></h3>
 		</div>
 	</div>
 
-	<h3 class="text-center my-3">{data.record.updated.slice(0, -5)}</h3>
-
-	<div class="grid grid-flow-row p-2 pt-0 gap-2 mx-1 rounded-xl">
+	<div class="grid grid-flow-row p-2 pt-0 gap-2 mx-1 mt-5 rounded-xl">
 
 		<!-- Feltétek nélkül -->
 		{#each Object.keys(data.record.termekek) as termek}
@@ -84,6 +100,10 @@
 	</div>
 	<div class="flex justify-center gap-5 font-semibold w-full">
 		<h3 class="outline outline-2 outline-secondary px-2 rounded-lg">{data.record.idopont}</h3>
+	</div>
+
+	<div class="flex w-full justify-center mt-5">
+		<button on:click={rebuy} class="p-4 px-8 mb-10 font-semibold text-lg bg-primary-container text-on-primary-container hover:bg-primary hover:text-on-primary rounded-xl hover:rounded-md transition-all">Újravásárlás!</button>
 	</div>
 
 </main>

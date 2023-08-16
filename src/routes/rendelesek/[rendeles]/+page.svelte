@@ -24,7 +24,7 @@
 	async function share() {
 		const shareData = {
 			title: 'bufe-app',
-			text: 'Rendelésem a büfé-appon.',
+			text: 'Rendelésem a büfé-appon:',
 			url: data.href
 		};
 
@@ -117,11 +117,11 @@
 	</div>
 
 	<div class="flex w-full justify-center mt-5">
-		<button on:click={rebuy} class="p-3 px-6 font-semibold text-lg bg-primary-container text-on-primary-container hover:bg-primary hover:text-on-primary rounded-xl hover:rounded-md transition-all">Újravásárlás!</button>
+		<button on:click={share} class="px-5 py-2 font-semibold text-lg bg-secondary-container text-on-secondary-container hover:bg-on-secondary-container hover:text-secondary-container rounded-xl hover:rounded-md transition-all">Megosztás</button>
 	</div>
 
 	<div class="flex w-full justify-center mt-3">
-		<button on:click={share} class="p-4 py-2 font-semibold text-lg bg-secondary-container text-on-secondary-container hover:bg-on-secondary-container hover:text-secondary-container rounded-xl hover:rounded-md transition-all">Megosztás</button>
+		<button on:click={rebuy} class="p-3 px-6 font-semibold text-lg bg-primary-container text-on-primary-container hover:bg-primary hover:text-on-primary rounded-xl hover:rounded-md transition-all">Újravásárlás!</button>
 	</div>
 
 </main>

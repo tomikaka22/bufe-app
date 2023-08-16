@@ -21,6 +21,20 @@
 		goto('/kosar');
 	}
 
+	async function share() {
+		const shareData = {
+			title: 'bufe-app',
+			text: 'Rendelésem a büfé-appon.',
+			url: data.href
+		};
+
+		try {
+			await navigator.share(shareData);
+		} catch (error) {
+			alert(error);
+		}
+	}
+
 </script>
 
 <main class="pb-[6.5rem]" in:fade={{ duration: 180 }}>
@@ -103,7 +117,11 @@
 	</div>
 
 	<div class="flex w-full justify-center mt-5">
-		<button on:click={rebuy} class="p-4 px-8 mb-10 font-semibold text-lg bg-primary-container text-on-primary-container hover:bg-primary hover:text-on-primary rounded-xl hover:rounded-md transition-all">Újravásárlás!</button>
+		<button on:click={rebuy} class="p-3 px-6 font-semibold text-lg bg-primary-container text-on-primary-container hover:bg-primary hover:text-on-primary rounded-xl hover:rounded-md transition-all">Újravásárlás!</button>
+	</div>
+
+	<div class="flex w-full justify-center mt-3">
+		<button on:click={share} class="p-4 py-2 font-semibold text-lg bg-secondary-container text-on-secondary-container hover:bg-on-secondary-container hover:text-secondary-container rounded-xl hover:rounded-md transition-all">Megosztás</button>
 	</div>
 
 </main>

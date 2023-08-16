@@ -14,7 +14,10 @@
 
 			<form bind:this={input} action="?/darab" method="POST">
 				{#each data.termekekLista as termek, i (i)}
-					<p class="px-2 my-2 w-fit bg-primary-container rounded-lg text-on-primary-container"><span class="font-semibold">{termek.termek}</span> <input class="appearance-none bg-background text-on-background rounded-xl py-1 px-2 my-1 mx-2 focus:mx-2" name="{termek.id}" style="width: 6ch; -moz-appearance: textfield;" value="{termek.darab}" type="number">db</p>
+					<p class="px-2 my-2 w-fit bg-primary-container rounded-lg text-on-primary-container">
+						<span class="font-semibold">{termek.termek}</span>
+						<input class="bg-background outline-none rounded-xl py-1 px-2 my-1 mx-1 font-normal" name="{termek.id}" style="width: 6ch; -moz-appearance: textfield;" value="{termek.darab}" type="number">db
+					</p>
 				{/each}
 			</form>
 		</div>

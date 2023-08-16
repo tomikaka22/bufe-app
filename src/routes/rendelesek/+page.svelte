@@ -56,7 +56,7 @@
 							{#if record.status !== 'folyamatban'}
 								<form class="bg-error-container w-full h-full rounded-r-full flex justify-end items-center font-semibold" method="POST" on:submit|preventDefault={handleSubmit}>
 									<input hidden name="recordID" type="text" value="{JSON.stringify(record.id)}">
-									<p class="mr-10">Törlés</p>
+									<p class="mr-10">{record.status === 'fuggoben' ? 'Visszavonás' : 'Törlés'}</p>
 								</form>
 							{:else}
 								<div class="bg-error-container w-full h-full rounded-r-full flex justify-center text-center items-center font-semibold">

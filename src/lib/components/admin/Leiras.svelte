@@ -13,7 +13,10 @@
 		<div class="m-4 mt-2">
 			<form bind:this={input} action="?/leiras" method="POST">
 				{#each data.termekekLista as termekek}
-					<p class="px-2 my-2 w-fit bg-primary-container rounded-lg text-on-primary-container"><strong>{termekek.termek}:</strong> <input class="appearance-none bg-background rounded-xl py-1 px-2 my-1 mr-1 focus:mx-2" name="{termekek.id}" type="text" value="{termekek.leiras}"></p>
+					<p class="px-2 my-2 w-fit bg-primary-container rounded-lg text-on-primary-container">
+						<strong>{termekek.termek}:</strong>
+						<input class="bg-background outline-none rounded-xl py-1 px-2 my-1 mx-1 font-normal" name="{termekek.id}" type="text" value="{termekek.leiras}">
+					</p>
 				{/each}
 			</form>
 		</div>

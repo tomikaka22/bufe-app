@@ -67,10 +67,10 @@
 						</form>
 					{/each}
 				{/if}
-				<input class="appearance-none bg-background rounded-xl py-1 px-2 my-1 mr-1 focus:mx-2" name="recordID" hidden type="text" value="{termekek.id}">
-				<input class="appearance-none bg-background rounded-xl py-1 px-2 my-1 mr-1 focus:mx-2" name="feltet" placeholder="Feltét neve" type="text" style="width: 10rem;">
-				<input class="appearance-none bg-background rounded-xl py-1 px-2 my-1 mr-1 focus:mx-2" name="darab" type="number" value="1" style="width: 6ch; -moz-appearance: textfield"> db
-				<input class="appearance-none bg-background rounded-xl py-1 px-2 my-1 mr-1 focus:mx-2" name="ar" type="number" value="100" style="width: 6ch; -moz-appearance: textfield"> Ft
+				<input class="bg-background outline-none rounded-xl py-1 px-2 my-1 mx-1 font-normal" name="recordID" hidden type="text" value="{termekek.id}">
+				<input class="bg-background outline-none rounded-xl py-1 px-2 my-1 mx-1 font-normal" name="feltet" placeholder="Feltét neve" type="text" style="width: 10rem;">
+				<input class="bg-background outline-none rounded-xl py-1 px-2 my-1 mx-1 font-normal" name="darab" type="number" value="1" style="width: 6ch; -moz-appearance: textfield"> db
+				<input class="bg-background outline-none rounded-xl py-1 px-2 my-1 mx-1 font-normal" name="ar" type="number" value="100" style="width: 6ch; -moz-appearance: textfield"> Ft
 				<button class="bg-background rounded-xl px-2 text-[yellowgreen] font-semibold text-lg">+</button>
 			</form>
 		{/each}

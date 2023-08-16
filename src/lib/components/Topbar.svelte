@@ -1,33 +1,17 @@
 <script>
    import { fly } from 'svelte/transition';
-	import { page } from '$app/stores';
-
 
    export let targeturl;
    export let target;
    export let text;
-   export let flyin;
+   let flyin = { x: -100 };
    export let hideProfile;
+
 </script>
 
-<div in:fly={flyin} class="w-full text-[#ffb68e] font-semibold">
-   <div class="w-full grid grid-cols-3 text-center py-1">
-      <div class="flex justify-center items-center mr-auto">
-         <a class="ml-4 mr-auto flex items-center" id="header-left" href="{targeturl}"><span class="mr-1">&lt;</span>{target}</a>
-      </div>
-      <div class="flex justify-center items-center">
-         <h1>{text}</h1>
-      </div>
-      <div class="flex justify-center items-center">
-         <a class="w-10 ml-auto mr-5" class:hideProfile href={'/profil?referrer=' + $page.url.pathname} >
-				<img class="max-w-full rounded-xl hover:rounded-md transition-all" src="/api/avatar" alt="">
-			</a>
-      </div>
-   </div>
+<div in:fly={flyin} class="w-full flex items-center text-primary p-2 pl-0 mb-2">
+	<a href="{targeturl}">
+		<svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" height="22" viewBox="0 -960 960 960" width="48"><path d="m274-450 248 248-42 42-320-320 320-320 42 42-248 248h526v60H274Z"/></svg>
+	</a>
+	<p class="text-lg">{text}</p>
 </div>
-
-<style lang="postcss">
-	.hideProfile {
-		visibility: hidden;
-	}
-</style>

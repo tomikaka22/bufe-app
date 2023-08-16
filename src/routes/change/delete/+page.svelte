@@ -20,12 +20,8 @@
 
 	<main in:fade={{ duration: 180 }}>
 		<Topbar
-		target={'Vissza'}
-		targeturl={'/profil'}
-		text={'Jelszó'}
-		background={'none'}
-		flyin={0}
-		hideProfile={1}
+			targeturl={'/profil'}
+			text={'Jelszó'}
 		></Topbar>
 
 		{#if form?.error}

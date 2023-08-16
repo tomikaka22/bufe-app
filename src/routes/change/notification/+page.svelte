@@ -40,12 +40,8 @@
 
 <main in:fade={{ duration: 180 }}>
 	<Topbar
-	target={'Vissza'}
-	targeturl={'/profil'}
-	text={'Értesítések'}
-	background={'none'}
-	flyin={0}
-	hideProfile={1}
+		targeturl={'/profil'}
+		text={'Értesítések'}
 	></Topbar>
 
 	<div class="text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">

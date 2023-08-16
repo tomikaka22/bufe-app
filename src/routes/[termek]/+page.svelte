@@ -85,12 +85,8 @@
 <main in:fade={{ duration: 180 }}>
 
    <Topbar
-      target={'Vissza'}
       targeturl={$page.url.searchParams.get('referrer') || '/list'}
-      text={''}
-      background={'none'}
-      hideProfile={0}
-      flyin={0}
+      text={termek}
    ></Topbar>
 
 	<div class="px-6">

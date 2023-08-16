@@ -25,17 +25,13 @@
 <main class="pb-[6.5rem]" in:fade={{ duration: 180 }}>
 
    <Topbar
-      target={'Menü'}
       targeturl={'/'}
       text={'Rendelések'}
-      background={'none'}
-      flyin={{ y: -200 }}
-		hideProfile={0}
    ></Topbar>
 
 	<div>
 
-		<div class="flex w-full mt-1 justify-center items-center">
+		<div class="flex w-full justify-center items-center">
 			<div class="outline outline-primary outline-1 rounded-lg px-5 font-semibold text-lg py-1">
 				<h3 class="font-semibold text-primary">Összesen: <span>{data.total} Ft</span></h3>
 			</div>

@@ -9,12 +9,8 @@
 <main class="pb-[6.5rem]" in:fade={{ duration: 180 }}>
 
 	<Topbar
-		target={'Vissza'}
 		targeturl={'/rendelesek'}
 		text={'Rendelés'}
-		background={'none'}
-		flyin={{ y: -200 }}
-		hideProfile={1}
 ></Topbar>
 
 	<div class="flex w-full mt-1 justify-center items-center">

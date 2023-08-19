@@ -4,9 +4,5 @@ export async function GET({ locals, fetch }) {
 	if (avatar.status === 404)
 		avatar = await fetch(`https://ui-avatars.com/api/?size=256&name=${locals.pb.authStore.baseModel.name}&color=ebebec&background=252525`);
 
-	return new Response(await avatar.blob(), {
-		headers: {
-			'Content-Type': 'image/*'
-		}
-	});
+	return new Response(await avatar.arrayBuffer());
 }

@@ -4,8 +4,9 @@ import { build, files, version } from '$service-worker';
 const CACHE = `cache-${version}`;
 
 const ASSETS = [
-	...build, // the app itself
-	...files  // everything in `static`
+	...build,	// the app itself
+	...files,	// everything in `static`
+	'/offline'	// Offline error oldal
 ];
 
 const cachedURLs = [
@@ -41,10 +42,13 @@ self.addEventListener('fetch', (event) => {
 		const url = new URL(event.request.url);
 		const cache = await caches.open(CACHE);
 
-		// `build`/`files` can always be served from the cache
+		// Contents of 'ASSETS' can always be served from the cache
 		if (ASSETS.includes(url.pathname)) {
 			return cache.match(url.pathname);
 		}
+
+		if (!navigator.onLine)
+			return Response.redirect('/offline', 303);
 
 		// cache first with cache refresh - https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Caching#cache_first_with_cache_refresh
 		if (cachedURLs.includes(url.pathname)) {

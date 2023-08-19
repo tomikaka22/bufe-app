@@ -2,7 +2,7 @@ import { redirect } from '@sveltejs/kit';
 
 export async function load({ locals, url }) {
 	// Ha nincs account, redirect
-	const anonRoutes = [ '/register','/login','/verify','/change' ];
+	const anonRoutes = [ '/register', '/login', '/verify', '/change', '/offline' ];
 
 	if (!anonRoutes.find(route => { return url.pathname.startsWith(route); })) {
 		if (!locals.pb.authStore.baseModel )  // Ha nincs bejelentkezve, redirect to login

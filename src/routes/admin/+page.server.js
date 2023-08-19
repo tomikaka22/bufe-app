@@ -37,7 +37,7 @@ export const actions = {
 			const id = foto[0];
 
 			if (image.size) {
-				const optimizedImage = await sharp(await image.arrayBuffer()).avif({ effort: 4, chromaSubsampling: '4:2:0' }).toBuffer();
+				const optimizedImage = await sharp(await image.arrayBuffer()).avif({ effort: 0, chromaSubsampling: '4:2:0' }).toBuffer();
 
 				const formData = new FormData();
 				formData.append('foto', new Blob([ optimizedImage ]));

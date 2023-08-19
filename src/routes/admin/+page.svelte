@@ -43,7 +43,7 @@
 		<div class="h-full w-full snap-y snap-mandatory overflow-y-scroll">
 			{#each data.szunetArray as szunet}
 				<div class="h-max snap-center">
-					<div class="grid grid-cols-[20%_80%] h-full w-full">
+					<div class="grid grid-cols-[20%_80%] h-full w-full min-h-[4rem]">
 						<!-- X. Óra előtti szünet -->
 						<div class="px-2 border-r border-b font-semibold text-lg flex items-center justify-center text-center">
 							{szunet}
@@ -52,7 +52,7 @@
 						<div class="border-b flex flex-row items-center h-full w-full">
 							<div class="grid grid-rows-2 h-full w-full">
 								<!-- Függőben rendelések -->
-								<div class="p-2 border-b border-tertiary-container flex items-center overflow-x-scroll">
+								<div class="p-2 border-b border-surface-variant flex items-center overflow-x-scroll">
 									{#each data.rendelesek.fuggoben as rendeles, i (rendeles.id)}
 										<div animate:flip={{ duration: 700, easing: expoOut }}>
 											{#if rendeles.idopont === szunet}
@@ -71,11 +71,11 @@
 													<div class="flex justify-center gap-1 items-start h-full">
 														{#each Object.keys(rendeles.termekek) as termek}
 															{#each rendeles.termekek[termek] as x}
-																<div class="font-semibold text-center flex flex-col justify-center items-center">
-																	<p class="w-fit bg-primary text-on-primary px-1 my-0.5 rounded-md">{termek}</p>
-																	<p class="w-fit bg-tertiary text-on-tertiary px-1 my-0.5 rounded-md">{x.ar} Ft, {x.darab} db</p>
+																<div class="font-semibold text-center px-0.5 flex flex-col justify-center items-center">
+																	<p class="w-full bg-primary text-on-primary px-1 my-0.5 rounded-md">{termek}</p>
+																	<p class="w-full bg-tertiary text-on-tertiary px-1 my-0.5 rounded-md">{x.darab} db, {x.ar} Ft</p>
 																	{#each x.feltet as feltet}
-																		<p class="w-fit text-on-secondary-container outline outline-1 outline-outline px-2 my-0.5 rounded-md font-normal">{feltet}</p>
+																		<p class="w-full text-on-secondary-container outline outline-1 outline-outline px-2 my-0.5 rounded-md font-normal">{feltet}</p>
 																	{/each}
 																</div>
 															{/each}
@@ -106,13 +106,13 @@
 													<div class="flex justify-center gap-1 items-start h-full">
 														{#each Object.keys(rendeles.termekek) as termek}
 															{#each rendeles.termekek[termek] as x}
-															<div class="font-semibold text-center flex flex-col justify-center items-center">
-																<p class="w-fit bg-primary text-on-primary px-1 my-0.5 rounded-md">{termek}</p>
-																<p class="w-fit bg-tertiary text-on-tertiary px-1 my-0.5 rounded-md">{x.ar} Ft, {x.darab} db</p>
-																{#each x.feltet as feltet}
-																	<p class="w-fit text-on-secondary-container outline outline-1 outline-outline px-2 my-0.5 rounded-md font-normal">{feltet}</p>
-																{/each}
-															</div>
+																<div class="font-semibold text-center px-0.5 flex flex-col justify-center items-center">
+																	<p class="w-full bg-primary text-on-primary px-1 my-0.5 rounded-md">{termek}</p>
+																	<p class="w-full bg-tertiary text-on-tertiary px-1 my-0.5 rounded-md">{x.darab} db, {x.ar} Ft</p>
+																	{#each x.feltet as feltet}
+																		<p class="w-full text-on-secondary-container outline outline-1 outline-outline px-2 my-0.5 rounded-md font-normal">{feltet}</p>
+																	{/each}
+																</div>
 															{/each}
 														{/each}
 													</div>

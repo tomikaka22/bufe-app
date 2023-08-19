@@ -8,5 +8,9 @@ export async function GET({ locals, fetch, url }) {
 	if (foto.status === 404)
 		foto = await fetch(`https://ui-avatars.com/api/?size=256&name=${locals.pb.authStore.baseModel.name}&color=ebebec&background=252525`);
 
-	return new Response(await foto.arrayBuffer());
+	return new Response(await foto.blob(), {
+		headers: {
+			'Content-Type': 'image/*'
+		}
+	});
 }

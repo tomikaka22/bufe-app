@@ -1,5 +1,6 @@
 import { PUSH_PRIVATE_KEY, PUSH_PUBLIC_KEY } from '$env/static/private';
 import webpush from 'web-push';
+import sharp from 'sharp';
 import { redirect } from '@sveltejs/kit';
 import { szunet } from '$lib/backendUtils/szunetSzamolo';
 
@@ -28,6 +29,23 @@ export async function load({ locals }) {
 }
 
 export const actions = {
+	foto: async ({ request, locals }) => {
+		const data = await request.formData();
+
+		for (const foto of data) {
+			const image = foto[1];
+			const id = foto[0];
+
+			if (image.size) {
+				const optimizedImage = await sharp(await image.arrayBuffer()).avif({ effort: 4, chromaSubsampling: '4:2:0' }).toBuffer();
+
+				const formData = new FormData();
+				formData.append('foto', new Blob([ optimizedImage ]));
+
+				await locals.pb.collection('termekek').update(id, formData);
+			}
+		}
+	},
 	darab: async ({ request, locals }) => {
 		const data = Object.fromEntries(await request.formData());
 

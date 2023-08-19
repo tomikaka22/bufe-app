@@ -9,7 +9,7 @@
 	import Leiras from '$lib/components/admin/Leiras.svelte';
 	import Feltet from '$lib/components/admin/Feltet.svelte';
 	import Kategoria from '$lib/components/admin/Kategoria.svelte';
-
+	import Kepek from '$lib/components/admin/Kepek.svelte';
 
 	export let data;
 
@@ -19,6 +19,7 @@
 	let leirasModal;
 	let feltetModal;
 	let kategoriaModal;
+	let kepekModal;
 
 	setInterval(async () => {
 		invalidateAll();
@@ -37,6 +38,7 @@
 			<button class="outline outline-1 w-24 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={leirasModal.showModal()}>Leírás</button>
 			<button class="outline outline-1 w-24 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={feltetModal.showModal()}>Feltét</button>
 			<button class="outline outline-1 w-24 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={kategoriaModal.showModal()}>Kategória</button>
+			<button class="outline outline-1 w-24 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={kepekModal.showModal()}>Képek</button>
 		</div>
 
 		<!-- Rendelések -->
@@ -137,6 +139,7 @@
 <Leiras bind:leirasModal data={data}></Leiras>
 <Feltet bind:feltetModal data={data}></Feltet>
 <Kategoria bind:kategoriaModal data={data}></Kategoria>
+<Kepek bind:kepekModal data={data}></Kepek>
 
 </main>
 

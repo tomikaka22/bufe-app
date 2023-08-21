@@ -94,11 +94,11 @@
 			<h1 class="text-primary text-center mb-2 text-xl font-semibold">{termek}</h1>
 			<div class="flex justify-center">
 				<div class="w-10/12">
-					<img class="w-full h-full rounded-3xl transition-all" src="{termek}.jpg" alt="" on:click={(e) => {touchRadius(e.target, '1rem', '1.5rem');}} on:error={img => {img.target.src='favicon.png';}}>
+					<img class="w-full h-full rounded-3xl transition-all" src="/api/files/termekek/{data.termekek.id}/{data.termekek.foto}" alt="" on:click={(e) => {touchRadius(e.target, '0.5rem', '1.5rem');}}>
 				</div>
 			</div>
 
-			<h4 class="text-center font-semibold">{data.termekek.leiras}</h4>
+			<h4 class="text-center font-semibold mt-2">{data.termekek.leiras}</h4>
 
 	{#if maxAmount}
 		{#key price}

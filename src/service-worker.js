@@ -3,6 +3,13 @@ import { build, files, version } from '$service-worker';
 // Create a unique cache name for this deployment
 const CACHE = `cache-${version}`;
 
+async function termekFotoURLs() {
+	const response = await fetch('/api/termekList');
+	const termekek = await response.json();
+
+	return termekek.termekFotoURLs;
+}
+
 const ASSETS = [
 	...build,	// the app itself
 	...files,	// everything in `static`
@@ -10,7 +17,8 @@ const ASSETS = [
 ];
 
 const cachedURLs = [
-	'/list/__data.json' // Be cacheli a /list load functionjét hogy ne kelljen várni amíg oda navigálunk.
+	'/list/__data.json', // Be cacheli a /list load functionjét hogy ne kelljen várni amíg oda navigálunk.
+	'/api/avatar'
 ];
 
 self.addEventListener('install', (event) => {
@@ -18,6 +26,8 @@ self.addEventListener('install', (event) => {
 	async function addFilesToCache() {
 		const cache = await caches.open(CACHE);
 		await cache.addAll(ASSETS);
+		await cache.addAll(await termekFotoURLs());
+		console.log('Precached Files!');
 	}
 
 	event.waitUntil(addFilesToCache());
@@ -51,7 +61,8 @@ self.addEventListener('fetch', (event) => {
 			return Response.redirect('/offline', 303);
 
 		// cache first with cache refresh - https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Caching#cache_first_with_cache_refresh
-		if (cachedURLs.includes(url.pathname)) {
+		if (cachedURLs.includes(url.pathname) || (await termekFotoURLs()).includes(url.pathname)) {
+			console.log('cache first with cache refresh', url.pathname);
 			const networkResponse = fetch(event.request).then(async (response) => {
 				if (response.ok) {
 					cache.put(event.request, response.clone());

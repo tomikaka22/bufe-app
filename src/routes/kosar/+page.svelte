@@ -10,6 +10,8 @@
 	import { forint } from '$lib/frontendUtils/formazo.js';
 
    export let data;
+console.log((data.termekek.find(x => x.termek === 'Croissant').id))
+console.log((data.termekek.find(x => x.termek === 'Croissant').foto))
 
 	let szunetSplide;
 	let fizetes = 'Készpénz';
@@ -149,7 +151,7 @@
 				<div animate:flip={{ duration: 500 }} class="flex flex-wrap items-start justify-center gap-5">
 					{#each $cart[termek] as x, i (i)}
 						<div class="bg-foreground rounded-2xl overflow-hidden font-semibold">
-							<div class="w-40 h-[7.6rem] relative bg-no-repeat bg-center bg-cover bg-[url('termek-drop.jpg')]">
+							<div class="w-40 h-[7.6rem] relative bg-no-repeat bg-center bg-cover" style="background-image: url('/api/files/termekek/{(data.termekek.find(x => x.termek === 'Croissant').id)}/{(data.termekek.find(x => x.termek === 'Croissant').foto)}');">
 								<p class="absolute w-full h-full text-center text-on-background flex justify-center items-center backdrop-brightness-50 p-2">{termek}</p>
 								{#key x.ar}
 									<p in:fade class="absolute top-2 left-2 bg-tertiary text-on-tertiary rounded-lg px-1">{forint(x.ar)}</p>

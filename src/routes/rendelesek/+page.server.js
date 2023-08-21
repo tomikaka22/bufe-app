@@ -1,6 +1,7 @@
 import { fail } from '@sveltejs/kit';
 
 export async function load({ locals, url }) {
+	const termekek = structuredClone(await locals.pb.collection('termekek').getFullList());
 	const elozmenyLista = structuredClone(await locals.pb.collection('rendelesek').getFullList(1, {
 		filter: `rendelo = "${locals.pb.authStore.baseModel.id}"`,
 		sort: '-created'
@@ -18,6 +19,7 @@ export async function load({ locals, url }) {
 	});
 
 	return {
+		termekek,
 		elozmenyLista,
 		total,
 		pathname: url.pathname

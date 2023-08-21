@@ -61,7 +61,7 @@
 					<div class="rounded-xl overflow-hidden">
 						<a href="/{termek}?referrer={data.pathname}" class="p-2 h-20 grid grid-cols-3 items-center text-center bg-foreground">
 							<div class="bg-background aspect-square overflow-hidden h-full rounded-lg">
-								<img class="w-full h-full object-cover" src="/termek-drop.jpg" alt="">
+								<img class="w-full h-full object-cover" src="/api/files/termekek/{(data.termekek.find(x => x.termek === termek).id)}/{(data.termekek.find(x => x.termek === termek).foto)}" alt="">
 							</div>
 							<div class="font-semibold">
 								{termek}
@@ -85,7 +85,7 @@
 					<div class="rounded-xl overflow-hidden">
 						<a href="/{termek}?referrer={data.pathname}" class="p-2 h-20 grid grid-cols-3 items-center text-center bg-foreground">
 							<div class="bg-background aspect-square overflow-hidden h-full rounded-lg">
-								<img class="w-full h-full object-cover" src="/termek-drop.jpg" alt="">
+								<img class="w-full h-full object-cover" src="/api/files/termekek/{(data.termekek.find(x => x.termek === termek).id)}/{(data.termekek.find(x => x.termek === termek).foto)}" alt="">
 							</div>
 							<div class="font-semibold">
 								{termek}

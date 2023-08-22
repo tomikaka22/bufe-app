@@ -96,7 +96,7 @@
 {/if}
 
 {#if !hideNavbarRoutes.includes($page.url.pathname)}
-	<div class:navbar-background-noconflict={!backgroundConflict.includes($page.url.pathname)} class="bg-foreground text-on-background flex gap-7 justify-between items-start fixed bottom-0 w-full text-sm h-[5.25rem] transition-all px-5 pt-3 z-10">
+	<div class:navbar-background-noconflict={!backgroundConflict.includes($page.url.pathname)} class="bg-foreground text-on-background flex gap-8 justify-between items-start fixed bottom-0 w-full text-sm h-[5.25rem] transition-all px-5 pt-3 z-10">
 		<a href="/" class="flex flex-col h-16 w-1/4 transition-all" class:active-nav={homeRoutes.includes($page.route.id)}>
 			<div class="w-full h-1/2 flex justify-center items-center rounded-3xl py-1 transition-all" class:active-img={homeRoutes.includes($page.route.id)}>
 				{#if homeRoutes.includes($page.route.id)}

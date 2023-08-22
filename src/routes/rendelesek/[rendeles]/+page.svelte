@@ -67,7 +67,7 @@
 								{termek}
 							</div>
 							<div class="flex flex-col items-end gap-2">
-								<div class="bg-tertiary text-on-tertiary rounded-lg font-semibold px-1 w-fit">{forint(x.ar)}</div>
+								<div class="outline outline-1 outline-tertiary text-tertiary rounded-lg font-semibold px-2 w-fit">{forint(x.ar)}</div>
 								<div class="outline outline-1 outline-tertiary text-tertiary rounded-lg font-semibold px-2 w-fit">{x.darab} db</div>
 							</div>
 						</a>
@@ -91,14 +91,14 @@
 								{termek}
 							</div>
 							<div class="flex flex-col items-end gap-2">
-								<div class="bg-tertiary text-on-tertiary rounded-lg font-semibold px-1 w-fit">{forint(x.ar)}</div>
+								<div class="outline outline-1 outline-tertiary text-tertiary rounded-lg font-semibold px-2 w-fit">{forint(x.ar)}</div>
 								<div class="outline outline-1 outline-tertiary text-tertiary rounded-lg font-semibold px-2 w-fit">{x.darab} db</div>
 							</div>
 						</a>
 						<!-- Feltétek -->
 						<div class="w-full p-1.5 flex flex-wrap gap-1.5 bg-surface-variant">
 							{#each x.feltet as feltet}
-								<p class="bg-secondary text-on-secondary font-semibold rounded-lg w-fit px-2">{feltet}</p>
+								<p class="bg-foreground text-on-surface-variant font-semibold rounded-lg px-2 flex justify-center items-center">{feltet}</p>
 							{/each}
 						</div>
 					</div>

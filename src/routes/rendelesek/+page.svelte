@@ -9,6 +9,7 @@
    import Topbar from '$lib/components/Topbar.svelte';
 
    export let data;
+console.log(data.elozmenyLista)
 
 	async function handleSubmit(form) {
 		const data = new FormData(form);
@@ -39,7 +40,7 @@
 
 		<div class="mt-5">
 			{#each data.elozmenyLista as record, i (record.id)}
-				<div  animate:flip={{ duration: 700, easing: expoOut }}>
+				<div animate:flip={{ duration: 700, easing: expoOut }}>
 					{#if record.status === 'fuggoben'}
 						<h3 class="text-center font-semibold">Függőben</h3>
 					{:else if record.status === 'torolve'}
@@ -109,7 +110,7 @@
 													<!-- Feltétek -->
 													<div class="w-full p-1.5 flex flex-wrap gap-1.5 bg-surface-variant">
 														{#each x.feltet as feltet}
-															<p class="bg-secondary text-on-secondary font-semibold rounded-lg w-fit px-2">{feltet}</p>
+															<p class="bg-foreground text-on-surface-variant font-semibold rounded-lg px-2 flex justify-center items-center">{feltet}</p>
 														{/each}
 													</div>
 												</div>

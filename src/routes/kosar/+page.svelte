@@ -10,6 +10,7 @@
 	import { forint } from '$lib/frontendUtils/formazo.js';
 
    export let data;
+	console.log($cart)
 console.log((data.termekek.find(x => x.termek === 'Croissant').id))
 console.log((data.termekek.find(x => x.termek === 'Croissant').foto))
 
@@ -146,42 +147,93 @@ console.log((data.termekek.find(x => x.termek === 'Croissant').foto))
 		</div>
 	</div>
 
-		<div class="flex flex-wrap justify-center gap-5">
-			{#each Object.keys($cart) as termek, _ (_)}
-				<div animate:flip={{ duration: 500 }} class="flex flex-wrap items-start justify-center gap-5">
-					{#each $cart[termek] as x, i (i)}
-						<div class="bg-foreground rounded-2xl overflow-hidden font-semibold">
-							<div class="w-40 h-[7.6rem] relative bg-no-repeat bg-center bg-cover" style="background-image: url('/api/files/termekek/{(data.termekek.find(x => x.termek === 'Croissant').id)}/{(data.termekek.find(x => x.termek === 'Croissant').foto)}');">
-								<p class="absolute w-full h-full text-center text-on-background flex justify-center items-center backdrop-brightness-50 p-2">{termek}</p>
-								{#key x.ar}
-									<p in:fade class="absolute top-2 left-2 bg-tertiary text-on-tertiary rounded-lg px-1">{forint(x.ar)}</p>
-								{/key}
+	<!-- Feltétek nélkül -->
+	<div class="grid grid-flow-row mx-4 pt-0 rounded-xl">
+		{#each Object.keys($cart) as termek, _ (_)}
+			{#each $cart[termek] as x, i (i)}
+				{#if !x.feltet.length}
+					<div class="rounded-2xl overflow-hidden mb-2">
+						<div class="p-2 h-20 grid grid-cols-3 items-center text-center bg-foreground">
+							<div class="bg-no-repeat bg-cover bg-[url('/termek-drop.jpg')] aspect-square overflow-hidden h-full rounded-xl">
+								<img class="w-full h-full object-cover failover-image" id="{(data.termekek.find(x => x.termek === termek).foto)}" src="/api/files/termekek/{(data.termekek.find(x => x.termek === termek).id)}/{(data.termekek.find(x => x.termek === termek).foto)}" alt="">
 							</div>
-							<!-- +/- Gombok  -->
-							<div class="bg-foreground text-center flex justify-center items-center gap-3.5 py-1.5 text-tertiary font-extrabold">
-								<button on:click={e => { subtractAmount(termek, i); touchRadius(e.target, '.3rem', '.5rem'); }} class="rounded-lg bg-secondary text-on-secondary aspect-square w-6 flex justify-center items-center transition-all">-</button>
+							<div class="font-semibold">
+								{termek}
+							</div>
+							<div class="flex flex-col items-end gap-2">
+								<div class="outline outline-1 outline-tertiary text-tertiary rounded-lg font-semibold px-1 w-fit h-6 py-1 flex gap-2 justify-center items-center">
+									<button on:click={() => { subtractAmount(termek, i); }} class="bg-tertiary text-on-tertiary h-full aspect-square rounded-md flex justify-center items-center">-</button>
 									{#key x.darab}
-										<p in:fade>{x.darab} db</p>
+										<span in:fade>{x.darab} db</span>
 									{/key}
-								<button on:click={e => { addAmount(termek, i); touchRadius(e.target, '.3rem', '.5rem'); }} class="rounded-lg bg-secondary text-on-secondary aspect-square w-6 flex justify-center items-center transition-all">+</button>
-							</div>
-							<!-- Feltétel -->
-							{#if x.feltet.length}
-								<div class="text-on-surface-variant bg-surface-variant bg-opacity-70 flex flex-col py-1">
-									<div class="px-2 leading-4">
-										{#each x.feltet as feltet, _ (_)}
-											<div class="flex items-center gap-1 py-1">
-												<div class="w-5 h-5 bg-secondary rounded-lg transition-all text-on-secondary flex justify-center items-center font-extrabold" on:click={() => {feltetRemove(termek,i,feltet);}}>-</div> <div>{feltet}</div>
-											</div>
-										{/each}
-									</div>
+									<button on:click={() => { addAmount(termek, i); }} class="bg-tertiary text-on-tertiary h-full aspect-square rounded-md flex justify-center items-center">+</button>
 								</div>
-							{/if}
+								<div class="outline outline-1 outline-tertiary text-tertiary rounded-lg font-semibold px-2 w-fit h-6 py-1 flex items-center justify-center">
+									{#key x.darab}
+										<span in:fade>{forint(x.ar)}</span>
+									{/key}
+								</div>
+							</div>
 						</div>
-					{/each}
-				</div>
+					</div>
+				{/if}
 			{/each}
-		</div>
+		{/each}
+	</div>
+	<!-- feltétekkel -->
+	<div class="grid grid-flow-row mx-4 pt-0 rounded-xl">
+		{#each Object.keys($cart) as termek, _ (_)}
+			{#each $cart[termek] as x, i (i)}
+				{#if x.feltet.length}
+					<div class="rounded-2xl overflow-hidden mb-2">
+						<div class="p-2 h-20 grid grid-cols-3 items-center text-center bg-foreground">
+							<div class="bg-no-repeat bg-cover bg-[url('/termek-drop.jpg')] aspect-square overflow-hidden h-full rounded-xl">
+								<img class="w-full h-full object-cover failover-image" id="{(data.termekek.find(x => x.termek === termek).foto)}" src="/api/files/termekek/{(data.termekek.find(x => x.termek === termek).id)}/{(data.termekek.find(x => x.termek === termek).foto)}" alt="">
+							</div>
+							<div class="font-semibold">
+								{termek}
+							</div>
+							<div class="flex flex-col items-end gap-2">
+								<div class="outline outline-1 outline-tertiary text-tertiary rounded-lg font-semibold px-1 w-fit h-6 py-1 flex gap-2 justify-center items-center">
+									<button on:click={() => { subtractAmount(termek, i); }} class="bg-tertiary text-on-tertiary h-full aspect-square rounded-md flex justify-center items-center">-</button>
+									{#key x.darab}
+										<span in:fade>{x.darab} db</span>
+									{/key}
+									<button on:click={() => { addAmount(termek, i); }} class="bg-tertiary text-on-tertiary h-full aspect-square rounded-md flex justify-center items-center">+</button>
+								</div>
+								<div class="outline outline-1 outline-tertiary text-tertiary rounded-lg font-semibold px-2 w-fit h-6 py-1 flex items-center justify-center">
+									{#key x.darab}
+										<span in:fade>{forint(x.ar)}</span>
+									{/key}
+								</div>
+							</div>
+						</div>
+						<!-- Feltétek -->
+						<div class="w-full p-1.5 flex flex-wrap gap-1.5 bg-surface-variant">
+							{#each x.feltet as feltet}
+								<p class="bg-foreground text-on-surface-variant font-semibold rounded-lg px-1.5 flex justify-center items-center">
+									<button class="mr-1 h-5 w-5 py-[0.05rem]" on:click={() => {feltetRemove(termek,i,feltet);}}>
+										<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-error" fill="currentColor" height="48" viewBox="0 -960 960 960" width="48">
+											<path d="M334.522-288 480-433.478 625.478-288 672-334.522 526.522-480 672-625.478 625.478-672
+												480-526.522 334.522-672 288-625.478 433.478-480 288-334.522 334.522-288ZM480.078-65.869q-85.469
+												0-161.006-32.395-75.536-32.395-131.975-88.833-56.438-56.439-88.833-131.897-32.395-75.459-32.395-160.928
+												0-86.469 32.395-162.006 32.395-75.536 88.745-131.504 56.349-55.968 131.849-88.616 75.5-32.648 161.017-32.648
+												86.516 0 162.12 32.604 75.603 32.604 131.529 88.497t88.549 131.452Q894.696-566.584 894.696-480q0 85.547-32.648
+												161.075-32.648 75.527-88.616 131.896-55.968 56.37-131.426 88.765-75.459 32.395-161.928 32.395ZM480-145.087q139.739
+												0 237.326-97.732Q814.913-340.551 814.913-480q0-139.739-97.587-237.326-97.587-97.587-237.609-97.587-139.021 0-236.826
+												97.587-97.804 97.587-97.804 237.609 0 139.021 97.732 236.826Q340.551-145.087 480-145.087ZM480-480Z"
+											/>
+										</svg>
+									</button>
+									{feltet}
+								</p>
+							{/each}
+						</div>
+					</div>
+				{/if}
+			{/each}
+		{/each}
+	</div>
 
 	{#if Object.keys($cart).length && data.szunetArray.length}
 		<!-- Fizetési mód -->
@@ -246,6 +298,10 @@ console.log((data.termekek.find(x => x.termek === 'Croissant').foto))
 
 	.activeSzunet {
 		@apply text-tertiary;
+	}
+
+	.failover-image[id=''] {
+		visibility: hidden;
 	}
 
 </style>

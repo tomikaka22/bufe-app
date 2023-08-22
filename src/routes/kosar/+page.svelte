@@ -151,7 +151,7 @@
 				{#if !x.feltet.length}
 					<div class="rounded-2xl overflow-hidden mb-2">
 						<div class="p-2 h-20 grid grid-cols-3 items-center text-center bg-foreground">
-							<div class="bg-no-repeat bg-cover bg-[url('/termek-drop.jpg')] aspect-square overflow-hidden h-full rounded-xl">
+							<div class="bg-no-repeat bg-cover bg-[url('/termek-drop.avif')] aspect-square overflow-hidden h-full rounded-xl">
 								<img class="w-full h-full object-cover failover-image" id="{(data.termekek.find(x => x.termek === termek).foto)}" src="/api/files/termekek/{(data.termekek.find(x => x.termek === termek).id)}/{(data.termekek.find(x => x.termek === termek).foto)}" alt="">
 							</div>
 							<div class="font-semibold">
@@ -184,7 +184,7 @@
 				{#if x.feltet.length}
 					<div class="rounded-2xl overflow-hidden mb-2">
 						<div class="p-2 h-20 grid grid-cols-3 items-center text-center bg-foreground">
-							<div class="bg-no-repeat bg-cover bg-[url('/termek-drop.jpg')] aspect-square overflow-hidden h-full rounded-xl">
+							<div class="bg-no-repeat bg-cover bg-[url('/termek-drop.avif')] aspect-square overflow-hidden h-full rounded-xl">
 								<img class="w-full h-full object-cover failover-image" id="{(data.termekek.find(x => x.termek === termek).foto)}" src="/api/files/termekek/{(data.termekek.find(x => x.termek === termek).id)}/{(data.termekek.find(x => x.termek === termek).foto)}" alt="">
 							</div>
 							<div class="font-semibold">

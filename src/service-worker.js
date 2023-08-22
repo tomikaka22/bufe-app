@@ -19,7 +19,7 @@ const ASSETS = [
 const cachedURLs = [
 	'/api/files',
 	'/list/__data.json', // Be cacheli a /list load functionjét hogy ne kelljen várni amíg oda navigálunk.
-	'/termek-drop.jpg'
+	'/termek-drop.avif'
 ];
 
 self.addEventListener('install', (event) => {

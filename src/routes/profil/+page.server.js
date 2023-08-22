@@ -10,7 +10,7 @@ export const actions = {
 		const image = (await request.formData()).get('avatar');
 
 		if (image.size) {
-			const optimizedImage = await sharp(await image.arrayBuffer()).resize(512, 512).avif({ effort: 1, chromaSubsampling: '4:2:0' }).toBuffer();
+			const optimizedImage = await sharp(await image.arrayBuffer()).resize(600, 600).avif({ effort: 2, chromaSubsampling: '4:2:0' }).toBuffer();
 
 			const formData = new FormData();
 			formData.append('avatar', new Blob([ optimizedImage ]));

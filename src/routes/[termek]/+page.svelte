@@ -102,7 +102,7 @@
 		<div>
 			<h1 class="text-primary text-center mb-2 text-xl font-semibold">{termek}</h1>
 			<div class="flex justify-center">
-				<div class="w-72 aspect-square rounded-3xl transition-all overflow-hidden bg-no-repeat bg-center bg-[url('/termek-drop.jpg')]">
+				<div class="w-72 aspect-square rounded-3xl transition-all overflow-hidden bg-no-repeat bg-center bg-[url('/termek-drop.avif')]">
 					<img class="w-full h-full failover-image" id="{data.termekek.foto}" src="/api/files/termekek/{data.termekek.id}/{data.termekek.foto}" alt="">
 				</div>
 			</div>

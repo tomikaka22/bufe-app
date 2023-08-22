@@ -161,7 +161,7 @@ console.log((data.termekek.find(x => x.termek === 'Croissant').foto))
 								{termek}
 							</div>
 							<div class="flex flex-col items-end gap-2">
-								<div class="outline outline-1 outline-tertiary text-tertiary rounded-lg font-semibold px-1 h-6 py-1 flex justify-center items-center">
+								<div class="outline outline-1 outline-tertiary text-tertiary rounded-lg font-semibold px-1 h-6 py-1 flex flex-row justify-center items-center">
 									<button on:click={() => { subtractAmount(termek, i); }} class="bg-tertiary text-on-tertiary h-full aspect-square rounded-md flex justify-center items-center">-</button>
 										{#key x.darab}
 											<span in:fade class="px-2">{x.darab} db</span>

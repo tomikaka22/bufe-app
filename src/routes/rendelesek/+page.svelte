@@ -74,8 +74,8 @@
 											{#if !x.feltet.length}
 												<div class="rounded-2xl overflow-hidden">
 													<a href="/rendelesek/{record.id}" class="p-2 h-20 grid grid-cols-3 items-center text-center bg-foreground">
-														<div class="bg-background aspect-square overflow-hidden h-full rounded-xl">
-															<img class="w-full h-full object-cover" src="/api/files/termekek/{(data.termekek.find(x => x.termek === termek).id)}/{(data.termekek.find(x => x.termek === termek).foto)}" alt="">
+														<div class="bg-no-repeat bg-cover bg-[url('/termek-drop.jpg')] aspect-square overflow-hidden h-full rounded-xl">
+															<img class="w-full h-full object-cover failover-image" id="{(data.termekek.find(x => x.termek === termek).foto)}" src="/api/files/termekek/{(data.termekek.find(x => x.termek === termek).id)}/{(data.termekek.find(x => x.termek === termek).foto)}" alt="">
 														</div>
 														<div class="font-semibold">
 															{termek}
@@ -95,8 +95,8 @@
 											{#if x.feltet.length}
 												<div class="rounded-2xl overflow-hidden">
 													<a href="/rendelesek/{record.id}" class="p-2 h-20 grid grid-cols-3 items-center text-center bg-foreground">
-														<div class="bg-background aspect-square overflow-hidden h-full rounded-xl">
-															<img class="w-full h-full object-cover" src="/api/files/termekek/{(data.termekek.find(x => x.termek === termek).id)}/{(data.termekek.find(x => x.termek === termek).foto)}" alt="">
+														<div class="bg-no-repeat bg-cover bg-[url('/termek-drop.jpg')] aspect-square overflow-hidden h-full rounded-xl">
+															<img class="w-full h-full object-cover failover-image" id="{(data.termekek.find(x => x.termek === termek).foto)}" src="/api/files/termekek/{(data.termekek.find(x => x.termek === termek).id)}/{(data.termekek.find(x => x.termek === termek).foto)}" alt="">
 														</div>
 														<div class="font-semibold">
 															{termek}
@@ -139,5 +139,9 @@
 		outline-2
 		bg-foreground
 		outline-primary;
+	}
+
+	.failover-image[id=''] {
+		visibility: hidden;
 	}
 </style>

@@ -93,8 +93,8 @@
 		<div>
 			<h1 class="text-primary text-center mb-2 text-xl font-semibold">{termek}</h1>
 			<div class="flex justify-center">
-				<div class="w-10/12">
-					<img class="w-full h-full rounded-3xl transition-all" src="/api/files/termekek/{data.termekek.id}/{data.termekek.foto}" alt="" on:click={(e) => {touchRadius(e.target, '0.5rem', '1.5rem');}}>
+				<div class="w-72 aspect-square rounded-3xl transition-all overflow-hidden bg-no-repeat bg-center bg-[url('/termek-drop.jpg')]">
+					<img class="w-full h-full failover-image" id="{data.termekek.foto}" src="/api/files/termekek/{data.termekek.id}/{data.termekek.foto}" alt="">
 				</div>
 			</div>
 
@@ -103,7 +103,7 @@
 	{#if maxAmount}
 		{#key price}
 			<div class="flex w-full justify-center items-center">
-				<div class="mt-5 outline outline-tertiary outline-1 rounded-lg px-5 font-semibold text-lg py-1" on:click={(e) => {touchRadius(e.target, '0.3rem', '0.5rem');}}>
+				<div class="mt-5 outline outline-tertiary outline-1 rounded-lg px-5 font-semibold text-lg py-1">
 					<h2 class="font-semibold text-on-tertiary-container" in:fade="{{ duration: 200 }}">{price} Ft</h2>
 				</div>
 			</div>
@@ -164,5 +164,9 @@
 
 	.ar {
 		@apply text-secondary;
+	}
+
+	.failover-image[id=''] {
+		visibility: hidden;
 	}
 </style>

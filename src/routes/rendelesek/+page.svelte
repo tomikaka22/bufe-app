@@ -9,7 +9,6 @@
    import Topbar from '$lib/components/Topbar.svelte';
 
    export let data;
-console.log(data.elozmenyLista)
 
 	async function handleSubmit(form) {
 		const data = new FormData(form);

@@ -10,9 +10,6 @@
 	import { forint } from '$lib/frontendUtils/formazo.js';
 
    export let data;
-	console.log($cart)
-console.log((data.termekek.find(x => x.termek === 'Croissant').id))
-console.log((data.termekek.find(x => x.termek === 'Croissant').foto))
 
 	let szunetSplide;
 	let fizetes = 'Készpénz';
@@ -160,12 +157,12 @@ console.log((data.termekek.find(x => x.termek === 'Croissant').foto))
 							<div class="font-semibold">
 								{termek}
 							</div>
-							<div class="flex flex-col items-end gap-2">
+							<div class="grid grid-rows-2 justify-items-end gap-2">
 								<div class="outline outline-1 outline-tertiary text-tertiary rounded-lg font-semibold px-1 h-6 py-1 flex flex-row justify-center items-center">
 									<button on:click={() => { subtractAmount(termek, i); }} class="bg-tertiary text-on-tertiary h-full aspect-square rounded-md flex justify-center items-center">-</button>
-										{#key x.darab}
-											<span in:fade class="px-2">{x.darab} db</span>
-										{/key}
+									{#key x.darab}
+										<span in:fade class="px-2">{x.darab} db</span>
+									{/key}
 									<button on:click={() => { addAmount(termek, i); }} class="bg-tertiary text-on-tertiary h-full aspect-square rounded-md flex justify-center items-center">+</button>
 								</div>
 								<div class="outline outline-1 outline-tertiary text-tertiary rounded-lg font-semibold px-2 w-fit h-6 py-1 flex items-center justify-center">

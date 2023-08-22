@@ -117,7 +117,9 @@
 						{#if termek.kategoria === 'Étel'}
 							<a href="{termek.termek}?referrer=/list" class="rounded-2xl transition-all overflow-hidden hover:rounded-lg">
 								<div class="h-28 overflow-clip">
-									<img class="w-full h-full object-cover" src="/api/files/termekek/{termek.id}/{termek.foto}" alt="">
+									<object class="w-full h-full object-cover" data="/api/files/termekek/{termek.id}/{termek.foto}" type="image/avif">
+										<img class="w-full h-full object-cover" src="/termek-drop.jpg" alt="">
+									</object>
 								</div>
 								<div class="bg-foreground p-3 font-semibold flex justify-between">
 									<div class="w-9/12">
@@ -139,7 +141,9 @@
 						{#if termek.kategoria === 'Ital'}
 							<a href="{termek.termek}?referrer=/list" class="rounded-2xl transition-all overflow-hidden hover:rounded-lg">
 								<div class="h-28 overflow-clip">
-									<img class="w-full h-full object-cover" src="/api/files/termekek/{termek.id}/{termek.foto}" alt="">
+									<object class="w-full h-full object-cover" data="/api/files/termekek/{termek.id}/{termek.foto}" type="image/avif">
+										<img class="w-full h-full object-cover" src="/termek-drop.jpg" alt="">
+									</object>
 								</div>
 								<div class="bg-foreground p-3 font-semibold flex justify-between">
 									<div class="w-9/12">
@@ -161,7 +165,9 @@
 						{#if termek.kategoria === 'Nasi'}
 							<a href="{termek.termek}?referrer=/list" class="rounded-2xl transition-all overflow-hidden hover:rounded-lg">
 								<div class="h-28 overflow-clip">
-									<img class="w-full h-full object-cover" src="/api/files/termekek/{termek.id}/{termek.foto}" alt="">
+									<object class="w-full h-full object-cover" data="/api/files/termekek/{termek.id}/{termek.foto}" type="image/avif">
+										<img class="w-full h-full object-cover" src="/termek-drop.jpg" alt="">
+									</object>
 								</div>
 								<div class="bg-foreground p-3 font-semibold flex justify-between">
 									<div class="w-9/12">
@@ -183,7 +189,9 @@
 						{#if termek.kategoria === 'Egyéb'}
 							<a href="{termek.termek}?referrer=/list" class="rounded-2xl transition-all overflow-hidden hover:rounded-lg">
 								<div class="h-28 overflow-clip">
-									<img class="w-full h-full object-cover" src="/api/files/termekek/{termek.id}/{termek.foto}" alt="">
+									<object class="w-full h-full object-cover" data="/api/files/termekek/{termek.id}/{termek.foto}" type="image/avif">
+										<img class="w-full h-full object-cover" src="/termek-drop.jpg" alt="">
+									</object>
 								</div>
 								<div class="bg-foreground p-3 font-semibold flex justify-between">
 									<div class="w-9/12">

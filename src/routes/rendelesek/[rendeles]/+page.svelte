@@ -4,8 +4,12 @@
 	import { forint } from '$lib/frontendUtils/utils.js';
    import { cart, total } from '$lib/stores/Cart.js';
    import Topbar from '$lib/components/Topbar.svelte';
+	import Notice from '$lib/components/dialogs/Notice.svelte';
 
 	export let data;
+	let showModal = false;
+	let modalTitle;
+	let modalText;
 
 	function rebuy() {
 		$cart = data.record.termekek;
@@ -31,7 +35,9 @@
 		try {
 			await navigator.share(shareData);
 		} catch (error) {
-			alert(error);
+			modalTitle = 'Hiba.';
+			modalText = 'Sikertelen megosztás.';
+			showModal = true;
 		}
 	}
 
@@ -44,6 +50,8 @@
 		text={data.record.updated.slice(0, -5)}
 	>
 	</Topbar>
+
+	<Notice bind:showModal title={modalTitle} text={modalText}></Notice>
 
 	<div class="flex w-full justify-center items-center">
 		<div class="outline outline-primary outline-1 rounded-lg px-5 font-semibold text-lg py-1">

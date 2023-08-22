@@ -5,8 +5,13 @@
    import { cart, total } from '$lib/stores/Cart.js';
 	import { touchRadius } from '$lib/frontendUtils/touchRadius.js';
    import Topbar from '$lib/components/Topbar.svelte';
+	import Notice from '$lib/components/dialogs/Notice.svelte';
 
    export let data;
+
+	let showModal = false;
+	let modalTitle;
+	let modalText;
 
    const termek = data.termekek.termek;
    const maxAmount = data.termekek.darab;
@@ -75,7 +80,9 @@
 
 			goto('/list?Category='.concat($page.url.searchParams.get('Category')));
 		} else {
-			alert(`Túl sok ${termek} van már a kosárban!`);
+			modalTitle = 'Hiba.';
+			modalText = `Túl sok ${termek} van már a kosárban!`;
+			showModal = true;
 		}
 
 	}
@@ -88,6 +95,8 @@
       targeturl={$page.url.searchParams.get('referrer') || '/list'}
       text={termek}
    ></Topbar>
+
+	<Notice bind:showModal title={modalTitle} text={modalText}></Notice>
 
 	<div class="px-6">
 		<div>

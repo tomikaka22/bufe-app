@@ -114,7 +114,7 @@
 			urites();
 			goto('/rendelesek');
 		} else {
-			alert(result.data.error);
+			console.log(result.data.error);
 			delete $cart[result.data.sok];
 			$cart = $cart; // kell reactivity miatt
 			recalculate();

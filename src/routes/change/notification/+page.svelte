@@ -2,6 +2,11 @@
 	import { fade } from 'svelte/transition';
 	import { urlB64ToUint8Array } from '$lib/frontendUtils/utils.js';
 	import Topbar from '$lib/components/Topbar.svelte';
+	import Notice from '$lib/components/dialogs/Notice.svelte';
+
+	let showModal = false;
+	let modalTitle;
+	let modalText;
 
 	let submitting = false;
 	let pushSubscriptionData;
@@ -10,7 +15,9 @@
 
 	async function notificationRequest() {
 		if (Notification.permission === 'default') {
-			alert('Ahhoz hogy infót kapj a rendelésed állapotáról engedélyezd az értesítéseket.');
+			modalTitle = 'Értesítések bekapcsolása.';
+			modalText = 'Ahhoz hogy infót kapj a rendelésed állapotáról engedélyezd az értesítéseket.';
+			showModal = true;
 			await Notification.requestPermission();
 		}
 
@@ -43,6 +50,8 @@
 		targeturl={'/profil'}
 		text={'Értesítések'}
 	></Topbar>
+
+	<Notice bind:showModal title={modalTitle} text={modalText}></Notice>
 
 	<div class="text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
 

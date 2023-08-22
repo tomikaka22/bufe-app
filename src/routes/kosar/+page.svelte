@@ -190,7 +190,7 @@
 							<div class="font-semibold">
 								{termek}
 							</div>
-							<div class="flex flex-col items-end gap-2">
+							<div class="grid grid-rows-2 justify-items-end gap-2">
 								<div class="outline outline-1 outline-tertiary text-tertiary rounded-lg font-semibold px-1 w-fit h-6 py-1 flex gap-2 justify-center items-center">
 									<button on:click={() => { subtractAmount(termek, i); }} class="bg-tertiary text-on-tertiary h-full aspect-square rounded-md flex justify-center items-center">-</button>
 									{#key x.darab}

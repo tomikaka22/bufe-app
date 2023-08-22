@@ -17,6 +17,7 @@ const ASSETS = [
 ];
 
 const cachedURLs = [
+	'/api/files',
 	'/list/__data.json', // Be cacheli a /list load functionjét hogy ne kelljen várni amíg oda navigálunk.
 	'/api/avatar',
 	'/termek-drop.jpg'
@@ -62,7 +63,7 @@ self.addEventListener('fetch', (event) => {
 			return Response.redirect('/offline', 303);
 
 		// cache first with cache refresh - https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Caching#cache_first_with_cache_refresh
-		if (cachedURLs.includes(url.pathname) || (await termekFotoURLs()).includes(url.pathname)) {
+		if (cachedURLs.some(route => { return url.pathname.startsWith(route); })) {
 			console.log('cache first with cache refresh', url.pathname);
 			const networkResponse = fetch(event.request).then(async (response) => {
 				if (response.ok) {

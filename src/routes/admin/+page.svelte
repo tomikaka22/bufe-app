@@ -32,13 +32,13 @@
 	<div class="grid grid-rows-[3rem_auto] h-screen">
 		<!-- Gombok -->
 		<div class="outline outline-1 py-2 flex text-center items-center justify-evenly z-10">
-			<button class="outline outline-1 w-24 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={termekModal.showModal()}>Termékek</button>
-			<button class="outline outline-1 w-24 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={darabModal.showModal()}>Darab</button>
-			<button class="outline outline-1 w-24 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={arakModal.showModal()}>Árak</button>
-			<button class="outline outline-1 w-24 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={leirasModal.showModal()}>Leírás</button>
-			<button class="outline outline-1 w-24 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={feltetModal.showModal()}>Feltét</button>
-			<button class="outline outline-1 w-24 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={kategoriaModal.showModal()}>Kategória</button>
-			<button class="outline outline-1 w-24 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={kepekModal.showModal()}>Képek</button>
+			<button class="outline outline-1 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={termekModal.showModal()}>Termékek</button>
+			<button class="outline outline-1 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={darabModal.showModal()}>Darab</button>
+			<button class="outline outline-1 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={arakModal.showModal()}>Árak</button>
+			<button class="outline outline-1 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={leirasModal.showModal()}>Leírás</button>
+			<button class="outline outline-1 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={feltetModal.showModal()}>Feltét</button>
+			<button class="outline outline-1 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={kategoriaModal.showModal()}>Kategória</button>
+			<button class="outline outline-1 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={kepekModal.showModal()}>Képek</button>
 		</div>
 
 		<!-- Rendelések -->

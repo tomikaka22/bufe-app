@@ -9,5 +9,4 @@ bufe-app
 src/lib/backendUtils/szunetSzamolo.js
 src/lib/Pocketbase/pb_migrations
 src/lib/Pocketbase/pb_data/log*
-src/lib/Pocketbase/pb_data/data*
 .gitignore

@@ -24,9 +24,11 @@
       <form use:enhance action="?/changeAvatar" method="POST" enctype="multipart/form-data">
 			<h1 class="text-center text-[#ffb68e] text-3xl font-semibold my-2">{data.name}</h1>
          <label for="avatar">
-            <img class="rounded-[5rem] hover:rounded-3xl transition-all" src="/api/avatar" alt="">
+            <div class="w-72 rounded-[5rem] hover:rounded-3xl transition-all overflow-hidden">
+					<img class="w-full h-full object-cover" src="/api/avatar" alt="">
+				</div>
          </label>
-         <input on:input={(e) => {e.target.form.submit();}} hidden type="file" name="avatar" id="avatar" value="" accept="image/*">
+         <input on:change={(e) => {e.target.form.submit();}} hidden type="file" name="avatar" id="avatar" value="" accept="image/*">
       </form>
    </div>
 

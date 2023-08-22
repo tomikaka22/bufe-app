@@ -1,4 +1,5 @@
 import { redirect } from '@sveltejs/kit';
+import sharp from 'sharp';
 
 export const actions = {
 	logout: async ({ locals }) => {
@@ -6,9 +7,17 @@ export const actions = {
 		throw redirect(303, '/login');
 	},
 	changeAvatar: async ({ request, locals }) => {
-		const data = await request.formData();
+		const image = (await request.formData()).get('avatar');
 
-		await locals.pb.collection('users').update(locals.pb.authStore.baseModel.id, data);
+		if (image.size) {
+			const optimizedImage = await sharp(await image.arrayBuffer()).resize(512, 512).avif({ effort: 1, chromaSubsampling: '4:2:0' }).toBuffer();
+
+			const formData = new FormData();
+			formData.append('avatar', new Blob([ optimizedImage ]));
+
+			await locals.pb.collection('users').update(locals.pb.authStore.baseModel.id, formData);
+		}
+
 	}
 };
 

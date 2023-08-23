@@ -16,6 +16,7 @@ webpush.setVapidDetails('mailto:szabot2@kkszki.hu', PUSH_PUBLIC_KEY, PUSH_PRIVAT
 export async function load({ locals }) {
 	return {
 		felhasznalokLista: structuredClone(await locals.pb.collection('users').getFullList({ sort: '+created' })),
+		banLista: structuredClone(await locals.pb.collection('tiltottak').getFullList({ sort: '+created' })),
 		termekekLista: structuredClone(await locals.pb.collection('termekek').getFullList({ sort: '+termek' })),
 		rendelesek: {
 			fuggoben: structuredClone(await locals.pb.collection('rendelesek').getFullList({ filter: 'status = "fuggoben"' })),

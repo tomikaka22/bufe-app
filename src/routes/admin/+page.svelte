@@ -13,7 +13,7 @@
 	import Ban from '$lib/components/admin/Ban.svelte';
 
 	export let data;
-
+console.log(data)
 	let darabModal;
 	let termekModal;
 	let arakModal;

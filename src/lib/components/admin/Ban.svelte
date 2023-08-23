@@ -12,17 +12,15 @@
 	<AdminTopbar midText={'Tiltás'} input={input} modal={banModal}></AdminTopbar>
 		<div class="m-4">
 			<h1 class="text-xl font-semibold text-primary">Kitiltott e-mailek:</h1>
-			{#each data.felhasznalokLista as user, i (i)}
-				{#if user.tiltas}
-					<form bind:this={input} class="text-primary font-semibold text-lg" action="?/unban" method="POST">
-						<div class="flex gap-2 items-center">
-							<p class="px-2 my-1 w-fit bg-error rounded-lg text-on-error">{user.email}</p>
-							<button class="outline outline-1 px-2 rounded-2xl text-tertiary transition-all hover:text-error-container">Pardon</button>
+			{#each data.banLista as ban, i (i)}
+				<form bind:this={input} class="text-primary font-semibold text-lg" action="?/unban" method="POST">
+					<div class="flex gap-2 items-center">
+						<p class="px-2 my-1 w-fit bg-error rounded-lg text-on-error">{ban.email}</p>
+						<button class="outline outline-1 px-2 rounded-2xl text-tertiary transition-all hover:text-error-container">Pardon</button>
 
-							<input type="text" hidden name="id" value="{user.id}">
-						</div>
-					</form>
-				{/if}
+						<input type="text" hidden name="id" value="{ban.user}">
+					</div>
+				</form>
 			{/each}
 
 			<h1 class="text-xl mt-10 font-semibold text-primary">e-mailek:</h1>

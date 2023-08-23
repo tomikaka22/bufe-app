@@ -34,7 +34,7 @@ export async function handle({ event, resolve }) {
 	}
 
 	// Ha user bannolva van redirect
-	if (event.locals.pb.authStore.baseModel?.kitiltva)
+	if (event.locals.pb.authStore.baseModel?.tiltas)
 		throw redirect(403, '/banned');
 
 	if (event.url.pathname.startsWith('/api'))

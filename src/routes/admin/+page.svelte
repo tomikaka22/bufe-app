@@ -10,6 +10,7 @@
 	import Feltet from '$lib/components/admin/Feltet.svelte';
 	import Kategoria from '$lib/components/admin/Kategoria.svelte';
 	import Kepek from '$lib/components/admin/Kepek.svelte';
+	import Ban from '$lib/components/admin/Ban.svelte';
 
 	export let data;
 
@@ -20,6 +21,7 @@
 	let feltetModal;
 	let kategoriaModal;
 	let kepekModal;
+	let banModal;
 
 	setInterval(async () => {
 		invalidateAll();
@@ -39,6 +41,7 @@
 			<button class="outline outline-1 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={feltetModal.showModal()}>Feltét</button>
 			<button class="outline outline-1 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={kategoriaModal.showModal()}>Kategória</button>
 			<button class="outline outline-1 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={kepekModal.showModal()}>Képek</button>
+			<button class="outline outline-1 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={banModal.showModal()}>Tiltás</button>
 		</div>
 
 		<!-- Rendelések -->
@@ -140,6 +143,7 @@
 <Feltet bind:feltetModal data={data}></Feltet>
 <Kategoria bind:kategoriaModal data={data}></Kategoria>
 <Kepek bind:kepekModal data={data}></Kepek>
+<Ban bind:banModal data={data}></Ban>
 
 </main>
 

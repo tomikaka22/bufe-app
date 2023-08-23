@@ -18,17 +18,28 @@ export async function load({ locals }) {
 	if (!admins.includes(locals.pb.authStore.baseModel.id)) throw redirect(303, '/'); // Ha nem admin id-vel van bejelentkezve redirect to login
 	else {
 		return {
-			'termekekLista': structuredClone(await locals.pb.collection('termekek').getFullList(1, { sort: '+termek' })),
-			'rendelesek': {
-				'fuggoben': structuredClone(await locals.pb.collection('rendelesek').getFullList(1, { filter: 'status = "fuggoben"' })),
-				'kesz': structuredClone(await locals.pb.collection('rendelesek').getFullList(1, { filter: 'status = "folyamatban"' }))
+			felhasznalokLista: structuredClone(await locals.pb.collection('users').getFullList({ sort: '+created' })),
+			termekekLista: structuredClone(await locals.pb.collection('termekek').getFullList(1, { sort: '+termek' })),
+			rendelesek: {
+				fuggoben: structuredClone(await locals.pb.collection('rendelesek').getFullList(1, { filter: 'status = "fuggoben"' })),
+				kesz: structuredClone(await locals.pb.collection('rendelesek').getFullList(1, { filter: 'status = "folyamatban"' }))
 			},
-			'szunetArray': szunet()
+			szunetArray: szunet()
 		};
 	}
 }
 
 export const actions = {
+	ban: async ({ request, locals }) => {
+		const data = Object.fromEntries(await request.formData());
+
+		await locals.pb.collection('users').update(data.id, { kitiltva: true });
+	},
+	unban: async ({ request, locals }) => {
+		const data = Object.fromEntries(await request.formData());
+
+		await locals.pb.collection('users').update(data.id, { kitiltva: false });
+	},
 	foto: async ({ request, locals }) => {
 		const data = await request.formData();
 

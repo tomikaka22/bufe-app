@@ -145,7 +145,10 @@
 
 		<a href="/profil" class="flex flex-col h-16 w-full transition-all" class:active-nav={profilRoutes.includes($page.route.id)}>
 			<div class="w-full h-1/2 flex justify-center items-center rounded-3xl py-1 transition-all" class:active-img={profilRoutes.includes($page.route.id)}>
-				<img class:profileActive={profilRoutes.includes($page.route.id)} class="h-full aspect-square rounded-lg transition-all grayscale-[0.5]" src="/api/avatar" alt="">
+				<div class:rounded-xl={profilRoutes.includes($page.route.id)} class="h-full aspect-square rounded-lg overflow-hidden flex justify-center items-center transition-all relative">
+					<img class="h-full w-full" src="/api/avatar" alt="">
+					<div class:opacity-40={!profilRoutes.includes($page.route.id)} class="absolute w-full h-full bg-on-primary transition-all opacity-0"></div>
+				</div>
 			</div>
 			<div class="w-full h-1/2 flex justify-center items-center" class:active-text={profilRoutes.includes($page.route.id)}>
 				Profil
@@ -195,9 +198,5 @@
 
 	.navbar-background-noconflict {
 		@apply bg-background;
-	}
-
-	.profileActive {
-		@apply rounded-xl grayscale-0;
 	}
 </style>

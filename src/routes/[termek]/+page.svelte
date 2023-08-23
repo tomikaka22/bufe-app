@@ -9,6 +9,9 @@
 
    export let data;
 
+	let showFavorite = false;
+	let favoriteForm;
+
 	let showModal = false;
 	let modalTitle;
 	let modalText;
@@ -87,6 +90,13 @@
 
 	}
 
+	function flipIMG(e) {
+		if (e.target.id === 'svg-star' || e.target.id === 'svg-path')
+			document.querySelector('form').submit();
+		else
+			showFavorite = !showFavorite;
+	}
+
 </script>
 
 <main in:fade={{ duration: 180 }}>
@@ -101,10 +111,34 @@
 	<div class="px-6">
 		<div>
 			<h1 class="text-primary text-center mb-2 text-xl font-semibold">{termek}</h1>
-			<div class="flex justify-center">
-				<div class="w-72 aspect-square rounded-3xl transition-all overflow-hidden bg-no-repeat bg-center bg-[url('/termek-drop.avif')]">
-					<img class="w-full h-full failover-image" id="{data.termekek.foto}" src="/api/files/termekek/{data.termekek.id}/{data.termekek.foto}" alt="">
-				</div>
+			<div class="flex justify-center w-full">
+				<button on:click={flipIMG}>
+					{#if !showFavorite}
+						<div in:fade={{ duration: 200 }} class="w-72 aspect-square rounded-3xl transition-all overflow-hidden bg-no-repeat bg-center bg-[url('/termek-drop.avif')]">
+							<img class="w-full h-full failover-image" id="{data.termekek.foto}" src="/api/files/termekek/{data.termekek.id}/{data.termekek.foto}" alt="">
+						</div>
+					{:else}
+						<form method="POST" in:fade={{ duration: 200 }} class="w-72 aspect-square rounded-3xl bg-foreground flex flex-col justify-center items-center">
+							{#if data.kedvencek.includes(data.termekek.id)}
+								<svg id="svg-star" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+									height="80" viewBox="0 -1600 1600 1600" width="80"><path id="svg-path" d="m388.333 -133.333
+									108.333 -468.333L133.333 -916.667l480 -41.667 186.667 -441.667 186.667 441.667
+									480 41.667 -363.333 315 108.333 468.333 -411.667 -248.333L388.333 -133.333Z"/>
+								</svg>
+							{:else}
+								<svg id="svg-star" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+									height="80" viewBox="0 -1600 1600 1600" width="80"><path id="svg-path" d="M538.333 -341.667
+									800 -498.332l261.667 158.333 -70 -296.665 230 -200 -303.335 -26.665 -118.333 -280
+									-118.333 278.333 -303.335 26.665 230 200 -70 296.665Zm-150 208.332 108.333 -468.333L133.333
+									-916.667l480 -41.667 186.667 -441.665 186.665 441.667 480 41.667 -363.335 315 108.333 468.333L800
+									-381.667 388.333 -133.335ZM800 -725Z"/>
+								</svg>
+							{/if}
+							<input type="text" hidden name="id" value="{data.termekek.id}">
+								<p class="font-semibold">Kedvenc</p>
+						</form>
+					{/if}
+				</button>
 			</div>
 
 			<h4 class="text-center font-semibold mt-2">{data.termekek.leiras}</h4>

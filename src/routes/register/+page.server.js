@@ -12,7 +12,7 @@ export const actions = {
 
 		const banRecord = await locals.pb.collection('tiltottak').getFirstListItem(`email = "${body.email}"`);
 		if (banRecord.email === body.email)
-			throw redirect(403, '/banned');
+			throw redirect(303, '/banned');
 
 		try {
 			await locals.pb.collection('users').create({ ...body });

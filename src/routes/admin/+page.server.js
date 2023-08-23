@@ -1,4 +1,5 @@
 import { PUSH_PRIVATE_KEY, PUSH_PUBLIC_KEY } from '$env/static/private';
+import { redirect } from '@sveltejs/kit';
 import webpush from 'web-push';
 import sharp from 'sharp';
 import { szunet } from '$lib/backendUtils/szunetSzamolo';
@@ -27,17 +28,19 @@ export async function load({ locals }) {
 export const actions = {
 	ban: async ({ request, locals }) => {
 		const data = Object.fromEntries(await request.formData());
+		const user = await locals.pb.collection('users').getOne(data.id);
 
-		const user = await locals.pb.collection('users').update(data.id, { kitiltva: true });
-		await locals.pb.collection('tiltottak').create({ email: user.email, user: user.id });
+		if (user.id === 'u1fy74rt1m48tx1' )  // Az admin profil ne tudja bannolni magát
+			throw redirect(303, '/admin');
+
+		const banRecord = await locals.pb.collection('tiltottak').create({ email: user.email, user: user.id });
+		await locals.pb.collection('users').update(data.id, { tiltas: banRecord.id });
 	},
 	unban: async ({ request, locals }) => {
 		const data = Object.fromEntries(await request.formData());
+		const user = await locals.pb.collection('users').getOne(data.id);
 
-		const user = await locals.pb.collection('users').update(data.id, { kitiltva: false });
-		const banRecord = await locals.pb.collection('tiltottak').getFirstListItem(`user = "${user.id.trim()}"`);
-
-		await locals.pb.collection('tiltottak').delete(banRecord.id);
+		await locals.pb.collection('tiltottak').delete(user.tiltas);
 	},
 	foto: async ({ request, locals }) => {
 		const data = await request.formData();

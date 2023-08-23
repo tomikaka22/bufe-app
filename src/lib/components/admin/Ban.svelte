@@ -18,7 +18,7 @@
 						<p class="px-2 my-1 w-fit bg-error rounded-lg text-on-error">{ban.email}</p>
 						<button class="outline outline-1 px-2 rounded-2xl text-tertiary transition-all hover:text-error-container">Pardon</button>
 
-						<input type="text" hidden name="id" value="{ban.user}">
+						<input type="text" hidden name="email" value="{ban.email}">
 					</div>
 				</form>
 			{/each}

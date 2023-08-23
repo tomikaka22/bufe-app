@@ -39,9 +39,9 @@ export const actions = {
 	},
 	unban: async ({ request, locals }) => {
 		const data = Object.fromEntries(await request.formData());
-		const user = await locals.pb.collection('users').getOne(data.id);
+		const banRecord = await locals.pb.collection('tiltottak').getFirstListItem(`email = "${data.email.trim()}"`);
 
-		await locals.pb.collection('tiltottak').delete(user.tiltas);
+		await locals.pb.collection('tiltottak').delete(banRecord.id);
 	},
 	foto: async ({ request, locals }) => {
 		const data = await request.formData();

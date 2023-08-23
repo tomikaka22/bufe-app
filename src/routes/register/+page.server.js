@@ -10,6 +10,10 @@ export const actions = {
 		const body = Object.fromEntries(await request.formData());
 		body.email = body.email.concat('@kkszki.hu');
 
+		const banRecord = await locals.pb.collection('tiltottak').getFirstListItem(`email = "${body.email}"`);
+		if (banRecord.email === body.email)
+			throw redirect(403, '/offline');
+
 		try {
 			await locals.pb.collection('users').create({ ...body });
 			await locals.pb.collection('users').authWithPassword(body.email, body.password);

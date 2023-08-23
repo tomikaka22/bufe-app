@@ -1,7 +1,6 @@
 import { PUSH_PRIVATE_KEY, PUSH_PUBLIC_KEY } from '$env/static/private';
 import webpush from 'web-push';
 import sharp from 'sharp';
-import { redirect } from '@sveltejs/kit';
 import { szunet } from '$lib/backendUtils/szunetSzamolo';
 
 process.on('uncaughtException', function (err) {
@@ -10,35 +9,35 @@ process.on('uncaughtException', function (err) {
 });
 
 export const ssr = false;
-const admins = [ 'u1fy74rt1m48tx1' ];
 
 webpush.setVapidDetails('mailto:szabot2@kkszki.hu', PUSH_PUBLIC_KEY, PUSH_PRIVATE_KEY);
 
 export async function load({ locals }) {
-	if (!admins.includes(locals.pb.authStore.baseModel.id)) throw redirect(303, '/'); // Ha nem admin id-vel van bejelentkezve redirect to login
-	else {
-		return {
-			felhasznalokLista: structuredClone(await locals.pb.collection('users').getFullList({ sort: '+created' })),
-			termekekLista: structuredClone(await locals.pb.collection('termekek').getFullList(1, { sort: '+termek' })),
-			rendelesek: {
-				fuggoben: structuredClone(await locals.pb.collection('rendelesek').getFullList(1, { filter: 'status = "fuggoben"' })),
-				kesz: structuredClone(await locals.pb.collection('rendelesek').getFullList(1, { filter: 'status = "folyamatban"' }))
-			},
-			szunetArray: szunet()
-		};
-	}
+	return {
+		felhasznalokLista: structuredClone(await locals.pb.collection('users').getFullList({ sort: '+created' })),
+		termekekLista: structuredClone(await locals.pb.collection('termekek').getFullList({ sort: '+termek' })),
+		rendelesek: {
+			fuggoben: structuredClone(await locals.pb.collection('rendelesek').getFullList({ filter: 'status = "fuggoben"' })),
+			kesz: structuredClone(await locals.pb.collection('rendelesek').getFullList({ filter: 'status = "folyamatban"' }))
+		},
+		szunetArray: szunet()
+	};
 }
 
 export const actions = {
 	ban: async ({ request, locals }) => {
 		const data = Object.fromEntries(await request.formData());
 
-		await locals.pb.collection('users').update(data.id, { kitiltva: true });
+		const user = await locals.pb.collection('users').update(data.id, { kitiltva: true });
+		await locals.pb.collection('tiltottak').create({ email: user.email, user: user.id });
 	},
 	unban: async ({ request, locals }) => {
 		const data = Object.fromEntries(await request.formData());
 
-		await locals.pb.collection('users').update(data.id, { kitiltva: false });
+		const user = await locals.pb.collection('users').update(data.id, { kitiltva: false });
+		const banRecord = await locals.pb.collection('tiltottak').getFirstListItem(`user = "${user.id.trim()}"`);
+
+		await locals.pb.collection('tiltottak').delete(banRecord.id);
 	},
 	foto: async ({ request, locals }) => {
 		const data = await request.formData();

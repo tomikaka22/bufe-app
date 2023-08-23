@@ -13,7 +13,8 @@ async function termekFotoURLs() {
 const ASSETS = [
 	...build,	// the app itself
 	...files,	// everything in `static`
-	'/offline'	// Offline error oldal
+	'/offline',	// Offline error oldal
+	'/banned'	// Ban oldal
 ];
 
 const cachedURLs = [

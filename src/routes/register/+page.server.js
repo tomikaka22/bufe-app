@@ -19,7 +19,7 @@ export const actions = {
 		}
 
 		if (banRecord)
-			throw redirect(303, '/banned');
+			throw redirect(303, '/banned/register');
 
 		try {
 			await locals.pb.collection('users').create({ ...body });

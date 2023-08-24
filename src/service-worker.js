@@ -12,10 +12,11 @@ async function termekFotoURLs() {
 }
 
 const ASSETS = [
-	...build,	// the app itself
-	...files,	// everything in `static`
-	'/offline',	// Offline error oldal
-	'/banned'	// Ban oldal
+	...build,				// the app itself
+	...files,				// everything in `static`
+	'/offline',				// Offline error oldal
+	'/banned',				// Ban oldal
+	'/banned/register'	// Ban oldal ami regisztálásnál van.
 ];
 
 const cachedURLs = [

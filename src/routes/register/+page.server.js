@@ -10,9 +10,13 @@ export const actions = {
 		const body = Object.fromEntries(await request.formData());
 		body.email = body.email.concat('@kkszki.hu');
 
-		const banRecord = await locals.pb.collection('tiltottak').getFirstListItem(`email = "${body.email}"`);
-		if (banRecord.email === body.email)
+		try {
+			await locals.pb.collection('tiltottak').getFirstListItem(`email = "${body.email}"`);
 			throw redirect(303, '/banned');
+		} catch (error) {
+			if (error.status === 404)
+				console.log('E-mail nem bannolt, regisztálás...');
+		}
 
 		try {
 			await locals.pb.collection('users').create({ ...body });

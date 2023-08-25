@@ -25,7 +25,7 @@
 					<h1 class="mt-5 font-semibold text-lg">Add meg az E-mail címed!</h1>
 					<form class="mt-3" method="post">
 						<div class="flex justify-center items-center gap-1 mt-2">
-							<input name='email' bind:value={email} type="text" placeholder="Kandós e-mail" class="bg-[#201a17] transition-all duration-100 ease-in outline outline-[#9f8d84] focus:placeholder:text-background outline-1 w-32 py-2 px-3 rounded-xl placeholder:text-center text-center focus:outline-[#ffb68e] placeholder:text-[#e6beaa] focus:outline-2"/>
+							<input name='email' autocapitalize="none" bind:value={email} type="text" placeholder="Kandós e-mail" class="bg-[#201a17] transition-all duration-100 ease-in outline outline-[#9f8d84] focus:placeholder:text-background outline-1 w-32 py-2 px-3 rounded-xl placeholder:text-center text-center focus:outline-[#ffb68e] placeholder:text-[#e6beaa] focus:outline-2"/>
 							<p>@kkszki.hu</p>
 						</div>
 						<br>

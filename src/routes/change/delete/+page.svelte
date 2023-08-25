@@ -21,7 +21,7 @@
 	<main in:fade={{ duration: 180 }}>
 		<Topbar
 			targeturl={'/profil'}
-			text={'Jelszó'}
+			text={'Törlés'}
 		></Topbar>
 
 		{#if form?.error}

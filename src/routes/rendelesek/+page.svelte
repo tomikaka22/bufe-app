@@ -33,7 +33,7 @@
 
 		<div class="flex w-full justify-center items-center">
 			<div class="outline outline-primary outline-1 rounded-lg px-5 font-semibold text-lg py-1">
-				<h3 class="font-semibold text-primary">Összesen: <span>{data.total} Ft</span></h3>
+				<h3 class="font-semibold text-primary">Összesen: <span>{forint(data.total)}</span></h3>
 			</div>
 		</div>
 

@@ -11,6 +11,13 @@
 	let modalTitle;
 	let modalText;
 
+	const status = {
+		fuggoben: 'Függőben',
+		folyamatban: 'Átvehető!',
+		kesz: 'Kész',
+		torolve: 'Törölve'
+	};
+
 	function rebuy() {
 		$cart = data.record.termekek;
 
@@ -55,7 +62,7 @@
 
 	<div class="flex w-full justify-center items-center">
 		<div class="outline outline-primary outline-1 rounded-lg px-5 font-semibold text-lg py-1">
-			<h3 class="font-semibold text-primary">Összesen: <span>{data.record.total} Ft</span></h3>
+			<h3 class="font-semibold text-primary">Összesen: <span>{forint(data.record.total)}</span></h3>
 		</div>
 	</div>
 
@@ -117,7 +124,7 @@
 	</div>
 
 	<div class="flex justify-center gap-3 mb-3 mt-1 font-semibold w-full">
-		<h3 class="outline outline-2 outline-primary text-primary px-2 rounded-lg">{data.record.status}</h3>
+		<h3 class="outline outline-2 outline-primary text-primary px-2 rounded-lg">{status[data.record.status]}</h3>
 		<h3 class="outline outline-2 outline-tertiary text-tertiary px-2 rounded-lg">{data.record.fizetes}</h3>
 	</div>
 	<div class="flex justify-center gap-5 font-semibold w-full">

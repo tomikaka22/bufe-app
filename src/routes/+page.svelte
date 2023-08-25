@@ -1,4 +1,5 @@
 <script>
+	import { version } from '$app/environment';
    import { fade } from 'svelte/transition';
 	import { forint } from '$lib/frontendUtils/utils.js';
 
@@ -20,7 +21,21 @@
 		<div class="w-full h-full flex gap-5">
 			<div class="w-full h-[22.5rem] flex flex-col gap-5">
 				<div class="bg-foreground h-56 w-full rounded-2xl p-2 px-4">
-					asd
+					<div class="w-full h-full flex flex-col justify-center items-center brightness-50">
+						<svg xmlns="http://www.w3.org/2000/svg" height="80" fill="currentColor"
+							viewBox="0 -1600 1600 1600" width="80">
+							<path d="M358.973 -266.667q-38.428 0 -65.368
+							-26.938Q266.667 -320.545 266.667 -358.973v-882.053q0
+							-38.428 26.938 -65.368Q320.545 -1333.333 358.973
+							-1333.333h681.54L1333.333 -1040.513v681.54q0 38.428
+							-26.938 65.368Q1279.455 -266.667 1241.027 -266.667H358.973Zm0
+							-51.282h882.053q17.948 0 29.487 -11.538t11.538 -29.487v-647.62H1007.308v-275.458H358.973q-17.948
+							0 -29.487 11.538t-11.538 29.487v882.053q0 17.948 11.538 29.487t29.487 11.538Zm140.642
+							-223.462h600.77v-51.282H499.615v51.282Zm0 -465.898H800v-51.282H499.615v51.282Zm0
+							232.95h600.77v-51.283H499.615v51.283Zm-181.667 -507.693v275.458Z"/>
+						</svg>
+						<p class="-mt-1 font-semibold">Nincsenek hírek.</p>
+					</div>
 				</div>
 
 				<a href="/rendelesek" class="bg-foreground w-full grid grid-rows-2 rounded-2xl aspect-video">
@@ -68,5 +83,6 @@
 		</div>
 
 	</div>
+	<p class="text-center mt-2 text-sm">{version}</p>
 
 </main>

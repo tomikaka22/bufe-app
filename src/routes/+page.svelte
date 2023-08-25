@@ -18,7 +18,7 @@
 		</a>
 
 		<div class="w-full h-full flex gap-5">
-			<div class="w-full h-full flex flex-col gap-5">
+			<div class="w-full h-[22.5rem] flex flex-col gap-5">
 				<div class="bg-foreground h-56 w-full rounded-2xl p-2 px-4">
 					asd
 				</div>

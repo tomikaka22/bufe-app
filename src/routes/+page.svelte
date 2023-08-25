@@ -39,13 +39,13 @@
 				</div>
 
 				<a href="/rendelesek" class="bg-foreground w-full grid grid-rows-2 rounded-2xl aspect-video">
-					<div class="flex gap-3 text-tertiary font-semibold text-2xl justify-center items-center">
+					<div class="flex gap-3 text-tertiary font-semibold text-xl justify-center items-center">
 						<p class="outline outline-1 px-2 rounded-lg outline-tertiary h-fit w-fit">{data.total.darab} db</p>
 						<p class="outline outline-1 px-2 rounded-lg outline-tertiary h-fit w-fit">{forint(data.total.ar)}</p>
 					</div>
 
 					<div class="border-t text-center flex items-center justify-center">
-						<p class="text-primary text-2xl font-semibold mb-1">Rendeléseim</p>
+						<p class="text-primary text-xl font-semibold mb-1">Rendeléseim</p>
 					</div>
 				</a>
 			</div>

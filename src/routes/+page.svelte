@@ -83,6 +83,6 @@
 		</div>
 
 	</div>
-	<p class="text-center mt-3.5 text-sm">{version}</p>
+	<p class="text-center mt-4 text-sm">{version}</p>
 
 </main>

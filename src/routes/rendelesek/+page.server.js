@@ -8,15 +8,14 @@ export async function load({ locals, url }) {
 	}));
 
 	let total = 0;
-
-	Object.keys(elozmenyLista).forEach(rendeles => {
-		if (elozmenyLista[rendeles].status === 'kesz')
-			Object.keys(elozmenyLista[rendeles].termekek).forEach(termek => {
-				elozmenyLista[rendeles].termekek[termek].forEach(x => {
+	for (const rendeles of elozmenyLista) {
+		if (rendeles.status === 'kesz')
+			for (const termek of Object.keys(rendeles.termekek)) {
+				for (const x of rendeles.termekek[termek]) {
 					total += x.ar;
-				});
-			});
-	});
+				}
+			}
+	}
 
 	return {
 		termekek,

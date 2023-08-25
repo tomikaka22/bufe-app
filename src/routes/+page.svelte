@@ -50,7 +50,7 @@
 						</div>
 					{/each}
 				{:else}
-					<div class="absolute h-full w-24 flex flex-col brightness-50 justify-center items-center">
+					<div class="absolute top-0 left-0 w-full h-full flex flex-col brightness-50 justify-center items-center">
 						<svg id="svg-star" xmlns="http://www.w3.org/2000/svg"
 							fill="currentColor"
 							height="80" viewBox="0 -1600 1600 1600" width="80">

@@ -1,6 +1,7 @@
 <script>
    import { page } from '$app/stores';
    import { goto } from '$app/navigation';
+	import { deserialize } from '$app/forms';
    import { fade } from 'svelte/transition';
    import { cart, total } from '$lib/stores/Cart.js';
 	import { touchRadius } from '$lib/frontendUtils/touchRadius.js';
@@ -10,7 +11,6 @@
    export let data;
 
 	let showFavorite = false;
-	let favoriteForm;
 
 	let showModal = false;
 	let modalTitle;
@@ -90,9 +90,24 @@
 
 	}
 
-	function flipIMG(e) {
-		if (e.target.id === 'svg-star' || e.target.id === 'svg-path')
-			document.querySelector('form').submit();
+	async function flipIMG(e) {
+		if (e.target.id === 'svg-star' || e.target.id === 'svg-path') {
+			const form = document.querySelector('form');
+			const formData = new FormData(form);
+
+			const response = await fetch(form.action, {
+				method: 'POST',
+				body: formData
+			});
+
+			const result = deserialize(await response.text());
+
+			if (result.type === 'success')
+				if (data.kedvencek.includes(data.termekek.id))
+					data.kedvencek = data.kedvencek.filter(kedvenc => kedvenc !== data.termekek.id);
+				else
+					data.kedvencek = [ ...data.kedvencek, data.termekek.id ];
+		}
 		else
 			showFavorite = !showFavorite;
 	}
@@ -120,13 +135,13 @@
 					{:else}
 						<form method="POST" in:fade={{ duration: 200 }} class="w-72 aspect-square rounded-3xl bg-foreground flex flex-col justify-center items-center">
 							{#if data.kedvencek.includes(data.termekek.id)}
-								<svg id="svg-star" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+								<svg in:fade id="svg-star" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
 									height="80" viewBox="0 -1600 1600 1600" width="80"><path id="svg-path" d="m388.333 -133.333
 									108.333 -468.333L133.333 -916.667l480 -41.667 186.667 -441.667 186.667 441.667
 									480 41.667 -363.333 315 108.333 468.333 -411.667 -248.333L388.333 -133.333Z"/>
 								</svg>
 							{:else}
-								<svg id="svg-star" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+								<svg in:fade id="svg-star" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
 									height="80" viewBox="0 -1600 1600 1600" width="80"><path id="svg-path" d="M538.333 -341.667
 									800 -498.332l261.667 158.333 -70 -296.665 230 -200 -303.335 -26.665 -118.333 -280
 									-118.333 278.333 -303.335 26.665 230 200 -70 296.665Zm-150 208.332 108.333 -468.333L133.333

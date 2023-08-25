@@ -14,7 +14,7 @@
 
 		<a href="/list" class="w-[21.25rem] h-32 rounded-2xl overflow-hidden bg-foreground relative">
 			<img src="/termek-drop.avif" class="object-cover w-full h-full" alt="">
-			<p class="absolute top-0 flex w-full h-full justify-center items-center backdrop-brightness-50 text-2xl font-semibold">Vásárlás!</p>
+			<p class="absolute top-0 flex w-full h-full justify-center items-center backdrop-brightness-50 text-2xl font-semibold text-primary">Vásárlás!</p>
 		</a>
 
 		<div class="w-fit flex px-4 gap-5 h-[22.5rem]">
@@ -38,10 +38,11 @@
 						{#each data.kedvencek as kedvenc}
 							<div class="h-20 w-24 my-2 snap-center rounded-2xl transition-all overflow-hidden bg-on-primary hover:rounded-lg">
 								<a href="{kedvenc.termek}?referrer=/list">
-									<div class="w-full h-full bg-center bg-no-repeat bg-cover" style="background-image: url('/api/files/termekek/{kedvenc.id}/{kedvenc.foto}');">
-										<div class="w-full h-full px-2 backdrop-brightness-50 flex justify-center items-center text-center">
-											<p class="font-semibold text-primary">{kedvenc.termek}</p>
+									<div class="w-full h-full bg-center bg-no-repeat bg-cover relative" style="background-image: url('/api/files/termekek/{kedvenc.id}/{kedvenc.foto}');">
+										<div class="w-full h-full px-2 flex justify-center items-center text-center">
+											<p class="font-semibold text-primary z-10">{kedvenc.termek}</p>
 										</div>
+										<div class="absolute top-0 w-full h-full bg-[black] opacity-50"></div> <!-- Undorító hack a chrome miatt -->
 									</div>
 								</a>
 							</div>

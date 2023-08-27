@@ -1,5 +1,4 @@
 <script>
-	import { version } from '$app/environment';
    import { fade } from 'svelte/transition';
 	import { forint } from '$lib/frontendUtils/utils.js';
 
@@ -83,6 +82,5 @@
 		</div>
 
 	</div>
-	<p class="text-center mt-4 text-sm">{version}</p>
 
 </main>

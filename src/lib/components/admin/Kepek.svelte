@@ -19,7 +19,11 @@
 
 					<label class="cursor-pointer rounded-b-2xl overflow-hidden w-full h-full">
 						<div class="relative w-full h-full">
-							<img class="w-full h-full brightness-50 object-cover" id="{termek.id}" on:error={e => { e.target.src = document.getElementById(termek.id + 'Input').files[0] ? URL.createObjectURL(document.getElementById(termek.id + 'Input').files[0]) : ''; }} src="/api/files/termekek/{termek.id}/{termek.foto}" alt="">
+							{#if termek.foto}
+								<img class="w-full h-full brightness-50 object-cover" id="{termek.id}" src="/api/files/termekek/{termek.id}/{termek.foto}" alt="">
+							{:else}
+								<img class="w-full h-full brightness-50 object-cover" id="{termek.id}" alt="">
+							{/if}
 							<svg class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-primary" fill="currentColor" xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48">
 								<path d="M440-437ZM100-120q-24 0-42-18t-18-42v-513q0-23 18-41.5t42-18.5h147l73-87h274v60H348l-73
 								87H100v513h680v-414h60v414q0 24-18.5 42T780-120H100Zm680-574v-86h-86v-60h86v-87h60v87h87v60h-87v86h-60ZM439.5-267q72.5

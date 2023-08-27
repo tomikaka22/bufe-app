@@ -15,7 +15,7 @@
 			{#each data.banLista as ban, i (i)}
 				<form bind:this={input} class="text-primary font-semibold text-lg" action="?/unban" method="POST">
 					<div class="flex gap-2 items-center">
-						<p class="px-2 my-1 w-fit bg-error rounded-lg text-on-error">{ban.email}</p>
+						<p class="px-2 my-1 w-fit bg-error rounded-lg text-on-error">{ban.email.replace('@kkszki.hu','')}</p>
 						<button class="outline outline-1 px-2 rounded-2xl text-tertiary transition-all hover:text-error-container">Pardon</button>
 
 						<input type="text" hidden name="email" value="{ban.email}">
@@ -28,7 +28,7 @@
 				{#if !user.tiltas}
 					<form class:hidden={user.id === 'u1fy74rt1m48tx1'} bind:this={input} class="text-primary font-semibold text-lg" action="?/ban" method="POST">
 						<div class="flex gap-2 items-center">
-							<p class="px-2 my-1 w-fit bg-tertiary rounded-lg text-on-tertiary">{user.email}</p>
+							<p class="px-2 my-1 w-fit bg-tertiary rounded-lg text-on-tertiary">{user.email.replace('@kkszki.hu','')}</p>
 							<button class="outline outline-1 px-2 rounded-2xl text-error transition-all hover:text-error-container">Tiltás</button>
 
 							<input type="text" hidden name="id" value="{user.id}">

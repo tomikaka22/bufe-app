@@ -44,13 +44,14 @@ export const actions = {
 		}
 
 		await locals.pb.collection('rendelesek').create({
-			'rendelo': locals.pb.authStore.baseModel.id,
-			'termekek': rendeles,
+			rendelo: locals.pb.authStore.baseModel.id,
+			termekek: rendeles,
 			total,
-			'status': 'fuggoben',
-			'name': locals.pb.authStore.baseModel.name,
-			'fizetes': data.fizetes,
-			'idopont': data.idopont
+			status: 'fuggoben',
+			name: locals.pb.authStore.baseModel.name,
+			email: locals.pb.authStore.baseModel.email,
+			fizetes: data.fizetes,
+			idopont: data.idopont
 		});
 	}
 };

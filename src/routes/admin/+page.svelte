@@ -13,7 +13,7 @@
 	import Ban from '$lib/components/admin/Ban.svelte';
 
 	export let data;
-console.log(data)
+
 	let darabModal;
 	let termekModal;
 	let arakModal;
@@ -23,9 +23,7 @@ console.log(data)
 	let kepekModal;
 	let banModal;
 
-	setInterval(async () => {
-		invalidateAll();
-	}, 8000);
+	setInterval(invalidateAll, 8000);
 
 </script>
 
@@ -61,13 +59,13 @@ console.log(data)
 									{#each data.rendelesek.fuggoben as rendeles, i (rendeles.id)}
 										<div animate:flip={{ duration: 700, easing: expoOut }}>
 											{#if rendeles.idopont === szunet}
-												<div class="bg-tertiary-container p-1 rounded-lg max-h-full min-w-max m-1">
+												<div class="bg-primary-container p-1 rounded-lg max-h-full min-w-max m-1">
 													<div class="flex w-full justify-between gap-3 mb-2">
 														<form use:enhance action="?/torles" method="POST">
 															<input hidden type="text" name="recordID" value="{JSON.stringify(rendeles.id)}">
 															<button class="bg-error text-on-error hover:bg-on-error hover:text-error hover:rounded-lg transition-all font-semibold px-1.5 rounded-3xl">&#10005;</button>
 														</form>
-															<p class="font-semibold">{rendeles.fizetes}</p>
+															<p class="font-semibold text-on-primary-container">{rendeles.email.replace('@kkszki.hu','')}</p>
 														<form use:enhance action="?/kesz" method="POST">
 															<input hidden type="text" name="recordID" value="{JSON.stringify(rendeles.id)}">
 															<button class="bg-tertiary text-on-tertiary hover:bg-on-tertiary hover:text-tertiary hover:rounded-lg transition-all font-semibold px-1.5 rounded-3xl">&#10003;</button>
@@ -86,6 +84,7 @@ console.log(data)
 															{/each}
 														{/each}
 													</div>
+													<p class="font-semibold text-center text-on-tertiary-container">{rendeles.fizetes}</p>
 												</div>
 											{/if}
 										</div>
@@ -102,7 +101,7 @@ console.log(data)
 															<input hidden type="text" name="recordID" value="{JSON.stringify(rendeles.id)}">
 															<button class="bg-error text-on-error hover:bg-on-error hover:text-error hover:rounded-lg transition-all font-semibold px-1.5 rounded-3xl">&#10005;</button>
 														</form>
-															<p class="font-semibold">{rendeles.fizetes}</p>
+															<p class="font-semibold">{rendeles.email.replace('@kkszki.hu','')}</p>
 														<form use:enhance action="?/atadva" method="POST">
 															<input hidden type="text" name="recordID" value="{JSON.stringify(rendeles.id)}">
 															<button class="bg-tertiary text-on-tertiary hover:bg-on-tertiary hover:text-tertiary hover:rounded-lg transition-all font-semibold px-1.5 rounded-3xl">&#10003;</button>
@@ -121,6 +120,7 @@ console.log(data)
 															{/each}
 														{/each}
 													</div>
+													<p class="font-semibold text-center text-on-tertiary-container">{rendeles.fizetes}</p>
 												</div>
 											{/if}
 										</div>

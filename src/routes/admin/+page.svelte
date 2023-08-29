@@ -78,7 +78,7 @@
 																	<p class="w-full bg-primary text-on-primary px-1 my-0.5 rounded-md">{termek}</p>
 																	<p class="w-full bg-tertiary text-on-tertiary px-1 my-0.5 rounded-md">{x.darab} db, {x.ar} Ft</p>
 																	{#each x.feltet as feltet}
-																		<p class="w-full text-on-secondary-container outline outline-1 outline-outline px-2 my-0.5 rounded-md font-normal">{feltet}</p>
+																		<p class="w-full text-on-surface outline outline-1 outline-on-surface-variant px-2 my-0.5 rounded-md font-normal">{feltet}</p>
 																	{/each}
 																</div>
 															{/each}
@@ -114,7 +114,7 @@
 																	<p class="w-full bg-primary text-on-primary px-1 my-0.5 rounded-md">{termek}</p>
 																	<p class="w-full bg-tertiary text-on-tertiary px-1 my-0.5 rounded-md">{x.darab} db, {x.ar} Ft</p>
 																	{#each x.feltet as feltet}
-																		<p class="w-full text-on-secondary-container outline outline-1 outline-outline px-2 my-0.5 rounded-md font-normal">{feltet}</p>
+																		<p class="w-full text-on-surface outline outline-1 outline-on-surface-variant px-2 my-0.5 rounded-md font-normal">{feltet}</p>
 																	{/each}
 																</div>
 															{/each}

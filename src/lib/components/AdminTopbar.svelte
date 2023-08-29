@@ -10,6 +10,6 @@
 	</div>
 	<div class="text-center text-lg text-primary">{midText}</div>
 	<div class="text-end">
-		<button on:click={input.submit()} class="w-24 outline outline-1 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-0.5 px-4"><h1>Mentés</h1></button>
+		<button class:invisible={!input} on:click={input.submit()} class="w-24 outline outline-1 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-0.5 px-4"><h1>Mentés</h1></button>
 	</div>
 </div>

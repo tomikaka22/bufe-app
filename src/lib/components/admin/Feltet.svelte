@@ -13,12 +13,13 @@
 		event.preventDefault();
 		const data = Object.fromEntries(new FormData(event.target).entries());
 
-		tempFeltetek[data.recordID] = {
-			...tempFeltetek[data.recordID],
-			[data.feltet]: {
-				'darab': data.darab,
-				'ar': data.ar
-			} };
+		if (data.feltet && data.darab && data.ar)
+			tempFeltetek[data.recordID] = {
+				...tempFeltetek[data.recordID],
+				[data.feltet]: {
+					'darab': data.darab,
+					'ar': data.ar
+				} };
 	}
 
 	function feltetModalInputRemove(event) { // Kitörli a (Zöld) frissen hozzáadott (Még nem véglegesitett) felteteket.

@@ -33,12 +33,13 @@
 		event.preventDefault();
 		const data = Object.fromEntries(new FormData(event.target).entries());
 
-		tempTermekek[data.termek] = {
-			'ar': data.ar,
-			'darab': data.darab,
-			'leiras': data.leiras,
-			'kategoria': data.kategoria
-		};
+		if (data.termek && data.ar && data.darab && data.leiras)
+			tempTermekek[data.termek] = {
+				'ar': data.ar,
+				'darab': data.darab,
+				'leiras': data.leiras,
+				'kategoria': data.kategoria
+			};
 	}
 </script>
 
@@ -49,7 +50,16 @@
 			<h2 class="font-semibold text-lg text-primary">Eddigi termékek:</h2>
 				{#each data.termekekLista as termekek}
 					<form class="my-1" on:submit={termekModalRemove}>
-						<p class:crossedOut="{termekekRemove.includes(termekek.id)}"><span class="bg-primary text-[black] rounded-md px-2">{termekek.termek}</span> <span class="bg-tertiary text-[black] rounded-md px-2">{termekek.darab} db | {termekek.ar} Ft</span> <span class="bg-secondary text-[black] rounded-md px-2">{termekek.kategoria}</span> <span class="bg-outline text-[black] rounded-md px-2">{termekek.leiras}</span>
+						<p class:crossedOut="{termekekRemove.includes(termekek.id)}" class="flex gap-1">
+							<span class="bg-primary text-[black] rounded-md px-2">{termekek.termek}</span>
+							<span class="bg-tertiary text-[black] rounded-md px-2">{termekek.darab} db | {termekek.ar} Ft</span>
+							<span class="bg-secondary text-[black] rounded-md px-2">{termekek.kategoria}</span>
+							{#if termekek.feltetek}
+								{#each Object.keys(termekek.feltetek) as feltet}
+									<span class="outline outline-2 outline-outline text-on-surface-variant rounded-md px-2 mx-[0.09rem]">{feltet}</span>
+								{/each}
+							{/if}
+							<span class="bg-outline text-[black] rounded-md px-2">{termekek.leiras}</span>
 							<input type="text" hidden name="{termekek.id}">
 							<button class="bg-foreground px-2 rounded-3xl"> {#if termekekRemove.includes(termekek.id)}<span class="brightness-150 w-full h-full bg-foreground">↻</span>{:else}❌{/if}</button>
 						</p>

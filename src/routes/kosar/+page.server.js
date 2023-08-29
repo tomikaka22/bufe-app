@@ -11,7 +11,6 @@ export async function load({ locals }) {
 	};
 }
 
-// TODO: Sürgős error handling szükséges
 export const actions = {
 	default: async ({ request, locals }) => {
 		const data = Object.fromEntries(await request.formData());
@@ -27,7 +26,12 @@ export const actions = {
 
 		for (const termek of Object.keys(rendeles)) {
 			for (const i in rendeles[termek]) {
-				const record = await locals.pb.collection('termekek').getFirstListItem(`termek = "${termek}"`);
+				let record;
+				try {
+					record = await locals.pb.collection('termekek').getFirstListItem(`termek = "${termek}"`);
+				} catch {
+					return fail(409, { 'error': `Nincs ilyen termék: ${termek}` });
+				}
 
 				// Validálás
 				const darab = rendeles[termek][i].darab;

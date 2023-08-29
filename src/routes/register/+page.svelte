@@ -29,7 +29,7 @@
          <input placeholder="Jelszó" name='password' bind:value={password} type="password" class="bg-background outline outline-outline outline-1 w-52 py-2 px-3 rounded-xl placeholder:text-center text-center focus:placeholder:text-background focus:outline-primary placeholder:text-secondary focus:outline-2 transition-all"/>
 
          <input placeholder="Jelszó újra" name='passwordConfirm' bind:value={passwordConfirm} type="password" class="bg-background outline outline-outline outline-1 w-52 py-2 px-3 rounded-xl placeholder:text-center text-center focus:placeholder:text-background focus:outline-primary placeholder:text-secondary focus:outline-2 transition-all"/>
-         {#if name && email && password && passwordConfirm && password === passwordConfirm}
+         {#if name && name2 && email && password && passwordConfirm && password === passwordConfirm}
 				<button class="w-36 bg-primary text-background p-2 rounded-full mt-2 focus:rounded-md transition-all font-semibold">Regisztráció</button>
          {/if}
          {#if error && !password || error && !password && !email}

@@ -14,7 +14,10 @@ export async function handle({ event, resolve }) {
 		event.locals.pb.authStore.clear();
 	}
 
-	const anonRoutes = [ '/register', '/login', '/verify', '/change', '/offline', '/banned', '/api' ];
+	if (event.url.pathname.startsWith('/api'))
+		return await resolve(event);
+
+	const anonRoutes = [ '/register', '/login', '/verify', '/change', '/offline', '/banned' ];
 
 	if (!anonRoutes.some(route => event.url.pathname.startsWith(route) )) {
 		if (!event.locals.pb.authStore.baseModel )  // Ha nincs bejelentkezve, redirect to login
@@ -39,9 +42,6 @@ export async function handle({ event, resolve }) {
 			&& !event.url.pathname.startsWith('/change')
 			&& !event.url.pathname.startsWith('/profil')
 	) throw redirect(303, '/banned');
-
-	if (event.url.pathname.startsWith('/api'))
-		return await resolve(event);
 
 	const response = await resolve(event);
 

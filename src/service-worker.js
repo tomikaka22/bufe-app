@@ -1,5 +1,4 @@
 import { build, files, version } from '$service-worker';
-import { redirect } from '@sveltejs/kit';
 
 // Create a unique cache name for this deployment
 const CACHE = `cache-${version}`;

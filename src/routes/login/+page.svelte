@@ -17,7 +17,7 @@
 					<input placeholder="e-mail" autocapitalize="none" name='email' bind:value={email} type="text" class="bg-background duration-100 ease-in outline outline-outline focus:placeholder:text-background outline-1 w-full py-2 px-3 rounded-xl placeholder:text-center text-center focus:outline-primary placeholder:text-secondary focus:outline-2 transition-all"/>
 					<p class="inline-block">@kkszki.hu</p>
 				</div>
-				<input type="password" bind:value={password} placeholder="Jelszó" class="bg-background outline outline-outline outline-1 w-52 py-2 px-3 rounded-xl placeholder:text-center text-center focus:placeholder:text-background focus:outline-primary placeholder:text-secondary focus:outline-2 transition-all"/>
+				<input type="password" name="password" bind:value={password} placeholder="Jelszó" class="bg-background outline outline-outline outline-1 w-52 py-2 px-3 rounded-xl placeholder:text-center text-center focus:placeholder:text-background focus:outline-primary placeholder:text-secondary focus:outline-2 transition-all"/>
 				{#if email && password}
 					<button class="w-36 bg-primary text-background p-2 rounded-full mt-6 focus:rounded-md transition-all font-semibold" in:fade={{ duration: 300 }}>Belépés</button>
 				{/if}

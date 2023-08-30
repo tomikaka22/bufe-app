@@ -37,7 +37,7 @@
 					</div>
 				</div>
 
-				<a href="/rendelesek" class="bg-foreground w-full grid grid-rows-2 rounded-2xl aspect-video">
+				<a href="/rendelesek" class="bg-foreground min-h-0 flex-grow grid grid-rows-2 rounded-2xl aspect-video">
 					<div class="flex gap-3 text-tertiary font-semibold text-xl justify-center items-center">
 						<p class="outline outline-1 px-2 rounded-lg outline-tertiary h-fit w-fit">{data.total.darab} db</p>
 						<p class="outline outline-1 px-2 rounded-lg outline-tertiary h-fit w-fit">{forint(data.total.ar)}</p>

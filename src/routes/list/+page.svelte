@@ -84,7 +84,7 @@
 		{/if}
 
 		<div class="w-full flex justify-center my-4">
-			<div style="transition-timing-function: cubic-bezier(0, 0, 0, 1);" class="w-3/5 h-10 mx-6 flex rounded-3xl overflow-hidden bg-foreground transition-all duration-[250ms] group focus-within:bg-surface-variant focus-within:w-4/5">
+			<div style="transition-timing-function: cubic-bezier(0, 0, 0, 1);" class="w-3/5 h-10 mx-6 flex rounded-3xl overflow-hidden bg-foreground transition-all duration-[250ms] group focus-within:bg-surface-variant focus-within:w-4/5 focus-within:rounded-xl">
 				{#if !searchWord}
 					<svg in:fade={{ duration: 200 }} class="mx-2 py-2.5 pl-1 text-outline group-focus-within:text-primary transition-all" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 						<!-- Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->

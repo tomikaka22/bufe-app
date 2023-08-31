@@ -4,7 +4,7 @@
 	import { deserialize } from '$app/forms';
    import { fade } from 'svelte/transition';
    import { cart, total } from '$lib/stores/Cart.js';
-	import { touchRadius } from '$lib/frontendUtils/touchRadius.js';
+	import { touchRadius } from '$lib/frontendUtils/utils.js';
    import Topbar from '$lib/components/Topbar.svelte';
 	import Notice from '$lib/components/dialogs/Notice.svelte';
 
@@ -169,13 +169,13 @@
 
 		<div class="flex w-full justify-center">
 			<div class="mt-5 flex justify-center items-center text-3xl rounded-2xl">
-				<div class="bg-secondary flex justify-center items-center rounded-2xl w-16 text-on-secondary transition-all" on:click="{(e) => {subtractAmount(); touchRadius(e.target.parentElement, '0.5rem', '1rem', 40);}}">
-					<button class="p-3 px-5">-</button>
-				</div>
+				<button use:touchRadius={'.55rem'} class="bg-secondary flex justify-center items-center rounded-2xl w-16 p-3 px-5 text-on-secondary transition-all" on:click="{() => { subtractAmount(); }}">
+					-
+				</button>
 				<div class="px-5 py-2 text-tertiary">{#key darab}<span in:fade="{{ duration: 200 }}">{darab}</span>{/key}</div>
-				<div class="bg-secondary flex justify-center items-center rounded-2xl w-16 text-on-secondary transition-all" on:click="{(e) => {addAmount(); touchRadius(e.target.parentElement, '0.5rem', '1rem', 40);}}">
-					<button class="p-3 px-5">+</button>
-				</div>
+				<button use:touchRadius={'.55rem'} class="bg-secondary flex justify-center items-center rounded-2xl w-16 p-3 px-5 text-on-secondary transition-all" on:click="{() => { addAmount(); }}">
+					+
+				</button>
 			</div>
 		</div>
 
@@ -187,15 +187,13 @@
 
 		{#if data.termekek.feltetek}
 			<div class="flex w-full justify-center">
-				<div class="w-10/12 mt-3 rounded-2xl mb-32 transition-all">
+				<div class="w-full mt-3 rounded-2xl mb-32 mx-8 transition-all">
 					<p class="text-center my-1 font-semibold">Feltétek</p>
-					<div>
-						{#each Object.keys(data.termekek.feltetek) as feltet}
-							<div class:active={feltetek.includes(feltet)} class="flex justify-between mx-2 mb-2 outline outline-1 outline-outlin rounded-xl p-2 transition-all" on:click={() => {feltetChange(feltet);}}>
-								<div>{feltet}</div> <div class:ar={feltetek.includes(feltet)} class="text-on-tertiary-container">{data.termekek.feltetek[feltet].ar} Ft</div>
-							</div>
-						{/each}
-					</div>
+					{#each Object.keys(data.termekek.feltetek) as feltet}
+						<button class:active={feltetek.includes(feltet)} class="flex w-full justify-between mb-2 outline outline-1 outline-outlin rounded-xl p-2 transition-all" on:click={() => {feltetChange(feltet);}}>
+							<div>{feltet}</div> <div class:ar={feltetek.includes(feltet)} class="text-on-tertiary-container">{data.termekek.feltetek[feltet].ar} Ft</div>
+						</button>
+					{/each}
 				</div>
 			</div>
 		{/if}

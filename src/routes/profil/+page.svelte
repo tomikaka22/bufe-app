@@ -66,7 +66,7 @@
 
 </main>
 
-<style>
+<style lang="postcss">
 	.button-notification-on {
 		@apply
 		bg-background

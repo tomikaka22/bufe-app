@@ -20,6 +20,3 @@
 		</div>
 	</div>
 {/if}
-
-<style>
-</style>

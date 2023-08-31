@@ -83,7 +83,7 @@
 	</form>
 </main>
 
-<style>
+<style lang="postcss">
 	.button-notification-on {
 		@apply bg-background outline outline-1 outline-tertiary text-tertiary;
 	}

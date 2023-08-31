@@ -161,7 +161,7 @@
 	<title>bufe-app</title>
 </svelte:head>
 
-<style>
+<style lang="postcss">
 	:global(*) {
 		-webkit-tap-highlight-color: transparent;
 		scrollbar-width: none;

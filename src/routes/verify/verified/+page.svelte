@@ -2,7 +2,6 @@
 	import { fade } from 'svelte/transition';
 
 	export let data;
-	console.log(data.status)
 </script>
 
 	<main in:fade={{ duration: 180 }} class="w-screen h-screen flex justify-center items-center">

@@ -5,8 +5,8 @@
 	import { Splide, SplideSlide } from '@splidejs/svelte-splide';
 	import '@splidejs/svelte-splide/css/core';
    import { cart, total } from '$lib/stores/Cart.js';
-	import { touchRadius } from '$lib/frontendUtils/touchRadius.js';
-	import { forint } from '$lib/frontendUtils/formazo.js';
+	import { touchRadius } from '$lib/frontendUtils/utils.js';
+	import { forint } from '$lib/frontendUtils/utils.js';
 
    export let data;
 
@@ -158,11 +158,11 @@
 							</div>
 							<div class="grid grid-rows-2 justify-items-end gap-2">
 								<div class="outline outline-1 outline-tertiary text-tertiary rounded-lg font-semibold px-1 h-6 py-1 flex flex-row justify-center items-center">
-									<button on:click={(e) => { touchRadius(e.target, '.25rem', '.375rem'); subtractAmount(termek, i); }} class="bg-tertiary text-on-tertiary h-full aspect-square rounded-md flex justify-center items-center transition-all">-</button>
+									<button use:touchRadius={'.25rem'} on:click={() => { subtractAmount(termek, i); }} class="bg-tertiary text-on-tertiary h-full aspect-square rounded-md flex justify-center items-center transition-all">-</button>
 									{#key x.darab}
 										<span in:fade class="px-2">{x.darab} db</span>
 									{/key}
-									<button on:click={(e) => { touchRadius(e.target, '.25rem', '.375rem'); addAmount(termek, i); }} class="bg-tertiary text-on-tertiary h-full aspect-square rounded-md flex justify-center items-center transition-all">+</button>
+									<button use:touchRadius={'.25rem'} on:click={() => { addAmount(termek, i); }} class="bg-tertiary text-on-tertiary h-full aspect-square rounded-md flex justify-center items-center transition-all">+</button>
 								</div>
 								<div class="outline outline-1 outline-tertiary text-tertiary rounded-lg font-semibold px-2 w-fit h-6 py-1 flex items-center justify-center">
 									{#key x.darab}
@@ -235,20 +235,20 @@
 		<!-- Fizetési mód -->
 		<div class="px-8">
 			<div class="my-5 grid grid-cols-2 text-center items-center w-full cursor-pointer">
-				<div class:activeFizetes={fizetes === 'Készpénz'} on:click={() => {fizetes = 'Készpénz';}} class="ml-[1px] py-2 text-secondary rounded-l-xl border border-secondary transition-all">
+				<button class:activeFizetes={fizetes === 'Készpénz'} on:click={() => {fizetes = 'Készpénz';}} class="ml-[1px] py-2 text-secondary rounded-l-xl border border-secondary transition-all">
 					<p>Készpénz</p>
-				</div>
-				<div class:activeFizetes={fizetes === 'Bankkártya'} on:click={() => {fizetes = 'Bankkártya';}} class="py-2 text-secondary rounded-r-xl border border-l-0 border-secondary transition-all">
+				</button>
+				<button class:activeFizetes={fizetes === 'Bankkártya'} on:click={() => {fizetes = 'Bankkártya';}} class="py-2 text-secondary rounded-r-xl border border-l-0 border-secondary transition-all">
 					<p>Bankkártya</p>
-				</div>
+				</button>
 			</div>
 		</div>
 
 		<!-- Szünet Választó -->
 		<div class="mb-5 flex justify-center items-center">
 			<div class="flex flex-col justify-center items-center font-semibold rounded-2xl">
-				<div class="bg-secondary flex justify-center items-center rounded-2xl w-20 mb-2 text-2xl text-on-secondary transition-all after:-rotate-90 after:content-['>']" on:click={(e) => {szunetSplide.splide.go('<'); touchRadius(e.target, '.5rem', '1rem');}}>
-				</div>
+				<button use:touchRadius={'.5rem'} class="bg-secondary flex justify-center items-center rounded-2xl w-20 mb-2 text-2xl text-on-secondary transition-all after:-rotate-90 after:content-['>']" on:click={() => {szunetSplide.splide.go('<');}}>
+				</button>
 				<div class="overflow-hidden flex rounded-xl outline outline-1 outline-outline">
 					<Splide bind:this={szunetSplide} on:moved={e => {idopont = data.szunetArray[e.detail.index];}} options={{ arrows: false, pagination: false, direction: 'ttb', height: '2rem', perMove: 1 }}>
 						{#each data.szunetArray as szunet}
@@ -260,8 +260,8 @@
 						{/each}
 					</Splide>
 				</div>
-				<div class="bg-secondary flex justify-center items-center rounded-2xl w-20 mt-2 text-2xl text-on-secondary transition-all after:rotate-90 after:content-['>']" on:click={(e) => {szunetSplide.splide.go('>'); touchRadius(e.target, '.5rem', '1rem');}}>
-				</div>
+				<button use:touchRadius={'.5rem'} class="bg-secondary flex justify-center items-center rounded-2xl w-20 mt-2 text-2xl text-on-secondary transition-all after:rotate-90 after:content-['>']" on:click={() => {szunetSplide.splide.go('>');}}>
+				</button>
 			</div>
 		</div>
 

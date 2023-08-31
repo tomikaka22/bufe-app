@@ -31,7 +31,7 @@ export const actions = {
 		const data = Object.fromEntries(await request.formData());
 		const user = await locals.pb.collection('users').getOne(data.id);
 
-		if (user.id === 'u1fy74rt1m48tx1' )  // Az admin profil ne tudja bannolni magát
+		if (user.id === 'u1fy74rt1m48tx1' || user.id === 'xkraxn39hbwzisz' )  // Az admin profil ne tudja bannolni magát
 			throw redirect(303, '/admin');
 
 		const banRecord = await locals.pb.collection('tiltottak').create({ email: user.email, user: user.id });

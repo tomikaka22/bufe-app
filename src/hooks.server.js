@@ -28,7 +28,7 @@ export async function handle({ event, resolve }) {
 	}
 
 	const protectedRoutes = [ '/admin' ];
-	const admins = [ 'u1fy74rt1m48tx1' ];
+	const admins = [ 'u1fy74rt1m48tx1', 'xkraxn39hbwzisz' ];
 
 	// Ha a route protected és user nem admin redirect to '/'
 	if (protectedRoutes.some(route => event.url.pathname.startsWith(route) )) {

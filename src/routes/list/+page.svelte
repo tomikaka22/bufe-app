@@ -65,7 +65,7 @@
 </script>
 
 <main in:fade={{ duration: 180 }}>
-	<div class="w-screen h-screen">
+	<div>
 
 		{#if data.nepszeruTermekek.length !== 0}
 			<div class="w-full grid grid-flow-col justify-start overflow-x-scroll snap-x snap-mandatory gap-3 mt-4 px-2">
@@ -80,6 +80,15 @@
 						</a>
 					</div>
 				{/each}
+			</div>
+		{:else}
+			<div class="w-full flex justify-center items-center mt-4 px-2">
+				<div class="w-full flex justify-center items-center bg-foreground rounded-2xl relative">
+					<p class="w-28 aspect-[5/4]"></p>
+					<p class="w-full h-full absolute font-semibold brightness-50 text-xl text-center flex justify-center items-center">
+						Népszerű termékek
+					</p>
+				</div>
 			</div>
 		{/if}
 
@@ -116,8 +125,8 @@
 					{#each data.termekek as termek}
 						{#if termek.kategoria === 'Étel'}
 							<a href="{termek.termek}?referrer=/list" class="rounded-2xl transition-all overflow-hidden hover:rounded-lg">
-								<div class="h-28 overflow-hidden bg-no-repeat bg-center bg-[url('/termek-drop.avif')]">
-									<img class="w-full h-full object-cover failover-image" id="{termek.foto}" src="/api/files/termekek/{termek.id}/{termek.foto}" alt="">
+								<div class="h-28 overflow-hidden">
+									<img class="w-full h-full object-cover failover-image" src="{termek.foto ? `/api/files/termekek/${termek.id}/${termek.foto}` : 'termek-drop.avif'}" alt="">
 								</div>
 								<div class="bg-foreground p-3 font-semibold flex justify-between">
 									<div class="w-9/12">
@@ -138,8 +147,8 @@
 					{#each data.termekek as termek}
 						{#if termek.kategoria === 'Ital'}
 							<a href="{termek.termek}?referrer=/list" class="rounded-2xl transition-all overflow-hidden hover:rounded-lg">
-								<div class="h-28 overflow-hidden bg-no-repeat bg-center bg-[url('/termek-drop.avif')]">
-									<img class="w-full h-full object-cover failover-image" id="{termek.foto}" src="/api/files/termekek/{termek.id}/{termek.foto}" alt="">
+								<div class="h-28 overflow-hidden">
+									<img class="w-full h-full object-cover failover-image" src="{termek.foto ? `/api/files/termekek/${termek.id}/${termek.foto}` : 'termek-drop.avif'}" alt="">
 								</div>
 								<div class="bg-foreground p-3 font-semibold flex justify-between">
 									<div class="w-9/12">
@@ -160,8 +169,8 @@
 					{#each data.termekek as termek}
 						{#if termek.kategoria === 'Nasi'}
 							<a href="{termek.termek}?referrer=/list" class="rounded-2xl transition-all overflow-hidden hover:rounded-lg">
-								<div class="h-28 overflow-hidden bg-no-repeat bg-center bg-[url('/termek-drop.avif')]">
-									<img class="w-full h-full object-cover failover-image" id="{termek.foto}" src="/api/files/termekek/{termek.id}/{termek.foto}" alt="">
+								<div class="h-28 overflow-hidden">
+									<img class="w-full h-full object-cover failover-image" src="{termek.foto ? `/api/files/termekek/${termek.id}/${termek.foto}` : 'termek-drop.avif'}" alt="">
 								</div>
 								<div class="bg-foreground p-3 font-semibold flex justify-between">
 									<div class="w-9/12">
@@ -182,8 +191,8 @@
 					{#each data.termekek as termek}
 						{#if termek.kategoria === 'Egyéb'}
 							<a href="{termek.termek}?referrer=/list" class="rounded-2xl transition-all overflow-hidden hover:rounded-lg">
-								<div class="h-28 overflow-hidden bg-no-repeat bg-center bg-[url('/termek-drop.avif')]">
-									<img class="w-full h-full object-cover failover-image" id="{termek.foto}" src="/api/files/termekek/{termek.id}/{termek.foto}" alt="">
+								<div class="h-28 overflow-hidden">
+									<img class="w-full h-full object-cover failover-image" src="{termek.foto ? `/api/files/termekek/${termek.id}/${termek.foto}` : 'termek-drop.avif'}" alt="">
 								</div>
 								<div class="bg-foreground p-3 font-semibold flex justify-between">
 									<div class="w-9/12">
@@ -220,9 +229,5 @@
 		@apply text-primary;
 		@apply bg-secondary-container;
 		@apply px-2;
-	}
-
-	.failover-image[id=''] {
-		visibility: hidden;
 	}
 </style>

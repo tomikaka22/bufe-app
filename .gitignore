@@ -1,10 +1,12 @@
 .DS_Store
 node_modules
-/build
-/.svelte-kit
-/package
+.svelte-kit
+package
 .env
 .env.*
 !.env.example
 bufe-app
-src/lib/Pocketbase/
+src/lib/backendUtils/szunetSzamolo.js
+src/lib/Pocketbase/pb_migrations
+src/lib/Pocketbase/pb_data/log*
+.gitignore

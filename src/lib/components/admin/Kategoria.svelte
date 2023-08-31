@@ -1,44 +1,27 @@
 <script>
-    export let data;
-    export let kategoriaModal;
+	import AdminTopbar from '$lib/components/AdminTopbar.svelte';
+
+	export let data;
+	export let kategoriaModal;
+
+	let input;
+
 </script>
 
-<dialog class="kategoria-modal" bind:this={kategoriaModal}>
-    <form action="?/kategoria" method="POST">
-       {#each data.termekekLista as termekek}
-          <p>{termekek.termek} | Kategória:
-             <select name="{termekek.id}">
-                <option value="Étel">Étel</option>
-                <option value="Ital">Ital</option>
-                <option value="Nasi">Nasi</option>
-             </select>
-          </p>
-       {/each}
-       <button>Mentés</button>
-    </form>
-    <button on:click={kategoriaModal.close()}><h1>Bezár</h1></button>
+<dialog class="bg-surface-variant rounded-2xl text-secondary w-fit" bind:this={kategoriaModal}>
+	<AdminTopbar midText={'Kategória'} input={input} modal={kategoriaModal}></AdminTopbar>
+		<div class="m-4 mt-2">
+			<form bind:this={input} action="?/kategoria" method="POST">
+				{#each data.termekekLista as termekek}
+					<p class="px-2 my-2 w-fit bg-primary-container rounded-lg text-on-primary-container"><span class="font-semibold text-lg">{termekek.termek}</span> | Kategória:
+						<select class="bg-background outline-none rounded-xl py-1 px-2 my-1 mx-1 font-normal" name="{termekek.id}" value="{termekek.kategoria}">
+								<option value="Étel">Étel</option>
+								<option value="Ital">Ital</option>
+								<option value="Nasi">Nasi</option>
+								<option value="Egyéb">Egyéb</option>
+						</select>
+					</p>
+				{/each}
+			</form>
+		</div>
  </dialog>
-
-<style lang="scss">
-   dialog {
-        margin: auto;
-        background-color: rgb(31, 31, 31);
-        color: white;
-        border-radius: 1em;
-        padding: 1em;
-        border: 1px solid white;
-
-        &::backdrop {
-            background: rgba(0, 0, 0, 0.800);
-        }
-        
-
-        button {
-            background-color: rgb(50, 50, 50);
-            color: white;
-            font-size: larger;
-            border-radius: 1em;
-            padding: .5em;
-        }
-    }
-</style>

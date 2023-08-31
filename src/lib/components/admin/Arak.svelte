@@ -1,37 +1,27 @@
 <script>
-    export let data;
-    export let arakModal;
+	import AdminTopbar from '$lib/components/AdminTopbar.svelte';
+
+	export let data;
+	export let arakModal;
+
+	let input;
+
 </script>
 
-<dialog class="arak-modal" bind:this={arakModal}>
-    <form action="?/ar" method="POST">
-       {#each data.termekekLista as termekek}
-          <p>{termekek.termek} <input name="{termekek.id}" style="width: 8ch;" value="{termekek.ar}" type="number">Ft</p>
-       {/each}
-       <button>Mentés</button>
-    </form>
-    <button on:click={arakModal.close()}><h1>Bezár</h1></button>
+<dialog class="bg-surface-variant rounded-2xl text-secondary relative w-80" bind:this={arakModal}>
+	<AdminTopbar midText={'Árak'} input={input} modal={arakModal}></AdminTopbar>
+	<div class="m-4 mt-2">
+		<form bind:this={input} action="?/ar" method="POST">
+			{#each data.termekekLista as termekek}
+				<p class="px-2 my-2 w-fit bg-primary-container rounded-lg text-on-primary-container">
+					<span class="font-semibold">{termekek.termek}</span>
+					<input class="bg-background outline-none rounded-xl py-1 px-2 my-1 mx-1 font-normal" name="{termekek.id}" style="width: 6ch; -moz-appearance: textfield;" value="{termekek.ar}" type="number">Ft
+				</p>
+			{/each}
+		</form>
+	</div>
  </dialog>
 
-<style lang="scss">
-   dialog {
-         margin: auto;
-         background-color: rgb(31, 31, 31);
-         color: white;
-         border-radius: 1em;
-         padding: 1em;
-         border: 1px solid white;
+ <style lang="postcss">
 
-         &::backdrop {
-            background: rgba(0, 0, 0, 0.800);
-         }
-
-         button {
-            background-color: rgb(50, 50, 50);
-            color: white;
-            font-size: larger;
-            border-radius: 1em;
-            padding: .5em;
-         }
-      }
-</style>
+ </style>

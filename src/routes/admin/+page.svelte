@@ -1,192 +1,149 @@
 <script>
 	import { enhance } from '$app/forms';
 	import { invalidateAll } from '$app/navigation';
-	import { fade } from 'svelte/transition';
+	import { flip } from 'svelte/animate';
+	import { expoOut } from 'svelte/easing';
 	import Termekek from '$lib/components/admin/Termekek.svelte';
 	import Darab from '$lib/components/admin/Darab.svelte';
 	import Arak from '$lib/components/admin/Arak.svelte';
 	import Leiras from '$lib/components/admin/Leiras.svelte';
 	import Feltet from '$lib/components/admin/Feltet.svelte';
 	import Kategoria from '$lib/components/admin/Kategoria.svelte';
-	
-	
+	import Kepek from '$lib/components/admin/Kepek.svelte';
+	import Ban from '$lib/components/admin/Ban.svelte';
+
 	export let data;
-	
+
 	let darabModal;
 	let termekModal;
 	let arakModal;
 	let leirasModal;
 	let feltetModal;
 	let kategoriaModal;
-	
-	setInterval(async () => {
-		invalidateAll()
-	}, 8000);
-	
-	</script>
-	
-	<main>
-		
-	<div class="grid-container">
-		<div class="grid-cell">
-			<h1>Bejövő rendelések</h1>
-				{#each data.rendelesek.fuggoben as rendeles, i (rendeles.id)}
-					<div transition:fade={{duration: 300}} class="rendeles-kartya">
-						<form use:enhance action="?/torles" method="POST">
-							<input hidden type="text" name="recordID" value="{JSON.stringify(rendeles.id)}">
-							<button class="torles-gomb">❌</button>
-						</form>
-						<h1>#{Object.keys(data.rendelesek.fuggoben)[i]}</h1>
-						<h3>{rendeles.name}</h3>
-						{#each Object.keys(rendeles.termekek) as termek}
-							<p><span style="color: chartreuse">{termek},</span> <span style="color: red;">{rendeles.termekek[termek].darab}</span> db, <span style="color: red;">{rendeles.termekek[termek].ar}</span> Ft</p>
-							{#if Array.isArray(rendeles.termekek[termek].feltet)}
-								{#each rendeles.termekek[termek].feltet as feltet}
-									<p style="color: burlywood; text-align: start;">{feltet}</p>
-								{/each}
-							{/if}
-						{/each}
-						<form use:enhance action="?/kesz" method="POST">
-							<input hidden type="text" name="recordID" value="{JSON.stringify(rendeles.id)}">
-							<button>Kész</button>
-						</form>
-					</div>
-				{/each}
+	let kepekModal;
+	let banModal;
+
+	setInterval(invalidateAll, 8000);
+
+</script>
+
+<main>
+
+	<div class="grid grid-rows-[3rem_auto] h-screen">
+		<!-- Gombok -->
+		<div class="outline outline-1 py-2 flex text-center items-center justify-evenly z-10">
+			<button class="outline outline-1 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={termekModal.showModal()}>Termékek</button>
+			<button class="outline outline-1 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={darabModal.showModal()}>Darab</button>
+			<button class="outline outline-1 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={arakModal.showModal()}>Árak</button>
+			<button class="outline outline-1 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={leirasModal.showModal()}>Leírás</button>
+			<button class="outline outline-1 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={feltetModal.showModal()}>Feltét</button>
+			<button class="outline outline-1 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={kategoriaModal.showModal()}>Kategória</button>
+			<button class="outline outline-1 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={kepekModal.showModal()}>Képek</button>
+			<button class="outline outline-1 transition-all hover:rounded-lg hover:bg-primary hover:outline-none hover:text-on-primary rounded-3xl p-1 px-2" on:click={banModal.showModal()}>Tiltás</button>
 		</div>
-	
-		<div class="grid-cell">
-			<h1>Kész rendelések</h1>
-			{#each data.rendelesek.kesz as rendeles, i (rendeles.id)}
-				<div transition:fade={{duration: 300}} class="rendeles-kartya rendeles-kartya-done">
-					<form use:enhance action="?/torles" method="POST">
-						<input hidden type="text" name="recordID" value="{JSON.stringify(rendeles.id)}">
-						<button class="torles-gomb">❌</button>
-					</form>
-					<h1>#{Object.keys(data.rendelesek.kesz)[i]}</h1>
-					<h3>{rendeles.name}</h3>
-					{#each Object.keys(rendeles.termekek) as termek}
-						<p><span style="color: chartreuse">{termek},</span> <span style="color: red;">{rendeles.termekek[termek].darab}</span> db, <span style="color: red;">{rendeles.termekek[termek].ar}</span> Ft</p>
-						{#if Array.isArray(rendeles.termekek[termek].feltet)}
-							{#each rendeles.termekek[termek].feltet as feltet}
-								<p style="color: burlywood; text-align: start;">{feltet}</p>
-							{/each}
-						{/if}
-					{/each}
-					<form use:enhance action="?/atadva" method="POST">
-						<input hidden type="text" name="recordID" value="{JSON.stringify(rendeles.id)}">
-						<button>Átadva</button>
-					</form>
+
+		<!-- Rendelések -->
+		<div class="h-full w-full snap-y snap-mandatory overflow-y-scroll">
+			{#each data.szunetArray as szunet}
+				<div class="h-max snap-center">
+					<div class="grid grid-cols-[20%_80%] h-full w-full min-h-[4rem]">
+						<!-- X. Óra előtti szünet -->
+						<div class="px-2 border-r border-b font-semibold text-lg flex items-center justify-center text-center">
+							{szunet}
+						</div>
+
+						<div class="border-b flex flex-row items-center h-full w-full">
+							<div class="grid grid-rows-2 h-full w-full">
+								<!-- Függőben rendelések -->
+								<div class="p-2 border-b border-surface-variant flex items-center overflow-x-scroll">
+									{#each data.rendelesek.fuggoben as rendeles, i (rendeles.id)}
+										<div animate:flip={{ duration: 700, easing: expoOut }}>
+											{#if rendeles.idopont === szunet}
+												<div class="bg-primary-container p-1 rounded-lg max-h-full min-w-max m-1">
+													<div class="flex w-full justify-between gap-3 mb-2">
+														<form use:enhance action="?/torles" method="POST">
+															<input hidden type="text" name="recordID" value="{JSON.stringify(rendeles.id)}">
+															<button class="bg-error text-on-error hover:bg-on-error hover:text-error hover:rounded-lg transition-all font-semibold px-1.5 rounded-3xl">&#10005;</button>
+														</form>
+															<p class="font-semibold text-on-primary-container">{rendeles.email.replace('@kkszki.hu','')}</p>
+														<form use:enhance action="?/kesz" method="POST">
+															<input hidden type="text" name="recordID" value="{JSON.stringify(rendeles.id)}">
+															<button class="bg-tertiary text-on-tertiary hover:bg-on-tertiary hover:text-tertiary hover:rounded-lg transition-all font-semibold px-1.5 rounded-3xl">&#10003;</button>
+														</form>
+													</div>
+													<div class="flex justify-center gap-1 items-start h-full">
+														{#each Object.keys(rendeles.termekek) as termek}
+															{#each rendeles.termekek[termek] as x}
+																<div class="font-semibold text-center px-0.5 flex flex-col justify-center items-center">
+																	<p class="w-full bg-primary text-on-primary px-1 my-0.5 rounded-md">{termek}</p>
+																	<p class="w-full bg-tertiary text-on-tertiary px-1 my-0.5 rounded-md">{x.darab} db, {x.ar} Ft</p>
+																	{#each x.feltet as feltet}
+																		<p class="w-full text-on-surface outline outline-1 outline-on-surface-variant px-2 my-0.5 rounded-md font-normal">{feltet}</p>
+																	{/each}
+																</div>
+															{/each}
+														{/each}
+													</div>
+													<p class="font-semibold text-center text-on-tertiary-container">{rendeles.fizetes}</p>
+												</div>
+											{/if}
+										</div>
+									{/each}
+								</div>
+								<!-- Kész rendelések -->
+								<div class="p-2 flex items-center overflow-x-scroll">
+									{#each data.rendelesek.kesz as rendeles, i (rendeles.id)}
+										<div animate:flip={{ duration: 700, easing: expoOut }}>
+											{#if rendeles.idopont === szunet}
+												<div class="bg-surface-variant p-1 rounded-lg max-h-full min-w-max m-1">
+													<div class="flex w-full justify-between gap-3 mb-2">
+														<form use:enhance action="?/torles" method="POST">
+															<input hidden type="text" name="recordID" value="{JSON.stringify(rendeles.id)}">
+															<button class="bg-error text-on-error hover:bg-on-error hover:text-error hover:rounded-lg transition-all font-semibold px-1.5 rounded-3xl">&#10005;</button>
+														</form>
+															<p class="font-semibold">{rendeles.email.replace('@kkszki.hu','')}</p>
+														<form use:enhance action="?/atadva" method="POST">
+															<input hidden type="text" name="recordID" value="{JSON.stringify(rendeles.id)}">
+															<button class="bg-tertiary text-on-tertiary hover:bg-on-tertiary hover:text-tertiary hover:rounded-lg transition-all font-semibold px-1.5 rounded-3xl">&#10003;</button>
+														</form>
+													</div>
+													<div class="flex justify-center gap-1 items-start h-full">
+														{#each Object.keys(rendeles.termekek) as termek}
+															{#each rendeles.termekek[termek] as x}
+																<div class="font-semibold text-center px-0.5 flex flex-col justify-center items-center">
+																	<p class="w-full bg-primary text-on-primary px-1 my-0.5 rounded-md">{termek}</p>
+																	<p class="w-full bg-tertiary text-on-tertiary px-1 my-0.5 rounded-md">{x.darab} db, {x.ar} Ft</p>
+																	{#each x.feltet as feltet}
+																		<p class="w-full text-on-surface outline outline-1 outline-on-surface-variant px-2 my-0.5 rounded-md font-normal">{feltet}</p>
+																	{/each}
+																</div>
+															{/each}
+														{/each}
+													</div>
+													<p class="font-semibold text-center text-on-tertiary-container">{rendeles.fizetes}</p>
+												</div>
+											{/if}
+										</div>
+									{/each}
+								</div>
+
+							</div>
+						</div>
+					</div>
 				</div>
 			{/each}
 		</div>
-	 <!-- ----------------------------------------------------------------------------------------------------------------------------------- -->
-		<div class="grid-cell">
-			<div class="szerkesztes">
-				<h1>Szerkesztés:</h1>
-				<button on:click={termekModal.showModal()}>Termékek</button>
-				<button on:click={darabModal.showModal()}>Darab</button>
-				<button on:click={arakModal.showModal()}>Árak</button>
-				<button on:click={leirasModal.showModal()}>Leirás</button>
-				<button on:click={feltetModal.showModal()}>Feltét</button>
-				<button on:click={kategoriaModal.showModal()}>Kategória</button>
-			</div>
-		</div>
 	</div>
-	
-	<!-- Modalok: -->
-	
-	<Termekek bind:termekModal data={data}></Termekek>
-	<Darab bind:darabModal data={data}></Darab>
-	<Arak bind:arakModal data={data}></Arak>
-	<Leiras bind:leirasModal data={data}></Leiras>
-	<Feltet bind:feltetModal data={data}></Feltet>
-	<Kategoria bind:kategoriaModal data={data}></Kategoria>
-	
-	</main>
-	
-	<style lang="scss">
-		
-		main {
-			.grid-container {
-				min-height: 100vh;
-				grid-template-columns: auto 52% 20%;
-				grid-template-rows: auto;
-				display: grid;
-	
-				.grid-cell {
-					color: white;
-					outline: .1em solid white;
-	
-					h1 {
-						text-align: center;
-						margin-top: .5em;
-						font-size: larger;
-					}
-	
-					button {
-						background-color: #222;
-						color: white;
-						font-size: larger;
-						border-radius: 1em;
-						margin: 0 auto;
-					}
-	
-					.rendeles-kartya {
-						text-align: center;
-						border-radius: 1em;
-						background-color: rgb(34, 34, 34);
-						outline: .1em solid rgb(255, 255, 255);
-						display: inline-block;
-						margin: .5em;
-						padding: .5em;
-						padding-top: 0;
-						position: relative;
-	
-						h1 {
-							color: rgb(0, 174, 255);
-							font-size: xx-large;
-						}
-	
-						p {
-							font-size: larger;
-						}
-	
-						.torles-gomb {
-							position: absolute;
-							right: 1ch;
-							top: .8ch;
-							cursor: pointer;
-							border: none;
-							padding: 0;
-							background-color: rgba(0, 0, 0, 0);
-						}
-	
-						h3 {
-							color: chocolate;
-						}
-	
-						button {
-							padding: .4em;
-						}
-					}
-	
-					.rendeles-kartya-done {
-						background-color: #003500;
-					}
-	
-					.szerkesztes {
-						position: fixed;
-						right: 1vw;
-	
-	
-						button {
-							display: block;
-							margin-top: 1ch;
-							padding: .5em;
-						}
-					}
-	
-				}
-			}
-		}
-	</style>
+
+<!-- Modalok: -->
+<Termekek bind:termekModal data={data}></Termekek>
+<Darab bind:darabModal data={data}></Darab>
+<Arak bind:arakModal data={data}></Arak>
+<Leiras bind:leirasModal data={data}></Leiras>
+<Feltet bind:feltetModal data={data}></Feltet>
+<Kategoria bind:kategoriaModal data={data}></Kategoria>
+<Kepek bind:kepekModal data={data}></Kepek>
+<Ban bind:banModal data={data}></Ban>
+
+</main>
+

@@ -5,8 +5,15 @@ module.exports = {
 		'node': true,
 		'worker': true
 	},
-	'extends': 'eslint:recommended',
+	'extends': [
+		'eslint:recommended',
+		'plugin:svelte/recommended'
+	],
 	'overrides': [
+		{
+			files: [ '*.svelte' ],
+			parser: 'svelte-eslint-parser'
+		}
 	],
 	'parserOptions': {
 		'ecmaVersion': '2020',
@@ -77,6 +84,20 @@ module.exports = {
 		],
 		'camelcase': [
 			'warn'
+		],
+		'no-self-assign': [
+			'off'
+		],
+		'svelte/valid-compile': [
+			'error',
+			{
+				'ignoreWarnings': true
+			}
+		],
+		'svelte/no-at-html-tags': [
+			'warn'
 		]
-	}
+	},
+	'plugins': [
+	]
 };

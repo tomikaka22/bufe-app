@@ -1,28 +1,31 @@
 <script>
-   import { fly, slide } from 'svelte/transition';
-	import { Swiper, SwiperSlide } from 'swiper/svelte';
-	import 'swiper/css';
-   import { browser } from '$app/environment';
-   import { cart, total } from '$lib/stores/Cart.js';
+   import { fade, fly } from 'svelte/transition';
+	import { register } from 'swiper/element/bundle';
+   import { onMount } from 'svelte';
    import { navigation } from '$lib/stores/Navigation.js';
-   import Topbar from '$lib/components/Topbar.svelte';
 
    export let data;
 
 	let swiper;
-   let cartshow = 0;
+	let scrollYOld = 0;
+	let navHide = false;
 
-   if (browser) {
-      if (localStorage.getItem('CartContent') != null) {
-         cartshow = 1;
-         $cart = JSON.parse(localStorage.getItem('CartContent'));
-			$total = JSON.parse(localStorage.getItem('Total'));
-      };
-   };
+	onMount(() => {
+		register();
+
+		addEventListener('scroll', () => {
+			if (window.scrollY > scrollYOld)
+				navHide = true;
+			else
+				navHide = false;
+
+			scrollYOld = window.scrollY;
+		});
+	});
 
 	function navigate(i) {
-		swiper.slideTo(i);
-		$navigation = i
+		swiper.swiper.slideTo(i);
+		$navigation = i;
 	}
 
 	// Search Bar
@@ -30,293 +33,201 @@
 	let searchWord;
 
 	function search() {
-		data.termekek = originalData.termekek.filter(termek => termek.termek.toLowerCase().includes(searchWord.toLowerCase()))
+
+		data.termekek = originalData.termekek.filter(termek => termek.termek.toLowerCase().includes(searchWord.toLowerCase()));
 
 		// Navigáljon arra a kategoriara amiben az a termek talalhato ahol a keresett szo a legtobbet elofordul.
-		if (searchWord.length > 0) { // ha nincs itt ez az if, akkor mindig visszaugrik az Etel kategoriara, mivel ott fordul elo a legtobbet empty string.
-			let kategoria = {
-				'Étel': 0,
-				'Ital': 0,
-				'Nasi': 0
-			}
+		const kategoria = {
+			'Étel': 0,
+			'Ital': 0,
+			'Nasi': 0,
+			'Egyéb' : 0
+		};
 
-			data.termekek.forEach(termek => {
-				kategoria[termek.kategoria] += termek.termek.toLowerCase().split(searchWord.toLowerCase()).length - 1
-			});
+		data.termekek.forEach(termek => {
+			kategoria[termek.kategoria] += termek.termek.toLowerCase().split(searchWord.toLowerCase()).length - 1;
+		});
 
-			switch (Object.values(kategoria).sort().reverse()[0]) {
-				case kategoria.Étel:
-					navigate(0)
-					break;
-				case kategoria.Ital:
-					navigate(1)
-					break;
-				case kategoria.Nasi:
-					navigate(2)
-			}
+		switch (Object.values(kategoria).sort().reverse()[0]) {
+			case kategoria.Étel:
+				navigate(0);
+				break;
+			case kategoria.Ital:
+				navigate(1);
+				break;
+			case kategoria.Nasi:
+				navigate(2);
+				break;
+			case kategoria.Egyéb:
+				navigate(3);
 		}
-		
 	}
 </script>
 
-<main>
+<main in:fade={{ duration: 180 }}>
+	<div>
 
-   <Topbar
-      target={'Menü'}
-      targeturl={'/'}
-      text={'Termékek'}
-      background={'#252525'}
-      flyin={{y: -200}}
-      hideProfile={0}
-   ></Topbar>
+		{#if data.nepszeruTermekek.length !== 0}
+			<div class="w-full grid grid-flow-col justify-start overflow-x-scroll snap-x snap-mandatory gap-3 mt-4 px-2">
+				{#each data.nepszeruTermekek as termek}
+					<div class="snap-center rounded-2xl transition-all overflow-hidden bg-secondary-container hover:rounded-lg w-28">
+						<a href="{termek.termek}?referrer=/list">
+							<div class="w-28 aspect-[5/4] bg-center bg-no-repeat bg-cover" style="background-image: url('/api/files/termekek/{termek.id}/{termek.foto}');">
+								<div class="h-full w-full px-2 backdrop-brightness-50 flex justify-center items-center text-center">
+									<p class="font-semibold text-primary">{termek.termek}</p>
+								</div>
+							</div>
+						</a>
+					</div>
+				{/each}
+			</div>
+		{:else}
+			<div class="w-full flex justify-center items-center mt-4 px-2">
+				<div class="w-full flex justify-center items-center bg-foreground rounded-2xl relative">
+					<p class="w-28 aspect-[5/4]"></p>
+					<p class="w-full h-full absolute font-semibold brightness-50 text-xl text-center flex justify-center items-center">
+						Népszerű termékek
+					</p>
+				</div>
+			</div>
+		{/if}
 
-	<div class="search-container">
-		<div class="search">
-			<input type="text" bind:value={searchWord} on:input={search}>
-			<button on:click={() => {searchWord = ''; search()}}>❌</button>
+		<div class="w-full flex justify-center my-4">
+			<div style="transition-timing-function: cubic-bezier(0, 0, 0, 1);" class="w-3/5 h-10 mx-6 flex rounded-3xl overflow-hidden bg-foreground transition-all duration-[250ms] group focus-within:bg-surface-variant focus-within:w-4/5 focus-within:rounded-xl">
+				{#if !searchWord}
+					<svg in:fade={{ duration: 200 }} class="mx-2 py-2.5 pl-1 text-outline group-focus-within:text-primary transition-all" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+						<!-- Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+						<path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/>
+					</svg>
+				{:else}
+					<!-- svelte-ignore a11y-no-static-element-interactions -->
+					<svg on:click={() => { searchWord = ''; search(); }} in:fade={{ duration: 200 }} class="mx-2 py-2.5 pl-1 text-outline group-focus-within:text-primary transition-all" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+						<!-- Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+						<path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/>
+					</svg>
+				{/if}
+				<input id="search" class="pr-2 p-1 bg-[transparent] placeholder:text-outline group-focus-within:placeholder:font-semibold outline-none w-full transition-all duration-300" type="text" placeholder="Keresés" bind:value={searchWord} on:input={search}>
+			</div>
 		</div>
+
+		<swiper-container class="pb-[6.5rem]"
+			auto-height={'true'}
+			initial-slide={$navigation}
+			resistance-ratio={'0.5'}
+			space-between={'20'}
+			slides-per-view={'1'}
+			bind:this={swiper}
+			on:slidechange={(e) => { $navigation = e.detail[0].activeIndex; }}
+			in:fly={{ delay: 100, duration: 380, y: -15 }}
+			>
+			<swiper-slide>
+				<div class="mx-6 flex flex-col gap-5 text-secondary">
+					{#each data.termekek as termek}
+						{#if termek.kategoria === 'Étel'}
+							<a href="{termek.termek}?referrer=/list" class="rounded-2xl transition-all overflow-hidden hover:rounded-lg">
+								<div class="h-28 overflow-hidden">
+									<img class="w-full h-full object-cover failover-image" src="{termek.foto ? `/api/files/termekek/${termek.id}/${termek.foto}` : 'termek-drop.avif'}" alt="">
+								</div>
+								<div class="bg-foreground p-3 font-semibold flex justify-between">
+									<div class="w-9/12">
+										<p class="text-primary">{termek.termek}</p>
+										<p class="text-xs font-normal whitespace-nowrap overflow-hidden text-ellipsis pr-5">{termek.leiras}</p>
+									</div>
+									<div class="text-on-tertiary self-center">
+										<p class="bg-tertiary rounded-lg px-1">{termek.ar} Ft</p>
+									</div>
+								</div>
+							</a>
+						{/if}
+					{/each}
+				</div>
+			</swiper-slide>
+			<swiper-slide>
+				<div class="mx-6 flex flex-col gap-5 text-secondary">
+					{#each data.termekek as termek}
+						{#if termek.kategoria === 'Ital'}
+							<a href="{termek.termek}?referrer=/list" class="rounded-2xl transition-all overflow-hidden hover:rounded-lg">
+								<div class="h-28 overflow-hidden">
+									<img class="w-full h-full object-cover failover-image" src="{termek.foto ? `/api/files/termekek/${termek.id}/${termek.foto}` : 'termek-drop.avif'}" alt="">
+								</div>
+								<div class="bg-foreground p-3 font-semibold flex justify-between">
+									<div class="w-9/12">
+										<p class="text-primary">{termek.termek}</p>
+										<p class="text-xs font-normal">{termek.leiras}</p>
+									</div>
+									<div class="text-on-tertiary self-center">
+										<p class="bg-tertiary rounded-lg px-1">{termek.ar} Ft</p>
+									</div>
+								</div>
+							</a>
+						{/if}
+					{/each}
+				</div>
+			</swiper-slide>
+			<swiper-slide>
+				<div class="mx-6 flex flex-col gap-5 text-secondary">
+					{#each data.termekek as termek}
+						{#if termek.kategoria === 'Nasi'}
+							<a href="{termek.termek}?referrer=/list" class="rounded-2xl transition-all overflow-hidden hover:rounded-lg">
+								<div class="h-28 overflow-hidden">
+									<img class="w-full h-full object-cover failover-image" src="{termek.foto ? `/api/files/termekek/${termek.id}/${termek.foto}` : 'termek-drop.avif'}" alt="">
+								</div>
+								<div class="bg-foreground p-3 font-semibold flex justify-between">
+									<div class="w-9/12">
+										<p class="text-primary">{termek.termek}</p>
+										<p class="text-xs font-normal">{termek.leiras}</p>
+									</div>
+									<div class="text-on-tertiary self-center">
+										<p class="bg-tertiary rounded-lg px-1">{termek.ar} Ft</p>
+									</div>
+								</div>
+							</a>
+						{/if}
+					{/each}
+				</div>
+			</swiper-slide>
+			<swiper-slide>
+				<div class="mx-6 flex flex-col gap-5 text-secondary">
+					{#each data.termekek as termek}
+						{#if termek.kategoria === 'Egyéb'}
+							<a href="{termek.termek}?referrer=/list" class="rounded-2xl transition-all overflow-hidden hover:rounded-lg">
+								<div class="h-28 overflow-hidden">
+									<img class="w-full h-full object-cover failover-image" src="{termek.foto ? `/api/files/termekek/${termek.id}/${termek.foto}` : 'termek-drop.avif'}" alt="">
+								</div>
+								<div class="bg-foreground p-3 font-semibold flex justify-between">
+									<div class="w-9/12">
+										<p class="text-primary">{termek.termek}</p>
+										<p class="text-xs font-normal">{termek.leiras}</p>
+									</div>
+									<div class="text-on-tertiary self-center">
+										<p class="bg-tertiary rounded-lg px-1">{termek.ar} Ft</p>
+									</div>
+								</div>
+							</a>
+						{/if}
+					{/each}
+				</div>
+			</swiper-slide>
+		</swiper-container>
+
+		{#if !navHide}
+			<div class="w-screen flex justify-center fixed bottom-0 z-10">
+				<div in:fly={{ y: 200 }} out:fly|local={{ y: 100 }} class="p-3 flex justify-center gap-6 text-secondary bg-on-secondary rounded-2xl mb-24 opacity-[0.97] font-semibold">
+					<button class="flex justify-center transition-all" on:click={() => {navigate(0);}}><p class:active='{$navigation === 0}' class="rounded-xl transition-all duration-300 py-1">Étel</p></button>
+					<button class="flex justify-center transition-all" on:click={() => {navigate(1);}}><p class:active='{$navigation === 1}' class="rounded-xl transition-all duration-300 py-1">Ital</p></button>
+					<button class="flex justify-center transition-all" on:click={() => {navigate(2);}}><p class:active='{$navigation === 2}' class="rounded-xl transition-all duration-300 py-1">Nasi</p></button>
+					<button class="flex justify-center transition-all" on:click={() => {navigate(3);}}><p class:active='{$navigation === 3}' class="rounded-xl transition-all duration-300 py-1">Egyéb</p></button>
+				</div>
+			</div>
+		{/if}
 	</div>
-
-	<Swiper
-	initialSlide={$navigation}
-	resistanceRatio={0.5}
-	speed={370}
-	spaceBetween={20}
-	slidesPerView={1}
-	on:slideChange={e => {$navigation = e.detail[0].activeIndex}}
-	on:swiper={e => {swiper = e.detail[0]}}
- 	>
-		<SwiperSlide>
-			<div in:slide={{duration: 800}} class='list-grid'>
-				<div class='grid-container'>
-					{#each data.termekek as termek}
-						{#if termek.kategoria == 'Étel'}
-							<div class="inner-grid" class:elfogyott={termek.darab == 0}>
-								<a data-sveltekit-noscroll href="{termek.termek}?referrer=/list" class='grid-cell'><img src='favicon.png' alt=''></a>
-								<a data-sveltekit-noscroll href="{termek.termek}?referrer=/list" class='grid-cell'>{termek.termek}</a>
-								<a data-sveltekit-noscroll href="{termek.termek}?referrer=/list" class='grid-cell'>{termek.ar} Ft</a>
-							</div>
-						{/if}
-					{/each}
-				</div>
-			</div>
-		</SwiperSlide>
-
-		<SwiperSlide>
-			<div in:slide={{duration: 800}} class='list-grid'>
-				<div class='grid-container'>
-					{#each data.termekek as termek}
-						{#if termek.kategoria == 'Ital'}
-							<div class="inner-grid" class:elfogyott={termek.darab == 0}>
-								<a data-sveltekit-noscroll href="{termek.termek}?referrer=/list" class='grid-cell'><img src='favicon.png' alt=''></a>
-								<a data-sveltekit-noscroll href="{termek.termek}?referrer=/list" class='grid-cell'>{termek.termek}</a>
-								<a data-sveltekit-noscroll href="{termek.termek}?referrer=/list" class='grid-cell'>{termek.ar} Ft</a>
-							</div>
-						{/if}
-					{/each}
-				</div>
-			</div>
-		</SwiperSlide>
-
-		<SwiperSlide>
-			<div in:slide={{duration: 800}} class='list-grid'>
-				<div class='grid-container'>
-					{#each data.termekek as termek}
-						{#if termek.kategoria == 'Nasi'}
-							<div class="inner-grid" class:elfogyott={termek.darab == 0}>
-								<a data-sveltekit-noscroll href="{termek.termek}?referrer=/list" class='grid-cell'><img src='favicon.png' alt=''></a>
-								<a data-sveltekit-noscroll href="{termek.termek}?referrer=/list" class='grid-cell'>{termek.termek}</a>
-								<a data-sveltekit-noscroll href="{termek.termek}?referrer=/list" class='grid-cell'>{termek.ar} Ft</a>
-							</div>
-						{/if}
-					{/each}
-				</div>
-			</div>
-		</SwiperSlide>
- 	</Swiper>
-
- {#if cartshow}
- <div in:fly={{y: 100}} style='margin-bottom: 6.5vh;' class='nav'>
-	 <div class='Étel' on:click={() => {navigate(0)}}><p class:active='{$navigation == 0}'>Étel</p></div>
-	 <div class='Ital' on:click={() => {navigate(1)}}><p class:active='{$navigation == 1}'>Ital</p></div>
-	 <div class='Nasi' on:click={() => {navigate(2)}}><p class:active='{$navigation == 2}'>Nasi</p></div>
- </div>
- 
- <a data-sveltekit-noscroll href="kosar?referrer=/list">
-	 <div in:fly={{y: 100, delay: 100}} class='cart'>
-		 <div class="cart-grid">
-			 <div class="cart-cell">
-				 <img src="shopping-basket.png" alt=""> <b>{$total.ar} Ft</b><p>({$total.darab} db termék a kosárban.)</p>
-			 </div>
-		 </div>
-	 </div>
- </a>
- 
- {:else}
- <div in:fly={{y: 200}} class='nav'>
-	 <div class='Étel' on:click={() => {navigate(0)}}><p class:active='{$navigation == 0}'>Étel</p></div>
-	 <div class='Ital' on:click={() => {navigate(1)}}><p class:active='{$navigation == 1}'>Ital</p></div>
-	 <div class='Nasi' on:click={() => {navigate(2)}}><p class:active='{$navigation == 2}'>Nasi</p></div>
- </div>
- {/if}
 
 </main>
 
-<style lang='scss'>
-
-main {
-      width: 100%;
-      height: 100%;
-      overflow-y: scroll;
-      position: fixed;
-
-      .list-grid {
-         display: grid;
-
-         .grid-container {
-            margin: 3%;
-            margin-bottom: 40%;
-            display: grid;
-            row-gap: .6vh;
-
-               .inner-grid {
-                  display: grid;
-                  grid-template-columns: 25% 25% 25% 25%;
-                  background-color: #252525;
-                  border-radius: 1em;
-
-                  &:nth-of-type(2n) {
-                     background-color: #161616;
-                  }
-
-                  .grid-cell {
-                     display: flex;
-                     justify-content: center;
-                     align-items: center;
-                     color: rgba(255, 255, 255, 0.9);
-                     height: 90px;
-
-                     &:nth-of-type(2n) {  // termek neve cell
-                        grid-column-start: 2;
-                        grid-column-end: 4;
-                     }
-
-                     img {
-                        height: 100%;
-                     }
-                  }
-               }
-         }
-
-      }
-
-      .nav {
-         display: flex;
-         background-color: #252525ea;
-         color: rgba(255, 255, 255, 0.877);
-         height: 12vh;
-         width: 100vw;
-         position: fixed;
-         bottom: 0;
-         left: 0;
-         z-index: 20;
-         margin-bottom: 3vh;
-         border-radius: 3em;
-         transform: scale(60%);
-         font-weight: bold;
-         border: 1px solid rgba(255, 255, 255, 0.048);
-
-         div {
-            display: flex;
-            flex: 33.3%;
-            justify-content: center;
-            align-items: center;
-         }
-
-         .active {
-            padding: 2vh;
-            background-color: var(--accent-color);
-            border-radius: 20px;
-            color: black;
-            transition: all .25s ease-in-out;
-         }
-      }
-      
-      .cart {
-         position: fixed;
-         bottom: 0;
-         left: 0;
-         height: 3.5em;
-         background-color: var(--accent-color);
-         border-top-left-radius: 2.8em;
-         border-top-right-radius: 2.8em;
-         width: calc(98% - 2%); // * NAAAAGYON HACKY, de nem megy mashogy. Utálom a css-t
-         margin-left: 2%;
-         padding: .5ch 0;
-			z-index: 20;
-
-         .cart-grid {
-            height: 100%;
-            width: 100%;
-            display: grid;
-
-            .cart-cell {
-               display: flex;
-               align-items: center;
-               justify-content: center;
-               color: black;
-
-               img {
-                  width: 12%;
-               }
-
-               b {
-                  font-size: large;
-                  margin-right: 3%;
-                  margin-left: 1%;
-                  margin-top: 1%;
-               }
-
-               p {
-                  margin-top: 1%;
-               }
-            }
-         }
-      }
-
-		.elfogyott {
-			opacity: 35%;
-		}
-
-		.search-container {
-			display: flex;
-			justify-content: center;
-			
-			.search {
-				display: flex;
-				align-items: center;
-				margin: 1em;
-
-				input {
-					background-color: black;
-					border: 0;
-					padding: .4em;
-					outline: 1px solid rgba(255, 255, 255, 0.863);
-					width: 100%;
-					border-radius: 1em;
-					color: white;
-				}
-
-				button {
-					margin-left: 1em;
-					border: 0;
-					outline: 1px solid rgba(255, 255, 255, 0.863);
-					padding: .5em;
-					border-radius: 1em;
-					background-color: var(--main-color);
-				}
-			}
-		}
-   }
-
- </style>
+<style lang="postcss">
+	.active {
+		@apply text-primary;
+		@apply bg-secondary-container;
+		@apply px-2;
+	}
+</style>

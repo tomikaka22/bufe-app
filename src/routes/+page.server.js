@@ -1,39 +1,39 @@
-const splash = [
-	'Az otthon készitett étel sokkal egészségesebb.',
-	'Ezen az oldalon nem pörög a cookie.',
-	'Adsz egy csókot?',
-	'Valaki hozzányúlt a spagettimhez!',
-	'Nyisd ki a szád, jön a kaja gránát!',
-	'A tényekben nem szabad hinni.',
-	'www.kkszki.{!straight}',
-	'Órán telefonozni szigorúan tilos.',
-	'6 ember rendelt az appomon ezen a héten!',
-	'Nuraphone rossz.',
-	'Puppy linux < bármelyik másik distro.',
-	'Szigma himek nem használnak classokat.',
-	'Akik OTL-t hallgatnak nem számitanak.',
-	'Pár rendelés és utóléred a kövér macskáimat.',
-	'Tiborral ne húzz ujjat.',
-	'App bepukkasztva',
-	'Release date: valamikor',
-	'Májkölszoft Binbóz',
-	'Általam kedvelt tanároknak jónapot kivánok!',
-	'🅱️ortfolio.',
-	'Balu Mester > Sajt32',
-	'Húszezresből mennyi van?',
-	'““”̿ ̿ ̿ ̿ ̿’̿’̵͇̿̿з=(*‿*)=ε/̵͇̿̿/̿ ̿ ̿ ̿ ̿’““'
-
-];
-
 export async function load({ locals }) {
-	const records = structuredClone(await locals.pb.collection('termekek').getFullList());
 
-	const random = records.map(record => {
-		return record.termek;
-	});
+	const kedvencek = await locals.pb.collection('users').getOne(locals.pb.authStore.baseModel.id, { expand: 'kedvencek' });
+
+	const elozmenyek = structuredClone(await locals.pb.collection('rendelesek').getFullList(1, {
+		filter: `rendelo = "${locals.pb.authStore.baseModel.id}"`,
+		sort: '-created'
+	}));
+
+	let elozmenyTermekek = [];
+	for (const elozmeny of elozmenyek) {
+		elozmenyTermekek = elozmenyTermekek.concat(Object.keys(elozmeny.termekek));
+
+		if (elozmenyTermekek.length > 6) {
+			elozmenyTermekek = elozmenyTermekek.slice(0,6);
+			break;
+		}
+	}
+	const elozmenyLista = elozmenyTermekek.map(async termek => structuredClone(await locals.pb.collection('termekek').getFirstListItem(`termek = "${termek}"`)));
+
+	const total = { ar: 0, darab: 0 };
+	for (const rendeles of elozmenyek) {
+		if (rendeles.status === 'kesz') {
+			total.darab++;
+			for (const termek of Object.keys(rendeles.termekek)) {
+				for (const x of rendeles.termekek[termek]) {
+					total.ar += x.ar;
+				}
+			}
+		}
+	}
 
 	return {
-		'randomTermek': encodeURI(random[Math.floor(Math.random() * random.length)]),
-		'splash': splash[Math.floor(Math.random() * splash.length)]
+		total,
+		elozmenyLista: await Promise.all(elozmenyLista),
+		name: locals.pb.authStore.baseModel.name,
+		kedvencek: structuredClone(kedvencek.expand.kedvencek)?.reverse()
 	};
 }

@@ -1,21 +1,27 @@
-export async function load({ locals }) {
+import { fail } from '@sveltejs/kit';
+
+export async function load({ locals, url }) {
+	const termekek = structuredClone(await locals.pb.collection('termekek').getFullList());
 	const elozmenyLista = structuredClone(await locals.pb.collection('rendelesek').getFullList(1, {
 		filter: `rendelo = "${locals.pb.authStore.baseModel.id}"`,
 		sort: '-created'
 	}));
 
 	let total = 0;
-
-	Object.keys(elozmenyLista).forEach(rendeles => {
-		if (elozmenyLista[rendeles].status === 'kesz')
-			Object.keys(elozmenyLista[rendeles].termekek).forEach(termek => {
-				total += elozmenyLista[rendeles].termekek[termek].ar;
-			});
-	});
+	for (const rendeles of elozmenyLista) {
+		if (rendeles.status === 'kesz')
+			for (const termek of Object.keys(rendeles.termekek)) {
+				for (const x of rendeles.termekek[termek]) {
+					total += x.ar;
+				}
+			}
+	}
 
 	return {
+		termekek,
 		elozmenyLista,
-		total
+		total,
+		pathname: url.pathname
 	};
 }
 
@@ -25,14 +31,24 @@ export const actions = {
 		const id = JSON.parse(data.recordID);
 		const rendeles = await locals.pb.collection('rendelesek').getOne(id);
 
-		if (rendeles.status === 'fuggoben' )
-			Object.keys(rendeles.termekek).forEach(async termek => {
-				const record = await locals.pb.collection('termekek').getFullList(1, { filter: `termek = '${termek}'` });
-				const darab = record[0].darab + rendeles.termekek[termek].darab;
+		if (rendeles.status === 'fuggoben' ) {
+			for (const termek of Object.keys(rendeles.termekek)) {
+				const record = await locals.pb.collection('termekek').getFirstListItem(`termek = '${termek}'`);
 
-				await locals.pb.collection('termekek').update(record[0].id, { darab });
-			});
+				let darab = record.darab;
+				let vasarlasok = record.vasarlasok;
 
+				for (const x of rendeles.termekek[termek]) {
+					darab += x.darab;
+					vasarlasok -= x.darab;
+				}
+
+				await locals.pb.collection('termekek').update(record.id, { darab, vasarlasok }); // visszaállítja a termék vásárlás számlálót és a rendelkezésre álló termékek számát.
+			}
+		}
+
+		else if (rendeles.status === 'folyamatban')
+			return fail(409, { 'error': 'Ezt a rendlést már nem lehet törölni!' });
 
 		await locals.pb.collection('rendelesek').delete(id);
 	}

@@ -1,6 +1,6 @@
 {
 	"name": "bufe-app",
-	"version": "0.0.5",
+	"version": "0.9.1",
 	"type": "module",
 	"private": true,
 	"scripts": {
@@ -9,18 +9,21 @@
 		"preview": "vite preview --host"
 	},
 	"devDependencies": {
-		"@sveltejs/kit": "next",
-		"@vite-pwa/sveltekit": "^0.1.0",
-		"eslint": "^8.28.0",
-		"sass": "^1.54.9",
-		"svelte": "^3.44.0",
-		"svelte-preprocess": "^4.10.7",
-		"vite": "^4.0.0"
+		"@sveltejs/kit": "latest",
+		"autoprefixer": "latest",
+		"eslint": "latest",
+		"eslint-plugin-svelte": "latest",
+		"postcss": "^8.4.27",
+		"svelte": "latest",
+		"tailwindcss": "latest",
+		"vite": "latest"
 	},
 	"dependencies": {
-		"@sveltejs/adapter-node": "^1.0.0-next.96",
-		"eslint-plugin-svelte3": "^4.0.0",
-		"pocketbase": "^0.8.0-rc3",
-		"swiper": "^8.4.5"
+		"@splidejs/svelte-splide": "latest",
+		"@sveltejs/adapter-node": "latest",
+		"pocketbase": "latest",
+		"sharp": "^0.32.5",
+		"swiper": "latest",
+		"web-push": "^3.6.4"
 	}
 }

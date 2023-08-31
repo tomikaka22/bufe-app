@@ -1,0 +1,16 @@
+{
+	"short_name": "bufe-app",
+	"name": "bufe-app",
+	"start_url": "/login",
+	"icons": [
+		{
+			"src": "pwa-icon.svg",
+			"sizes": "any"
+		}
+	],
+	"background_color": "#000000",
+	"display": "standalone",
+	"scope": "/",
+	"theme_color": "#000000",
+	"description": "bufe-app"
+}

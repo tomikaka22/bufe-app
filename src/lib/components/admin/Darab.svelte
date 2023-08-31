@@ -1,38 +1,28 @@
 <script>
-    export let data;
-    export let darabModal;
+	import AdminTopbar from '$lib/components/AdminTopbar.svelte';
+
+	export let data;
+	export let darabModal;
+
+	let input;
+
 </script>
 
-<dialog class="darab-modal" bind:this={darabModal}>
-    <form action="?/darab" method="POST">
-       {#each data.termekekLista as termekek, i (i)}
-          <p>{termekek.termek} <input name="{termekek.id}" style="width: 6ch;" value="{termekek.darab}" type="number">db</p>
-       {/each}
-       <button>Mentés</button>
-    </form>
-    <button on:click={darabModal.close()}><h1>Bezár</h1></button>
+<dialog class="bg-surface-variant w-fit rounded-2xl text-secondary" bind:this={darabModal}>
+	<AdminTopbar midText={'Darab'} input={input} modal={darabModal}></AdminTopbar>
+		<div class="m-4 mt-2">
+
+			<form bind:this={input} action="?/darab" method="POST">
+				{#each data.termekekLista as termek, i (i)}
+					<p class="px-2 my-2 w-fit bg-primary-container rounded-lg text-on-primary-container">
+						<span class="font-semibold">{termek.termek}</span>
+						<input class="bg-background outline-none rounded-xl py-1 px-2 my-1 mx-1 font-normal" name="{termek.id}" style="width: 6ch; -moz-appearance: textfield;" value="{termek.darab}" type="number">db
+					</p>
+				{/each}
+			</form>
+		</div>
  </dialog>
 
-<style lang="scss">
-    dialog {
-        margin: auto;
-        background-color: rgb(31, 31, 31);
-        color: white;
-        border-radius: 1em;
-        padding: 1em;
-        border: 1px solid white;
+ <style lang="postcss">
 
-        &::backdrop {
-            background: rgba(0, 0, 0, 0.800);
-        }
-
-        button {
-            background-color: rgb(50, 50, 50);
-            color: white;
-            font-size: larger;
-            border-radius: 1em;
-            padding: .5em;
-        }
-    }
-
-</style>
+ </style>

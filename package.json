@@ -1,6 +1,6 @@
 {
 	"name": "bufe-app",
-	"version": "0.9.1",
+	"version": "0.9.2",
 	"type": "module",
 	"private": true,
 	"scripts": {
@@ -13,7 +13,7 @@
 		"autoprefixer": "latest",
 		"eslint": "latest",
 		"eslint-plugin-svelte": "latest",
-		"postcss": "^8.4.27",
+		"postcss": "latest",
 		"svelte": "latest",
 		"tailwindcss": "latest",
 		"vite": "latest"
@@ -22,8 +22,8 @@
 		"@splidejs/svelte-splide": "latest",
 		"@sveltejs/adapter-node": "latest",
 		"pocketbase": "latest",
-		"sharp": "^0.32.5",
+		"sharp": "latest",
 		"swiper": "latest",
-		"web-push": "^3.6.4"
+		"web-push": "latest"
 	}
 }

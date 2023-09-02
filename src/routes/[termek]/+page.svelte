@@ -129,8 +129,8 @@
 			<div class="flex justify-center w-full">
 				<button on:click={flipIMG}>
 					{#if !showFavorite}
-						<div in:fade={{ duration: 200 }} class="w-72 aspect-square rounded-3xl transition-all overflow-hidden bg-no-repeat bg-center bg-[url('/termek-drop.avif')]">
-							<img class="w-full h-full failover-image" id="{data.termekek.foto}" src="/api/files/termekek/{data.termekek.id}/{data.termekek.foto}" alt="">
+						<div in:fade={{ duration: 200 }} class="w-72 aspect-square rounded-3xl transition-all overflow-hidden">
+							<img class="w-full h-full object-cover" src="{data.termekek.foto ? `/api/files/termekek/${data.termekek.id}/${data.termekek.foto}` : '/termek-drop.avif'}" alt="">
 						</div>
 					{:else}
 						<form method="POST" in:fade={{ duration: 200 }} class="w-72 aspect-square rounded-3xl bg-foreground flex flex-col justify-center items-center">
@@ -220,9 +220,5 @@
 
 	.ar {
 		@apply text-secondary;
-	}
-
-	.failover-image[id=''] {
-		visibility: hidden;
 	}
 </style>

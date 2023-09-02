@@ -140,9 +140,3 @@
 	</div>
 
 </main>
-
-<style lang="postcss">
-	.failover-image[id=''] {
-		visibility: hidden;
-	}
-</style>

@@ -34,6 +34,6 @@ export async function load({ locals }) {
 		total,
 		elozmenyLista: await Promise.all(elozmenyLista),
 		name: locals.pb.authStore.baseModel.name,
-		kedvencek: structuredClone(kedvencek.expand.kedvencek)?.reverse()
+		kedvencek: structuredClone(kedvencek.expand?.kedvencek)?.reverse()
 	};
 }

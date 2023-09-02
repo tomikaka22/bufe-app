@@ -37,7 +37,7 @@ export const actions = {
 				const darab = rendeles[termek][i].darab;
 				let subTotal = darab * record.ar;
 				const feltet = rendeles[termek][i].feltet.map((feltet => { subTotal += Number(record.feltetek[feltet].ar) * darab; return feltet; }));
-				rendeles[termek][i] = { 'ar': subTotal, darab, feltet };
+				rendeles[termek][i] = { 'ar': subTotal, darab, feltet, id: record.id, foto: record.foto };
 				total += subTotal;
 
 				if (record.darab - darab >= 0)

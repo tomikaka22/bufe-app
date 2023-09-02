@@ -11,7 +11,7 @@
 <dialog class="bg-surface-variant w-fit rounded-2xl text-secondary" bind:this={kepekModal}>
 	<AdminTopbar midText={'Képek'} input={input} modal={kepekModal}></AdminTopbar>
 
-		<form bind:this={input} enctype="multipart/form-data" action="?/foto" method="POST" class="w-full flex gap-5 flex-wrap justify-center mb-5">
+		<form bind:this={input} enctype="multipart/form-data" action="?/foto" method="POST" class="w-full flex gap-5 px-5 flex-wrap justify-center mb-5">
 			{#each data.termekekLista as termek, i (i)}
 
 				<div class="flex flex-col justify-center w-44 h-44 text-center font-semibold">
@@ -32,7 +32,7 @@
 							</svg>
 						</div>
 
-						<input on:change={(e) => {document.getElementById(termek.id).src = URL.createObjectURL(e.target.files[0]); }} id="{termek.id}Input" hidden type="file" name="{termek.id}" value="" accept="image/*">
+						<input on:change={(e) => {document.getElementById(termek.id).src = URL.createObjectURL(e.target.files[0]); }} hidden type="file" name="{termek.id}" value="" accept="image/*">
 					</label>
 				</div>
 

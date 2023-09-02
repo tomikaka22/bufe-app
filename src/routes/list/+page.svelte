@@ -67,12 +67,12 @@
 <main in:fade={{ duration: 180 }}>
 	<div>
 
-		{#if data.nepszeruTermekek.length !== 0}
+		{#if data.nepszeruTermekek.length > 3}
 			<div class="w-full grid grid-flow-col justify-start overflow-x-scroll snap-x snap-mandatory gap-3 mt-4 px-2">
 				{#each data.nepszeruTermekek as termek}
 					<div class="snap-center rounded-2xl transition-all overflow-hidden bg-secondary-container hover:rounded-lg w-28">
 						<a href="{termek.termek}?referrer=/list">
-							<div class="w-28 aspect-[5/4] bg-center bg-no-repeat bg-cover" style="background-image: url('/api/files/termekek/{termek.id}/{termek.foto}');">
+							<div class="w-28 aspect-[5/4] bg-center bg-no-repeat bg-cover" style="background-image: url('{termek.foto ? `/api/files/termekek/${termek.id}/${termek.foto}` : ''}');">
 								<div class="h-full w-full px-2 backdrop-brightness-50 flex justify-center items-center text-center">
 									<p class="font-semibold text-primary">{termek.termek}</p>
 								</div>
@@ -82,7 +82,7 @@
 				{/each}
 			</div>
 		{:else}
-			<div class="w-full flex justify-center items-center mt-4 px-2">
+			<div class="w-full flex justify-center items-center mt-4 px-6">
 				<div class="w-full flex justify-center items-center bg-foreground rounded-2xl relative">
 					<p class="w-28 aspect-[5/4]"></p>
 					<p class="w-full h-full absolute font-semibold brightness-50 text-xl text-center flex justify-center items-center">
@@ -125,8 +125,8 @@
 					{#each data.termekek as termek}
 						{#if termek.kategoria === 'Étel'}
 							<a href="{termek.termek}?referrer=/list" class="rounded-2xl transition-all overflow-hidden hover:rounded-lg">
-								<div class="h-28 overflow-hidden">
-									<img class="w-full h-full object-cover failover-image" src="{termek.foto ? `/api/files/termekek/${termek.id}/${termek.foto}` : 'termek-drop.avif'}" alt="">
+								<div class="h-28 overflow-hidden bg-foreground">
+									<img class="w-full h-full object-cover failover-image" src="{termek.foto ? `/api/files/termekek/${termek.id}/${termek.foto}` : '/termek-drop.avif'}" alt="">
 								</div>
 								<div class="bg-foreground p-3 font-semibold flex justify-between">
 									<div class="w-9/12">
@@ -147,8 +147,8 @@
 					{#each data.termekek as termek}
 						{#if termek.kategoria === 'Ital'}
 							<a href="{termek.termek}?referrer=/list" class="rounded-2xl transition-all overflow-hidden hover:rounded-lg">
-								<div class="h-28 overflow-hidden">
-									<img class="w-full h-full object-cover failover-image" src="{termek.foto ? `/api/files/termekek/${termek.id}/${termek.foto}` : 'termek-drop.avif'}" alt="">
+								<div class="h-28 overflow-hidden bg-foreground">
+									<img class="w-full h-full object-cover failover-image" src="{termek.foto ? `/api/files/termekek/${termek.id}/${termek.foto}` : '/termek-drop.avif'}" alt="">
 								</div>
 								<div class="bg-foreground p-3 font-semibold flex justify-between">
 									<div class="w-9/12">
@@ -169,8 +169,8 @@
 					{#each data.termekek as termek}
 						{#if termek.kategoria === 'Nasi'}
 							<a href="{termek.termek}?referrer=/list" class="rounded-2xl transition-all overflow-hidden hover:rounded-lg">
-								<div class="h-28 overflow-hidden">
-									<img class="w-full h-full object-cover failover-image" src="{termek.foto ? `/api/files/termekek/${termek.id}/${termek.foto}` : 'termek-drop.avif'}" alt="">
+								<div class="h-28 overflow-hidden bg-foreground">
+									<img class="w-full h-full object-cover failover-image" src="{termek.foto ? `/api/files/termekek/${termek.id}/${termek.foto}` : '/termek-drop.avif'}" alt="">
 								</div>
 								<div class="bg-foreground p-3 font-semibold flex justify-between">
 									<div class="w-9/12">
@@ -191,8 +191,8 @@
 					{#each data.termekek as termek}
 						{#if termek.kategoria === 'Egyéb'}
 							<a href="{termek.termek}?referrer=/list" class="rounded-2xl transition-all overflow-hidden hover:rounded-lg">
-								<div class="h-28 overflow-hidden">
-									<img class="w-full h-full object-cover failover-image" src="{termek.foto ? `/api/files/termekek/${termek.id}/${termek.foto}` : 'termek-drop.avif'}" alt="">
+								<div class="h-28 overflow-hidden bg-foreground">
+									<img class="w-full h-full object-cover failover-image" src="{termek.foto ? `/api/files/termekek/${termek.id}/${termek.foto}` : '/termek-drop.avif'}" alt="">
 								</div>
 								<div class="bg-foreground p-3 font-semibold flex justify-between">
 									<div class="w-9/12">

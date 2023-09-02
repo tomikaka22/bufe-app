@@ -54,7 +54,7 @@
 					{#each data.kedvencek as kedvenc}
 						<div class="h-20 w-full my-2 snap-center rounded-2xl transition-all overflow-hidden bg-on-primary hover:rounded-lg">
 							<a href="{kedvenc.termek}?referrer=/list">
-								<div class="w-full h-full bg-center bg-no-repeat bg-cover relative" style="background-image: url('/api/files/termekek/{kedvenc.id}/{kedvenc.foto}');">
+								<div class="w-full h-full bg-center bg-no-repeat bg-cover relative" style="background-image: url({kedvenc.foto ? `/api/files/termekek/${kedvenc.id}/${kedvenc.foto}` : ''});">
 									<div class="w-full h-full px-2 flex justify-center items-center text-center">
 										<p class="font-semibold text-primary z-10">{kedvenc.termek}</p>
 									</div>

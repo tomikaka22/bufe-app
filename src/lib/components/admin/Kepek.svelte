@@ -32,7 +32,7 @@
 							</svg>
 						</div>
 
-						<input on:change={(e) => {document.getElementById(termek.id).src = URL.createObjectURL(e.target.files[0]); }} id="{termek.id}Input" hidden type="file" name="{termek.id}" value="" accept="image/*">
+						<input on:change={(e) => {document.getElementById(termek.id).src = URL.createObjectURL(e.target.files[0]); }} hidden type="file" name="{termek.id}" value="" accept="image/*">
 					</label>
 				</div>
 

@@ -16,7 +16,7 @@
 
 			<p class="text-sm pb-16">{text}</p>
 
-			<button on:click={() => { showModal = false; }} class="absolute bottom-6 right-7 p-3 font-semibold text-xs text-primary">OK</button>
+			<button on:click={() => { showModal = false; }} class="absolute bottom-6 right-7 p-3 font-semibold text-sm text-primary">OK</button>
 		</div>
 	</div>
 {/if}

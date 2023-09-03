@@ -20,7 +20,7 @@
 		<div class="w-full h-full flex gap-5">
 			<div class="w-full h-[22.5rem] flex flex-col gap-5">
 				<div class="bg-foreground h-56 w-full rounded-2xl p-2 px-4">
-					<div class="w-full h-full flex flex-col justify-center items-center brightness-50">
+					<div class="w-full h-full flex flex-col justify-center items-center opacity-40"> <!-- Nem brightness-50 mert webkiten valamiért zöld -->
 						<svg xmlns="http://www.w3.org/2000/svg" height="80" fill="currentColor"
 							viewBox="0 -1600 1600 1600" width="80">
 							<path d="M358.973 -266.667q-38.428 0 -65.368

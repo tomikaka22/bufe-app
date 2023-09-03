@@ -4,9 +4,24 @@
 	import { cubicOut } from 'svelte/easing';
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
+	import Notice from '$lib/components/dialogs/Notice.svelte';
 
 	export let data;
 	let showVersion = 0;
+
+	let showModal = false;
+	let modalTitle;
+	let modalText;
+
+	function submitAvatar(e) {
+		if (e.target.files[0].size < 10485760)
+			e.target.form.submit();
+		else {
+			modalTitle = Math.round(e.target.files[0].size / 1048576) + ' MB túl sok.';
+			modalText = 'A kép mérete maximum 10 MB lehet!';
+			showModal = true;
+		}
+	}
 
 	async function handleSubmit(event) {
 		const data = new FormData(this);
@@ -22,6 +37,8 @@
 
 <main in:fade={{ duration: 180 }}>
 
+	<Notice bind:showModal title={modalTitle} text={modalText}></Notice>
+
    <div in:fly={{ y: -120, easing: cubicOut }} class="w-full flex flex-col justify-center items-center">
 		<button on:click={() => { showVersion++; }} class="text-center text-primary text-3xl font-semibold px-2 my-2">{data.name}</button>
       <form use:enhance action="?/changeAvatar" method="POST" enctype="multipart/form-data">
@@ -30,7 +47,7 @@
 					<img class="w-full h-full object-cover" src="/api/avatar" alt="">
 				</div>
          </label>
-         <input on:change={(e) => {e.target.form.submit();}} hidden type="file" name="avatar" id="avatar" value="" accept="image/*">
+         <input on:change={submitAvatar} hidden type="file" name="avatar" id="avatar" value="" accept="image/*">
       </form>
    </div>
 

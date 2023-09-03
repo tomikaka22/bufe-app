@@ -5,8 +5,7 @@ package
 .env
 .env.*
 !.env.example
-bufe-app
+build
 src/lib/backendUtils/szunetSzamolo.js
-src/lib/Pocketbase/pb_migrations
-src/lib/Pocketbase/pb_data/log*
+src/lib/Pocketbase*
 .gitignore

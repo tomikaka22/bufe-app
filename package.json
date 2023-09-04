@@ -21,6 +21,7 @@
 	"dependencies": {
 		"@splidejs/svelte-splide": "latest",
 		"@sveltejs/adapter-node": "latest",
+		"browser-dtector": "^3.4.0",
 		"pocketbase": "latest",
 		"sharp": "latest",
 		"swiper": "latest",

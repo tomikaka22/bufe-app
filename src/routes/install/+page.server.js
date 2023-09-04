@@ -1,7 +1,5 @@
 import BrowserDetector from 'browser-dtector';
 
-export const prerender = true;
-
 export async function load({ request }) {
 	const browser = new BrowserDetector(request.headers.get('user-agent')).parseUserAgent();
 	let browserNumber;

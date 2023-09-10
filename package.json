@@ -9,17 +9,17 @@
     "preview": "vite preview --host"
   },
   "devDependencies": {
-    "@sveltejs/kit": "latest",
-    "autoprefixer": "latest",
     "eslint": "latest",
-    "eslint-plugin-svelte": "latest",
-    "postcss": "latest",
+    "eslint-plugin-svelte": "latest"
+  },
+  "dependencies": {
     "svelte": "latest",
     "svelte-adapter-bun": "latest",
     "tailwindcss": "latest",
-    "vite": "latest"
-  },
-  "dependencies": {
+    "vite": "latest",
+    "autoprefixer": "latest",
+    "@sveltejs/kit": "latest",
+    "postcss": "latest",
     "@splidejs/svelte-splide": "latest",
     "browser-dtector": "latest",
     "pocketbase": "latest",

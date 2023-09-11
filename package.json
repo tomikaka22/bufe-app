@@ -13,19 +13,18 @@
     "eslint-plugin-svelte": "latest"
   },
   "dependencies": {
-    "svelte": "latest",
-    "svelte-adapter-bun": "latest",
-    "tailwindcss": "latest",
-    "vite": "latest",
-    "autoprefixer": "latest",
-    "@sveltejs/kit": "latest",
-    "postcss": "latest",
     "@splidejs/svelte-splide": "latest",
+    "@sveltejs/adapter-node": "^1.3.1",
+    "@sveltejs/kit": "latest",
+    "autoprefixer": "latest",
     "browser-dtector": "latest",
     "pocketbase": "latest",
+    "postcss": "latest",
     "sharp": "latest",
+    "svelte": "latest",
     "swiper": "latest",
+    "tailwindcss": "latest",
+    "vite": "latest",
     "web-push": "latest"
-  },
-  "trustedDependencies": ["sharp"]
+  }
 }

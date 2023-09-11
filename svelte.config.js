@@ -1,4 +1,4 @@
-import adapter from 'svelte-adapter-bun';
+import adapter from '@sveltejs/adapter-node';
 import { vitePreprocess } from '@sveltejs/kit/vite';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -13,10 +13,7 @@ const config = {
 	},
 
 	kit: {
-		adapter: adapter({
-			dynamic_origin: true,
-			xff_depth: 1
-		}),
+		adapter: adapter({ polyfill: false }),
 		serviceWorker: { register: false },
 		version: { name: process.env.npm_package_version + ' ' + (new Date).toLocaleString('hu-HU').split('. ').join('').split(':').join('') }
 	}

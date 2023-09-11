@@ -13,7 +13,10 @@ const config = {
 	},
 
 	kit: {
-		adapter: adapter({ dynamic_origin: true }),
+		adapter: adapter({
+			dynamic_origin: true,
+			xff_depth: 1
+		}),
 		serviceWorker: { register: false },
 		version: { name: process.env.npm_package_version + ' ' + (new Date).toLocaleString('hu-HU').split('. ').join('').split(':').join('') }
 	}

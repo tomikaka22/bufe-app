@@ -1,65 +1,75 @@
 <script>
 	import { fade } from 'svelte/transition';
-	import { Splide, SplideSlide } from '@splidejs/svelte-splide';
-	import '@splidejs/svelte-splide/css/core';
 
 	export let data;
 
-	let splide;
-	let splideIndex = data.browserNumber;
+	let index = data.browserNumber;
 </script>
 
 <main>
 	<h1 class="text-4xl font-semibold text-primary text-center mt-5">Telepítés</h1>
-	<div class="w-full flex justify-center">
-		<Splide on:moved={(e) => { splideIndex = e.detail.index; }} bind:this={splide} options={{ arrows: false, start: data.browserNumber, flickPower: 100 }}>
-
-			<SplideSlide class="px-16 pt-5">
-				<div class="w-full h-full flex justify-center items-center">
-					<img class="border-x border-foreground rounded-3xl transition-all" src="/Chrome.avif" alt="">
-				</div>
-			</SplideSlide>
-
-			<SplideSlide class="px-16 pt-5">
-				<img class="border-x border-foreground rounded-3xl transition-all" src="/Firefox.avif" alt="">
-			</SplideSlide>
-
-			<SplideSlide class="px-16 pt-5">
-				<div class="w-full h-full flex justify-center items-center">
-					<img class="border-x border-foreground rounded-3xl transition-all" src="/Chrome.avif" alt="">
-				</div>
-			</SplideSlide>
-
-		</Splide>
-	</div>
 
 	<div class="px-8 mt-5">
 		<div class="grid grid-cols-3 text-center items-center w-full cursor-pointer">
-			<button class:activeChrome={ splideIndex === 0 }  on:click={() => { splide.go(0); splideIndex = splide.splide.index; }} class="ml-[1px] py-2 text-secondary rounded-l-xl border border-primary transition-all">
+			<button class:activeChrome={ index === 0 } on:click={() => { index = 0; }} class="ml-[1px] py-2 text-secondary rounded-l-xl border border-primary transition-all">
 				<p>Chrome</p>
 			</button>
-			<button class:activeFirefox={ splideIndex === 1 }  on:click={() => { splide.go(1); splideIndex = splide.splide.index; }} class="py-2 text-secondary border border-l-0 border-primary transition-all">
+			<button class:activeFirefox={ index === 1 } on:click={() => { index = 1; }} class="py-2 text-secondary border border-l-0 border-primary transition-all">
 				<p>Firefox</p>
 			</button>
-			<button class:activeSafari={ splideIndex === 2 }  on:click={() => { splide.go(2); splideIndex = splide.splide.index; }} class="py-2 text-secondary rounded-r-xl border border-l-0 border-primary transition-all">
+			<button class:activeSafari={ index === 2 } on:click={() => { index = 2; }} class="py-2 text-secondary rounded-r-xl border border-l-0 border-primary transition-all">
 				<p>Safari</p>
 			</button>
 		</div>
 	</div>
 
-	{#if splideIndex === 0}
-		<p in:fade={{ duration: 200 }} class="text-center my-5 mt-3 px-5 font-semibold">
-			Nyomj a megjelenő <span class="text-primary">"Hozzáadás a képernyőhöz"</span> gombra, vagy a jobboldali hamburger menüből válaszd ki a <span class="text-primary">"Telepítés"</span> gombot.
-		</p>
-	{:else if splideIndex === 1}
-		<p in:fade={{ duration: 200 }} class="text-center my-5 mt-3 px-5 font-semibold">
-			Nyomj a jobboldali hamburger menüre és válaszd ki a <span class="text-primary">"Telepítés"</span> gombot.
-		</p>
-	{:else if splideIndex === 2}
-		<p in:fade={{ duration: 200 }} class="text-center my-5 mt-3 px-5 font-semibold">
-			Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-		</p>
+	{#if index === 0}
+		<div in:fade={{ duration: 200 }}>
+
+			<p class="text-center my-3 mt-5 px-5 font-semibold">A legegyszerűbb mód, ha megnyomod a "Hozzáadás a képernyőhöz" gombot.</p>
+			<p class="text-center my-3 px-5 font-semibold">Ha nincs ilyen gomb, nyomj a jobboldali hamburger menüre.</p>
+
+			<div class="w-5/6 mx-auto mt-5 rounded-2xl overflow-hidden relative">
+				<img class="w-full h-full" src="Chrome-menu.avif" alt="">
+
+				<div class="absolute top-0 flex w-full justify-end mt-[26%]">
+					<p class="text-center font-semibold mr-[5%]">Hamburger menü</p>
+				</div>
+			</div>
+
+			<p class="text-center mt-5 px-5 font-semibold">Nyomj a telepítés gombra.</p>
+			<div class="w-5/6 mx-auto mt-5 rounded-2xl overflow-hidden">
+				<img class="w-full h-full" src="Chrome-install.avif" alt="">
+			</div>
+
+		</div>
+	{:else if index === 1}
+		<div in:fade={{ duration: 200 }}>
+			<p class="text-center my-3 mt-5 px-5 font-semibold">Nyomj a hamburger menüre a jobb sarokban.</p>
+
+			<div class="w-5/6 mx-auto mt-5 rounded-2xl overflow-hidden relative">
+				<img class="w-full h-full" src="Firefox-menu.avif" alt="">
+
+				<div class="absolute top-0 flex w-full justify-end mt-[26%]">
+					<p class="text-center font-semibold mr-[5%]">Hamburger menü</p>
+				</div>
+			</div>
+
+			<p class="text-center mt-5 px-5 font-semibold">Nyomj a telepítés gombra.</p>
+			<div class="w-5/6 mx-auto mt-5 rounded-2xl overflow-hidden">
+				<img class="w-full h-full" src="Firefox-install.avif" alt="">
+			</div>
+		</div>
+	{:else if index === 2}
+		<div in:fade={{ duration: 200 }}>
+			<img class="w-5/6 mx-auto mt-5 rounded-2xl" src="Chrome.avif" alt="">
+			<p class="text-center my-5 px-5 font-semibold">
+				Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+			</p>
+		</div>
 	{/if}
+
+	<p class="text-center mt-3 px-5 py-2 font-semibold bg-foreground">A telepítéshez az utasításokat kövesd itt, vagy az app böngészős verziójában!</p>
 
 </main>
 

@@ -1,6 +1,6 @@
 {
   "name": "bufe-app",
-  "version": "0.9.3",
+  "version": "0.9.4",
   "type": "module",
   "private": true,
   "scripts": {

@@ -87,10 +87,6 @@ self.addEventListener('fetch', (event) => {
 self.addEventListener('push', async event => {
 	if (event.data) {
 		const data = await JSON.parse(event.data.text());
-		console.log(data);
-		// console.log('Push event!! ', event.data.text());
 		self.registration.showNotification(data.title, data.options);
 	}
-	else
-		console.log('Push event but no data');
 });

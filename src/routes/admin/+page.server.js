@@ -4,11 +4,6 @@ import webpush from 'web-push';
 import sharp from 'sharp';
 import { szunet } from '$lib/backendUtils/szunetSzamolo';
 
-process.on('uncaughtException', function (err) {
-	console.error(err);
-	console.log('Node NOT Exiting...');
-});
-
 export const ssr = false;
 
 webpush.setVapidDetails('mailto:szabot2@kkszki.hu', PUSH_PUBLIC_KEY, PUSH_PRIVATE_KEY);
@@ -127,15 +122,17 @@ export const actions = {
 		const data = Object.fromEntries(await request.formData());
 		const id = JSON.parse(data.recordID);
 		const rendeles = await locals.pb.collection('rendelesek').getOne(id);
-		const pushList = await locals.pb.collection('push').getFullList(1, { filter: `name = "${rendeles.rendelo}"` });
+		const pushSubscriber = await locals.pb.collection('push').getFirstListItem(`name = '${rendeles.rendelo}'`);
 
 		await locals.pb.collection('rendelesek').update(id, { 'status': 'folyamatban' });
 
-		for (const pushSubscriber of pushList) {
-			webpush.sendNotification(pushSubscriber.subscription, JSON.stringify({
-				title: 'A rendelésed átvehető!', options: { body: 'Vedd át amíg meleg.', icon: 'favicon.png' }
-			}));
-		}
+		webpush.sendNotification(pushSubscriber.subscription, JSON.stringify({
+			title: 'A rendelésed átvehető!', options: { body: 'Vedd át amíg meleg.', icon: 'favicon.png' }
+		})).catch(async () => {
+			await locals.pb.collection('push').delete(pushSubscriber.id);
+			console.log('Hibás pushNotification, pushSubscriber törölve.');
+		});
+
 	},
 	atadva: async ({ request, locals }) => {
 		const data = Object.fromEntries(await request.formData());

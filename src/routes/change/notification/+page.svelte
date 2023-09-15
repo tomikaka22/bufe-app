@@ -4,12 +4,12 @@
 	import Topbar from '$lib/components/Topbar.svelte';
 	import Notice from '$lib/components/dialogs/Notice.svelte';
 
+	export let data;
+
 	let showModal = false;
 	let modalTitle;
 	let modalText;
 
-	let submitting = false;
-	let pushSubscriptionData;
 	let subscribeForm;
 	let deleteForm;
 
@@ -29,7 +29,7 @@
 			const serviceWorker = await navigator.serviceWorker.getRegistration('/');
 			const applicationServerKey = urlB64ToUint8Array('BN5M32D0WPnvIRlNo8YoJ4Obrb4ok0ULSSbyDqCvhoq0KdTMJ2xKm3YytmPPk2Ve32OyipWUpjt_4r0H_pyifbI');
 
-			pushSubscriptionData = JSON.stringify(await serviceWorker.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey }));
+			const pushSubscriptionData = JSON.stringify(await serviceWorker.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey }));
 			localStorage.setItem('pushSubscriptionData', pushSubscriptionData);
 
 			subscribeForm[0].value = pushSubscriptionData;
@@ -39,7 +39,6 @@
 
 	async function pushDelete() {
 		localStorage.removeItem('pushSubscriptionData');
-		pushSubscriptionData = undefined;
 		deleteForm.submit();
 	}
 
@@ -53,23 +52,20 @@
 
 	<Notice bind:showModal title={modalTitle} text={modalText}></Notice>
 
-	<div class="text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+	<div class="absolute -z-10 text-center top-0 bottom-0 left-0 right-0 flex flex-col justify-center items-center">
 
-		{#if localStorage.getItem('pushSubscriptionData')}
+		{#if data.linkedSubscription}
 
-			<h1 class="text-tertiary text-2xl">Az értesítések bevannak kapcsolva</h1>
-
-			{#if !submitting}
+			{#if JSON.parse(localStorage.getItem('pushSubscriptionData'))?.keys.auth === data.linkedSubscription?.keys.auth }
+				<h1 class="text-tertiary text-2xl mx-6">Az értesítések bevannak kapcsolva</h1>
 				<button on:click={pushDelete} class="button-primary button-notification-on">Értesítések kikapcsolása</button>
 			{:else}
-				<button in:fade={{ duration: 200 }} class="button-primary button-notification-submitting">Értesítések kikapcsolása</button>
+				<h1 class="text-error text-2xl mx-6">Az értesítések már bevannak kapcsolva egy másik eszközön.</h1>
+				<button on:click={pushSubscribe} class="outline outline-1 outline-error-container text-error font-semibold p-2 px-4 mt-3 rounded-3xl hover:rounded-lg transition-all">Értesítések átirányítása</button>
 			{/if}
+
 		{:else}
-			{#if !submitting}
-				<button on:click={pushSubscribe} class="button-primary">Értesítések bekapcsolása</button>
-			{:else}
-				<button  class="button-primary button-notification-submitting">Értesítések bekapcsolása</button>
-			{/if}
+			<button on:click={pushSubscribe} class="button-primary">Értesítések bekapcsolása</button>
 		{/if}
 
 	</div>
@@ -86,9 +82,5 @@
 <style lang="postcss">
 	.button-notification-on {
 		@apply bg-background outline outline-1 outline-tertiary text-tertiary;
-	}
-
-	.button-notification-submitting {
-		@apply bg-background outline outline-1 outline-tertiary text-tertiary brightness-50;
 	}
 </style>

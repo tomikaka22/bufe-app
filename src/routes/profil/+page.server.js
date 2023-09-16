@@ -1,6 +1,12 @@
 import { redirect } from '@sveltejs/kit';
 import sharp from 'sharp';
 
+export async function load({ locals }) {
+	return {
+		name: locals.pb.authStore?.baseModel?.name
+	};
+}
+
 export const actions = {
 	logout: async ({ locals }) => {
 		locals.pb.authStore.clear();
@@ -20,20 +26,3 @@ export const actions = {
 
 	}
 };
-
-export async function load({ locals }) {
-	try {
-		const linkedSubscription = await locals.pb.collection('push').getFirstListItem(`name = '${locals.pb.authStore.baseModel.id}'`);
-		return {
-			linkedSubscription: linkedSubscription.subscription,
-			name: locals.pb.authStore?.baseModel?.name
-		};
-
-	} catch (error) {
-		if (error.status === 404)
-			return {
-				linkedSubscription: undefined,
-				name: locals.pb.authStore?.baseModel?.name
-			};
-	}
-}

@@ -53,18 +53,10 @@
    </div>
 
 	<!-- Értesítések button -->
-	{#if data.linkedSubscription}
-
-		{#if JSON.parse(localStorage.getItem('pushSubscriptionData'))?.keys.auth === data.linkedSubscription?.keys.auth }
-			<div class="flex justify-center">
-				<a href="/change/notification" class="button-primary button-notification-on">Értesítések</a>
-			</div>
-		{:else}
-			<div class="flex justify-center">
-				<a href="/change/notification" class="outline outline-1 outline-error-container text-error font-semibold p-2 px-4 mt-3 rounded-3xl hover:rounded-lg transition-all">Értesítések</a>
-			</div>
-		{/if}
-
+	{#if localStorage.getItem('pushSubscriptionData')}
+		<div class="flex justify-center">
+			<a href="/change/notification" class="button-primary button-notification-on">Értesítések</a>
+		</div>
 	{:else}
 		<div class="flex justify-center">
 			<a href="/change/notification" class="outline outline-1 p-2 px-4 mt-3 rounded-3xl hover:rounded-lg transition-all">Értesítések</a>

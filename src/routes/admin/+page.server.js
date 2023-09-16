@@ -122,16 +122,18 @@ export const actions = {
 		const data = Object.fromEntries(await request.formData());
 		const id = JSON.parse(data.recordID);
 		const rendeles = await locals.pb.collection('rendelesek').getOne(id);
-		const pushSubscriber = await locals.pb.collection('push').getFirstListItem(`name = '${rendeles.rendelo}'`);
+		const pushSubscribtions = await locals.pb.collection('push').getFullList({ filter: `name = '${rendeles.rendelo}'` });
 
 		await locals.pb.collection('rendelesek').update(id, { 'status': 'folyamatban' });
 
-		webpush.sendNotification(pushSubscriber.subscription, JSON.stringify({
-			title: 'A rendelésed átvehető!', options: { body: 'Vedd át amíg meleg.', icon: 'favicon.png' }
-		})).catch(async () => {
-			await locals.pb.collection('push').delete(pushSubscriber.id);
-			console.log('Hibás pushNotification, pushSubscriber törölve.');
-		});
+		for (const subscription of pushSubscribtions) {
+			webpush.sendNotification(subscription.subscription, JSON.stringify({
+				title: 'A rendelésed átvehető!', options: { body: 'Vedd át amíg meleg.', icon: 'favicon.png' }
+			})).catch(async () => {
+				await locals.pb.collection('push').delete(subscription.id);
+				console.log('Push notification error, deleting registration for:', subscription.name);
+			});
+		}
 
 	},
 	atadva: async ({ request, locals }) => {

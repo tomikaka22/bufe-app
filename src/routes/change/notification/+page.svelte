@@ -4,8 +4,6 @@
 	import Topbar from '$lib/components/Topbar.svelte';
 	import Notice from '$lib/components/dialogs/Notice.svelte';
 
-	export let data;
-
 	let showModal = false;
 	let modalTitle;
 	let modalText;
@@ -38,6 +36,7 @@
 	}
 
 	async function pushDelete() {
+		deleteForm[0].value = localStorage.getItem('pushSubscriptionData');
 		localStorage.removeItem('pushSubscriptionData');
 		deleteForm.submit();
 	}
@@ -54,16 +53,9 @@
 
 	<div class="absolute -z-10 text-center top-0 bottom-0 left-0 right-0 flex flex-col justify-center items-center">
 
-		{#if data.linkedSubscription}
-
-			{#if JSON.parse(localStorage.getItem('pushSubscriptionData'))?.keys.auth === data.linkedSubscription?.keys.auth }
-				<h1 class="text-tertiary text-2xl mx-6">Az értesítések bevannak kapcsolva</h1>
-				<button on:click={pushDelete} class="button-primary button-notification-on">Értesítések kikapcsolása</button>
-			{:else}
-				<h1 class="text-error text-2xl mx-6">Az értesítések már bevannak kapcsolva egy másik eszközön.</h1>
-				<button on:click={pushSubscribe} class="outline outline-1 outline-error-container text-error font-semibold p-2 px-4 mt-3 rounded-3xl hover:rounded-lg transition-all">Értesítések átirányítása</button>
-			{/if}
-
+		{#if localStorage.getItem('pushSubscriptionData')}
+			<h1 class="text-tertiary text-2xl mx-6">Az értesítések bevannak kapcsolva</h1>
+			<button on:click={pushDelete} class="p-2 px-4 mt-3 rounded-3xl hover:rounded-lg transition-all bg-background outline outline-1 outline-tertiary text-tertiary">Értesítések kikapcsolása</button>
 		{:else}
 			<button on:click={pushSubscribe} class="button-primary">Értesítések bekapcsolása</button>
 		{/if}
@@ -76,11 +68,6 @@
 	</form>
 
 	<form bind:this={deleteForm} action="?/delete" method="post">
+		<input hidden name="pushSubscriptionData" type="text">
 	</form>
 </main>
-
-<style lang="postcss">
-	.button-notification-on {
-		@apply bg-background outline outline-1 outline-tertiary text-tertiary;
-	}
-</style>

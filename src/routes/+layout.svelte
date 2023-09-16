@@ -63,15 +63,7 @@
 		}
 	});
 
-	function swRegister() {
-		if ('serviceWorker' in navigator) {
-			navigator.serviceWorker.register('/service-worker.js');
-		}
-	}
-
 	onMount(() => {
-		swRegister();
-
 		if (localStorage.getItem('CartContent')) {
 			$cart = JSON.parse(localStorage.getItem('CartContent'));
 			$total = JSON.parse(localStorage.getItem('Total'));

@@ -5,7 +5,7 @@ export function timeToMs(time) {
 }
 
 export function szunet(most = timeToMs(new Date().toLocaleTimeString('hu-HU', { timeZone: 'Europe/Budapest' }))) {
-	if (most < timeToMs('28:00:00'))
+	if (most < timeToMs('08:00:00'))
 		return [ '1. Óra előtt','2. Óra előtti szünet','3. Óra előtti szünet','4. Óra előtti szünet','5. Óra előtti szünet','6. Óra előtti szünet' ];
 	else if (most < timeToMs('08:55:00'))
 		return [ '2. Óra előtti szünet','3. Óra előtti szünet','4. Óra előtti szünet','5. Óra előtti szünet','6. Óra előtti szünet' ];

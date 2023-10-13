@@ -82,9 +82,9 @@
 				{/each}
 			</div>
 		{:else}
-			<div class="w-full flex justify-center items-center mt-4 px-6">
+			<div class="w-full flex justify-center items-center mt-4 px-10">
 				<div class="w-full flex justify-center items-center bg-foreground rounded-2xl relative">
-					<p class="w-28 aspect-[5/4]"></p>
+					<p class="w-28 h-14"></p>
 					<p class="w-full h-full absolute font-semibold brightness-50 text-xl text-center flex justify-center items-center">
 						Népszerű termékek
 					</p>

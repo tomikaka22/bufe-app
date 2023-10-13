@@ -89,8 +89,8 @@
 
 {#if !hideNavbarRoutes.includes($page.url.pathname)}
 	<div class:navbar-background-noconflict={!backgroundConflict.includes($page.url.pathname)} class="bg-foreground text-on-background grid grid-cols-4 gap-8 justify-evenly justify-items-center fixed bottom-0 w-full text-sm h-[5.25rem] transition-all px-5 pt-3 z-10">
-		<a href="/" class="flex flex-col h-16 w-full transition-all" class:active-nav={homeRoutes.includes($page.route.id)}>
-			<div class="w-full h-1/2 flex justify-center items-center rounded-3xl py-1 transition-all" class:active-img={homeRoutes.includes($page.route.id)}>
+		<a href="/" class="flex flex-col justify-center items-center h-16 w-full transition-all" class:active-nav={homeRoutes.includes($page.route.id)}>
+			<div class="w-1/2 h-1/2 flex justify-center items-center rounded-3xl py-1" class:active-img={homeRoutes.includes($page.route.id)} style="transition-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1.0);">
 				{#if homeRoutes.includes($page.route.id)}
 					<svg class="h-full w-full text-primary" fill="currentColor" xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48"><path d="M160-120v-480l320-240 320 240v480H560v-280H400v280H160Z"/></svg>
 				{:else}
@@ -102,8 +102,8 @@
 			</div>
 		</a>
 
-		<a href="/list" class="flex flex-col h-16 w-full transition-all" class:active-nav={termekekRoutes.includes($page.route.id)}>
-			<div class="w-full h-1/2 flex justify-center items-center rounded-3xl py-1 transition-all" class:active-img={termekekRoutes.includes($page.route.id)}>
+		<a href="/list" class="flex flex-col justify-center items-center h-16 w-full transition-all" class:active-nav={termekekRoutes.includes($page.route.id)}>
+			<div class="w-1/2 h-1/2 flex justify-center items-center rounded-3xl py-1" class:active-img={termekekRoutes.includes($page.route.id)} style="transition-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1.0);">
 				{#if termekekRoutes.includes($page.route.id)}
 					<svg class="h-full w-full text-primary" fill="currentColor" xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48"><path d="M80-558v-40q0-109 105-175.5T480-840q190 0 295 66.5T880-598v40H80Zm0 176v-60q33 0 57.5-22t78.5-22q54 0 71.5 22t58.5 22q41 0 60.5-22t73.5-22q54 0 73.5 22t60.5 22q41 0 58.5-22t71.5-22q54 0 78.5 22t57.5 22v60q-54 0-74.5-22T744-426q-41 0-58.5 22T614-382q-54 0-73.5-22T480-426q-41 0-60.5 22T346-382q-54 0-71.5-22T216-426q-41 0-61.5 22T80-382Zm60 262q-24 0-42-18t-18-42v-128h800v128q0 24-18 42t-42 18H140Z"/></svg>
 				{:else}
@@ -115,8 +115,8 @@
 			</div>
 		</a>
 
-		<a href="/kosar" class="flex flex-col h-16 w-full transition-all" class:active-nav={kosarRoutes.includes($page.route.id)}>
-			<div class="w-full h-1/2 relative flex justify-center items-center rounded-3xl py-1 transition-all" class:active-img={kosarRoutes.includes($page.route.id)}>
+		<a href="/kosar" class="flex flex-col justify-center items-center h-16 w-full transition-all" class:active-nav={kosarRoutes.includes($page.route.id)}>
+			<div class="w-1/2 h-1/2 relative flex justify-center items-center rounded-3xl py-1" class:active-img={kosarRoutes.includes($page.route.id)} style="transition-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1.0);">
 				{#if kosarRoutes.includes($page.route.id)}
 					<svg class="h-full w-full text-primary" fill="currentColor" xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48"><path d="M286.788-81Q257-81 236-102.212q-21-21.213-21-51Q215-183 236.212-204q21.213-21 51-21Q317-225 338-203.788q21 21.213 21 51Q359-123 337.788-102q-21.213 21-51 21Zm400 0Q657-81 636-102.212q-21-21.213-21-51Q615-183 636.212-204q21.213-21 51-21Q717-225 738-203.788q21 21.213 21 51Q759-123 737.788-102q-21.213 21-51 21ZM205-801h589.074q22.964 0 34.945 21Q841-759 829-738L694-495q-11 19-28.559 30.5Q647.881-453 627-453H324l-56 104h491v60H277q-42 0-60.5-28t.5-63l64-118-152-322H51v-60h117l37 79Z"/></svg>
 				{:else}
@@ -135,8 +135,8 @@
 			</div>
 		</a>
 
-		<a href="/profil" class="flex flex-col h-16 w-full transition-all" class:active-nav={profilRoutes.includes($page.route.id)}>
-			<div class="w-full h-1/2 flex justify-center items-center rounded-3xl py-1 transition-all" class:active-img={profilRoutes.includes($page.route.id)}>
+		<a href="/profil" class="flex flex-col justify-center items-center h-16 w-full transition-all" class:active-nav={profilRoutes.includes($page.route.id)}>
+			<div class="w-1/2 h-1/2 flex justify-center items-center rounded-3xl py-1" class:active-img={profilRoutes.includes($page.route.id)} style="transition-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1.0);">
 				<div class:rounded-xl={profilRoutes.includes($page.route.id)} class="h-full aspect-square rounded-lg overflow-hidden flex justify-center items-center transition-all relative">
 					<img class="h-full w-full" src="/api/avatar" alt="">
 					<div class:opacity-40={!profilRoutes.includes($page.route.id)} class="absolute w-full h-full bg-on-primary transition-all opacity-0"></div>
@@ -181,11 +181,20 @@
 	}
 
 	.active-img {
-		@apply bg-secondary-container;
+		@apply
+		bg-secondary-container
+		w-full
+		transition-all
+		duration-300
+		;
 	}
 
 	.active-text {
-		@apply text-secondary;
+		@apply
+		text-secondary
+		transition-all
+		duration-300
+		;
 	}
 
 	.navbar-background-noconflict {

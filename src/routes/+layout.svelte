@@ -88,7 +88,7 @@
 {/if}
 
 {#if !hideNavbarRoutes.includes($page.url.pathname)}
-	<div class:navbar-background-noconflict={!backgroundConflict.includes($page.url.pathname)} class="bg-foreground text-on-background grid grid-cols-4 gap-8 justify-evenly justify-items-center fixed bottom-0 w-full text-sm h-[5.25rem] transition-all px-5 pt-3 z-10">
+	<div class:navbar-background-noconflict={!backgroundConflict.includes($page.url.pathname)} class="bg-foreground text-on-background grid grid-cols-4 gap-8 justify-evenly justify-items-center fixed bottom-0 w-full text-sm h-[5.25rem] transition-all duration-200 px-5 pt-3 z-10">
 		<a href="/" class="flex flex-col justify-center items-center h-16 w-full transition-all" class:active-nav={homeRoutes.includes($page.route.id)}>
 			<div class="w-1/2 h-1/2 flex justify-center items-center rounded-3xl py-1" class:active-img={homeRoutes.includes($page.route.id)} style="transition-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1.0);">
 				{#if homeRoutes.includes($page.route.id)}
@@ -193,7 +193,7 @@
 		@apply
 		text-secondary
 		transition-all
-		duration-300
+		duration-200
 		;
 	}
 

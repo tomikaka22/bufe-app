@@ -19,7 +19,7 @@ const ASSETS = [
 ];
 
 const cachedURLs = [
-	'/api',
+	'/api/files',
 	'/list', // Be cacheli a /list load functionjét hogy ne kelljen várni amíg oda navigálunk.
 	'/profil',
 	'/termek-drop.avif'

@@ -74,7 +74,7 @@
 						<a href="{termek.termek}?referrer=/list">
 							<div class="w-28 aspect-[5/4] bg-center bg-no-repeat bg-cover" style="background-image: url('{termek.foto ? `/api/files/termekek/${termek.id}/${termek.foto}` : ''}');">
 								<div class="h-full w-full px-2 backdrop-brightness-50 flex justify-center items-center text-center">
-									<p class="font-semibold text-primary">{termek.termek}</p>
+									<p class="font-semibold text-primary line-clamp-3 break-words">{termek.termek}</p>
 								</div>
 							</div>
 						</a>
@@ -118,7 +118,7 @@
 			slides-per-view={'1'}
 			bind:this={swiper}
 			on:slidechange={(e) => { $navigation = e.detail[0].activeIndex; }}
-			in:fly={{ delay: 100, duration: 380, y: -15 }}
+			in:fly={{ delay: 0, duration: 380, y: -15 }}
 			>
 			<swiper-slide>
 				<div class="mx-6 flex flex-col gap-5 text-secondary">
@@ -130,8 +130,8 @@
 								</div>
 								<div class="bg-foreground p-3 font-semibold flex justify-between">
 									<div class="w-9/12">
-										<p class="text-primary">{termek.termek}</p>
-										<p class="text-xs font-normal whitespace-nowrap overflow-hidden text-ellipsis pr-5">{termek.leiras}</p>
+										<p class="text-primary truncate break-words">{termek.termek}</p>
+										<p class="text-xs font-normal truncate break-words pr-5">{termek.leiras}</p>
 									</div>
 									<div class="text-on-tertiary self-center">
 										<p class="bg-tertiary rounded-lg px-1">{termek.ar} Ft</p>
@@ -152,8 +152,8 @@
 								</div>
 								<div class="bg-foreground p-3 font-semibold flex justify-between">
 									<div class="w-9/12">
-										<p class="text-primary">{termek.termek}</p>
-										<p class="text-xs font-normal">{termek.leiras}</p>
+										<p class="text-primary truncate break-words">{termek.termek}</p>
+										<p class="text-xs font-normal truncate break-words pr-5">{termek.leiras}</p>
 									</div>
 									<div class="text-on-tertiary self-center">
 										<p class="bg-tertiary rounded-lg px-1">{termek.ar} Ft</p>
@@ -174,8 +174,8 @@
 								</div>
 								<div class="bg-foreground p-3 font-semibold flex justify-between">
 									<div class="w-9/12">
-										<p class="text-primary">{termek.termek}</p>
-										<p class="text-xs font-normal">{termek.leiras}</p>
+										<p class="text-primary truncate break-words">{termek.termek}</p>
+										<p class="text-xs font-normal truncate break-words pr-5">{termek.leiras}</p>
 									</div>
 									<div class="text-on-tertiary self-center">
 										<p class="bg-tertiary rounded-lg px-1">{termek.ar} Ft</p>
@@ -196,8 +196,8 @@
 								</div>
 								<div class="bg-foreground p-3 font-semibold flex justify-between">
 									<div class="w-9/12">
-										<p class="text-primary">{termek.termek}</p>
-										<p class="text-xs font-normal">{termek.leiras}</p>
+										<p class="text-primary truncate break-words">{termek.termek}</p>
+										<p class="text-xs font-normal truncate break-words pr-5">{termek.leiras}</p>
 									</div>
 									<div class="text-on-tertiary self-center">
 										<p class="bg-tertiary rounded-lg px-1">{termek.ar} Ft</p>

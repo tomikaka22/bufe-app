@@ -56,7 +56,7 @@
 							<a href="{kedvenc.termek}?referrer=/list">
 								<div class="w-full h-full bg-center bg-no-repeat bg-cover relative" style="background-image: url({kedvenc.foto ? `/api/files/termekek/${kedvenc.id}/${kedvenc.foto}` : ''});">
 									<div class="w-full h-full px-2 flex justify-center items-center text-center">
-										<p class="font-semibold text-primary z-10">{kedvenc.termek}</p>
+										<p class="font-semibold text-primary z-10 line-clamp-3 break-words">{kedvenc.termek}</p>
 									</div>
 									<div class="absolute top-0 w-full h-full bg-[black] opacity-50"></div> <!-- Undorító hack a chrome miatt -->
 								</div>

@@ -118,22 +118,22 @@
 
    <Topbar
       targeturl={$page.url.searchParams.get('referrer') || '/list'}
-      text={termek}
+      text={data.termekek.kategoria}
    ></Topbar>
 
 	<Notice bind:showModal title={modalTitle} text={modalText}></Notice>
 
-	<div class="px-6">
+	<div class="px-10">
 		<div>
-			<h1 class="text-primary text-center mb-2 text-xl font-semibold">{termek}</h1>
+			<h1 class="text-primary text-center mb-2 text-3xl font-semibold line-clamp-2 break-words">{termek}</h1>
 			<div class="flex justify-center w-full">
 				<button on:click={flipIMG}>
 					{#if !showFavorite}
-						<div in:fade={{ duration: 200 }} class="w-72 aspect-square rounded-3xl transition-all overflow-hidden">
+						<div in:fade={{ duration: 200 }} class="w-[19rem] aspect-square rounded-3xl transition-all overflow-hidden">
 							<img class="w-full h-full object-cover" src="{data.termekek.foto ? `/api/files/termekek/${data.termekek.id}/${data.termekek.foto}` : '/termek-drop.avif'}" alt="">
 						</div>
 					{:else}
-						<form method="POST" in:fade={{ duration: 200 }} class="w-72 aspect-square rounded-3xl bg-foreground flex flex-col justify-center items-center">
+						<form method="POST" in:fade={{ duration: 200 }} class="w-[19rem] aspect-square rounded-3xl bg-foreground flex flex-col justify-center items-center">
 							{#if data.kedvencek.includes(data.termekek.id)}
 								<svg in:fade id="svg-star" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
 									height="80" viewBox="0 -1600 1600 1600" width="80"><path id="svg-path" d="m388.333 -133.333
@@ -156,39 +156,23 @@
 				</button>
 			</div>
 
-			<h4 class="text-center font-semibold mt-2">{data.termekek.leiras}</h4>
+			<div class="flex justify-center items-start gap-3 mt-3 px-5">
+				<p class="text-sm max-w-[65%] font-semibold p-1 px-2 rounded-lg bg-foreground outline outline-1 outline-outline transition-all break-words duration-100 truncate hover:whitespace-normal hover:outline-none">
+					{data.termekek.leiras}
+				</p>
+
+				{#key price}
+					<div class="rounded-lg px-2 outline outline-1 outline-tertiary font-semibold text-lg whitespace-nowrap">
+						<h2 class="font-semibold text-tertiary text-center" in:fade="{{ duration: 200 }}">{price} Ft</h2>
+					</div>
+				{/key}
+			</div>
 
 	{#if maxAmount}
-		{#key price}
-			<div class="flex w-full justify-center items-center">
-				<div class="mt-5 outline outline-tertiary outline-1 rounded-lg px-5 font-semibold text-lg py-1">
-					<h2 class="font-semibold text-on-tertiary-container" in:fade="{{ duration: 200 }}">{price} Ft</h2>
-				</div>
-			</div>
-		{/key}
-
-		<div class="flex w-full justify-center">
-			<div class="mt-5 flex justify-center items-center text-3xl rounded-2xl">
-				<button use:touchRadius={'.55rem'} class="bg-secondary flex justify-center items-center rounded-2xl w-16 p-3 px-5 text-on-secondary transition-all" on:click="{() => { subtractAmount(); }}">
-					-
-				</button>
-				<div class="px-5 py-2 text-tertiary">{#key darab}<span in:fade="{{ duration: 200 }}">{darab}</span>{/key}</div>
-				<button use:touchRadius={'.55rem'} class="bg-secondary flex justify-center items-center rounded-2xl w-16 p-3 px-5 text-on-secondary transition-all" on:click="{() => { addAmount(); }}">
-					+
-				</button>
-			</div>
-		</div>
-
-		<div class="flex w-full justify-center items-center">
-			<button on:click={buy} class="mt-5 text-lg transition-all bg-primary-container text-on-primary-container py-2 px-10 rounded-3xl hover:rounded-lg hover:bg-primary hover:text-on-primary font-semibold">
-				Kosárba
-			</button>
-		</div>
-
 		{#if data.termekek.feltetek}
 			<div class="flex w-full justify-center">
-				<div class="w-full mt-3 rounded-2xl mb-32 mx-8 transition-all">
-					<p class="text-center my-1 font-semibold">Feltétek</p>
+				<div class="w-full rounded-2xl mx-8 mt-4 transition-all">
+					<p class="text-center mb-1 font-semibold">Feltétek</p>
 					{#each Object.keys(data.termekek.feltetek) as feltet}
 						<button class:active={feltetek.includes(feltet)} class="flex w-full justify-between mb-2 outline outline-1 outline-outlin rounded-xl p-2 transition-all" on:click={() => {feltetChange(feltet);}}>
 							<div>{feltet}</div> <div class:ar={feltetek.includes(feltet)} class="text-on-tertiary-container">{data.termekek.feltetek[feltet].ar} Ft</div>
@@ -197,6 +181,24 @@
 				</div>
 			</div>
 		{/if}
+
+		<div class="flex w-full justify-center">
+			<div class="mt-5 flex justify-center items-center text-3xl rounded-2xl">
+				<button use:touchRadius={'.55rem'} class="bg-secondary flex justify-center items-center rounded-2xl w-14 aspect-square text-on-secondary transition-all" on:click={subtractAmount}>
+					-
+				</button>
+				<div class="px-5 py-2 text-tertiary">{#key darab}<span in:fade="{{ duration: 200 }}">{darab}</span>{/key}</div>
+				<button use:touchRadius={'.55rem'} class="bg-secondary flex justify-center items-center rounded-2xl w-14 aspect-square text-on-secondary transition-all" on:click={addAmount}>
+					+
+				</button>
+			</div>
+		</div>
+
+		<div class="flex w-full justify-center items-center">
+			<button on:click={buy} class="text-lg transition-all bg-primary-container text-on-primary-container py-2 px-8 mt-4 mb-32 rounded-3xl hover:rounded-lg hover:bg-primary hover:text-on-primary font-semibold">
+				Kosárba
+			</button>
+		</div>
 	{:else}
 		<div class="flex w-full mt-5 justify-center items-center">
 			<div class="text-lg transition-all bg-on-error text-error rounded-xl py-2 px-10 font-semibold">
@@ -204,7 +206,6 @@
 			</div>
 		</div>
 	{/if}
-
 	</div>
 
 </main>

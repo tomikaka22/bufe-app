@@ -78,7 +78,7 @@
 							<div class="aspect-square overflow-hidden h-full rounded-xl">
 								<img class="w-full h-full object-cover" src="{x.foto ? `/api/files/termekek/${x.id}/${x.foto}` : '/termek-drop.avif'}" alt="">
 							</div>
-							<div class="font-semibold">
+							<div class="font-semibold line-clamp-3 break-words">
 								{termek}
 							</div>
 							<div class="flex flex-col items-end gap-2">
@@ -102,7 +102,7 @@
 							<div class="aspect-square overflow-hidden h-full rounded-xl">
 								<img class="w-full h-full object-cover" src="{x.foto ? `/api/files/termekek/${x.id}/${x.foto}` : '/termek-drop.avif'}" alt="">
 							</div>
-							<div class="font-semibold">
+							<div class="font-semibold line-clamp-3 break-words">
 								{termek}
 							</div>
 							<div class="flex flex-col items-end gap-2">

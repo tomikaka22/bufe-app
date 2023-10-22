@@ -221,7 +221,7 @@
 											/>
 										</svg>
 									</button>
-									{feltet}
+									<span class="truncate max-w-[7.5rem]">{feltet}</span>
 								</p>
 							{/each}
 						</div>

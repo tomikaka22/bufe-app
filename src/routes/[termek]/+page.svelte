@@ -175,7 +175,7 @@
 					<p class="text-center mb-1 font-semibold">Feltétek</p>
 					{#each Object.keys(data.termekek.feltetek) as feltet}
 						<button class:active={feltetek.includes(feltet)} class="flex w-full justify-between mb-2 outline outline-1 outline-outlin rounded-xl p-2 transition-all" on:click={() => {feltetChange(feltet);}}>
-							<div>{feltet}</div> <div class:ar={feltetek.includes(feltet)} class="text-on-tertiary-container">{data.termekek.feltetek[feltet].ar} Ft</div>
+							<div class="truncate">{feltet}</div> <div class:ar={feltetek.includes(feltet)} class="text-on-tertiary-container ml-5 whitespace-nowrap">{data.termekek.feltetek[feltet].ar} Ft</div>
 						</button>
 					{/each}
 				</div>

@@ -109,7 +109,9 @@
 													<!-- Feltétek -->
 													<div class="w-full p-1.5 flex flex-wrap gap-1.5 bg-surface-variant">
 														{#each x.feltet as feltet}
-															<p class="bg-foreground text-on-surface-variant font-semibold rounded-lg px-2 flex justify-center items-center">{feltet}</p>
+															<p class="bg-foreground text-on-surface-variant font-semibold rounded-lg px-2 flex justify-center items-center">
+																<span class="truncate max-w-[7.5rem]">{feltet}</span>
+															</p>
 														{/each}
 													</div>
 												</div>

@@ -7,6 +7,7 @@
 	import { touchRadius } from '$lib/frontendUtils/utils.js';
    import Topbar from '$lib/components/Topbar.svelte';
 	import Notice from '$lib/components/dialogs/Notice.svelte';
+	import Leiras from '$lib/components/Leiras.svelte';
 
    export let data;
 
@@ -157,9 +158,8 @@
 			</div>
 
 			<div class="flex justify-center items-start gap-3 mt-3 px-5">
-				<p class="text-sm max-w-[65%] font-semibold p-1 px-2 rounded-lg bg-foreground outline outline-1 outline-outline transition-all break-words duration-100 truncate hover:whitespace-normal hover:outline-none">
-					{data.termekek.leiras}
-				</p>
+
+				<Leiras leiras={data.termekek.leiras}></Leiras>
 
 				{#key price}
 					<div class="rounded-lg px-2 outline outline-1 outline-tertiary font-semibold text-lg whitespace-nowrap">

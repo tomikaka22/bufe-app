@@ -4,7 +4,7 @@
 	import { deserialize } from '$app/forms';
    import { fade } from 'svelte/transition';
    import { cart, total } from '$lib/stores/Cart.js';
-	import { touchRadius } from '$lib/frontendUtils/utils.js';
+	import { forint, touchRadius } from '$lib/frontendUtils/utils.js';
    import Topbar from '$lib/components/Topbar.svelte';
 	import Notice from '$lib/components/dialogs/Notice.svelte';
 	import Leiras from '$lib/components/Leiras.svelte';
@@ -171,11 +171,11 @@
 	{#if maxAmount}
 		{#if data.termekek.feltetek}
 			<div class="flex w-full justify-center">
-				<div class="w-full rounded-2xl mx-8 mt-4 transition-all">
+				<div class="max-w-sm mx-8 w-full rounded-2xl mt-4 transition-all">
 					<p class="text-center mb-1 font-semibold">Feltétek</p>
 					{#each Object.keys(data.termekek.feltetek) as feltet}
 						<button class:active={feltetek.includes(feltet)} class="flex w-full justify-between mb-2 outline outline-1 outline-outlin rounded-xl p-2 transition-all" on:click={() => {feltetChange(feltet);}}>
-							<div class="truncate">{feltet}</div> <div class:ar={feltetek.includes(feltet)} class="text-on-tertiary-container ml-5 whitespace-nowrap">{data.termekek.feltetek[feltet].ar} Ft</div>
+							<div class="truncate">{feltet}</div> <div class:ar={feltetek.includes(feltet)} class="text-on-tertiary-container ml-5 whitespace-nowrap">{'+ ' + forint(data.termekek.feltetek[feltet].ar)}</div>
 						</button>
 					{/each}
 				</div>
@@ -183,7 +183,7 @@
 		{/if}
 
 		<div class="flex w-full justify-center">
-			<div class="mt-5 flex justify-center items-center text-3xl rounded-2xl">
+			<div class="mt-4 flex justify-center items-center text-3xl rounded-2xl">
 				<button use:touchRadius={'.55rem'} class="bg-secondary flex justify-center items-center rounded-2xl w-14 aspect-square text-on-secondary transition-all" on:click={subtractAmount}>
 					-
 				</button>

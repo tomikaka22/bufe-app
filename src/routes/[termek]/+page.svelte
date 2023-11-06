@@ -171,7 +171,7 @@
 	{#if maxAmount}
 		{#if data.termekek.feltetek}
 			<div class="flex w-full justify-center">
-				<div class="max-w-sm mx-8 w-full rounded-2xl mt-4 transition-all">
+				<div class="max-w-sm px-2 w-full rounded-2xl mt-4 transition-all">
 					<p class="text-center mb-1 font-semibold">Feltétek</p>
 					{#each Object.keys(data.termekek.feltetek) as feltet}
 						<button class:active={feltetek.includes(feltet)} class="flex w-full justify-between mb-2 outline outline-1 outline-outlin rounded-xl p-2 transition-all" on:click={() => {feltetChange(feltet);}}>

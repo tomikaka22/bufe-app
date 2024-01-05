@@ -33,15 +33,13 @@ export const actions = {
 			for (const termek of Object.keys(rendeles.termekek)) {
 				const record = await locals.pb.collection('termekek').getFirstListItem(`termek = '${termek}'`);
 
-				let darab = record.darab;
 				let vasarlasok = record.vasarlasok;
 
 				for (const x of rendeles.termekek[termek]) {
-					darab += x.darab;
 					vasarlasok -= x.darab;
 				}
 
-				await locals.pb.collection('termekek').update(record.id, { darab, vasarlasok }); // visszaállítja a termék vásárlás számlálót és a rendelkezésre álló termékek számát.
+				await locals.pb.collection('termekek').update(record.id, { vasarlasok }); // visszaállítja a termék vásárlás számlálót és a rendelkezésre álló termékek számát.
 			}
 		}
 

@@ -40,8 +40,8 @@ export const actions = {
 				rendeles[termek][i] = { 'ar': subTotal, darab, feltet, id: record.id, foto: record.foto };
 				total += subTotal;
 
-				if (record.darab - darab >= 0)
-					await locals.pb.collection('termekek').update(record.id, { 'darab': record.darab - darab, 'vasarlasok': record.vasarlasok + darab } );	// darabszam kivonasa, vásárlás szám növelése
+				if (darab <= record.darab)
+					await locals.pb.collection('termekek').update(record.id, { 'vasarlasok': record.vasarlasok + darab } );	// vásárlás szám növelése
 				else
 					return fail(409, { 'error': `Túl sok ${record.termek} a kosárban!`, 'sok': record.termek });
 			}

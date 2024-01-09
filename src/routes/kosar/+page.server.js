@@ -5,9 +5,22 @@ export const ssr = false;
 
 export async function load({ locals }) {
 
+	const rendelesek = await locals.pb.collection('rendelesek').getFullList('status = fuggoben');
+	let szunetArray = szunet();
+
+	const idopontok = {}; // hány db rendelés esik adott szünetre
+	for (const x of rendelesek) {
+		idopontok[x.idopont] ? ++idopontok[x.idopont] : idopontok[x.idopont] = 1;
+	}
+
+	for (const idopont in idopontok) { // ha elérte a maxot, szedje ki az elérhető szünetek közül
+		if (idopontok[idopont] >= 30)
+			szunetArray = szunetArray.filter((x) => x !== idopont);
+	}
 	return {
-		'termekek': structuredClone(await locals.pb.collection('termekek').getFullList()),
-		'szunetArray': szunet()
+		termekek: structuredClone(await locals.pb.collection('termekek').getFullList()),
+		szunetArray,
+		idopontok
 	};
 }
 
@@ -22,6 +35,9 @@ export const actions = {
 		}
 		if (![ 'Készpénz','Bankkártya' ].includes(data.fizetes)) {
 			return fail(409, { 'error': `Hibás fizetési mód: ${data.fizetes}` });	// Hibás fizetési mód
+		}
+		if ((await locals.pb.collection('rendelesek').getFullList({ filter: `status = "fuggoben" && idopont = "${data.idopont}"` })).length >= 30) {
+			return fail(409, { 'error': `Maximum rendelés elérve: ${data.idopont}` });	// Maximum rendeles per szünet elérve
 		}
 
 		for (const termek of Object.keys(rendeles)) {

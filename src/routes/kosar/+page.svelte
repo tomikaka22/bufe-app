@@ -254,7 +254,13 @@
 						{#each data.szunetArray as szunet}
 							<SplideSlide>
 								<div class:activeSzunet={szunet === idopont} class="w-full h-full flex justify-center items-center px-4">
-									{szunet}
+									<!-- Todo: Színek -->
+									<p
+										class:text-[#ff5d5d]={data.idopontok[szunet] > 20 && szunet === idopont}
+										class:text-[#ff9f51]={data.idopontok[szunet] > 10 && szunet === idopont}
+										>
+										{szunet}
+									</p>
 								</div>
 							</SplideSlide>
 						{/each}

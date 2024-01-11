@@ -9,7 +9,7 @@
 	import { forint } from '$lib/frontendUtils/utils.js';
 
    export let data;
-
+console.log(data.idopontok)
 	let szunetSplide;
 	let fizetes = 'Készpénz';
 	let idopont = data.szunetArray[0];

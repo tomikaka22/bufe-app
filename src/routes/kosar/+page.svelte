@@ -9,7 +9,6 @@
 	import { forint } from '$lib/frontendUtils/utils.js';
 
    export let data;
-console.log(data.idopontok)
 	let szunetSplide;
 	let fizetes = 'Készpénz';
 	let idopont = data.szunetArray[0];
@@ -252,11 +251,12 @@ console.log(data.idopontok)
 					<Splide bind:this={szunetSplide} on:moved={e => {idopont = data.szunetArray[e.detail.index];}} options={{ arrows: false, pagination: false, direction: 'ttb', height: '2rem', perMove: 1 }}>
 						{#each data.szunetArray as szunet}
 							<SplideSlide>
-								<div class:activeSzunet={szunet === idopont} class="w-full h-full flex justify-center items-center px-4">
+								<div class="w-full h-full flex justify-center items-center px-4">
 									<!-- Todo: Színek -->
 									<p
-										class:text-[#ff5d5d]="{data.idopontok[szunet] >= 20 && szunet === idopont}"
-										class:text-[#ff9f51]="{data.idopontok[szunet] >= 10 && szunet === idopont}"
+										class:activeSzunetYellow="{data.idopontok[szunet] >= 20 && szunet === idopont}"
+										class:activeSzunetRed="{data.idopontok[szunet] >= 10 && szunet === idopont}"
+										class:activeSzunet={szunet === idopont}
 										>
 										{szunet} {data.idopontok[szunet] ? ` - ${30 - data.idopontok[szunet]} szabad` : ' - 30 szabad'}
 									</p>
@@ -299,6 +299,14 @@ console.log(data.idopontok)
 
 	.activeSzunet {
 		@apply text-tertiary;
+	}
+
+	.activeSzunetYellow {
+		@apply text-[#ff5d5d]
+	}
+
+	.activeSzunetRed {
+		@apply text-[#ff9f51]
 	}
 
 </style>

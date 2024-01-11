@@ -251,12 +251,11 @@
 					<Splide bind:this={szunetSplide} on:moved={e => {idopont = data.szunetArray[e.detail.index];}} options={{ arrows: false, pagination: false, direction: 'ttb', height: '2rem', perMove: 1 }}>
 						{#each data.szunetArray as szunet}
 							<SplideSlide>
-								<div class="w-full h-full flex justify-center items-center px-4">
+								<div class:activeSzunet={szunet === idopont} class="w-full h-full flex justify-center items-center px-4">
 									<!-- Todo: Színek -->
 									<p
+										class:activeSzunetRed="{data.idopontok[szunet] >= 10 && data.idopontok[szunet] < 20 && szunet === idopont}"
 										class:activeSzunetYellow="{data.idopontok[szunet] >= 20 && szunet === idopont}"
-										class:activeSzunetRed="{data.idopontok[szunet] >= 10 && szunet === idopont}"
-										class:activeSzunet={szunet === idopont}
 										>
 										{szunet} {data.idopontok[szunet] ? ` - ${30 - data.idopontok[szunet]} szabad` : ' - 30 szabad'}
 									</p>

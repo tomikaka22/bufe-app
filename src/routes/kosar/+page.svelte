@@ -14,7 +14,6 @@
 	let fizetes = 'Készpénz';
 	let idopont = data.szunetArray[0];
 	let submitting = false;
-
 	if (localStorage.getItem('CartContent')) {
 		$cart = JSON.parse(localStorage.getItem('CartContent'));
 		$total = JSON.parse(localStorage.getItem('Total'));
@@ -256,10 +255,10 @@
 								<div class:activeSzunet={szunet === idopont} class="w-full h-full flex justify-center items-center px-4">
 									<!-- Todo: Színek -->
 									<p
-										class:text-[#ff5d5d]={data.idopontok[szunet] > 20 && szunet === idopont}
-										class:text-[#ff9f51]={data.idopontok[szunet] > 10 && szunet === idopont}
+										class:text-[#ff5d5d]="{data.idopontok[szunet] >= 20 && szunet === idopont}"
+										class:text-[#ff9f51]="{data.idopontok[szunet] >= 10 && szunet === idopont}"
 										>
-										{szunet}
+										{szunet} {data.idopontok[szunet] ? ` - ${30 - data.idopontok[szunet]} szabad` : ' - 30 szabad'}
 									</p>
 								</div>
 							</SplideSlide>

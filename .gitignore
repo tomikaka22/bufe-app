@@ -6,6 +6,4 @@ package
 .env.*
 !.env.example
 build
-src/lib/backendUtils/szunetSzamolo.js
-src/lib/Pocketbase*
 .gitignore

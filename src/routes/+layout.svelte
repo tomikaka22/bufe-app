@@ -14,7 +14,7 @@
 	const backgroundConflict = [ '/list','/kosar' ];
 
 	const termekekRoutes = [ '/list', '/[termek]' ];
-	const homeRoutes = [ '/', '/rendelesek', '/rendelesek/[rendeles]' ];
+	const homeRoutes = [ '/home', '/rendelesek', '/rendelesek/[rendeles]' ];
 	const kosarRoutes = [ '/kosar' ];
 	const profilRoutes = [ '/profil', '/change/notification', '/change/password', '/change/delete' ];
 
@@ -89,7 +89,7 @@
 
 {#if !hideNavbarRoutes.includes($page.url.pathname)}
 	<div class:navbar-background-noconflict={!backgroundConflict.includes($page.url.pathname)} class="bg-foreground text-on-background grid grid-cols-4 gap-8 justify-evenly justify-items-center fixed bottom-0 w-full text-sm h-[5.25rem] transition-all duration-200 px-5 pt-3 z-10">
-		<a href="/" class="flex flex-col justify-center items-center h-16 w-full transition-all" class:active-nav={homeRoutes.includes($page.route.id)}>
+		<a href="/home" class="flex flex-col justify-center items-center h-16 w-full transition-all" class:active-nav={homeRoutes.includes($page.route.id)}>
 			<div class="w-1/2 h-1/2 flex justify-center items-center rounded-3xl py-1" class:active-img={homeRoutes.includes($page.route.id)} style="transition-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1.0);">
 				{#if homeRoutes.includes($page.route.id)}
 					<svg class="h-full w-full text-primary" fill="currentColor" xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48"><path d="M160-120v-480l320-240 320 240v480H560v-280H400v280H160Z"/></svg>

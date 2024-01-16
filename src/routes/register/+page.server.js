@@ -2,7 +2,7 @@ import { fail, redirect } from '@sveltejs/kit';
 
 export function load({ locals }) {
 	if (locals.pb.authStore.isValid)
-		throw redirect(303, '/');
+		throw redirect(303, '/home');
 }
 
 export const actions = {

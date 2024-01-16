@@ -7,3 +7,4 @@ package
 !.env.example
 build
 .gitignore
+src/lib/Pocketbase/pb_data/logs*

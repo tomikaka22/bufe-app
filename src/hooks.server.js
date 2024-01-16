@@ -30,10 +30,10 @@ export async function handle({ event, resolve }) {
 	const protectedRoutes = [ '/admin' ];
 	const admins = [ 'u1fy74rt1m48tx1', 'xkraxn39hbwzisz' ];
 
-	// Ha a route protected és user nem admin redirect to '/'
+	// Ha a route protected és user nem admin redirect to '/home'
 	if (protectedRoutes.some(route => event.url.pathname.startsWith(route) )) {
 		if (!admins.includes(event.locals.pb.authStore.baseModel.id))
-			throw redirect(303, '/');
+			throw redirect(303, '/home');
 	}
 
 	// Ha user bannolva van redirect

@@ -4,7 +4,7 @@ export async function load({ locals }) {
 	if (!locals.pb.authStore.baseModel)  // Ha nincs bejelentkezve, redirect to login
 		throw redirect(303, '/login');
 	if (locals.pb.authStore.baseModel.verified)
-		throw redirect(303, '/');
+		throw redirect(303, '/home');
 
 	return {
 		name: locals.pb.authStore.baseModel.name

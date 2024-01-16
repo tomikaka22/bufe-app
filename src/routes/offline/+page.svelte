@@ -2,6 +2,6 @@
 	<h1 class="text-primary text-3xl text-center font-semibold w-96">Úgy tűnik offline vagy.</h1>
 
 	<div class="w-full flex justify-center">
-		<button class="button-primary" on:click={() => { window.location.replace('/'); }}>Újrapróbálkozás</button>
+		<button class="button-primary" on:click={() => { window.location.replace('/home'); }}>Újrapróbálkozás</button>
 	</div>
 </main>

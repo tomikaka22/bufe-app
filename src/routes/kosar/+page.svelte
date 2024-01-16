@@ -124,7 +124,7 @@
 <main class="pb-[5.25rem]" in:fade={{ duration: 180 }}>
 
    <div class="flex w-full justify-center mt-4">
-		<button class="text-primary font-semibold outline outline-outline outline-1 w-max rounded-3xl p-2 px-6 transition-all hover:rounded-lg hover:bg-primary hover:text-on-primary hover:outline-none" on:click={() => {urites(); goto('/');}}>Űrités</button>
+		<button class="text-primary font-semibold outline outline-outline outline-1 w-max rounded-3xl p-2 px-6 transition-all hover:rounded-lg hover:bg-primary hover:text-on-primary hover:outline-none" on:click={() => {urites(); goto('/home');}}>Űrités</button>
 	</div>
 
 	<!-- Ár, darab -->

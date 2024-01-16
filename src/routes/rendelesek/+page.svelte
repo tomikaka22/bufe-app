@@ -25,7 +25,7 @@
 <main class="pb-[6.5rem]" in:fade={{ duration: 180 }}>
 
    <Topbar
-      targeturl={'/'}
+      targeturl={'/home'}
       text={'Rendelések'}
    ></Topbar>
 

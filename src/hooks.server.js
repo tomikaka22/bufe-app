@@ -17,9 +17,9 @@ export async function handle({ event, resolve }) {
 	if (event.url.pathname.startsWith('/api'))
 		return await resolve(event);
 
-	const anonRoutes = [ '/register', '/login', '/verify', '/change', '/offline', '/banned', '/install' ];
+	const anonRoutes = [ '/register', '/login', '/verify', '/verify/verified', '/change/delete', '/change/password', '/change/password/new', '/offline', '/banned', '/install', '/install/app', '/' ];
 
-	if (!anonRoutes.some(route => event.url.pathname.startsWith(route) )) {
+	if (!anonRoutes.some(route => event.url.pathname === route )) {
 		if (!event.locals.pb.authStore.baseModel )  // Ha nincs bejelentkezve, redirect to login
 			throw redirect(303, '/login');
 

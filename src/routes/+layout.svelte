@@ -10,7 +10,7 @@
 
 	const noKeyURLs = [ '/admin', '/rendelesek' ];
 
-	const hideNavbarRoutes = [ '/login', '/register', '/admin', '/offline', '/verify', '/verify/verified', '/banned', '/banned/register', '/install' ];
+	const hideNavbarRoutes = [ '/', '/login', '/register', '/admin', '/offline', '/verify', '/verify/verified', '/banned', '/banned/register', '/install', '/install/app' ];
 	const backgroundConflict = [ '/list','/kosar' ];
 
 	const termekekRoutes = [ '/list', '/[termek]' ];

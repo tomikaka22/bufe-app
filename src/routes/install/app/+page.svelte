@@ -11,7 +11,7 @@
 
 	<Topbar
 		targeturl={'/install'}
-		text={'Alkalmazás'}
+		text={'Telepítés'}
 	></Topbar>
 
 	<h1 class="text-4xl font-semibold text-primary text-center mt-5">Telepítés</h1>

@@ -12,11 +12,17 @@
 			"sizes": "1024x1024",
 			"type": "image/png",
 			"purpose": "maskable"
+		},
+		{
+			"src": "Logo-transparent.svg",
+			"sizes": "any",
+			"type": "image/svg",
+			"purpose": "monochrome"
 		}
 	],
-	"background_color": "#000000",
+	"background_color": "#201a17",
 	"display": "standalone",
 	"scope": "/",
-	"theme_color": "#000000",
+	"theme_color": "#201a17",
 	"description": "bufe-app"
 }

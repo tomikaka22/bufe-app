@@ -11,7 +11,7 @@
 		<div class="text-center">
 
 			<!-- <h1 class="block mx-auto mb-10 text-3xl">Kandó Büfé</h1> -->
-			<img src="favicon.png" class="block mx-auto mb-10" alt="" />
+			<img src="Logo.svg" class="block mx-32 mb-10" alt="" />
 			<form class="flex flex-col items-center gap-5" method="post">
 				<div class="flex items-center gap-1 w-52">
 					<input placeholder="e-mail" autocapitalize="none" name='email' bind:value={email} type="text" class="bg-background duration-100 ease-in outline outline-outline focus:placeholder:text-background outline-1 w-full py-2 px-3 rounded-xl placeholder:text-center text-center focus:outline-primary placeholder:text-secondary focus:outline-2 transition-all"/>

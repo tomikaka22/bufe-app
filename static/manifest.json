@@ -4,6 +4,10 @@
 	"start_url": "/login",
 	"icons": [
 		{
+			"src": "Logo.svg",
+			"sizes": "any"
+		},
+		{
 			"src": "maskable_icon.png",
 			"sizes": "1024x1024",
 			"type": "image/png",

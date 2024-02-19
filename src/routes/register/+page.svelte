@@ -16,56 +16,67 @@
 	let offsetTop;
 	let offsetLeft;
 
-	function initLicense(node) {
+	function initLicense() {
+		const node = document.getElementById('licenseButton');
 		const license = document.getElementById('license');
 		const backdrop = document.getElementById('backdrop');
+		node.style.visibility = 'hidden';
 
-		offsetHeight = node.offsetHeight + 'px';
-		offsetWidth = node.offsetWidth + 'px';
-		offsetTop = node.offsetTop + 'px';
-		offsetLeft = node.offsetLeft + 'px';
+		offsetHeight = node.offsetHeight;
+		offsetWidth = node.offsetWidth;
+		offsetTop = node.offsetTop;
+		offsetLeft = node.offsetLeft;
 
-		license.style.height = offsetHeight;
-		license.style.width = offsetWidth;
-		license.style.top = offsetTop;
-		license.style.left = offsetLeft;
+		license.style.position = 'absolute';
+		license.style.transition = 'all';
+		license.style.transitionDuration = '400ms';
+		license.style.top = offsetTop + 'px';
+		license.style.left = offsetLeft + 'px';
+		license.style.width = offsetWidth + 0.5 + 'px';
+		license.style.height = offsetHeight + 0.5 + 'px';
 		license.style.display = 'block';
+		license.style.visibility = 'visible';
+		license.style.transitionTimingFunction = 'cubic-bezier(0.05, 0.7, 0.1, 1.0)';
+
+		backdrop.style.visibility = 'visible';
+		backdrop.style.opacity = 1;
+		license.style.opacity = 1;
 
 		setTimeout(() => {
-			backdrop.style.visibility = 'visible';
-			backdrop.style.opacity = '1';
-
-			license.style.visibility = 'visible';
-			license.style.width = '75%';
-			license.style.height = '75%';
 			license.style.top = '50%';
 			license.style.left = '50%';
 			license.style.transform = 'translate(-50%, -50%)';
+			license.style.width = '80%';
+			license.style.height = '20%';
+
 		}, 5);
+
+		setTimeout(() => {
+			license.style.width = '80%';
+			license.style.height = '90%';
+		}, 350);
+
 	}
 
 	function closeLicense() {
 		const license = document.getElementById('license');
 		const backdrop = document.getElementById('backdrop');
+		const node = document.getElementById('licenseButton');
 
-		backdrop.style.opacity = '0';
+		backdrop.style.opacity = 0;
 		backdrop.style.visibility = 'hidden';
 
-		license.style.transitionDuration = '300ms';
-		license.style.opacity = '0';
-		license.style.visibility = 'hidden';
+		license.style.transform = 'none';
+		license.style.top = offsetTop + 'px';
+		license.style.left = offsetLeft + 'px';
+		license.style.width = offsetWidth + 0.5 + 'px';
+		license.style.height = offsetHeight + 0.5 + 'px';
 
 		setTimeout(() => {
-			license.style.transform = 'none';
-			license.style.height = offsetHeight;
-			license.style.width = offsetWidth;
-			license.style.top = offsetTop;
-			license.style.left = offsetLeft;
-			license.style.transitionDuration = '700ms';
-			license.style.opacity = '1';
-			license.style.display = 'hidden';
-		}, 300);
-
+			license.style.opacity = 0;
+			license.style.visibility = 'hidden';
+			node.style.visibility = 'visible';
+		}, 420);
 	}
 
 </script>
@@ -89,7 +100,7 @@
 
          <input placeholder="Jelszó újra" name='passwordConfirm' bind:value={passwordConfirm} type="password" class="bg-background outline outline-outline outline-1 w-52 py-2 px-3 rounded-xl placeholder:text-center text-center focus:placeholder:text-background focus:outline-primary placeholder:text-secondary focus:outline-2 transition-all"/>
          {#if name && name2 && email && password && passwordConfirm && password === passwordConfirm && licenseCheck}
-				<button class="w-36 bg-primary text-background p-2 rounded-full mt-2 focus:rounded-md transition-all font-semibold">Regisztráció</button>
+				<button in:fade class="w-36 bg-primary text-background p-2 rounded-full mt-2 focus:rounded-md transition-all font-semibold">Regisztráció</button>
          {/if}
          {#if error && !password || error && !password && !email}
             <p id="error" class="text-error text-lg text-center px-2 font-semibold">{form?.error}</p>
@@ -99,7 +110,7 @@
 		<!-- svelte-ignore a11y-no-static-element-interactions -->
 		<div id="backdrop" on:click={closeLicense} class="backdrop-brightness-50 absolute top-0 bottom-0 left-0 right-0 invisible opacity-0 transition-all duration-300"></div>
 
-		<div id="license" class="bg-foreground rounded-[2rem] absolute transition-all duration-700 overflow-scroll invisible hidden" style="transition-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1.0);">
+		<div id="license" class="bg-foreground rounded-[2rem] absolute overflow-scroll invisible hidden">
 			<div class="relative p-6">
 				<h1 class="font-semibold text-2xl text-center mb-3 text-primary">Felhasználói Feltételek és Körülmények</h1>
 				<div class="text-sm pb-16 text-left">
@@ -132,7 +143,7 @@
 		</div>
 
 		<div class="mt-6 text-sm">
-			Elfogadom a <button on:click={(e) => { initLicense(e.target); }} class="underline cursor-pointer ">Felhasználói Feltételek és Körülmények</button>et
+			Elfogadom a <button id="licenseButton" on:click={(e) => { initLicense(e.target); }} class="underline cursor-pointer text-sm">Felhasználói Feltételek és Körülmények</button>et
 			<input bind:checked={licenseCheck} type="checkbox" name="" id="">
 		</div>
 
@@ -144,7 +155,3 @@
    </div>
 
 </main>
-
-<style lang="postcss">
-
-</style>
